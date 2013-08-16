@@ -18,3 +18,9 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+
+# Gradle build directory
+android_fragments/build/
+
+# Idea files
+.idea/

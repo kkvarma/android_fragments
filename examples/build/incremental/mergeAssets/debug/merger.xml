@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger>
+
+    <dataSet config="main" >
+        <source path="D:\Libraries\Wolf-ITechnologies\workspace\android\publicRepositories\android_fragments\examples\src\main\assets" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="D:\Libraries\Wolf-ITechnologies\workspace\android\publicRepositories\android_fragments\examples\src\debug\assets" />
+    </dataSet>
+
+</merger>
