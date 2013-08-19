@@ -21,6 +21,7 @@ local.properties
 
 # Gradle build directory
 android_fragments/build/
+examples/build
 
 # Idea files
 .idea/
