@@ -1,25 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * =================================================================================
+ * Copyright (C) 2013 Martin Albedinsky [Wolf-ITechnologies]
+ * =================================================================================
+ * Licensed under the Apache License, Version 2.0 or later (further "License" only);
+ * *********************************************************************************
+ * You may use this file only in compliance with the License. More details and copy
+ * of this License you may obtain at
+ *
+ * 		http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * You can redistribute, modify or publish any part of the code written in this
+ * file but as it is described in the License, the software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF
+ * ANY KIND.
+ *
+ * See the License for the specific language governing permissions and limitations
+ * under the License.
+ * =================================================================================
+ */
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wit.and.examples"
-    android:versionCode="1"
-    android:versionName="1.0" >
+          package="com.wit.and.examples"
+          android:versionCode="1"
+          android:versionName="1.0">
 
     <uses-sdk
-        android:minSdkVersion="7"
-        android:targetSdkVersion="18" />
+            android:minSdkVersion="7"
+            android:targetSdkVersion="18"
+            android:maxSdkVersion="18"/>
 
     <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+            android:allowBackup="true"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
         <activity
-            android:name="com.wit.and.examples.MainActivityd"
-            android:label="@string/app_name" >
+                android:name="com.wit.and.examples.MainActivityd"
+                android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>
