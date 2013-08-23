@@ -1,8 +1,10 @@
-package com.wit.and.examples;
+package com.wit.and.examples.fragments;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+
+import com.wit.and.examples.R;
 
 public class MainActivityd extends Activity {
 
