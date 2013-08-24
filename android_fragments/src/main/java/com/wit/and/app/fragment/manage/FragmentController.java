@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.and.app.fragment;
+package com.wit.and.app.fragment.manage;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -28,7 +28,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
-import com.wit.and.R;
+import com.wit.and.fragment.R;
 
 /**
  * <p>
@@ -74,7 +74,7 @@ public class FragmentController {
 	 * Default tag for the showing on fragments.
 	 * </p>
 	 */
-	public static final String FRAGMENT_TAG = "com.wit.and.app.fragment.FragmentController.Fragment.TAG";
+	public static final String FRAGMENT_TAG = "com.wit.and.app.fragment.manage.FragmentController.Fragment.TAG";
 
 	/**
 	 * <br/>

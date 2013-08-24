@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.and.app.fragment;
+package com.wit.and.app.fragment.manage;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,7 +29,7 @@ import android.support.v4.app.Fragment;
  * </p>
  * <h5>FragmentFactory</h5>
  * <p>
- * implements {@link com.wit.and.app.fragment.FragmentController.IFragmentFactory}
+ * implements {@link com.wit.and.app.fragment.manage.FragmentController.IFragmentFactory}
  * </p>
  * <h4>Class Overview</h4>
  * <p>
