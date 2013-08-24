@@ -38,7 +38,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.wit.and.R;
+import com.wit.and.fragment.R;
 import com.wit.and.animation.BaseAnimation;
 
 /**

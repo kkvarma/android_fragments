@@ -1,4 +1,4 @@
-package com.wit.and.test;
+package com.wit.and.fragment.test;
 
 /**
  * @author Martin Albedinsky

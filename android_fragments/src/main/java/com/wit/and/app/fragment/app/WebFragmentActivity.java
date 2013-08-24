@@ -18,13 +18,13 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.and.app;
+package com.wit.and.app.fragment.app;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.webkit.WebView;
 
-import com.wit.and.R;
+import com.wit.and.fragment.R;
 import com.wit.and.app.fragment.WebFragment;
 import com.wit.and.app.fragment.WebFragment.OnWebViewInitListener;
 
@@ -60,7 +60,7 @@ public class WebFragmentActivity extends FragmentActivity implements OnWebViewIn
     /**
      *
      */
-    public static final String INTENT_EXTRAS_CONTENT = "com.wit.and.app.WebFragmentActivity.Intent.Content";
+    public static final String INTENT_EXTRAS_CONTENT = "com.wit.and.app.fragment.app.WebFragmentActivity.Intent.Content";
 
     /**
      *
