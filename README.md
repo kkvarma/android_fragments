@@ -27,7 +27,7 @@ Please see official wiki [page](https://github.com/Wolf-ITechnologies/android_fr
 
 ## Compatibility ##
 
-Fully supported from **Android API version 7**, so every Android powered device out there :).
+Fully supported from **Android API version 7**, so **every Android** powered device out there :).
 
 ## Related Projects
 
