@@ -24,13 +24,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 /**
- * <p>
- * public abstract class
- * </p>
- * <h5>FragmentFactory</h5>
- * <p>
- * implements {@link com.wit.and.app.fragment.manage.FragmentController.IFragmentFactory}
- * </p>
  * <h4>Class Overview</h4>
  * <p>
  * </p>
