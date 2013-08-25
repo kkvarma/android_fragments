@@ -30,7 +30,8 @@
 :: ====================================================================================
 :: Script global parameters
 :: ------------------------------------------------------------------------------------
-@SET LIBRARY_MAIN_DIR=..\%LIBRARY_NAME%\src\main
+@SET LIBRARY_DIR=..\
+@SET LIBRARY_MAIN_DIR=%LIBRARY_DIR%%LIBRARY_NAME%\src\main
 @SET LIBRARY_SRC_DIR=%LIBRARY_MAIN_DIR%\java
 @SET LIBRARY_RES_DIR=%LIBRARY_MAIN_DIR%\res
 @SET LIBRARY_EXAMPLES_MAIN_DIR=..\examples\src\main
@@ -68,6 +69,12 @@ XCOPY %LIBRARY_SRC_DIR% %ECLIPSE_SRC_DIR% /S /Y
 XCOPY %LIBRARY_RES_DIR% %ECLIPSE_RES_DIR% /S /Y
 COPY %LIBRARY_MAIN_DIR%\AndroidManifest.xml %ECLIPSE_PATH%\AndroidManifest.xml /Y
 ECHO.Update process finished.
+:: ------------------------------------------------------------------------------------
+:: Copy library documentation files
+:: ------------------------------------------------------------------------------------
+COPY %LIBRARY_DIR%\CHANGELOG.md %ECLIPSE_PATH%\CHANGELOG.md /Y
+COPY %LIBRARY_DIR%\TODO.md %ECLIPSE_PATH%\TODO.md /Y
+COPY %LIBRARY_DIR%\LICENSE.md %ECLIPSE_PATH%\LICENSE.md /Y
 :: ====================================================================================
 :: Clean Eclipse examples base sub-project structure
 :: ------------------------------------------------------------------------------------
