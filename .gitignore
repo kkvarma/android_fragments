@@ -26,6 +26,11 @@ examples/build/
 # Idea files
 .idea/
 
+# Gradle files
+.gradle
+
 # =============== RELEASE ====================
 # exclude instrument tests
 android_fragments/src/instrumentTest/
+# exclude project build script
+project.bat
