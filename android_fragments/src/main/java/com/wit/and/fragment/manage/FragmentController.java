@@ -30,12 +30,6 @@ import android.util.Log;
 import com.wit.and.fragment.R;
 
 /**
- * <p>
- * public class
- * </p>
- * <h5>FragmentController</h5>
- * <p>
- * </p>
  * <h4>Class Overview</h4>
  * <p>
  * </p>
