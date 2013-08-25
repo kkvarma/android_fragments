@@ -36,6 +36,6 @@ Fully supported from **Android API version 7**, so **every Android** powered dev
 
 ## Support ##
 
-If You have any questions related to this project, feel free and contact me at [gray.wolf@wolf-itechnologies.com](mailto:gray.wolf@wolf-itechnologies.com).
+If You have any questions related to this project, feel free and contact us at [github.public@wolf-itechnologies.com](mailto:github.public@wolf-itechnologies.com).
 
 ## Other ##
