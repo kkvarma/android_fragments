@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.and.app.fragment.manage;
+package com.wit.and.fragment.manage;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

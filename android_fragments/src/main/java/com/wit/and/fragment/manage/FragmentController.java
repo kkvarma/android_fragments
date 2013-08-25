@@ -18,12 +18,11 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.and.app.fragment.manage;
+package com.wit.and.fragment.manage;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -127,7 +126,7 @@ public class FragmentController {
 	 * <h5><i>public FragmentController(FragmentManager fragmentManager)</i></h5>
 	 * <p>
 	 * Same as
-	 * {@link #FragmentController(FragmentManager, IFragmentFactory)}, but with
+	 * {@link #FragmentController(android.support.v4.app.FragmentManager, com.wit.and.fragment.manage.FragmentController.IFragmentFactory)}, but with
 	 * not initialized factory.
 	 * </p>
 	 * 
@@ -146,8 +145,8 @@ public class FragmentController {
 	 * Constructs the manager to handle fragments.
 	 * </p>
 	 * <p>
-	 * <b>Note: </b>always use {@link FragmentManager} provided by
-	 * {@link FragmentActivity}.
+	 * <b>Note: </b>always use {@link android.support.v4.app.FragmentManager} provided by
+	 * {@link android.support.v4.app.FragmentActivity}.
 	 * </p>
 	 * <p>
 	 * <b>DialogManager parent:</b>
@@ -337,7 +336,7 @@ public class FragmentController {
 	 * <p>
 	 * Sets the fragment manager to handle showing fragments.
 	 * </p>
-	 * <b>Note: </b>always use {@link FragmentManager} provided by fragment
+	 * <b>Note: </b>always use {@link android.support.v4.app.FragmentManager} provided by fragment
 	 * activity.</p>
 	 * <p>
 	 * <b>FragmentController parent:</b>
@@ -562,7 +561,7 @@ public class FragmentController {
 	 * <br/>
 	 * <h5><i>protected final FragmentTransaction beginTransaction()</i></h5>
 	 * <p>
-	 * Begins new {@link FragmentTransaction}.
+	 * Begins new {@link android.support.v4.app.FragmentTransaction}.
 	 * </p>
 	 * 
 	 * @return
@@ -1051,7 +1050,7 @@ public class FragmentController {
      * </p>
      *
      * @author Martin Albedinsky
-     * @see FragmentController
+     * @see com.wit.and.fragment.manage.FragmentController
      */
     public static interface IFragmentFactory {
 
@@ -1066,7 +1065,7 @@ public class FragmentController {
          * <p>
          * Returns the instance of the fragment. Instance of the fragment depends on
          * the given <var>fragmentID</var>. This is invoked after call of
-         * <code>showFragment(int, ...)</code> from the {@link FragmentController}.
+         * <code>showFragment(int, ...)</code> from the {@link com.wit.and.fragment.manage.FragmentController}.
          * </p>
          *
          * @param fragmentID
@@ -1083,7 +1082,7 @@ public class FragmentController {
          * <p>
          * Returns tag associated with the dialog fragment with the given
          * <var>fragmentID</var>. If here provided tag is <code>null</code>, default
-         * tag from {@link FragmentController} will be used to show actual fragment.
+         * tag from {@link com.wit.and.fragment.manage.FragmentController} will be used to show actual fragment.
          * </p>
          *
          * @param fragmentID
