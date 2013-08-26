@@ -27,4 +27,4 @@ examples/build/
 .idea/
 
 # Gradle files
-.gradle
+.gradle/
