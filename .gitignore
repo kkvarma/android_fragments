@@ -27,7 +27,7 @@ examples/build/
 .idea/
 
 # Gradle files
-.gradle
+.gradle/
 
 # =============== RELEASE ====================
 # exclude instrument tests
