@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="android-fragments:jar">
+    <output-path>$PROJECT_DIR$/lib</output-path>
+    <root id="archive" name="android-fragments.jar">
+      <element id="module-output" name="android_fragments-android_fragments" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/documentation/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
