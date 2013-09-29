@@ -2,7 +2,7 @@
 <!--
 /*
  * =================================================================================
- * Copyright (C) 2012 - 2013 Martin Albedinsky [Wolf-ITechnologies]
+ * Copyright (C) 2012 Martin Albedinsky [Wolf-ITechnologies]
  * =================================================================================
  * Licensed under the Apache License, Version 2.0 or later (further "License" only);
  * *********************************************************************************
@@ -21,22 +21,11 @@
  * =================================================================================
  */
 -->
-<resources>
-    
-    <!-- ###### FRAGMENT INTEGERS ###### -->
-    <eat-comment />
-    
-    <!-- ## Animations [START] ## -->
-    <eat-comment/>
-    <!-- Duration for incoming fragment slide animation -->
-    <integer name="And.Anim.Slide.In.Fragment.duration">500</integer>
-    <!-- Duration for outgoing fragment slide animation -->
-    <integer name="And.Anim.Slide.Out.Fragment.duration">500</integer>
-    <!-- Duration for incoming back-stacked fragment slide animation -->
-    <integer name="And.Anim.Slide.In.Back.Fragment.duration">350</integer>
-    <!-- Duration for outgoing back-stacked fragment slide animation -->
-    <integer name="And.Anim.Slide.Out.Back.Fragment.duration">350</integer>
-    <!-- ## Animations [END] ## -->
-    <eat-comment/>
-    
-</resources>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <translate
+        android:duration="@integer/And.Anim.Slide.In.Back.Fragment.duration"
+        android:fromYDelta="-100%p"
+        android:toYDelta="0%p" />
+
+</set>

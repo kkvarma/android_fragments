@@ -20,9 +20,6 @@
  */
 package com.wit.and.fragment.manage;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-
 /**
  * <h4>Class Overview</h4>
  * <p>
@@ -87,6 +84,39 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	 * Public --------------------------------
 	 */
 
+    /**
+     * <p>
+     * Creates fragment tag in required format depends on the passed
+     * <var>factory</var> package name and <var>fragmentName</var>.
+     * </p>
+     * <p>
+     * Example format: <u>com.android.app.fragment.factories.ScreenProfileFactory.EditProfile.TAG</u><br/><br/>
+     * - where <b>com.android.app.fragment.factories</b> is name of package where <var>factory</var> is placed,
+     * <b>ScreenProfileFactory</b> is factory class name, <b>EditProfile</b> is <var>fragmentName</var> and
+     * <b>TAG</b> is tag identifier.
+     * </p>
+     *
+     * @param factoryClass
+     *          Class of factory for which is creation of fragment tag requested.
+     * @param fragmentName
+     *          Fragment name (can be fragment class name) for which tag should be created.
+     * @return Fragment tag in required format, or <code>null</code> if <var>fragmentName</var> is <code>null</code> or empty.
+     */
+    public static String createFragmentTag(Class<? extends FragmentController.IFragmentFactory> factoryClass, String fragmentName) {
+        // Only valid fragment name is allowed.
+        if (fragmentName == null || fragmentName.length() == 0)
+            return null;
+
+        StringBuilder builder = new StringBuilder("");
+        builder.append(factoryClass.getPackage().getName());
+        builder.append(".");
+        builder.append(factoryClass.getSimpleName());
+        builder.append(".");
+        builder.append(fragmentName);
+        builder.append(".TAG");
+        return builder.toString();
+    }
+
 	/**
 	 * Getters + Setters ---------------------
 	 */
@@ -102,16 +132,6 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	/**
 	 * Abstract methods ----------------------
 	 */
-
-    /**
-     */
-    @Override
-	public abstract Fragment createFragmentInstance(int fragmentID, Bundle params);
-
-    /**
-     */
-    @Override
-	public abstract String getFragmentTag(int fragmentID);
 
 	/**
 	 * Inner classes =========================
