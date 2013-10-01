@@ -23,8 +23,12 @@ package com.wit.and.fragment.manage;
 /**
  * <h4>Class Overview</h4>
  * <p>
+ * This is only helper implementation of {@link com.wit.and.fragment.manage.FragmentController.IFragmentFactory}.
  * </p>
- * 
+ * <p>
+ * Provides some methods useful when using custom factory.
+ * </p>
+ *
  * @author Martin Albedinsky
  */
 public abstract class FragmentFactory implements FragmentController.IFragmentFactory {
