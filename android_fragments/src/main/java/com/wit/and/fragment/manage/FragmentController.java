@@ -303,14 +303,16 @@ public class FragmentController {
         final List<Fragment> fragments = mFragmentManager.getFragments();
         final List<Fragment> visibleFragments = new ArrayList<Fragment>();
 
-        // Get only visible fragments.
-        for (Fragment fragment : fragments) {
-            // TODO: perform here more fragment checks ?
-            if (fragment != null && fragment.isVisible()) {
-                visibleFragments.add(fragment);
+        if (fragments != null) {
+            // Get only visible fragments.
+            for (Fragment fragment : fragments) {
+                // TODO: perform here more fragment checks ?
+                if (fragment != null && fragment.isVisible()) {
+                    visibleFragments.add(fragment);
 
-                if (DEBUG)
-                    Log.d(TAG, "visible fragment(" + fragment.getTag() + ")");
+                    if (DEBUG)
+                        Log.d(TAG, "visible fragment(" + fragment.getTag() + ")");
+                }
             }
         }
 
@@ -355,14 +357,16 @@ public class FragmentController {
         final List<Fragment> fragments = mFragmentManager.getFragments();
         final List<Fragment> visibleFragments = new ArrayList<Fragment>();
 
-        // Get only visible fragments.
-        for (Fragment fragment : fragments) {
-            // TODO: perform here more fragment checks ?
-            if (fragment != null && fragment.isVisible()) {
-                visibleFragments.add(fragment);
+        if (fragments != null) {
+            // Get only visible fragments.
+            for (Fragment fragment : fragments) {
+                // TODO: perform here more fragment checks ?
+                if (fragment != null && fragment.isVisible()) {
+                    visibleFragments.add(fragment);
 
-                if (DEBUG)
-                    Log.d(TAG, "visible fragment(" + fragment.getTag() + ")");
+                    if (DEBUG)
+                        Log.d(TAG, "visible fragment(" + fragment.getTag() + ")");
+                }
             }
         }
 
