@@ -1092,14 +1092,14 @@ public class FragmentController {
      * <p>
      * Handles the directions of replacing fragments in the activity content
      * view. Each type contains animations for incoming and outgoing fragment
-     * also for incoming and outgoing fragment from the back stack (when the
-     * back button is clicked and the old fragment is showed from the back
+     * and also for incoming and outgoing fragment from the back stack (when the
+     * back button is clicked and the old fragment is being showed from the back
      * stack).
      * </p>
      * <p>
-     * Back stack animations are in the reverse state against their fragment
-     * animation partners. For example in case of <var>FROM_LEFT</var> direction
-     * are used these animations:
+     * Back stack animations are in the reverse order against their fragment
+     * animation partners. For example in case of {@link ShowDirection#FROM_LEFT}
+     * direction are used these animations:
      * <ul>
      * <li>incoming: <var>R.anim.and_slide_fragment_in_right</var></li>
      * <li>outgoing: <var>R.anim.and_slide_fragment_out_right</var></li>
@@ -1108,7 +1108,8 @@ public class FragmentController {
      * </ul>
      * </p>
      * <p>
-     * Each animation has duration set to <code>500 ms</code>.
+     * Each animation has duration set to <code>500 ms</code> and in case of back stack
+     * animation to <code>350 ms</code>.
      * </p>
      */
     public static class ShowDirection implements Parcelable {
