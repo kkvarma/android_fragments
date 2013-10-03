@@ -285,14 +285,19 @@ public class FragmentController {
 
     /**
      * <p>
-     * Returns the fragment which is currently showing at the screen.
+     * Returns the fragment which is currently showing at the screen. To determine
+     * visible fragment state are check these flags:
+     * <ul>
+     * <li>{@link android.support.v4.app.Fragment#isVisible()}</li>
+     * <li>or {@link android.support.v4.app.Fragment#isAdded()}</li>
+     * </ul>
      * </p>
      * <p>
      * This will be actually the fragment which was showed as last.
      * </p>
      *
-     * @return Currently visible fragment, or <code>null</code> if there
-     *         are no fragments.
+     * @return Currently visible or added fragment, or <code>null</code> if there
+     *         are no fragments or fragments are in undesirable states.
      *
      * @see #getVisibleSecondFragment()
      */
@@ -303,14 +308,16 @@ public class FragmentController {
         final List<Fragment> fragments = mFragmentManager.getFragments();
         final List<Fragment> visibleFragments = new ArrayList<Fragment>();
 
-        // Get only visible fragments.
-        for (Fragment fragment : fragments) {
-            // TODO: perform here more fragment checks ?
-            if (fragment != null && fragment.isVisible()) {
-                visibleFragments.add(fragment);
+        if (fragments != null) {
+            // Get only visible fragments.
+            for (Fragment fragment : fragments) {
+                // TODO: perform here more fragment checks ?
+                if (fragment != null && (fragment.isVisible() || fragment.isAdded())) {
+                    visibleFragments.add(fragment);
 
-                if (DEBUG)
-                    Log.d(TAG, "visible fragment(" + fragment.getTag() + ")");
+                    if (DEBUG)
+                        Log.d(TAG, "visible/added fragment(" + fragment.getTag() + ")");
+                }
             }
         }
 
@@ -337,14 +344,19 @@ public class FragmentController {
     /**
      * <p>
      * Returns the second fragment which is currently showing at the screen
-     * where two fragments are visible at the same time.
+     * where two fragments are visible at the same time. To determine
+     * second visible fragment state are check these flags:
+     * <ul>
+     * <li>{@link android.support.v4.app.Fragment#isVisible()}</li>
+     * <li>or {@link android.support.v4.app.Fragment#isAdded()}</li>
+     * </ul>
      * </p>
      * <p>
      * This will be actually the fragment which was showed before the last one.
      * </p>
      *
-     * @return Currently visible fragment, or <code>null</code> if there
-     *         are no fragments.
+     * @return Currently second visible or added fragment, or <code>null</code> if there
+     *         are no fragments or fragments are in undesirable states.
      *
      * @see #getVisibleFragment()
      */
@@ -355,14 +367,16 @@ public class FragmentController {
         final List<Fragment> fragments = mFragmentManager.getFragments();
         final List<Fragment> visibleFragments = new ArrayList<Fragment>();
 
-        // Get only visible fragments.
-        for (Fragment fragment : fragments) {
-            // TODO: perform here more fragment checks ?
-            if (fragment != null && fragment.isVisible()) {
-                visibleFragments.add(fragment);
+        if (fragments != null) {
+            // Get only visible fragments.
+            for (Fragment fragment : fragments) {
+                // TODO: perform here more fragment checks ?
+                if (fragment != null && (fragment.isVisible() || fragment.isAdded())) {
+                    visibleFragments.add(fragment);
 
-                if (DEBUG)
-                    Log.d(TAG, "visible fragment(" + fragment.getTag() + ")");
+                    if (DEBUG)
+                        Log.d(TAG, "visible/added fragment(" + fragment.getTag() + ")");
+                }
             }
         }
 
@@ -876,23 +890,23 @@ public class FragmentController {
          */
 
         /**
-         * Flag indicating, if fragment should be added to back stack or not.
+         * Flag indicating, whether fragment should be added to back stack or not.
          */
         protected boolean addToBackStack = false;
 
         /**
-         * Flag indicating, if same fragment (currently showing) can
+         * Flag indicating, whether same fragment (currently showing) can
          * be replaced by the new one with this options containing same tag.
          */
         protected boolean replaceSame = true;
 
         /**
-         * Flag indicating, if fragment should be showed immediately.
+         * Flag indicating, whether fragment should be showed immediately.
          */
         protected boolean showImmediately = false;
 
         /**
-         * Flag indicating, if fragment's options menu should be enabled
+         * Flag indicating, whether fragment's options menu should be enabled
          * if same fragment (withs same tag) is already showing and should not be replaced.
          */
         protected boolean showOptionsMenu = false;
@@ -998,7 +1012,7 @@ public class FragmentController {
 
         /**
          * <p>
-         * Sets flag indicating, if fragment should be added to back stack or not.
+         * Sets flag indicating, whether fragment should be added to back stack or not.
          * </p>
          *
          * @param add <code>True</code> to add fragment to back stack, <code>false</code> otherwise.
@@ -1042,7 +1056,7 @@ public class FragmentController {
 
         /**
          * <p>
-         * Sets flag indicating, if currently showing fragment with same tag can
+         * Sets flag indicating, whether currently showing fragment with same tag can
          * be replaced by the new one.
          * </p>
          *
@@ -1056,7 +1070,7 @@ public class FragmentController {
 
         /**
          * <p>
-         * Sets flag indicating, if fragment should be showed immediately.
+         * Sets flag indicating, whether fragment should be showed immediately.
          * </p>
          *
          * @param immediately <code>True</code> to show immediately, <code>false</code> otherwise.
@@ -1069,7 +1083,7 @@ public class FragmentController {
 
         /**
          * <p>
-         * Sets flag indicating, if fragment's options menu should be enabled in case
+         * Sets flag indicating, whether fragment's options menu should be enabled in case
          * that, there is already same fragment (with same tag) showing and can't be
          * replaced be the new one.
          * </p>
