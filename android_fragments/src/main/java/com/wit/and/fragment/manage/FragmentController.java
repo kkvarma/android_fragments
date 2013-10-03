@@ -22,6 +22,8 @@ package com.wit.and.fragment.manage;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -29,22 +31,41 @@ import android.util.Log;
 
 import com.wit.and.fragment.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <h4>Class Overview</h4>
  * <p>
  * </p>
- * 
+ *
  * @author Martin Albedinsky
+ *
+ * @see com.wit.and.fragment.manage.FragmentController.IFragmentFactory
+ * @see com.wit.and.fragment.manage.FragmentController.ShowOptions
  */
 public class FragmentController {
 
-    // TODO: save last show option to determine back stacked fragment
-    // TODO: implements parcelable for show options and direction
-    // TODO: dispatch back pressed to handle removing fragments -> notify listeners with fragment tag or id.
+    /**
+     * Constants =============================
+     */
 
-	/**
-	 * Constants =============================
-	 */
+    /**
+     * <h5><i>public static final String FRAGMENT_TAG</i></h5>
+     * <p>
+     * Default tag for the showing on fragments.
+     * </p>
+     */
+    public static final String FRAGMENT_TAG = "com.wit.and.app.fragment.manage.FragmentController.Fragment.TAG";
+
+    /**
+     * <br/>
+     * <h5><i>public static final ShowOptions SHOW_OPTIONS</i></h5>
+     * <p>
+     * Default options to show fragment.
+     * </p>
+     */
+    public static final ShowOptions SHOW_OPTIONS = new ShowOptions();
 
     /**
      * Log TAG.
@@ -54,356 +75,484 @@ public class FragmentController {
     /**
      * Indicates if debug private output trough log-cat is enabled.
      */
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     /**
      * Indicates if logging for user output trough log-cat is enabled.
      */
     private static final boolean USER_LOG = true;
 
-	/**
-	 * <h5><i>public static final String FRAGMENT_TAG</i></h5>
-	 * <p>
-	 * Default tag for the showing on fragments.
-	 * </p>
-	 */
-	public static final String FRAGMENT_TAG = "com.wit.and.app.fragment.manage.FragmentController.Fragment.TAG";
-
-	/**
-	 * <br/>
-	 * <h5><i>public static final ShowOptions SHOW_OPTIONS</i></h5>
-	 * <p>
-	 * Default options to show fragment.
-	 * </p>
-	 */
-	public static final ShowOptions SHOW_OPTIONS = new ShowOptions();
-
-	/**
-	 * Enums =================================
-	 */
+    /**
+     * Enums =================================
+     */
 
     /**
      * Static members ========================
      */
 
-	/**
-	 * Members ===============================
-	 */
-
-	/**
-	 * Fragment manager to handle showing fragments.
-	 */
-	private FragmentManager mFragmentManager = null;
-
-	private IFragmentFactory mFragmentFactory = null;
-
-	private int mFragmentContainerID = -1;
-
-	/**
-	 * Listeners -----------------------------
-	 */
-
-	/**
-	 * Arrays --------------------------------
-	 */
-
-	/**
-	 * Booleans ------------------------------
-	 */
-
-	/**
-	 * Constructors ==========================
-	 */
-
-	/**
-	 * <br/>
-	 * <h5><i>public FragmentController(FragmentManager fragmentManager)</i></h5>
-	 * <p>
-	 * Same as
-	 * {@link #FragmentController(android.support.v4.app.FragmentManager, com.wit.and.fragment.manage.FragmentController.IFragmentFactory)}, but with
-	 * not initialized factory.
-	 * </p>
-	 * 
-	 * @param fragmentManager
-	 *            Support fragment manager.
-	 */
-	public FragmentController(FragmentManager fragmentManager) {
-		this(fragmentManager, null);
-	}
-
-	/**
-	 * <br/>
-	 * <h5><i>public FragmentController(FragmentManager fragmentManager,
-	 * IFragmentFactory factory)</i></h5>
-	 * <p>
-	 * Constructs the manager to handle fragments.
-	 * </p>
-	 * <p>
-	 * <b>Note: </b>always use {@link android.support.v4.app.FragmentManager} provided by
-	 * {@link android.support.v4.app.FragmentActivity}.
-	 * </p>
-	 * <p>
-	 * <b>DialogManager parent:</b>
-	 * <ul>
-	 * <li>FragmentActivity:
-	 * <code>yourActivity.getSupportFragmentManager()</code></li>
-	 * <li>Fragment: <code>yourFragment.getFragmentManager()</code></li>
-	 * </ul>
-	 * </p>
-	 * 
-	 * @param fragmentManager
-	 *            Support fragment manager.
-	 * @param factory
-	 *            Fragment factory to provide fragment instances.
-	 */
-	public FragmentController(FragmentManager fragmentManager, IFragmentFactory factory) {
-		this.mFragmentManager = fragmentManager;
-		this.mFragmentFactory = factory;
-	}
-
-	/**
-	 * Methods ===============================
-	 */
-
-	/**
-	 * Public --------------------------------
-	 */
-
-	/**
-	 * <br/>
-	 * <h5><i></i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @param fragmentID
-	 * @return
-	 * @throws IllegalStateException
-	 */
-	public final boolean showFragment(int fragmentID) {
-		return this.showFragment(fragmentID, SHOW_OPTIONS, null);
-	}
-
-	/**
-	 * <br/>
-	 * <h5><i>public final boolean showFragment(int fragmentID, Bundle
-	 * params)</i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @param fragmentID
-	 * @param params
-	 * @return
-	 * @throws IllegalStateException
-	 */
-	public final boolean showFragment(int fragmentID, Bundle params) {
-		return this.showFragment(fragmentID, SHOW_OPTIONS, params);
-	}
-
-	/**
-	 * <br/>
-	 * <h5><i>public final boolean showFragment(int fragmentID, ShowOptions
-	 * options)</i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @param fragmentID
-	 * @param options
-	 * @return
-	 * @throws IllegalStateException
-	 */
-	public final boolean showFragment(int fragmentID, ShowOptions options) {
-		return this.showFragment(fragmentID, options, null);
-	}
-
-	/**
-	 * <br/>
-	 * <h5><i>public final boolean showFragment(int fragmentID, ShowOptions
-	 * options, Bundle params)</i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @param fragmentID
-	 * @param options
-	 * @param params
-	 * @return
-	 * @throws IllegalStateException
-	 */
-	public final boolean showFragment(int fragmentID, ShowOptions options, Bundle params) {
-		return this.performShowFactoryFragment(fragmentID, options, params);
-	}
-
-	/**
-	 * <br/>
-	 * <h5><i>public final boolean showFragment(Fragment fragment)</i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @param fragment
-	 * @return
-	 */
-	public final boolean showFragment(Fragment fragment) {
-		return this.showFragment(fragment, SHOW_OPTIONS);
-	}
-
-	/**
-	 * <br/>
-	 * <h5><i>public final boolean showFragment(Fragment fragment, ShowOptions
-	 * options)</i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @param fragment
-	 * @param options
-	 * @return
-	 */
-	public final boolean showFragment(Fragment fragment, ShowOptions options) {
-		return this.performShowFragment(fragment, options);
-	}
-
-	/**
-	 * <br/>
-	 * <h5><i></i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @return
-	 */
-	public Fragment getVisibleFragment() {
-		return mFragmentManager.findFragmentByTag(getVisibleFragmentTag());
-	}
-
-	/**
-	 * <br/>
-	 * <h5><i></i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @return
-	 */
-	public boolean hideVisibleFragment() {
-		boolean hided = false;
-
-		// TODO: implement this
-
-		return hided;
-	}
-
-	/**
-	 * 
-	 * @param fragmentID
-	 * @return
-	 */
-	public boolean removeFragmentFromBackStack(int fragmentID) {
-		return performRemoveBackStackFactoryFragment(fragmentID);
-	}
-
-	/**
-	 * 
-	 * @param fragmentTag
-	 * @return
-	 */
-	public boolean removeFragmentFromBackStack(String fragmentTag) {
-		return performRemoveBackStackFragment(fragmentTag);
-	}
-
-	/**
-	 * Getters + Setters ---------------------
-	 */
-
-	/**
-	 * <br/>
-	 * <h5><i></i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @return
-	 */
-	public String getVisibleFragmentTag() {
-		// TODO: implement this
-		return null;
-	}
-
-	/**
-	 * <br/>
-	 * <h5><i>public final void setFragmentManager(FragmentManager
-	 * fragmentManager)</i></h5>
-	 * <p>
-	 * Sets the fragment manager to handle showing fragments.
-	 * </p>
-	 * <b>Note: </b>always use {@link android.support.v4.app.FragmentManager} provided by fragment
-	 * activity.</p>
-	 * <p>
-	 * <b>FragmentController parent:</b>
-	 * <ul>
-	 * <li>FragmentActivity:
-	 * <code>yourActivity.getSupportFragmentManager()</code></li>
-	 * <li>Fragment: <code>yourFragment.getFragmentManager()</code></li>
-	 * </ul>
-	 * </p>
-	 * 
-	 * @param fragmentManager
-	 *            Support fragment manager.
-	 */
-	public final void setFragmentManager(FragmentManager fragmentManager) {
-		this.mFragmentManager = fragmentManager;
-	}
-
-	/**
-	 * <br/>
-	 * <h5><i></i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @param layoutID
-	 */
-	public final void setFragmentContainerID(int layoutID) {
-		this.mFragmentContainerID = layoutID;
-	}
-
-	/**
-	 * <br/>
-	 * <h5><i></i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @return
-	 */
-	public final int getFragmentContainerID() {
-		return mFragmentContainerID;
-	}
-
-	/**
-	 * <br/>
-	 * <h5><i></i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @param factory
-	 */
-	public final void setFragmentFactory(IFragmentFactory factory) {
-		this.mFragmentFactory = factory;
-	}
-
-	/**
-	 * <br/>
-	 * <h5><i></i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @return
-	 */
-	public final IFragmentFactory getFragmentFactory() {
-		return mFragmentFactory;
-	}
+    /**
+     * Members ===============================
+     */
 
     /**
-     * <br/>
-     * <h5><i>public final void dispatchRestoreInstanceState(Bundle savedInstanceState)</i></h5>
+     * Fragment manager to handle showing/searching and hiding fragments.
+     */
+    private FragmentManager mFragmentManager = null;
+
+    /**
+     * Fragment factory which provides fragment instance.
+     */
+    private IFragmentFactory mFragmentFactory = null;
+
+    /**
+     * Id of global layout in which will be layout of showing fragment placed.
+     */
+    private int mFragmentContainerID = -1;
+
+    /**
+     * Listeners -----------------------------
+     */
+
+    /**
+     * Arrays --------------------------------
+     */
+
+    /**
+     * Booleans ------------------------------
+     */
+
+    /**
+     * Constructors ==========================
+     */
+
+    /**
+     * <p>
+     * Same as
+     * {@link #FragmentController(android.support.v4.app.FragmentManager, com.wit.and.fragment.manage.FragmentController.IFragmentFactory)}, but with
+     * not initialized factory.
+     * </p>
+     *
+     * @param fragmentManager Support fragment manager.
+     */
+    public FragmentController(FragmentManager fragmentManager) {
+        this(fragmentManager, null);
+    }
+
+    /**
+     * <p>
+     * Constructs the controller to handle fragments.
+     * </p>
+     * <p>
+     * <b>Note: </b>always use {@link android.support.v4.app.FragmentManager} provided by
+     * {@link android.support.v4.app.FragmentActivity}.
+     * </p>
+     * <p>
+     * <b>DialogManager parent:</b>
+     * <ul>
+     * <li>FragmentActivity:
+     * <code>yourActivity.getSupportFragmentManager()</code></li>
+     * <li>Fragment: <code>yourFragment.getFragmentManager()</code></li>
+     * </ul>
+     * </p>
+     *
+     * @param fragmentManager Support fragment manager.
+     * @param factory         Fragment factory to provide fragment instances.
+     */
+    public FragmentController(FragmentManager fragmentManager, IFragmentFactory factory) {
+        this.mFragmentManager = fragmentManager;
+        this.mFragmentFactory = factory;
+    }
+
+    /**
+     * Methods ===============================
+     */
+
+    /**
+     * Public --------------------------------
+     */
+
+    /**
+     * <p>
+     * Same as {@link #showFragment(int, android.os.Bundle)} without params.
+     * </p>
+     *
+     * @param fragmentID Id of factory fragment to show.
+     * @return <code>True</code> if transaction for fragment was successfully
+     *         created and committed or if fragment is currently showing and should
+     *         not be replaced by new one, <code>false</code> otherwise.
+     * @throws IllegalStateException If current factory isn't valid.
+     *
+     * @see #hasFactory()
+     */
+    public final boolean showFragment(int fragmentID) {
+        return this.showFragment(fragmentID, null);
+    }
+
+    /**
+     * <p>
+     * Shows the fragment provided from the current factory represented by
+     * the requested <var>fragmentID</var>.
+     * </p>
+     *
+     * @param fragmentID Id of factory fragment to show.
+     * @param params Parameters for factory fragment. These parameters will
+     *               be passed to the factory.
+     * @return <code>True</code> if transaction for fragment was successfully
+     *         created and committed or if fragment is currently showing and should
+     *         not be replaced by new one, <code>false</code> otherwise.
+     * @throws IllegalStateException If current factory isn't valid.
+     *
+     * @see #hasFactory()
+     */
+    public final boolean showFragment(int fragmentID, Bundle params) {
+        // Check if we have fragment factory.
+        return this.checkFragmentFactory() && this.performShowFactoryFragment(fragmentID, params);
+    }
+
+    /**
+     * <p>
+     * Same as {@link #showFragment(android.support.v4.app.Fragment, com.wit.and.fragment.manage.FragmentController.ShowOptions)}
+     * with default {@link com.wit.and.fragment.manage.FragmentController.ShowOptions}.
+     * </p>
+     *
+     * @param fragment Fragment to show.
+     * @return <code>True</code> if transaction for fragment was successfully
+     *         created and committed or if fragment is currently showing and should
+     *         not be replaced by new one, <code>false</code> otherwise.
+     */
+    public final boolean showFragment(Fragment fragment) {
+        return this.showFragment(fragment, SHOW_OPTIONS);
+    }
+
+    /**
+     * <p>
+     * Shows the given fragment using the given show options.
+     * </p>
+     *
+     * @param fragment Fragment to show.
+     * @param options Show options for the given fragment.
+     * @return <code>True</code> if transaction for fragment was successfully
+     *         created and committed or if fragment is currently showing and should
+     *         not be replaced by new one, <code>false</code> otherwise.
+     */
+    public final boolean showFragment(Fragment fragment, ShowOptions options) {
+        return this.performShowFragment(fragment, options);
+    }
+
+    /**
+     * <p>
+     * Same as {@link android.support.v4.app.FragmentManager#findFragmentById(int)}.
+     * </p>
+     *
+     * @param fragmentID Id of fragment to find.
+     * @return Found fragment or <code>null</code> if there is no fragment with the requested id.
+     *
+     * @see #findFragmentByTag(String)
+     */
+    public Fragment findFragmentByID(int fragmentID) {
+        return mFragmentManager.findFragmentById(fragmentID);
+    }
+
+    /**
+     * <p>
+     * Same as {@link android.support.v4.app.FragmentManager#findFragmentByTag(String)}.
+     * </p>
+     *
+     * @param fragmentTag Tag of fragment to find.
+     * @return Found fragment or <code>null</code> if there is no fragment with the request tag.
+     *
+     * @see #findFragmentByID(int)
+     */
+    public Fragment findFragmentByTag(String fragmentTag) {
+        return mFragmentManager.findFragmentByTag(fragmentTag);
+    }
+
+    /**
+     * <p>
+     * Same as {@link #findFragmentByTag(String)} where fragment tag
+     * will be requested from the current fragment factory.
+     * </p>
+     *
+     * @param fragmentID If of factory dialog.
+     * @return Found fragment or <code>null</code> if there is no fragment with the tag
+     *         provided from factory.
+     * @throws IllegalStateException If current factory isn't valid.
+     */
+    public Fragment getFragmentByID(int fragmentID) {
+        // Check if we have fragment factory.
+        return this.checkFragmentFactory() ? findFragmentByTag(mFragmentFactory.getFragmentTag(fragmentID)) : null;
+    }
+
+    /**
+     * <p>
+     * Returns the fragment which is currently showing at the screen.
+     * </p>
+     * <p>
+     * This will be actually the fragment which was showed as last.
+     * </p>
+     *
+     * @return Currently visible fragment, or <code>null</code> if there
+     *         are no fragments.
+     *
+     * @see #getVisibleSecondFragment()
+     */
+    public Fragment getVisibleFragment() {
+        if (DEBUG)
+            Log.d(TAG, "Resolving current visible fragment.");
+
+        final List<Fragment> fragments = mFragmentManager.getFragments();
+        final List<Fragment> visibleFragments = new ArrayList<Fragment>();
+
+        // Get only visible fragments.
+        for (Fragment fragment : fragments) {
+            // TODO: perform here more fragment checks ?
+            if (fragment != null && fragment.isVisible()) {
+                visibleFragments.add(fragment);
+
+                if (DEBUG)
+                    Log.d(TAG, "visible fragment(" + fragment.getTag() + ")");
+            }
+        }
+
+        int size;
+        Fragment fragment = null;
+        switch (size = visibleFragments.size()) {
+            case 0:
+                // No fragments available.
+                break;
+            case 1:
+                // Only one fragment available, get it.
+                fragment = visibleFragments.get(0);
+                break;
+            default:
+                // More than one fragment available.
+                fragment = visibleFragments.get(size - 1);
+        }
+        if (DEBUG) {
+            Log.d(TAG, "Resolved visible fragment(" + fragment + ")");
+        }
+        return fragment;
+    }
+
+    /**
+     * <p>
+     * Returns the second fragment which is currently showing at the screen
+     * where two fragments are visible at the same time.
+     * </p>
+     * <p>
+     * This will be actually the fragment which was showed before the last one.
+     * </p>
+     *
+     * @return Currently visible fragment, or <code>null</code> if there
+     *         are no fragments.
+     *
+     * @see #getVisibleFragment()
+     */
+    public Fragment getVisibleSecondFragment() {
+        if (DEBUG)
+            Log.d(TAG, "Resolving current second visible fragment.");
+
+        final List<Fragment> fragments = mFragmentManager.getFragments();
+        final List<Fragment> visibleFragments = new ArrayList<Fragment>();
+
+        // Get only visible fragments.
+        for (Fragment fragment : fragments) {
+            // TODO: perform here more fragment checks ?
+            if (fragment != null && fragment.isVisible()) {
+                visibleFragments.add(fragment);
+
+                if (DEBUG)
+                    Log.d(TAG, "visible fragment(" + fragment.getTag() + ")");
+            }
+        }
+
+        int size;
+        Fragment secondFragment = null;
+        switch (size = visibleFragments.size()) {
+            case 0:
+            case 1:
+                // No or one fragments available.
+                break;
+            case 2:
+                // Two fragments available, get the second one.
+                secondFragment = visibleFragments.get(0);
+                break;
+            default:
+                // More than two fragments available.
+                secondFragment = visibleFragments.get(size - 2);
+        }
+        if (DEBUG) {
+            Log.d(TAG, "Resolved second visible fragment(" + secondFragment + ")");
+        }
+        return secondFragment;
+    }
+
+    /**
+     * <p>
+     * Same as {@link android.support.v4.app.FragmentManager#popBackStack()}.
+     * </p>
+     */
+    public void hideVisibleFragment() {
+        mFragmentManager.popBackStack();
+    }
+
+    /**
+     * <p>
+     * Same as {@link android.support.v4.app.FragmentManager#popBackStackImmediate()}.
+     * </p>
+     *
+     * @return <code>True</code> if fragment was hided (popped) immediate, <code>false</code> otherwise.
+     */
+    public boolean hideVisibleFragmentImmediate() {
+        return mFragmentManager.popBackStackImmediate();
+    }
+
+    /**
+     * <p>
+     * Same as {@link #removeFragmentFromBackStack(String)} where fragment
+     * tag will be requested form the current factory.
+     * </p>
+     * <p>
+     * <b>This implementation does nothing.</b>
+     * </p>
+     *
+     * @param fragmentID Id of factory fragment to remove.
+     * @return <code>True</code> if removing was successful, <code>false</code> otherwise.
+     *
+     * @throws java.lang.IllegalStateException If current factory isn't valid.
+     */
+    public boolean removeFragmentFromBackStack(int fragmentID) {
+        // Check if we have fragment factory.
+        return this.checkFragmentFactory() && removeFragmentFromBackStack(mFragmentFactory.getFragmentTag(fragmentID));
+    }
+
+    /**
+     * <p>
+     * Removes fragment associated with the given <var>fragmentTag</var>
+     * from the back stack.
+     * </p>
+     * <p>
+     * <b>This implementation does nothing.</b>
+     * </p>
+     *
+     * @param fragmentTag Tag of fragment to remove.
+     * @return <code>True</code> if removing was successful, <code>false</code> otherwise.
+     */
+    public boolean removeFragmentFromBackStack(String fragmentTag) {
+        return performRemoveBackStackFragment(fragmentTag);
+    }
+
+    /**
+     * <p>
+     * Returns flag indicating if this controller holds valid factory.
+     * </p>
+     *
+     * @return <code>True</code> if current factory is valid, <code>false</code> otherwise.
+     */
+    public boolean hasFactory() {
+        return mFragmentFactory != null;
+    }
+
+    /**
+     * Getters + Setters ---------------------
+     */
+
+    /**
+     * <p>
+     * Returns tag of the currently visible fragment.
+     * </p>
+     *
+     * @return Fragment tag, or <code>null</code> if there is currently no visible fragment.
+     *
+     * @see #getVisibleFragment()
+     */
+    public String getVisibleFragmentTag() {
+        final Fragment visibleFragment = getVisibleFragment();
+        return (visibleFragment != null) ? visibleFragment.getTag() : null;
+    }
+
+    /**
+     * <p>
+     * Sets the fragment manager to handle showing fragments.
+     * </p>
+     * <b>Note: </b>always use {@link android.support.v4.app.FragmentManager} provided by fragment
+     * activity.</p>
+     * <p>
+     * <b>FragmentController parent:</b>
+     * <ul>
+     * <li>FragmentActivity:
+     * <code>yourActivity.getSupportFragmentManager()</code></li>
+     * <li>Fragment: <code>yourFragment.getFragmentManager()</code></li>
+     * </ul>
+     * </p>
+     *
+     * @param fragmentManager Support fragment manager.
+     */
+    public final void setFragmentManager(FragmentManager fragmentManager) {
+        this.mFragmentManager = fragmentManager;
+    }
+
+    /**
+     * <p>
+     * Sets the id of container layout.
+     * </p>
+     *
+     * @param layoutID Id of layout into which will be created
+     *                 view of showing fragments placed.
+     *
+     * @see #getFragmentContainerID()
+     */
+    public final void setFragmentContainerID(int layoutID) {
+        this.mFragmentContainerID = layoutID;
+    }
+
+    /**
+     * <p>
+     * Returns id of container layout.
+     * </p>
+     *
+     * @return Same id as set or <code>-1</code> as default.
+     *
+     * @see #setFragmentContainerID(int)
+     */
+    public final int getFragmentContainerID() {
+        return mFragmentContainerID;
+    }
+
+    /**
+     * <p>
+     * Sets the fragment factory.
+     * </p>
+     *
+     * @param factory Fragment factory to provide fragment instances.
+     *
+     * @see #getFragmentFactory()
+     * @see #hasFactory()
+     */
+    public final void setFragmentFactory(IFragmentFactory factory) {
+        this.mFragmentFactory = factory;
+    }
+
+    /**
+     * <p>
+     * Returns current fragment factory.
+     * </p>
+     *
+     * @return Current fragment factory, or <code>null</code> if there is no factory set.
+     *
+     * @see #setFragmentFactory(com.wit.and.fragment.manage.FragmentController.IFragmentFactory)
+     * @see #hasFactory()
+     */
+    public final IFragmentFactory getFragmentFactory() {
+        return mFragmentFactory;
+    }
+
+    /**
      * <p>
      * Dispatches restoring of the fragment controller saved state.
      * </p>
      *
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle with controller state to restore.
      */
     public final void dispatchRestoreInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
@@ -412,13 +561,11 @@ public class FragmentController {
     }
 
     /**
-     * <br/>
-     * <h5><i>public final void dispatchSaveInstanceState(Bundle outState)</i></h5>
      * <p>
      * Dispatches saving of the current fragment controller state.
      * </p>
      *
-     * @param outState
+     * @param outState Bundle to save controller state.
      */
     public final void dispatchSaveInstanceState(Bundle outState) {
         if (outState == null) {
@@ -427,273 +574,385 @@ public class FragmentController {
         onSaveInstanceState(outState);
     }
 
-	/**
-	 * Protected -----------------------------
-	 */
+    /**
+     * Protected -----------------------------
+     */
 
     /**
-     * <br/>
-     * <h5><i>protected void onRestoreInstanceState(Bundle savedInstanceState)</i></h5>
      * <p>
      * Derived class should restored here its own saved state. This implementation does nothing.
      * </p>
      *
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle with controller state to restore.
      */
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
     }
 
     /**
-     * <br/>
-     * <h5><i>protected void onSaveInstanceState(Bundle outState)</i></h5>
      * <p>
      * Derived class should here save its own state. This implementation does nothing.
      * </p>
      *
-     * @param outState
+     * @param outState Bundle to save controller state.
      */
     protected void onSaveInstanceState(Bundle outState) {
     }
 
-	/**
-	 * <br/>
-	 * <h5><i>protected final FragmentManager getFragmentManager()</i></h5>
-	 * <p>
-	 * Returns support fragment manager.
-	 * </p>
-	 * 
-	 * @return
-	 */
-	protected final FragmentManager getFragmentManager() {
-		return mFragmentManager;
-	}
+    /**
+     * <p>
+     * Returns support fragment manager.
+     * </p>
+     *
+     * @return Current fragment manager, or <code>null</code> if there is no
+     *         manager set.
+     */
+    protected final FragmentManager getFragmentManager() {
+        return mFragmentManager;
+    }
 
-	/**
-	 * <br/>
-	 * <h5><i>protected boolean onShowFragment(Fragment fragment, ShowOptions
-	 * options)</i></h5>
-	 * <p>
-	 * </p>
-	 * 
-	 * @param fragment
-	 * @param options
-	 * @return
-	 */
-	protected boolean onShowFragment(Fragment fragment, ShowOptions options) {
-		boolean showed = false;
-
-		if (options == null) {
-			// Use default options.
-			options = SHOW_OPTIONS;
-		}
+    /**
+     * <p>
+     * Invoked to show the given fragment using the given options.
+     * </p>
+     *
+     * @param fragment Fragment to show.
+     * @param options Show options for the given fragment.
+     * @return <code>True</code> if showing was successful, <code>false</code> otherwise.
+     *         This implementation always returns <code>true</code> or throws exception.
+     *
+     * @throws java.lang.IllegalStateException If the id of layout container is not set.
+     */
+    protected boolean onShowFragment(Fragment fragment, ShowOptions options) {
+        if (options == null) {
+            // Use default options.
+            options = SHOW_OPTIONS;
+        }
 
         if (!options.replaceSame) {
             // Do not replace same fragment.
-            Fragment oldFragment = mFragmentManager.findFragmentByTag(options.tag);
-            if (oldFragment != null) {
+            Fragment currentFragment = mFragmentManager.findFragmentByTag(options.tag);
+            if (currentFragment != null) {
                 if (USER_LOG)
-                    Log.i(TAG, "Fragment with tag(" + options.tag + ") is already showing.");
-                return showed;
+                    Log.i(TAG, "Fragment with tag(" + options.tag + ") is already showing or in the back-stack.");
+
+                // Check if this fragment has options menu.
+                if (options.showOptionsMenu) {
+                    currentFragment.setHasOptionsMenu(true);
+                }
+                return true;
             }
         }
 
-		// Check if we have place where the fragment should be placed.
-		if (options.containerID == -1) {
-			if (mFragmentContainerID == -1) {
-				// No id provided for the layout where should be fragment
-				// placed.
-				throw new IllegalStateException("There is no id provided for the layout container into which should be new fragment placed.");
-			} else {
-				options.containerID = mFragmentContainerID;
-			}
-		}
+        // Check if we have place where the fragment should be placed.
+        if (options.containerID == -1) {
+            if (mFragmentContainerID == -1) {
+                // No id provided for the layout where should be fragment
+                // placed.
+                throw new IllegalStateException("There is no id provided for the layout container into which should be requested fragment's view placed.");
+            } else {
+                options.containerID = mFragmentContainerID;
+            }
+        }
 
-		FragmentTransaction transaction = this.beginTransaction();
+        FragmentTransaction transaction = this.beginTransaction();
 
-		// Apply animations to the transaction from the ShowDirection parameter.
-		if (options.showDirection != ShowDirection.NONE) {
-			ShowDirection dir = options.showDirection;
+        // Apply animations to the transaction from the ShowDirection parameter.
+        if (options.showDirection != ShowDirection.NONE) {
+            ShowDirection dir = options.showDirection;
 
-			/**
-			 * <pre>
-			 * There are provided 4 animations: 
-			 * First two for currently incoming and outgoing fragment.
-			 * Second two for incoming and outgoing fragment from the back stack.
-			 * </pre>
-			 */
-			transaction.setCustomAnimations(dir.getInAnimResID(), dir.getOutAnimResID(), dir.getInAnimBackResID(),
-					dir.getOutAnimBackResID());
-		}
+            /**
+             * <pre>
+             * There are provided 4 animations:
+             * First two for currently incoming and outgoing fragment.
+             * Second two for incoming and outgoing fragment from the back stack.
+             * </pre>
+             */
+            transaction.setCustomAnimations(dir.getInAnimResID(), dir.getOutAnimResID(), dir.getInAnimBackResID(),
+                    dir.getOutAnimBackResID());
+        }
 
-		if (DEBUG)
-			Log.d(TAG, "onShowFragment() options = " + options.toString());
+        if (DEBUG)
+            Log.d(TAG, "onShowFragment() options = " + options.toString());
 
-		// Fragment's view replaces the view of the container layout.
-		transaction.replace(options.containerID, fragment, options.tag);
+        // Fragment's view replaces the view of the container layout.
+        transaction.replace(options.containerID, fragment, options.tag);
 
-		// Add fragment to back stack if requested.
-		if (options.addToBackStack) {
-			transaction.addToBackStack(fragment.getTag());
-			if (USER_LOG)
-				Log.i(TAG, "Fragment(" + fragment + ") added to back stack under tag(" + fragment.getTag() + ")");
-		}
+        // Add fragment to back stack if requested.
+        if (options.addToBackStack) {
+            transaction.addToBackStack(fragment.getTag());
+            if (USER_LOG)
+                Log.i(TAG, "Fragment(" + fragment + ") added to back stack under tag(" + fragment.getTag() + ")");
+        }
+        return onCommitTransaction(transaction, options);
+    }
 
-		// Commit transaction.
-		transaction.commit();
-		showed = true;
+    /**
+     * <p>
+     * Invoked to finally commit created fragment transaction. Here passed transaction
+     * is already set upped according to the show options.
+     * </p>
+     * <p>
+     * This implementation commits the <var>transaction</var> and in case that the <var>options</var>
+     * has set flag {@link com.wit.and.fragment.manage.FragmentController.ShowOptions#showImmediately}
+     * to <code>true</code> the {@link android.support.v4.app.FragmentManager#executePendingTransactions()}
+     * will be invoked too.
+     * </p>
+     *
+     * @param transaction Final transaction to commit.
+     * @param options Already processed show options.
+     * @return Always <code>true</code>.
+     */
+    protected boolean onCommitTransaction(FragmentTransaction transaction, ShowOptions options) {
+        // Commit transaction.
+        transaction.commit();
+        if (options.showImmediately) {
+            mFragmentManager.executePendingTransactions();
+        }
+        return true;
+    }
 
-		return showed;
-	}
+    /**
+     * <p>
+     * Invoked to remove fragment with the given tag from the back stack.
+     * </p>
+     *
+     * @param fragmentTag Tag of fragment to remove.
+     * @return <code>True</code> if removing was successful, <code>false</code> otherwise.
+     */
+    protected boolean onRemoveBackStackFragment(String fragmentTag) {
+        boolean removed = false;
+        // TODO: implement this
+        return removed;
+    }
 
-	protected boolean onRemoveBackStackFragment(String fragmentTag) {
-		boolean removed = false;
-		// TODO: implement this
-		return removed;
-	}
+    /**
+     * <p>
+     * Begins new {@link android.support.v4.app.FragmentTransaction}.
+     * </p>
+     *
+     * @return Prepared fragment transaction.
+     */
+    @SuppressLint("CommitTransaction")
+    protected final FragmentTransaction beginTransaction() {
+        return mFragmentManager.beginTransaction();
+    }
 
-	/**
-	 * <br/>
-	 * <h5><i>protected final FragmentTransaction beginTransaction()</i></h5>
-	 * <p>
-	 * Begins new {@link android.support.v4.app.FragmentTransaction}.
-	 * </p>
-	 * 
-	 * @return
-	 */
-	@SuppressLint("CommitTransaction")
-	protected final FragmentTransaction beginTransaction() {
-		return mFragmentManager.beginTransaction();
-	}
+    /**
+     * Private -------------------------------
+     */
 
-	/**
-	 * Private -------------------------------
-	 */
+    /**
+     * Performs showing of the given fragment using the given options.
+     *
+     * @param fragment Fragment to show.
+     * @param options Show options for the given fragment.
+     * @return <code>True</code> if showing was successful, <code>false</code> otherwise.
+     */
+    private boolean performShowFragment(Fragment fragment, ShowOptions options) {
+        if (fragment == null) {
+            if (USER_LOG)
+                Log.i(TAG, "Invalid fragment instance(null) to show.");
+            return false;
+        }
+        return onShowFragment(fragment, options);
+    }
 
-	/**
-	 * Performs showing of the given fragment with the given parameters.
-	 * 
-	 * @param fragment
-	 * @param options
-	 * @return
-	 */
-	private boolean performShowFragment(Fragment fragment, ShowOptions options) {
-		if (fragment == null) {
-			if (USER_LOG)
-				Log.i(TAG, "Invalid fragment instance(" + fragment + ") to show.");
-			return false;
-		}
-		return onShowFragment(fragment, options);
-	}
+    /**
+     * Performs showing of the fragment obtained from the factory with the given
+     * parameters.
+     *
+     * @param fragmentID Id of factory fragment to show..
+     * @param params Parameters for factory fragment. These parameters will
+     *               be passed to the factory.
+     * @return <code>True</code> if showing was successful, <code>false</code> otherwise.
+     * @throws IllegalStateException If current factory isn't valid.
+     */
+    private boolean performShowFactoryFragment(int fragmentID, Bundle params) {
+        // First obtain fragment instance then fragment tag.
+        Fragment fragment = mFragmentFactory.createFragmentInstance(fragmentID, params);
+        if (fragment == null) {
+            // Invalid fragment instance.
+            Log.e(TAG, "No such fragment instance for the requested fragment id(" + fragmentID + "). Please check your fragment factory.");
+            return false;
+        }
 
-	/**
-	 * Performs showing of the fragment obtained from the factory with the given
-	 * parameters.
-	 * 
-	 * @param fragmentID
-	 * @param options
-	 * @param params
-	 * @return
-	 * @throws IllegalStateException
-	 */
-	private boolean performShowFactoryFragment(int fragmentID, ShowOptions options, Bundle params) {
-		// Check if we have dialog factory.
-		if (mFragmentFactory == null) {
-			throw new IllegalStateException("No fragment factory found. Please set factory before you use showFragment(int, ...) methods");
-		}
+        // Resolve options.
+        final ShowOptions options = mFragmentFactory.getFragmentShowOptions(fragmentID);
+        return onShowFragment(fragment, (options == null) ? SHOW_OPTIONS : options);
+    }
 
-		// First obtain fragment instance then fragment tag.
-		Fragment fragment = mFragmentFactory.createFragmentInstance(fragmentID, params);
-		if (fragment == null) {
-			// Invalid fragment instance.
-			Log.e(TAG, "No such fragment instance for the requested fragment id(" + fragmentID + "). Please check your fragment factory.");
-			return false;
-		}
-		String tag = mFragmentFactory.getFragmentTag(fragmentID);
-		if (tag == null && options == null) {
-			options = SHOW_OPTIONS;
-			options.tag = tag;
-		}
+    /**
+     * Performs removing of fragment with the requested tag from the back stack.
+     *
+     * @param fragmentTag Tag of fragment to remove.
+     * @return <code>True</code> if removing was successful, <code>false</code> otherwise.
+     */
+    private boolean performRemoveBackStackFragment(String fragmentTag) {
+        return onRemoveBackStackFragment(fragmentTag);
+    }
 
-		return onShowFragment(null, options);
-	}
+    /**
+     * Check if current fragment factory is valid.
+     *
+     * @throws java.lang.IllegalStateException If current factory isn't valid.
+     */
+    private boolean checkFragmentFactory() {
+        if (mFragmentFactory == null) {
+            throw new IllegalStateException("No fragment factory found.");
+        }
+        return true;
+    }
 
-	private boolean performRemoveBackStackFactoryFragment(int fragmentID) {
-		// TODO: implement this
-		return false;
-	}
+    /**
+     * Abstract methods ----------------------
+     */
 
-	private boolean performRemoveBackStackFragment(String fragmentTag) {
-		// TODO: implement this
-		return onRemoveBackStackFragment(fragmentTag);
-	}
+    /**
+     * Inner classes =========================
+     */
 
-	/**
-	 * Abstract methods ----------------------
-	 */
+    /**
+     * <h4>Class Overview</h4>
+     * <p>
+     * Options for fragment showing.
+     * </p>
+     * <h4>Default SetUp:</h4>
+     * <ul>
+     * <li>tag: {@link com.wit.and.fragment.manage.FragmentController#FRAGMENT_TAG}</li>
+     * <li>show direction: {@link com.wit.and.fragment.manage.FragmentController.ShowDirection#NONE}</li>
+     * <li>container id: <b>-1</b></li>
+     * <li>back-stacking: <b>false</b></li>
+     * <li>replacing same: <b>true</b></li>
+     * <li>showing immediately: <b>false</b></li>
+     * <li>showing options menu: <b>false</b></li>
+     * </ul>
+     *
+     * @author Martin Albedinsky
+     * @see com.wit.and.fragment.manage.FragmentController
+     * @see com.wit.and.fragment.manage.FragmentController.IFragmentFactory
+     */
+    public static class ShowOptions implements Parcelable {
+        /**
+         * Constants =============================
+         */
 
-	/**
-	 * Inner classes =========================
-	 */
+        /**
+         * <p>
+         * Parcelable creator.
+         * </p>
+         */
+        public static final Creator<ShowOptions> CREATOR = new Creator<ShowOptions>() {
+            @Override
+            public ShowOptions createFromParcel(Parcel source) {
+                return new ShowOptions(source);
+            }
+            @Override
+            public ShowOptions[] newArray(int size) {
+                return new ShowOptions[size];
+            }
+        };
 
-	/**
-	 * <p>
-	 * public static class
-	 * </p>
-	 * <h5>ShowOptions</h5>
-	 * <p>
-	 * </p>
-	 * <h4>Class Overview</h4>
-	 * <p>
-	 * </p>
-	 * 
-	 * @author Martin Albedinsky
-	 */
-	public static class ShowOptions {
+        /**
+         * Members ===============================
+         */
 
-		/**
-		 * Members ===============================
-		 */
+        /**
+         * Tag of fragment.
+         */
+        protected String tag = FRAGMENT_TAG;
 
-		/**
-		 * 
-		 */
-		String tag = FRAGMENT_TAG;
+        /**
+         * Show direction.
+         */
+        protected ShowDirection showDirection = ShowDirection.NONE;
 
-		/**
-		 * 
-		 */
-		boolean addToBackStack = true;
+        /**
+         * Container layout id.
+         */
+        protected int containerID = -1;
 
-        boolean replaceSame = true;
+        /**
+         * Booleans ------------------------------
+         */
 
-		/**
-		 * 
-		 */
-		ShowDirection showDirection = ShowDirection.NONE;
+        /**
+         * Flag indicating, if fragment should be added to back stack or not.
+         */
+        protected boolean addToBackStack = false;
 
-		int containerID = -1;
+        /**
+         * Flag indicating, if same fragment (currently showing) can
+         * be replaced by the new one with this options containing same tag.
+         */
+        protected boolean replaceSame = true;
 
-		/**
-		 * Constructors ==========================
-		 */
+        /**
+         * Flag indicating, if fragment should be showed immediately.
+         */
+        protected boolean showImmediately = false;
 
-		/**
-		 * <br/>
-		 * <h5><i>public ShowOptions()</i></h5>
-		 * <p>
-		 * Constructs default show fragment options.
-		 * </p>
-		 */
-		public ShowOptions() {
-		}
+        /**
+         * Flag indicating, if fragment's options menu should be enabled
+         * if same fragment (withs same tag) is already showing and should not be replaced.
+         */
+        protected boolean showOptionsMenu = false;
 
-		/**
-		 * Methods ===============================
-		 */
+        /**
+         * Constructors ==========================
+         */
 
-		/**
-		 * Public --------------------------------
-		 */
+        /**
+         * <p>
+         * Constructs default fragment show options.
+         * </p>
+         */
+        public ShowOptions() {
+        }
+
+        /**
+         * <p>
+         * Called from the parcelable creator.
+         * </p>
+         *
+         * @param input Parcelable source with saved data.
+         */
+        protected ShowOptions(Parcel input) {
+            this.containerID = input.readInt();
+            this.tag = input.readString();
+            this.addToBackStack = input.readInt() == 1;
+            this.replaceSame = input.readInt() == 1;
+            this.showImmediately = input.readInt() == 1;
+            this.showOptionsMenu = input.readInt() == 1;
+            this.showDirection = ShowDirection.CREATOR.createFromParcel(input);
+        }
+
+        /**
+         * Methods ===============================
+         */
+
+        /**
+         * Public --------------------------------
+         */
+
+        /**
+         */
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(containerID);
+            dest.writeString(tag);
+            dest.writeInt(addToBackStack ? 1 : 0);
+            dest.writeInt(replaceSame ? 1 : 0);
+            dest.writeInt(showImmediately ? 1 : 0);
+            dest.writeInt(showOptionsMenu ? 1 : 0);
+            showDirection.writeToParcel(dest, flags);
+        }
+
+        /**
+         */
+        @Override
+        public int describeContents() {
+            return 0;
+        }
 
         /**
          */
@@ -701,11 +960,10 @@ public class FragmentController {
         public String toString() {
             StringBuilder builder = new StringBuilder("");
 
-            builder.append("[");
-            builder.append(" tag(");
+            builder.append("[tag(");
             builder.append(tag);
             builder.append("), ");
-            builder.append(" direction(");
+            builder.append(" showDirection(");
             builder.append(showDirection.toString());
             builder.append("), ");
             builder.append(" backStacked(");
@@ -716,236 +974,302 @@ public class FragmentController {
             builder.append("), ");
             builder.append(" container(");
             builder.append(containerID);
-            builder.append(") ");
-            builder.append("]");
+            builder.append(")]");
 
             return builder.toString();
         }
 
         /**
-		 * Getters + Setters ---------------------
-		 */
-
-		/**
-		 * <br/>
-		 * <h5><i>public ShowOptions tag(String fragmentTag)</i></h5>
-		 * <p>
-		 * </p>
-		 * 
-		 * @param fragmentTag
-		 * @return
-		 */
-		public ShowOptions tag(String fragmentTag) {
-			this.tag = fragmentTag;
-			return this;
-		}
-
-		/**
-		 * <br/>
-		 * <h5><i>public ShowOptions addToBackStack(boolean add)</i></h5>
-		 * <p>
-		 * </p>
-		 * 
-		 * @param add
-		 * @return
-		 */
-		public ShowOptions addToBackStack(boolean add) {
-			this.addToBackStack = add;
-			return this;
-		}
-
-		/**
-		 * <br/>
-		 * <h5><i>public ShowOptions direction(ShowDirection direction)</i></h5>
-		 * <p>
-		 * </p>
-		 * 
-		 * @param direction
-		 * @return
-		 */
-		public ShowOptions direction(ShowDirection direction) {
-			this.showDirection = direction;
-			return this;
-		}
-
-		/**
-		 * <br/>
-		 * <h5><i>public ShowOptions containerID(int layoutID)</i></h5>
-		 * <p>
-		 * </p>
-		 * 
-		 * @param layoutID
-		 * @return
-		 */
-		public ShowOptions containerID(int layoutID) {
-			this.containerID = layoutID;
-			return this;
-		}
+         * Getters + Setters ---------------------
+         */
 
         /**
-         * <br/>
-         * <h5><i>public ShowOptions replaceSame(boolean replace)</i></h5>
          * <p>
+         * Sets fragment tag.
          * </p>
          *
-         * @param replace
-         * @return
+         * @param fragmentTag Fragment tag.
+         * @return This options.
+         */
+        public ShowOptions tag(String fragmentTag) {
+            this.tag = fragmentTag;
+            return this;
+        }
+
+        /**
+         * <p>
+         * Sets flag indicating, if fragment should be added to back stack or not.
+         * </p>
+         *
+         * @param add <code>True</code> to add fragment to back stack, <code>false</code> otherwise.
+         * @return This options.
+         */
+        public ShowOptions addToBackStack(boolean add) {
+            this.addToBackStack = add;
+            return this;
+        }
+
+        /**
+         * <p>
+         * Sets the show direction for fragment.
+         * </p>
+         *
+         * @param direction Show direction.
+         * @return This options.
+         *
+         * @see com.wit.and.fragment.manage.FragmentController.ShowDirection
+         */
+        public ShowOptions showDirection(ShowDirection direction) {
+            this.showDirection = direction;
+            return this;
+        }
+
+        /**
+         * <p>
+         * Sets id of layout container into which should be placed the view of fragment.
+         * <b>Note</b>, that this container will be used only for this fragment.
+         * </p>
+         *
+         * @param layoutID Id of layout container.
+         * @return This options.
+         *
+         * @see com.wit.and.fragment.manage.FragmentController#setFragmentContainerID(int)
+         */
+        public ShowOptions containerID(int layoutID) {
+            this.containerID = layoutID;
+            return this;
+        }
+
+        /**
+         * <p>
+         * Sets flag indicating, if currently showing fragment with same tag can
+         * be replaced by the new one.
+         * </p>
+         *
+         * @param replace <code>True</code> to replace same fragment with the new one, <code>false</code> otherwise.
+         * @return This options.
          */
         public ShowOptions replaceSame(boolean replace) {
             this.replaceSame = replace;
             return this;
         }
-	}
 
-	/**
-	 * <p>
-	 * public static class
-	 * </p>
-	 * <h5>ShowDirection</h5>
-	 * <p>
-	 * Handles the directions of replacing fragments in the activity content
-	 * view. Each type contains animations for incoming and outgoing fragment
-	 * also for incoming and outgoing fragment from the back stack (when the
-	 * back button is clicked and the old fragment is showed from the back
-	 * stack).
-	 * </p>
-	 * <p>
-	 * Back stack animations are in the reverse state against their dialog
-	 * animation partners. For example in case of <var>FROM_LEFT</var> direction
-	 * are used these animations:
-	 * <ul>
-	 * <li>incoming: <var>R.anim.and_slide_fragment_in_right</var></li>
-	 * <li>outgoing: <var>R.anim.and_slide_fragment_out_right</var></li>
-	 * <li>incoming(backStack): <var>R.anim.and_slide_fragment_in_left</var></li>
-	 * <li>outgoing(backStack): <var>R.anim.and_slide_fragment_out_left</var></li>
-	 * </ul>
-	 * </p>
-	 * <p>
-	 * Each animation has duration set to <code>500 ms</code>.
-	 * </p>
-	 */
-	public static class ShowDirection {
-		/**
-		 * <h5><i>public static final ShowDirection NONE</i></h5>
-		 * <p>
-		 * Use this to show new incoming fragment which actually replaces the
-		 * current fragment without any animation.
-		 * </p>
-		 */
-		public static final ShowDirection NONE = new ShowDirection(0, 0, 0, 0, "NONE");
+        /**
+         * <p>
+         * Sets flag indicating, if fragment should be showed immediately.
+         * </p>
+         *
+         * @param immediately <code>True</code> to show immediately, <code>false</code> otherwise.
+         * @return This options.
+         */
+        public ShowOptions showImmediately(boolean immediately) {
+            this.showImmediately = immediately;
+            return this;
+        }
 
-		/**
-		 * <h5><i>public static final ShowDirection FROM_LEFT</i></h5>
-		 * <p>
-		 * Use this to show new incoming fragment from the left and outgoing
-		 * will be hided to the right.
-		 * </p>
-		 */
-		public static final ShowDirection FROM_LEFT = new ShowDirection(R.anim.and_slide_fragment_in_right, R.anim.and_slide_fragment_out_right,
-				R.anim.and_slide_fragment_in_left, R.anim.and_slide_fragment_out_left, "FROM_LEFT");
+        /**
+         * <p>
+         * Sets flag indicating, if fragment's options menu should be enabled in case
+         * that, there is already same fragment (with same tag) showing and can't be
+         * replaced be the new one.
+         * </p>
+         * <p>
+         * <b>Note</b>, that this flag will be checked only if the
+         * {@link #replaceSame(boolean)} was called with <code>false</code>.
+         * </p>
+         *
+         * @param show <code>True</code>
+         * @return This options.
+         */
+        public ShowOptions showOptionsMenu(boolean show) {
+            this.showOptionsMenu = show;
+            return this;
+        }
+    }
 
-		/**
-		 * <h5><i>public static final ShowDirection FROM_RIGHT</i></h5>
-		 * <p>
-		 * Use this to show new incoming fragment from the right and outgoing
-		 * will be hided to the left.
-		 * </p>
-		 */
-		public static final ShowDirection FROM_RIGHT = new ShowDirection(R.anim.and_slide_fragment_in_left, R.anim.and_slide_fragment_out_left,
-				R.anim.and_slide_fragment_in_right, R.anim.and_slide_fragment_out_right, "FROM_RIGHT");
+    /**
+     * <h4>Class Overview</h4>
+     * <p>
+     * Handles the directions of replacing fragments in the activity content
+     * view. Each type contains animations for incoming and outgoing fragment
+     * also for incoming and outgoing fragment from the back stack (when the
+     * back button is clicked and the old fragment is showed from the back
+     * stack).
+     * </p>
+     * <p>
+     * Back stack animations are in the reverse state against their fragment
+     * animation partners. For example in case of <var>FROM_LEFT</var> direction
+     * are used these animations:
+     * <ul>
+     * <li>incoming: <var>R.anim.and_slide_fragment_in_right</var></li>
+     * <li>outgoing: <var>R.anim.and_slide_fragment_out_right</var></li>
+     * <li>incoming(backStack): <var>R.anim.and_slide_fragment_in_left_back</var></li>
+     * <li>outgoing(backStack): <var>R.anim.and_slide_fragment_out_left_back</var></li>
+     * </ul>
+     * </p>
+     * <p>
+     * Each animation has duration set to <code>500 ms</code>.
+     * </p>
+     */
+    public static class ShowDirection implements Parcelable {
+        /**
+         * Constants =============================
+         */
 
-		/**
-		 * <h5><i>public static final ShowDirection FROM_TOP</i></h5>
-		 * <p>
-		 * Use this to show new incoming fragment from the top and outgoing will
-		 * be hided to the bottom.
-		 * </p>
-		 */
-		public static final ShowDirection FROM_TOP = new ShowDirection(R.anim.and_slide_fragment_in_bottom, R.anim.and_slide_fragment_out_bottom,
-				R.anim.and_slide_fragment_in_top, R.anim.and_slide_fragment_out_top, "FROM_TOP");
+        /**
+         * <p>
+         * Parcelable creator.
+         * </p>
+         */
+        public static final Creator<ShowDirection> CREATOR = new Creator<ShowDirection>() {
+            @Override
+            public ShowDirection createFromParcel(Parcel source) {
+                return new ShowDirection(source);
+            }
+            @Override
+            public ShowDirection[] newArray(int size) {
+                return new ShowDirection[size];
+            }
+        };
 
-		/**
-		 * <h5><i>public static final ShowDirection FROM_BOTTOM</i></h5>
-		 * <p>
-		 * Use this to show new incoming fragment from the bottom and outgoing
-		 * will be hided to the top.
-		 * </p>
-		 */
-		public static final ShowDirection FROM_BOTTOM = new ShowDirection(R.anim.and_slide_fragment_in_top, R.anim.and_slide_fragment_out_top,
-				R.anim.and_slide_fragment_in_bottom, R.anim.and_slide_fragment_out_bottom, "FROM_BOTTOM");
+        /**
+         * <p>
+         * Use this to show new incoming fragment which actually replaces the
+         * current fragment without any animation.
+         * </p>
+         */
+        public static final ShowDirection NONE = new ShowDirection(0, 0, 0, 0, "NONE");
 
-		/**
-		 * Animation resource ids.
-		 */
-		/**
-		 */
-		private int mInAnimResID = 0;
-		private int mOutAnimResID = 0;
-		private int mInAnimBackResID = 0;
-		private int mOutAnimBackResID = 0;
+        /**
+         * <p>
+         * Use this to show new incoming fragment from the left and outgoing
+         * will be hided to the right.
+         * </p>
+         */
+        public static final ShowDirection FROM_LEFT = new ShowDirection(
+                // Incoming animation.
+                R.anim.and_slide_fragment_in_right,
+                // Outgoing animation.
+                R.anim.and_slide_fragment_out_right,
+                // Incoming back-stack animation.
+                R.anim.and_slide_fragment_in_left_back,
+                // Outgoing back-stack animation.
+                R.anim.and_slide_fragment_out_left_back,
+                "FROM_LEFT");
 
+        /**
+         * <p>
+         * Use this to show new incoming fragment from the right and outgoing
+         * will be hided to the left.
+         * </p>
+         */
+        public static final ShowDirection FROM_RIGHT = new ShowDirection(
+                // Incoming animation.
+                R.anim.and_slide_fragment_in_left,
+                // Outgoing animation.
+                R.anim.and_slide_fragment_out_left,
+                // Incoming back-stack animation.
+                R.anim.and_slide_fragment_in_right_back,
+                // Outgoing back-stack animation.
+                R.anim.and_slide_fragment_out_right_back,
+                "FROM_RIGHT");
+
+        /**
+         * <p>
+         * Use this to show new incoming fragment from the top and outgoing will
+         * be hided to the bottom.
+         * </p>
+         */
+        public static final ShowDirection FROM_TOP = new ShowDirection(
+                // Incoming animation.
+                R.anim.and_slide_fragment_in_bottom,
+                // Outgoing animation.
+                R.anim.and_slide_fragment_out_bottom,
+                // Incoming back-stack animation.
+                R.anim.and_slide_fragment_in_top_back,
+                // Outgoing back-stack animation.
+                R.anim.and_slide_fragment_out_top_back,
+                "FROM_TOP");
+
+        /**
+         * <p>
+         * Use this to show new incoming fragment from the bottom and outgoing
+         * will be hided to the top.
+         * </p>
+         */
+        public static final ShowDirection FROM_BOTTOM = new ShowDirection(
+                // Incoming animation.
+                R.anim.and_slide_fragment_in_top,
+                // Outgoing animation.
+                R.anim.and_slide_fragment_out_top,
+                // Incoming back-stack animation.
+                R.anim.and_slide_fragment_in_bottom_back,
+                // Outgoing back-stack animation.
+                R.anim.and_slide_fragment_out_bottom_back,
+                "FROM_BOTTOM");
+
+        /**
+         * Members ===============================
+         */
+
+        /**
+         * Animation resource id.
+         */
+        private int mInAnimResID, mOutAnimResID, mInAnimBackResID, mOutAnimBackResID;
+
+        /**
+         * Name of this show direction.
+         */
         private String mName = "";
 
-		/**
-		 * <h5><i>public ShowDirection(int inAnim, int outAnim)</i></h5>
-		 * <p>
-		 * Creates the show direction type with the given
-		 * animations. The back-stack animation resource ids will be set to
-		 * <code>0</code>.
-		 * </p>
-		 * 
-		 * @param inAnim
-		 *            Animation resource id for incoming new fragment.
-		 * @param outAnim
-		 *            Animation resource id for outgoing current fragment.
-		 */
-		public ShowDirection(int inAnim, int outAnim) {
-			this(inAnim, outAnim, 0, 0);
-		}
+        /**
+         * Constructors ==========================
+         */
 
-		/**
-		 * <h5><i>public ShowDirection(int inAnim, int outAnim, int inAnimBack,
-		 * int outAnimBack)</i></h5>
-		 * <p>
-		 * Same as {@link #ShowDirection(int, int, int, int, String)}
+        /**
+         * <p>
+         * Creates the show showDirection type with the given
+         * animations. The back-stack animation resource ids will be set to
+         * <code>0</code>.
+         * </p>
+         *
+         * @param inAnim  Animation resource id for incoming new fragment.
+         * @param outAnim Animation resource id for outgoing current fragment.
+         */
+        public ShowDirection(int inAnim, int outAnim) {
+            this(inAnim, outAnim, 0, 0);
+        }
+
+        /**
+         * <p>
+         * Same as {@link #ShowDirection(int, int, int, int, String)}
          * with empty name.
-		 * </p>
-		 * 
-		 * @param inAnim
-		 *            Animation resource id for incoming new fragment.
-		 * @param outAnim
-		 *            Animation resource id for outgoing fragment to the back
-		 *            stack.
-		 * @param inAnimBack
-		 *            Animation resource id for incoming fragment from the back
-		 *            stack.
-		 * @param outAnimBack
-		 *            Animation resource id for outgoing current fragment.
-		 */
-		public ShowDirection(int inAnim, int outAnim, int inAnimBack, int outAnimBack) {
+         * </p>
+         *
+         * @param inAnim      Animation resource id for incoming new fragment.
+         * @param outAnim     Animation resource id for outgoing fragment to the back
+         *                    stack.
+         * @param inAnimBack  Animation resource id for incoming fragment from the back
+         *                    stack.
+         * @param outAnimBack Animation resource id for outgoing current fragment.
+         */
+        public ShowDirection(int inAnim, int outAnim, int inAnimBack, int outAnimBack) {
             this(inAnim, outAnim, inAnimBack, outAnimBack, "");
         }
 
         /**
-         * <h5><i>public ShowDirection(int inAnim, int outAnim, int inAnimBack,
-         * int outAnimBack, String name)</i></h5>
          * <p>
-         * Creates the show direction type with the given
+         * Creates the show showDirection type with the given
          * animations and name.
          * </p>
          *
-         * @param inAnim
-         *            Animation resource id for incoming new fragment.
-         * @param outAnim
-         *            Animation resource id for outgoing fragment to the back
-         *            stack.
-         * @param inAnimBack
-         *            Animation resource id for incoming fragment from the back
-         *            stack.
-         * @param outAnimBack
-         *            Animation resource id for outgoing current fragment.
-         * @param name
-         *            Name of the direction used to identify it. Also used in {@link #toString()} method.
+         * @param inAnim      Animation resource id for incoming new fragment.
+         * @param outAnim     Animation resource id for outgoing fragment to the back
+         *                    stack.
+         * @param inAnimBack  Animation resource id for incoming fragment from the back
+         *                    stack.
+         * @param outAnimBack Animation resource id for outgoing current fragment.
+         * @param name        Name of the showDirection used to identify it. Also used in {@link #toString()} method.
          */
         public ShowDirection(int inAnim, int outAnim, int inAnimBack, int outAnimBack, String name) {
             this.mInAnimResID = inAnim;
@@ -953,6 +1277,21 @@ public class FragmentController {
             this.mInAnimBackResID = inAnimBack;
             this.mOutAnimBackResID = outAnimBack;
             this.mName = name;
+        }
+
+        /**
+         * <p>
+         * Called from the parcelable creator.
+         * </p>
+         *
+         * @param input Parcelable source with saved data.
+         */
+        protected ShowDirection(Parcel input) {
+            this.mInAnimResID = input.readInt();
+            this.mOutAnimResID = input.readInt();
+            this.mInAnimBackResID = input.readInt();
+            this.mOutAnimBackResID = input.readInt();
+            this.mName = input.readString();
         }
 
         /**
@@ -971,76 +1310,85 @@ public class FragmentController {
         }
 
         /**
+         */
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(mInAnimResID);
+            dest.writeInt(mOutAnimResID);
+            dest.writeInt(mInAnimBackResID);
+            dest.writeInt(mOutAnimBackResID);
+            dest.writeString(mName);
+        }
+
+        /**
+         */
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        /**
          * Getters + Setters ---------------------
          */
 
-		/**
-		 * <h5><i>public int getInAnimResID()</i></h5>
-		 * <p>
-		 * Returns the id of the animation for incoming fragment for this
-		 * direction.
-		 * </p>
-		 * 
-		 * @return Animation resource id.
-		 */
-		public int getInAnimResID() {
-			return mInAnimResID;
-		}
+        /**
+         * <p>
+         * Returns the id of the animation for incoming fragment for this
+         * showDirection.
+         * </p>
+         *
+         * @return Animation resource id.
+         */
+        public int getInAnimResID() {
+            return mInAnimResID;
+        }
 
-		/**
-		 * <h5><i>public int getOutAnimResID()</i></h5>
-		 * <p>
-		 * Returns the id of the animation for outgoing fragment for this
-		 * direction.
-		 * </p>
-		 * 
-		 * @return Animation resource id.
-		 */
-		public int getOutAnimResID() {
-			return mOutAnimResID;
-		}
+        /**
+         * <p>
+         * Returns the id of the animation for outgoing fragment for this
+         * showDirection.
+         * </p>
+         *
+         * @return Animation resource id.
+         */
+        public int getOutAnimResID() {
+            return mOutAnimResID;
+        }
 
-		/**
-		 * <h5><i>public int getOutAnimBackResID()</i></h5>
-		 * <p>
-		 * Returns the id of the animation for outgoing fragment for this
-		 * direction when the fragment is being hided while new one is being
-		 * showed from the back stack.
-		 * </p>
-		 * 
-		 * @return Animation resource id.
-		 */
-		public int getOutAnimBackResID() {
-			return mOutAnimBackResID;
-		}
+        /**
+         * <p>
+         * Returns the id of the animation for outgoing fragment for this
+         * showDirection when the fragment is being hided while new one is being
+         * showed from the back stack.
+         * </p>
+         *
+         * @return Animation resource id.
+         */
+        public int getOutAnimBackResID() {
+            return mOutAnimBackResID;
+        }
 
-		/**
-		 * <h5><i>public int getInAnimBackResID()</i></h5>
-		 * <p>
-		 * Returns the id of the animation for incoming fragment for this
-		 * direction when the fragment is being showed from the back stack.
-		 * </p>
-		 * 
-		 * @return Animation resource id.
-		 */
-		public int getInAnimBackResID() {
-			return mInAnimBackResID;
-		}
-	}
-
-	/**
-	 * Interface =============================
-	 */
+        /**
+         * <p>
+         * Returns the id of the animation for incoming fragment for this
+         * showDirection when the fragment is being showed from the back stack.
+         * </p>
+         *
+         * @return Animation resource id.
+         */
+        public int getInAnimBackResID() {
+            return mInAnimBackResID;
+        }
+    }
 
     /**
-     * <p>
-     * public static interface
-     * </p>
-     * <h5>IFragmentFactory</h5>
-     * <p>
-     * </p>
+     * Interface =============================
+     */
+
+    /**
      * <h4>Interface Overview</h4>
      * <p>
+     * Base interface for fragment factory.
      * </p>
      *
      * @author Martin Albedinsky
@@ -1053,33 +1401,42 @@ public class FragmentController {
          */
 
         /**
-         * <br/>
-         * <h5><i>public abstract Fragment createFragmentInstance(int fragmentID,
-         * Bundle params)</i></h5>
          * <p>
          * Returns the instance of the fragment. Instance of the fragment depends on
          * the given <var>fragmentID</var>. This is invoked after call of
          * <code>showFragment(int, ...)</code> from the {@link com.wit.and.fragment.manage.FragmentController}.
          * </p>
          *
-         * @param fragmentID
-         *          Id of fragment.
-         * @param params
-         *            Bundle parameters with data or <code>null</code> if there was
-         *            invoked the method to show fragment without <var>params</var>.
+         * @param fragmentID Factory id of fragment.
+         * @param params     Bundle parameters with data or <code>null</code> if there was
+         *                   invoked the method to show fragment without <var>params</var>.
+         * @return Instance of fragment associated with the <var>fragmentID</var> or <code>null</code> if this
+         *         factory has no mapping for requested fragment id.
          */
         public Fragment createFragmentInstance(int fragmentID, Bundle params);
 
         /**
-         * <br/>
-         * <h5><i>public abstract String getFragmentTag(int fragmentID)</i></h5>
          * <p>
-         * Returns tag associated with the dialog fragment with the given
-         * <var>fragmentID</var>. If here provided tag is <code>null</code>, default
-         * tag from {@link com.wit.and.fragment.manage.FragmentController} will be used to show actual fragment.
+         * Returns show options associated with the fragment represented by the given
+         * <var>fragmentID</var>. If here provided options are <code>null</code>, default
+         * show options from {@link com.wit.and.fragment.manage.FragmentController} will be
+         * used to show that fragment.
          * </p>
          *
-         * @param fragmentID
+         * @param fragmentID Factory id of fragment.
+         * @return Show options for fragment associated with the <var>fragmentID</var> or <code>null</code> if this
+         *         factory has no mapping for requested fragment id.
+         */
+        public ShowOptions getFragmentShowOptions(int fragmentID);
+
+        /**
+         * <p>
+         * Returns tag associated with the fragment represented by the given <var>fragmentID</var>.
+         * </p>
+         *
+         * @param fragmentID Factory id of fragment.
+         * @return Tag for fragment associated with the <var>fragmentID</var> or <code>null</code> if this
+         *         factory has no mapping for requested fragment id.
          */
         public String getFragmentTag(int fragmentID);
     }
