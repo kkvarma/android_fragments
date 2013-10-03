@@ -20,6 +20,7 @@
  */
 package com.wit.and.fragment;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 /**
@@ -75,6 +76,16 @@ public abstract class BaseFragment extends Fragment {
      */
 
     /**
+     *
+     */
+    private boolean bRestored = false;
+
+    /**
+     *
+     */
+    private boolean bViewRestored = false;
+
+    /**
      * Constructors ==========================
      */
 
@@ -87,8 +98,63 @@ public abstract class BaseFragment extends Fragment {
      */
 
     /**
+     * <p>
+     * </p>
+     *
+     * @return
+     */
+    public boolean dispatchBackPress() {
+        return false;
+    }
+
+    /**
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.bViewRestored = false;
+        this.bRestored = savedInstanceState != null;
+    }
+
+    /**
+     */
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        this.bViewRestored = true;
+    }
+
+    /**
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.bViewRestored = false;
+    }
+
+    /**
      * Getters + Setters ---------------------
      */
+
+    /**
+     * <p>
+     * </p>
+     *
+     * @return
+     */
+    public boolean isRestored() {
+        return bRestored;
+    }
+
+    /**
+     * <p>
+     * </p>
+     *
+     * @return
+     */
+    public boolean isViewRestored() {
+        return bViewRestored;
+    }
 
     /**
      * Protected -----------------------------
