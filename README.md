@@ -4,14 +4,7 @@ Android Fragments (RELEASE PREVIEW)
 <b>Note, that this is still under development and there can be in some release versions made some big changes in the logic. Please be careful, when You are
 pulling new version. Thank You for understanding. We hope, that this library will be soon available in the RELEASE version.</b>
 
-### From [Android Daily Development]() series by
-
-|:----:|
-| [![](http://www.wolf-itechnologies.com/images/wit/main/logo/wit_ic_logo_50.png "")]() | [Wolf-ITechnologies]() |
-
-<div style="text-align: center;">
-	<img src="http://www.wolf-itechnologies.com/images/wit/main/logo/wit_ic_logo_50.png" />
-</div>
+### From [Android Daily Development]() series by [![](http://www.wolf-itechnologies.com/images/wit/main/logo/wit_ic_logo_50.png "")]() [Wolf-ITechnologies]() ###
 
 ## Overview ##
 
