@@ -20,6 +20,7 @@
  */
 package com.wit.and.fragment;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,7 +31,6 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
 import java.util.regex.Pattern;
 
@@ -73,7 +73,7 @@ public class WebFragment extends Fragment {
 
     /**
      * Source code copied from Android SDK [START] =====================================================
-     * to preserve min library SDK version to 7.
+     * to preserve min library SDK version at 7.
      */
     private static final String GOOD_IRI_CHAR = "a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF";
     /**
@@ -141,8 +141,6 @@ public class WebFragment extends Fragment {
 
     /**
      * Width of dialog window drop shadow. In pixels.
-     */
-    private static final int DROP_SHADOW_SIZE = 10;
 
     /**
      * Enums =================================
@@ -188,19 +186,9 @@ public class WebFragment extends Fragment {
     private WebView mWebView = null;
 
     /**
-     * Loading bar in the body view.
-     */
-    private ProgressBar mBodyLoadingBar;
-
-    /**
      * Content to load into the web view.
      */
     private String mContent = "";
-
-    /**
-     * Dialog views.
-     */
-    private View mBodyView, mButtonsView;
 
     /**
      * Content type to load into the web view.
@@ -210,6 +198,11 @@ public class WebFragment extends Fragment {
     /**
      * Listeners -----------------------------
      */
+
+    /**
+     *
+     */
+    private OnLoadingWebContentListener iOnWebContentListener;
 
     /**
      * Arrays --------------------------------
@@ -272,20 +265,30 @@ public class WebFragment extends Fragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = null;
+        this.mWebView = new WebView(inflater.getContext());
+        mWebView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
+        // Set up web view.
+        mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 
-
-        return view;
+        // Set custom WebViewClient and WebChromeClient.
+        WebViewClient client = onGetWebViewClient();
+        if (client != null) {
+            mWebView.setWebViewClient(client);
+        }
+        WebChromeClient chromeClient = onGetWebChromeClient();
+        if (chromeClient != null) {
+            mWebView.setWebChromeClient(chromeClient);
+        }
+        return mWebView;
     }
 
     /**
      */
     @Override
+    @SuppressLint("SetJavaScriptEnabled")
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
 
         if (savedInstanceState != null) {
             this.mContentType = ContentType.values()[savedInstanceState.getInt(BUNDLE_WEB_VIEW_CONTENT_TYPE)];
@@ -310,7 +313,6 @@ public class WebFragment extends Fragment {
             // Load content.
             loadContent(mContent);
         }
-        // TODO: this.checkIfShowBodyLoading();
     }
 
     /**
@@ -367,7 +369,7 @@ public class WebFragment extends Fragment {
      *
      * @see #loadContent(String)
      */
-    public final String getContent() {
+    public String getContent() {
         return mContent;
     }
 
@@ -378,8 +380,18 @@ public class WebFragment extends Fragment {
      *
      * @return Type of current web view's content.
      */
-    public final ContentType getContentType() {
+    public ContentType getContentType() {
         return mContentType;
+    }
+
+    /**
+     * <p>
+     * </p>
+     *
+     * @param listener
+     */
+    public void setOnWebContentLoadingListener(OnLoadingWebContentListener listener) {
+        this.iOnWebContentListener = listener;
     }
 
     /**
@@ -413,7 +425,7 @@ public class WebFragment extends Fragment {
                 super.onPageFinished(view, url);
                 if (USER_LOG)
                     Log.i(TAG, "onPageFinished('" + url + "')");
-                // TODO: hideLoading();
+                dispatchLoadingFinished(url);
             }
 
             @Override
@@ -427,7 +439,7 @@ public class WebFragment extends Fragment {
                 super.onPageStarted(view, url, favicon);
                 if (USER_LOG)
                     Log.i(TAG, "onPageStarted('" + url + "')");
-                // TODO: showLoading();
+                dispatchLoadingStarted(url);
             }
 
             @Override
@@ -480,6 +492,8 @@ public class WebFragment extends Fragment {
 
             if (USER_LOG)
                 Log.i(TAG, "Loaded URL('" + url + "') into web view.");
+        } else {
+            Log.e(TAG, "Can't load URL('" + url + "') into web view. Url or web view is invalid.");
         }
         return success;
     }
@@ -506,8 +520,34 @@ public class WebFragment extends Fragment {
 
             if (USER_LOG)
                 Log.i(TAG, "Loaded data('" + data + "') into web view.");
+        } else {
+            Log.e(TAG, "Can't load data('" + data + "') into web view. Data or web view is invalid.");
         }
         return success;
+    }
+
+    /**
+     * <p>
+     * </p>
+     *
+     * @param webContent
+     */
+    protected final void dispatchLoadingStarted(String webContent) {
+        if (iOnWebContentListener != null) {
+            iOnWebContentListener.onLoadingWebContentStarted(webContent);
+        }
+    }
+
+    /**
+     * <p>
+     * </p>
+     *
+     * @param webContent
+     */
+    protected final void dispatchLoadingFinished(String webContent) {
+        if (iOnWebContentListener != null) {
+            iOnWebContentListener.onLoadingWebContentFinished(webContent);
+        }
     }
 
     /**
@@ -611,4 +651,34 @@ public class WebFragment extends Fragment {
     /**
      * Interface =============================
      */
+
+    /**
+     * <h4>Interface Overview</h4>
+     * <p>
+     * </p>
+     *
+     * @author Martin Albedinsky
+     */
+    public static interface OnLoadingWebContentListener {
+
+        /**
+         * Methods ===============================
+         */
+
+        /**
+         * <p>
+         * </p>
+         *
+         * @param webContent
+         */
+        public void onLoadingWebContentStarted(String webContent);
+
+        /**
+         * <p>
+         * </p>
+         *
+         * @param webContent
+         */
+        public void onLoadingWebContentFinished(String webContent);
+    }
 }
