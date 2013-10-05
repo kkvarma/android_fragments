@@ -9,6 +9,10 @@ pulling new version. Thank You for understanding. We hope, that this library wil
 |:----:|
 | [![](http://www.wolf-itechnologies.com/images/wit/main/logo/wit_ic_logo_50.png "")]() | [Wolf-ITechnologies]() |
 
+<div style="text-align: center;">
+	<img src="http://www.wolf-itechnologies.com/images/wit/main/logo/wit_ic_logo_50.png" />
+</div>
+
 ## Overview ##
 
 ## Example Usage ##
