@@ -55,7 +55,7 @@ public class WebFragment extends Fragment {
     /**
      * Indicates if debug private output trough log-cat is enabled.
      */
-    private static final boolean DEBUG = false;
+    // private static final boolean DEBUG = false;
 
     /**
      * Indicates if logging for user output trough log-cat is enabled.
@@ -217,6 +217,11 @@ public class WebFragment extends Fragment {
      */
     private boolean bJavaScriptEnabled = true;
 
+	/**
+	 *
+	 */
+	private boolean bReadyToLoadContent = false;
+
     /**
      * Constructors ==========================
      */
@@ -305,6 +310,7 @@ public class WebFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+	    this.bReadyToLoadContent = true;
 
         // Restore web view state.
         if (savedInstanceState != null && mWebView != null && mContentType == ContentType.URL) {
@@ -313,6 +319,7 @@ public class WebFragment extends Fragment {
             // Load content.
             loadContent(mContent);
         }
+
     }
 
     /**
@@ -333,7 +340,8 @@ public class WebFragment extends Fragment {
 
     /**
      * <p>
-     * Loads the given content into the web view.
+     * Loads the given content into the web view. If this fragment's activity isn't created
+     * yet, here passed content will be loaded later when its activity is created.
      * </p>
      *
      * @param content Content to load. This can be raw HTML or URL.
@@ -342,19 +350,34 @@ public class WebFragment extends Fragment {
     public final boolean loadContent(String content) {
         this.resolveContentType(content);
         boolean loaded = false;
-
-        switch (mContentType) {
-            case URL:
-                loaded = onLoadURL(content);
-                break;
-            case HTML:
-                loaded = onLoadData(content);
-                break;
-            case UNKNOWN:
-                break;
-        }
+	    if (bReadyToLoadContent) {
+	        switch (mContentType) {
+	            case URL:
+	                loaded = onLoadURL(content);
+	                break;
+	            case HTML:
+	                loaded = onLoadData(content);
+	                break;
+	            case UNKNOWN:
+	                break;
+	        }
+	    }
         return loaded;
     }
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	public boolean dispatchBackPress() {
+		if (mWebView != null && mWebView.canGoBack()) {
+			mWebView.goBack();
+			return true;
+		}
+		return false;
+	}
 
     /**
      * Getters + Setters ---------------------
