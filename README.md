@@ -36,7 +36,7 @@ Fully supported from **Android API version 7**, so **every Android** powered dev
 
 ### Examples ###
 
-For more even **more** examples and detailed usage have a look to official wiki [page](https://github.com/Wolf-ITechnologies/android_fragments/wiki/Detailed-Usage).
+For even **more** examples and detailed usage have a look to official wiki [page](https://github.com/Wolf-ITechnologies/android_fragments/wiki/Detailed-Usage).
 
 ### How it works ###
 
