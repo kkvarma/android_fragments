@@ -31,6 +31,6 @@
             android:targetSdkVersion="18"
             android:maxSdkVersion="18"/>
 
-    <application></application>
+    <application />
 
 </manifest>
