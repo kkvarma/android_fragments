@@ -17,3 +17,5 @@ examples/build/
 android_fragments/src/instrumentTest/
 # exclude project build script
 project.bat
+# exclude all project scripts
+script/
