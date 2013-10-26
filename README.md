@@ -8,7 +8,7 @@ Android Fragments (0.1)
 **Note, that this library is still under development and there can be in some release versions made some big changes in the logic. Please be careful, when You are pulling new version. Thank You for understanding. We hope, that this library will be soon available in the RELEASE version.**
 
 <h1 align="right">
-	From the <a href="" title="">Android Libraries</a>
+	From the <a href="" title="">Android Daily Development</a>
 	<br/>
 	series by
 	<br/>
