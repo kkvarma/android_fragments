@@ -28,7 +28,7 @@ Please, follow to [this](#detailed-usage) section to see detailed usage.
 
 ## Compatibility ##
 
-Fully supported from **Android API version 7**, so **every Android** powered device out there :).
+Fully supported from the **Android API version 7**, so **every Android** powered device out there :).
 
 ## Getting Started ##
 
