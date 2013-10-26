@@ -11,9 +11,3 @@ examples/build/
 
 # Intellij files
 .idea/workspace.xml
-
-# =============== RELEASE ====================
-# exclude instrument tests
-android_fragments/src/instrumentTest/
-# exclude project build script
-project.bat
