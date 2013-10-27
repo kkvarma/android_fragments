@@ -15,7 +15,9 @@ Android Fragments (0.1)
 	<a href="" title="">Wolf-ITechnologies</a>
 </h1>
 <p align="right">
-	<img src="http://www.wolf-itechnologies.com/images/wit/main/logo/wit_logo_200.png" />
+	<a href="" title="">
+		<img src="http://www.wolf-itechnologies.com/images/wit/main/logo/wit_logo_200.png" />
+	</a>
 </p>
 
 ## Overview ##
