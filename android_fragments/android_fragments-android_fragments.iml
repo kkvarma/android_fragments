@@ -18,7 +18,7 @@
     </facet>
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
-        <option name="GRADLE_PROJECT_PATH" value=":submodules:android_fragments:android_fragments" />
+        <option name="GRADLE_PROJECT_PATH" value=":android_fragments" />
       </configuration>
     </facet>
   </component>
