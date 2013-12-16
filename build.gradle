@@ -9,10 +9,10 @@ buildscript {
 }
 
 // Android SDK options.
-ext.compileSdkVersion = 18
-ext.buildToolsVersion = "18.0.1"
+ext.compileSdkVersion = 19
+ext.buildToolsVersion = "19"
 ext.minSdkVersion = 7
-ext.targetSdkVersion = 18
+ext.targetSdkVersion = 19
 
 // Support library.
-ext.supportLibrary = 'com.android.support:support-v4:18.0.0'
+ext.supportLibrary = 'com.android.support:support-v4:19.0.0'

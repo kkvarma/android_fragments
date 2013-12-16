@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.and.fragment.manage;
+package com.wit.android.fragment.manage;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -29,7 +29,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
-import com.wit.and.fragment.R;
+import com.wit.android.fragment.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +41,8 @@ import java.util.List;
  *
  * @author Martin Albedinsky
  *
- * @see com.wit.and.fragment.manage.FragmentController.IFragmentFactory
- * @see com.wit.and.fragment.manage.FragmentController.ShowOptions
+ * @see com.wit.android.fragment.manage.FragmentController.IFragmentFactory
+ * @see com.wit.android.fragment.manage.FragmentController.ShowOptions
  */
 public class FragmentController {
 
@@ -128,7 +128,7 @@ public class FragmentController {
     /**
      * <p>
      * Same as
-     * {@link #FragmentController(android.support.v4.app.FragmentManager, com.wit.and.fragment.manage.FragmentController.IFragmentFactory)}, but with
+     * {@link #FragmentController(android.support.v4.app.FragmentManager, com.wit.android.fragment.manage.FragmentController.IFragmentFactory)}, but with
      * not initialized factory.
      * </p>
      *
@@ -211,8 +211,8 @@ public class FragmentController {
 
     /**
      * <p>
-     * Same as {@link #showFragment(android.support.v4.app.Fragment, com.wit.and.fragment.manage.FragmentController.ShowOptions)}
-     * with default {@link com.wit.and.fragment.manage.FragmentController.ShowOptions}.
+     * Same as {@link #showFragment(android.support.v4.app.Fragment, com.wit.android.fragment.manage.FragmentController.ShowOptions)}
+     * with default {@link com.wit.android.fragment.manage.FragmentController.ShowOptions}.
      * </p>
      *
      * @param fragment Fragment to show.
@@ -554,7 +554,7 @@ public class FragmentController {
      *
      * @return Current fragment factory, or <code>null</code> if there is no factory set.
      *
-     * @see #setFragmentFactory(com.wit.and.fragment.manage.FragmentController.IFragmentFactory)
+     * @see #setFragmentFactory(com.wit.android.fragment.manage.FragmentController.IFragmentFactory)
      * @see #hasFactory()
      */
     public final IFragmentFactory getFragmentFactory() {
@@ -707,7 +707,7 @@ public class FragmentController {
      * </p>
      * <p>
      * This implementation commits the <var>transaction</var> and in case that the <var>options</var>
-     * has set flag {@link com.wit.and.fragment.manage.FragmentController.ShowOptions#showImmediately}
+     * has set flag {@link com.wit.android.fragment.manage.FragmentController.ShowOptions#showImmediately}
      * to <code>true</code> the {@link android.support.v4.app.FragmentManager#executePendingTransactions()}
      * will be invoked too.
      * </p>
@@ -832,8 +832,8 @@ public class FragmentController {
      * </p>
      * <h4>Default SetUp:</h4>
      * <ul>
-     * <li>tag: {@link com.wit.and.fragment.manage.FragmentController#FRAGMENT_TAG}</li>
-     * <li>show direction: {@link com.wit.and.fragment.manage.FragmentController.ShowDirection#NONE}</li>
+     * <li>tag: {@link com.wit.android.fragment.manage.FragmentController#FRAGMENT_TAG}</li>
+     * <li>show direction: {@link com.wit.android.fragment.manage.FragmentController.ShowDirection#NONE}</li>
      * <li>container id: <b>-1</b></li>
      * <li>back-stacking: <b>false</b></li>
      * <li>replacing same: <b>true</b></li>
@@ -842,8 +842,8 @@ public class FragmentController {
      * </ul>
      *
      * @author Martin Albedinsky
-     * @see com.wit.and.fragment.manage.FragmentController
-     * @see com.wit.and.fragment.manage.FragmentController.IFragmentFactory
+     * @see com.wit.android.fragment.manage.FragmentController
+     * @see com.wit.android.fragment.manage.FragmentController.IFragmentFactory
      */
     public static class ShowOptions implements Parcelable {
         /**
@@ -1031,7 +1031,7 @@ public class FragmentController {
          * @param direction Show direction.
          * @return This options.
          *
-         * @see com.wit.and.fragment.manage.FragmentController.ShowDirection
+         * @see com.wit.android.fragment.manage.FragmentController.ShowDirection
          */
         public ShowOptions showDirection(ShowDirection direction) {
             this.showDirection = direction;
@@ -1047,7 +1047,7 @@ public class FragmentController {
          * @param layoutID Id of layout container.
          * @return This options.
          *
-         * @see com.wit.and.fragment.manage.FragmentController#setFragmentContainerID(int)
+         * @see com.wit.android.fragment.manage.FragmentController#setFragmentContainerID(int)
          */
         public ShowOptions containerID(int layoutID) {
             this.containerID = layoutID;
@@ -1407,7 +1407,7 @@ public class FragmentController {
      * </p>
      *
      * @author Martin Albedinsky
-     * @see com.wit.and.fragment.manage.FragmentController
+     * @see com.wit.android.fragment.manage.FragmentController
      */
     public static interface IFragmentFactory {
 
@@ -1419,7 +1419,7 @@ public class FragmentController {
          * <p>
          * Returns the instance of the fragment. Instance of the fragment depends on
          * the given <var>fragmentID</var>. This is invoked after call of
-         * <code>showFragment(int, ...)</code> from the {@link com.wit.and.fragment.manage.FragmentController}.
+         * <code>showFragment(int, ...)</code> from the {@link com.wit.android.fragment.manage.FragmentController}.
          * </p>
          *
          * @param fragmentID Factory id of fragment.
@@ -1434,7 +1434,7 @@ public class FragmentController {
          * <p>
          * Returns show options associated with the fragment represented by the given
          * <var>fragmentID</var>. If here provided options are <code>null</code>, default
-         * show options from {@link com.wit.and.fragment.manage.FragmentController} will be
+         * show options from {@link com.wit.android.fragment.manage.FragmentController} will be
          * used to show that fragment.
          * </p>
          *

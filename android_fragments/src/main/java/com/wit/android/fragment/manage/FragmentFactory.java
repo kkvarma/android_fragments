@@ -18,12 +18,12 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.and.fragment.manage;
+package com.wit.android.fragment.manage;
 
 /**
  * <h4>Class Overview</h4>
  * <p>
- * This is only helper implementation of {@link com.wit.and.fragment.manage.FragmentController.IFragmentFactory}.
+ * This is only helper implementation of {@link com.wit.android.fragment.manage.FragmentController.IFragmentFactory}.
  * </p>
  * <p>
  * Provides some methods useful when using custom factory.
@@ -108,17 +108,10 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
      */
     public static String createFragmentTag(Class<? extends FragmentController.IFragmentFactory> factoryClass, String fragmentName) {
         // Only valid fragment name is allowed.
-        if (fragmentName == null || fragmentName.length() == 0)
+        if (fragmentName == null || fragmentName.length() == 0) {
             return null;
-
-        StringBuilder builder = new StringBuilder("");
-        builder.append(factoryClass.getPackage().getName());
-        builder.append(".");
-        builder.append(factoryClass.getSimpleName());
-        builder.append(".");
-        builder.append(fragmentName);
-        builder.append(".TAG");
-        return builder.toString();
+        }
+        return factoryClass.getPackage().getName() + "." + factoryClass.getSimpleName() + "." + fragmentName + ".TAG";
     }
 
 	/**

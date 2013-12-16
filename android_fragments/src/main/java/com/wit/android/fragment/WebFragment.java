@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.and.fragment;
+package com.wit.android.fragment;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
@@ -609,7 +609,7 @@ public class WebFragment extends Fragment {
     /**
      * <h4>Class Overview</h4>
      * <p>
-     * Web options for {@link com.wit.and.fragment.WebFragment}.
+     * Web options for {@link com.wit.android.fragment.WebFragment}.
      * </p>
      *
      * @author Martin Albedinsky

@@ -1,1 +1,4 @@
+// Release:
+//include ':android_fragments'
+// Examples:
 include ':android_fragments', ':examples'

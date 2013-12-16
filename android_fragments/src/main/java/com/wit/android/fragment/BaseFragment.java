@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.and.fragment;
+package com.wit.android.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -132,29 +132,29 @@ public abstract class BaseFragment extends Fragment {
         this.bViewRestored = false;
     }
 
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	public boolean isRestored() {
+		return bRestored;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	public boolean isViewRestored() {
+		return bViewRestored;
+	}
+
     /**
      * Getters + Setters ---------------------
      */
-
-    /**
-     * <p>
-     * </p>
-     *
-     * @return
-     */
-    public boolean isRestored() {
-        return bRestored;
-    }
-
-    /**
-     * <p>
-     * </p>
-     *
-     * @return
-     */
-    public boolean isViewRestored() {
-        return bViewRestored;
-    }
 
     /**
      * Protected -----------------------------
