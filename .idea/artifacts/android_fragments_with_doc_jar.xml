@@ -6,7 +6,7 @@
         <element id="file-copy" path="$PROJECT_DIR$/documentation/META-INF/MANIFEST.MF" />
       </element>
       <element id="dir-copy" path="$PROJECT_DIR$/documentation" />
-      <element id="module-output" name="android_fragments-android_fragments" />
+      <element id="module-output" name="library" />
     </root>
   </artifact>
 </component>

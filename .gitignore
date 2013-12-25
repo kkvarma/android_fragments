@@ -3,7 +3,7 @@
 local.properties
 
 # Modules build directories
-android_fragments/build/
+library/build/
 examples/build/
 
 # Gradle files
