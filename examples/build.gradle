@@ -1,7 +1,13 @@
 apply plugin: 'android'
 
+repositories {
+    mavenLocal()
+}
+
 dependencies {
     compile project(':library')
+    compile 'com.wit.android:android-examples:+@aar'
+    compile rootProject.appCompatLibrary
 }
 
 android {

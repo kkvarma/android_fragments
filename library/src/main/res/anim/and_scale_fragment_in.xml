@@ -23,9 +23,18 @@
 -->
 <set xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <translate
-        android:duration="@integer/And.Anim.Fragment.Slide.In.Back.duration"
-        android:fromXDelta="-100%p"
-        android:toXDelta="0%p" />
+    <alpha
+            android:duration="@integer/And.Anim.Fragment.Alpha.In.duration"
+            android:fromAlpha="0.5"
+            android:toAlpha="1.0"/>
+
+    <scale
+            android:duration="@integer/And.Anim.Fragment.Scale.In.duration"
+            android:fromXScale="0.5"
+            android:toXScale="1.0"
+            android:pivotX="50%"
+            android:fromYScale="0.5"
+            android:toYScale="1.0"
+            android:pivotY="50%"/>
 
 </set>

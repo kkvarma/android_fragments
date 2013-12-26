@@ -202,7 +202,7 @@ public class WebFragment extends Fragment {
     /**
      *
      */
-    private OnLoadingWebContentListener iOnWebContentListener;
+    private OnWebContentLoadingListener iWebContentLoadingListener;
 
     /**
      * Arrays --------------------------------
@@ -233,6 +233,17 @@ public class WebFragment extends Fragment {
     /**
      * Public --------------------------------
      */
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param url
+	 * @return
+	 */
+    public static boolean isValidWebUrl(String url) {
+	    return WEB_URL.matcher("").reset(url).matches();
+    }
 
     /**
      * <p>
@@ -413,9 +424,17 @@ public class WebFragment extends Fragment {
      *
      * @param listener
      */
-    public void setOnWebContentLoadingListener(OnLoadingWebContentListener listener) {
-        this.iOnWebContentListener = listener;
+    public void setOnWebContentLoadingListener(OnWebContentLoadingListener listener) {
+        this.iWebContentLoadingListener = listener;
     }
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	public void removeOnWebContentLoadingListener() {
+		this.iWebContentLoadingListener = null;
+	}
 
     /**
      * Protected -----------------------------
@@ -556,8 +575,8 @@ public class WebFragment extends Fragment {
      * @param webContent
      */
     protected final void dispatchLoadingStarted(String webContent) {
-        if (iOnWebContentListener != null) {
-            iOnWebContentListener.onLoadingWebContentStarted(webContent);
+        if (iWebContentLoadingListener != null) {
+            iWebContentLoadingListener.onLoadingStarted(webContent);
         }
     }
 
@@ -568,8 +587,8 @@ public class WebFragment extends Fragment {
      * @param webContent
      */
     protected final void dispatchLoadingFinished(String webContent) {
-        if (iOnWebContentListener != null) {
-            iOnWebContentListener.onLoadingWebContentFinished(webContent);
+        if (iWebContentLoadingListener != null) {
+            iWebContentLoadingListener.onLoadingFinished(webContent);
         }
     }
 
@@ -585,7 +604,7 @@ public class WebFragment extends Fragment {
      */
     private void resolveContentType(String content) {
         if (content != null && content.length() > 0) {
-            if (WEB_URL.matcher("").reset(content).matches()) {
+            if (isValidWebUrl(content)) {
                 this.mContentType = ContentType.URL;
             } else {
                 this.mContentType = ContentType.HTML;
@@ -682,7 +701,7 @@ public class WebFragment extends Fragment {
      *
      * @author Martin Albedinsky
      */
-    public static interface OnLoadingWebContentListener {
+    public static interface OnWebContentLoadingListener {
 
         /**
          * Methods ===============================
@@ -694,7 +713,7 @@ public class WebFragment extends Fragment {
          *
          * @param webContent
          */
-        public void onLoadingWebContentStarted(String webContent);
+        public void onLoadingStarted(String webContent);
 
         /**
          * <p>
@@ -702,6 +721,6 @@ public class WebFragment extends Fragment {
          *
          * @param webContent
          */
-        public void onLoadingWebContentFinished(String webContent);
+        public void onLoadingFinished(String webContent);
     }
 }

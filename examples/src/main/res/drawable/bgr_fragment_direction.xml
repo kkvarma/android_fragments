@@ -21,11 +21,32 @@
  * =================================================================================
  */
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.wit.android.fragment"
-          android:versionCode="1"
-          android:versionName="1.0">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-sdk android:minSdkVersion="7"/>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                    android:angle="180"
+                    android:startColor="#44ffffff"
+                    android:centerColor="@android:color/transparent"
+                    android:endColor="@android:color/transparent"/>
+        </shape>
+    </item>
 
-</manifest>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                    android:angle="90"
+                    android:startColor="#44ffffff"
+                    android:centerColor="@android:color/transparent"
+                    android:endColor="@android:color/transparent"/>
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#88000000"/>
+        </shape>
+    </item>
+
+</layer-list>

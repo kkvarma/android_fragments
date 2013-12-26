@@ -26,17 +26,29 @@
     <!-- ###### FRAGMENT NUMBERS ###### -->
     <eat-comment />
     
-    <!-- ## Animations [START] ## -->
+    <!-- ## Animation durations ## -->
+    <eat-comment/>
+    <!-- # Slide animation durations # -->
     <eat-comment/>
     <!-- Duration for incoming fragment slide animation -->
-    <integer name="And.Anim.Slide.In.Fragment.duration">500</integer>
+    <integer name="And.Anim.Fragment.Slide.In.duration">500</integer>
     <!-- Duration for outgoing fragment slide animation -->
-    <integer name="And.Anim.Slide.Out.Fragment.duration">500</integer>
+    <integer name="And.Anim.Fragment.Slide.Out.duration">500</integer>
     <!-- Duration for incoming back-stacked fragment slide animation -->
-    <integer name="And.Anim.Slide.In.Back.Fragment.duration">350</integer>
-    <!-- Duration for outgoing back-stacked fragment slide animation -->
-    <integer name="And.Anim.Slide.Out.Back.Fragment.duration">350</integer>
-    <!-- ## Animations [END] ## -->
+    <integer name="And.Anim.Fragment.Slide.In.Back.duration">350</integer>
+    <!-- Duration for outgoing current fragment slide animation -->
+    <integer name="And.Anim.Fragment.Slide.Out.Back.duration">350</integer>
+    <!-- # Scale animation durations # -->
     <eat-comment/>
-    
+    <!-- Duration for incoming fragment scale animation -->
+    <integer name="And.Anim.Fragment.Scale.In.duration">500</integer>
+    <!-- Duration for outgoing current fragment scale animation -->
+    <integer name="And.Anim.Fragment.Scale.Out.Back.duration">350</integer>
+    <!-- # Alpha animation durations # -->
+    <eat-comment/>
+    <!-- Duration for incoming fragment alpha animation -->
+    <integer name="And.Anim.Fragment.Alpha.In.duration">400</integer>
+    <!-- Duration for outgoing current fragment scale animation -->
+    <integer name="And.Anim.Fragment.Alpha.Out.Back.duration">350</integer>
+
 </resources>

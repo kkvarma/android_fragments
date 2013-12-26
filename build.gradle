@@ -16,3 +16,5 @@ ext.targetSdkVersion = 19
 
 // Support library.
 ext.supportLibrary = 'com.android.support:support-v4:+'
+// Support Application compatibility library.
+ext.appCompatLibrary = 'com.android.support:appcompat-v7:+'

@@ -24,7 +24,7 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
 
     <translate
-        android:duration="@integer/And.Anim.Slide.Out.Back.Fragment.duration"
+        android:duration="@integer/And.Anim.Fragment.Slide.Out.Back.duration"
         android:fromXDelta="0%p"
         android:toXDelta="100%p" />
 

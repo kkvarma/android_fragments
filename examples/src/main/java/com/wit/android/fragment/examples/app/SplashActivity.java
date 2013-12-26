@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
 /*
  * =================================================================================
- * Copyright (C) 2012 Martin Albedinsky [Wolf-ITechnologies]
+ * Copyright (C) 2013 Martin Albedinsky [Wolf-ITechnologies]
  * =================================================================================
  * Licensed under the Apache License, Version 2.0 or later (further "License" only);
- * *********************************************************************************
+ * ---------------------------------------------------------------------------------
  * You may use this file only in compliance with the License. More details and copy
  * of this License you may obtain at
  * 
@@ -20,12 +18,22 @@
  * under the License.
  * =================================================================================
  */
--->
-<set xmlns:android="http://schemas.android.com/apk/res/android">
+package com.wit.android.fragment.examples.app;
 
-    <translate
-        android:duration="@integer/And.Anim.Fragment.Slide.In.Back.duration"
-        android:fromXDelta="-100%p"
-        android:toXDelta="0%p" />
+import com.wit.android.examples.annotations.ExDelay;
+import com.wit.android.examples.annotations.ExHomeActivity;
+import com.wit.android.examples.annotations.ExLogo;
+import com.wit.android.examples.app.ExSplashActivity;
+import com.wit.android.fragment.examples.R;
 
-</set>
+/**
+ * <p>
+ * Description.
+ * </p>
+ *
+ * @author Martin Albedinsky
+ */
+@ExDelay(500)
+@ExLogo(R.drawable.ic_logo)
+@ExHomeActivity(HomeActivity.class)
+public class SplashActivity extends ExSplashActivity {}

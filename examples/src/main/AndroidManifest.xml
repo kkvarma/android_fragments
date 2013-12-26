@@ -22,7 +22,7 @@
  */
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.wit.android.examples"
+          package="com.wit.android.fragment.examples"
           android:versionCode="1"
           android:versionName="1.0">
 
@@ -31,20 +31,25 @@
             android:targetSdkVersion="19"
             android:maxSdkVersion="19"/>
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
             android:allowBackup="true"
-            android:icon="@drawable/ic_launcher"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme">
-        <activity
-                android:name="com.wit.android.examples.fragments.MainActivityd"
-                android:label="@string/app_name">
+            android:icon="@drawable/ex_ic_launcher"
+            android:label="@string/App.name"
+            android:theme="@style/Ex.App.Theme">
+
+        <activity android:name=".app.SplashActivity" android:noHistory="true" android:theme="@style/Ex.Theme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".app.HomeActivity" />
+        <activity android:name=".app.WebActivity" />
+
     </application>
 
 </manifest>
