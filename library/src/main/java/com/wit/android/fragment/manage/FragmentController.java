@@ -56,7 +56,7 @@ public class FragmentController {
 	 * Default tag for the showing on fragments.
 	 * </p>
 	 */
-	public static final String FRAGMENT_TAG = "com.wit.and.app.fragment.manage.FragmentController.Fragment.TAG";
+	public static final String FRAGMENT_TAG = "com.wit.android.fragment.manage.FragmentController.Fragment.TAG";
 
 	/**
 	 * <br/>

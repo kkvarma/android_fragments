@@ -1,4 +1,9 @@
-// Global gradle configuration. This will be applied to all sub-projects.
+/*
+Global gradle configuration. This will be applied to all sub-projects.
+*/
+/**
+ * Global build script =======================================================
+ */
 buildscript {
     repositories {
         mavenCentral()
@@ -8,12 +13,23 @@ buildscript {
     }
 }
 
-// Android SDK options.
+/**
+ * Library options ===========================================================
+ */
+ext.libraryName = "android-fragments"
+ext.libraryVersion = "0.2"
+
+/**
+ * Android SDK options =======================================================
+ */
 ext.compileSdkVersion = 19
 ext.buildToolsVersion = "19.0.1"
 ext.minSdkVersion = 7
 ext.targetSdkVersion = 19
 
+/**
+ * Global dependencies =======================================================
+ */
 // Support library.
 ext.supportLibrary = 'com.android.support:support-v4:+'
 // Support Application compatibility library.

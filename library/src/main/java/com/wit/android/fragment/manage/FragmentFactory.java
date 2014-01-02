@@ -26,7 +26,7 @@ package com.wit.android.fragment.manage;
  * This is only helper implementation of {@link com.wit.android.fragment.manage.FragmentController.IFragmentFactory}.
  * </p>
  * <p>
- * Provides some methods useful when using custom factory.
+ * Provides some methods useful when using custom fragment factory.
  * </p>
  *
  * @author Martin Albedinsky
@@ -90,8 +90,8 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 
     /**
      * <p>
-     * Creates fragment tag in required format depends on the passed
-     * <var>factory</var> package name and <var>fragmentName</var>.
+     * Creates a fragment tag in required format depends on the passed <var>factory's</var> package
+     * name and the specified <var>fragmentName</var>.
      * </p>
      * <p>
      * Example format: <u>com.android.app.fragment.factories.ScreenProfileFactory.EditProfile.TAG</u><br/><br/>

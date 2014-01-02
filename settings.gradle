@@ -1,4 +1,7 @@
-// Release:
-//include ':library'
-// Examples:
+/**
+ * Gradle project settings ===================================================
+ */
+// Release version:
+// include ':library'
+// Examples version:
 include ':examples', ':library'

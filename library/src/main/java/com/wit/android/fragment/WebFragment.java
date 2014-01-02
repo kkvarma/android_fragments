@@ -67,9 +67,9 @@ public class WebFragment extends Fragment {
      */
     /**
      */
-    private static final String BUNDLE_WEB_VIEW_CONTENT = "com.wit.and.fragment.WebFragment.Bundle.Content";
-    private static final String BUNDLE_WEB_VIEW_CONTENT_TYPE = "com.wit.and.fragment.WebFragment.Bundle.ContentType";
-    private static final String BUNDLE_WEB_VIEW_JAVA_SCRIPT_ENABLED = "com.wit.and.fragment.WebFragment.Bundle.JavaScriptEnabled";
+    private static final String BUNDLE_WEB_VIEW_CONTENT = "com.wit.android.fragment.WebFragment.Bundle.Content";
+    private static final String BUNDLE_WEB_VIEW_CONTENT_TYPE = "com.wit.android.fragment.WebFragment.Bundle.ContentType";
+    private static final String BUNDLE_WEB_VIEW_JAVA_SCRIPT_ENABLED = "com.wit.android.fragment.WebFragment.Bundle.JavaScriptEnabled";
 
     /**
      * Source code copied from Android SDK [START] =====================================================

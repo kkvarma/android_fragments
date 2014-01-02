@@ -104,7 +104,7 @@ public abstract class BaseFragment extends Fragment {
      * @return
      */
     public boolean dispatchBackPress() {
-        return false;
+        return onBackPress();
     }
 
     /**
@@ -159,6 +159,16 @@ public abstract class BaseFragment extends Fragment {
     /**
      * Protected -----------------------------
      */
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	protected boolean onBackPress() {
+		return false;
+	}
 
     /**
      * Private -------------------------------

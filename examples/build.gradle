@@ -1,15 +1,23 @@
 apply plugin: 'android'
 
+/**
+ * Used repositories =========================================================
+ */
 repositories {
     mavenLocal()
 }
 
+/**
+ * Examples dependencies =====================================================
+ */
 dependencies {
     compile project(':library')
     compile 'com.wit.android:android-examples:+@aar'
-    compile rootProject.appCompatLibrary
 }
 
+/**
+ * Android Project options ===================================================
+ */
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
