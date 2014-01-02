@@ -21,12 +21,29 @@
  * =================================================================================
  */
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/bgr_fragment_direction">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bgr_fragment">
 
+    <LinearLayout
+            style="@style/Ex.App.Content.Layout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dip"
+                android:scaleType="fitXY"/>
 
-</LinearLayout>
+        <TextView
+                style="@style/Ex.App.Section.Widget.Heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Personal Info:"/>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -63,11 +63,6 @@ public class FragmentsFactory extends FragmentFactory {
 	public Fragment createFragmentInstance(int fragmentID, Bundle params) {
 		Fragment fragment = null;
 		switch (fragmentID) {
-			case FRAGMENT_DIRECTION_FROM_LEFT_TO_BACKGROUND:
-			case FRAGMENT_DIRECTION_FROM_RIGHT_TO_BACKGROUND:
-			case FRAGMENT_DIRECTION_FROM_TOP_TO_BACKGROUND:
-			case FRAGMENT_DIRECTION_FROM_BOTTOM_TO_BACKGROUND:
-				break;
 			default:
 				fragment = DirectionFragment.newInstance(params.getString(PARAM_ACTION_BAR_TITLE));
 		}
@@ -105,12 +100,16 @@ public class FragmentsFactory extends FragmentFactory {
 				options.showDirection(FragmentController.ShowDirection.FROM_BACKGROUND_TO_BOTTOM);
 				break;
 			case FRAGMENT_DIRECTION_FROM_LEFT_TO_BACKGROUND:
+				options.showDirection(FragmentController.ShowDirection.FROM_LEFT_TO_BACKGROUND);
 				break;
 			case FRAGMENT_DIRECTION_FROM_RIGHT_TO_BACKGROUND:
+				options.showDirection(FragmentController.ShowDirection.FROM_RIGHT_TO_BACKGROUND);
 				break;
 			case FRAGMENT_DIRECTION_FROM_TOP_TO_BACKGROUND:
+				options.showDirection(FragmentController.ShowDirection.FROM_TOP_TO_BACKGROUND);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BOTTOM_TO_BACKGROUND:
+				options.showDirection(FragmentController.ShowDirection.FROM_BOTTOM_TO_BACKGROUND);
 				break;
 		}
 		return options.addToBackStack(params.getBoolean(PARAM_ADD_TO_BACK_STACK, false));

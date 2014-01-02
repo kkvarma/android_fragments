@@ -28,6 +28,8 @@ import android.view.ViewGroup;
 import com.wit.android.examples.app.fragment.ExActionBarFragment;
 import com.wit.android.fragment.examples.R;
 
+import java.util.Random;
+
 /**
  * <p>
  * Description.
@@ -54,7 +56,7 @@ public class DirectionFragment extends ExActionBarFragment {
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_direction, null);
+		return inflater.inflate(this.randomLayoutRes(), null);
 	}
 
 	/**
@@ -63,4 +65,15 @@ public class DirectionFragment extends ExActionBarFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 	}
+
+	private int randomLayoutRes() {
+		switch (new Random().nextInt(3)) {
+			case 1:
+				return R.layout.fragment_direction_2;
+			case 2:
+				return R.layout.fragment_direction_3;
+		}
+		return R.layout.fragment_direction_1;
+	}
+
 }

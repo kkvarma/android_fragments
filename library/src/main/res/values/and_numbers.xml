@@ -30,25 +30,33 @@
     <eat-comment/>
     <!-- # Slide animation durations # -->
     <eat-comment/>
-    <!-- Duration for incoming fragment slide animation -->
+    <!-- Duration for a new incoming fragment's slide animation -->
     <integer name="And.Anim.Fragment.Slide.In.duration">500</integer>
-    <!-- Duration for outgoing fragment slide animation -->
+    <!-- Duration for a current outgoing fragment's slide animation -->
     <integer name="And.Anim.Fragment.Slide.Out.duration">500</integer>
-    <!-- Duration for incoming back-stacked fragment slide animation -->
+    <!-- Duration for an old incoming back-stacked fragment's slide animation -->
     <integer name="And.Anim.Fragment.Slide.In.Back.duration">350</integer>
-    <!-- Duration for outgoing current fragment slide animation -->
+    <!-- Duration for a current outgoing fragment's slide animation -->
     <integer name="And.Anim.Fragment.Slide.Out.Back.duration">350</integer>
     <!-- # Scale animation durations # -->
     <eat-comment/>
-    <!-- Duration for incoming fragment scale animation -->
+    <!-- Duration for a new incoming fragment's scale animation -->
     <integer name="And.Anim.Fragment.Scale.In.duration">500</integer>
-    <!-- Duration for outgoing current fragment scale animation -->
+    <!-- Duration for a current outgoing fragment's scale animation -->
+    <integer name="And.Anim.Fragment.Scale.In.Back.duration">500</integer>
+    <!-- Duration for an old incoming back-stacked fragment's scale animation -->
+    <integer name="And.Anim.Fragment.Scale.Out.duration">350</integer>
+    <!-- Duration for a current outgoing fragment's scale animation -->
     <integer name="And.Anim.Fragment.Scale.Out.Back.duration">350</integer>
     <!-- # Alpha animation durations # -->
     <eat-comment/>
-    <!-- Duration for incoming fragment alpha animation -->
+    <!-- Duration for a new incoming fragment's alpha animation -->
     <integer name="And.Anim.Fragment.Alpha.In.duration">400</integer>
-    <!-- Duration for outgoing current fragment scale animation -->
+    <!-- Duration for a current outgoing fragment's alpha animation -->
+    <integer name="And.Anim.Fragment.Alpha.In.Back.duration">400</integer>
+    <!-- Duration for an old incoming back-stacked fragment's alpha animation -->
+    <integer name="And.Anim.Fragment.Alpha.Out.duration">300</integer>
+    <!-- Duration for a current outgoing fragment's alpha animation -->
     <integer name="And.Anim.Fragment.Alpha.Out.Back.duration">350</integer>
 
 </resources>

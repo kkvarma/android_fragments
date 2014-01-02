@@ -73,12 +73,12 @@ public class FragmentController {
 	private static final String TAG = FragmentController.class.getSimpleName();
 
 	/**
-	 * Indicates if debug private output trough log-cat is enabled.
+	 * Flag indicating whether the debug output trough log-cat is enabled or not.
 	 */
 	private static final boolean DEBUG = false;
 
 	/**
-	 * Indicates if logging for user output trough log-cat is enabled.
+	 * Flag indicating whether the output for user trough log-cat is enabled or not.
 	 */
 	private static final boolean USER_LOG = true;
 
@@ -1259,6 +1259,66 @@ public class FragmentController {
 				R.anim.and_scale_fragment_out_back,
 				"FROM_BACKGROUND_TO_BOTTOM");
 
+		/**
+		 * <p>
+		 * </p>
+		 */
+		public static final ShowDirection FROM_LEFT_TO_BACKGROUND = new ShowDirection(
+				// Incoming animation.
+				R.anim.and_slide_fragment_in_right,
+				// Outgoing animation.
+				R.anim.and_scale_fragment_out,
+				// Incoming back-stack animation.
+				R.anim.and_scale_fragment_in_back,
+				// Outgoing back-stack animation.
+				R.anim.and_slide_fragment_out_left_back,
+				"FROM_LEFT_TO_BACKGROUND");
+
+		/**
+		 * <p>
+		 * </p>
+		 */
+		public static final ShowDirection FROM_RIGHT_TO_BACKGROUND = new ShowDirection(
+				// Incoming animation.
+				R.anim.and_slide_fragment_in_left,
+				// Outgoing animation.
+				R.anim.and_scale_fragment_out,
+				// Incoming back-stack animation.
+				R.anim.and_scale_fragment_in_back,
+				// Outgoing back-stack animation.
+				R.anim.and_slide_fragment_out_right_back,
+				"FROM_RIGHT_TO_BACKGROUND");
+
+		/**
+		 * <p>
+		 * </p>
+		 */
+		public static final ShowDirection FROM_TOP_TO_BACKGROUND = new ShowDirection(
+				// Incoming animation.
+				R.anim.and_slide_fragment_in_bottom,
+				// Outgoing animation.
+				R.anim.and_scale_fragment_out,
+				// Incoming back-stack animation.
+				R.anim.and_scale_fragment_in_back,
+				// Outgoing back-stack animation.
+				R.anim.and_slide_fragment_out_top_back,
+				"FROM_TOP_TO_BACKGROUND");
+
+		/**
+		 * <p>
+		 * </p>
+		 */
+		public static final ShowDirection FROM_BOTTOM_TO_BACKGROUND = new ShowDirection(
+				// Incoming animation.
+				R.anim.and_slide_fragment_in_top,
+				// Outgoing animation.
+				R.anim.and_scale_fragment_out,
+				// Incoming back-stack animation.
+				R.anim.and_scale_fragment_in_back,
+				// Outgoing back-stack animation.
+				R.anim.and_slide_fragment_out_bottom_back,
+				"FROM_BOTTOM_TO_BACKGROUND");
+		
 		/**
 		 * Members ===============================
 		 */

@@ -56,4 +56,10 @@
     <eat-comment/>
     <string name="Activity.Web.Toast.OnlyUrlIsAllowed">Only valid web URL is allowed here</string>
 
+    <!-- ## Direction fragment strings ## -->
+    <eat-comment/>
+    <string name="Fragment.Direction.Edit.Hint.Username">Username</string>
+    <string name="Fragment.Direction.Edit.Hint.Pass">password</string>
+    <string name="Fragment.Direction.Button.SignUp">Sign Up</string>
+
 </resources>
