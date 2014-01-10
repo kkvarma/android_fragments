@@ -187,12 +187,12 @@ public class WebActivity extends ExBaseActionBarActivity {
 	private class LoadingListener implements WebFragment.OnWebContentLoadingListener {
 
 		@Override
-		public void onLoadingStarted(String webContent) {
+		public void onLoadingStarted(String webUrl) {
 
 		}
 
 		@Override
-		public void onLoadingFinished(String webContent) {
+		public void onLoadingFinished(String webUrl) {
 
 		}
 	}
