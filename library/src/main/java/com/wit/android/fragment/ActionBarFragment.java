@@ -114,10 +114,10 @@ public class ActionBarFragment extends BaseFragment {
 	 * Same as {@link android.support.v7.app.ActionBarActivity#supportInvalidateOptionsMenu()}.
 	 * </p>
 	 *
-	 * @see #isActionBarActivityAvailable()
+	 * @see #isActivityAvailable()
 	 */
 	public void invalidateOptionsMenu() {
-		if (isActionBarActivityAvailable()) {
+		if (isActivityAvailable()) {
 			getActionBarActivity().supportInvalidateOptionsMenu();
 		}
 	}
@@ -128,10 +128,10 @@ public class ActionBarFragment extends BaseFragment {
 	 * </p>
 	 *
 	 * @see #getActionBar()
-	 * @see #isActionBarActivityAvailable()
+	 * @see #isActivityAvailable()
 	 */
 	public boolean requestWindowFeature(int featureID) {
-		return isActionBarActivityAvailable() && getActionBarActivity().supportRequestWindowFeature(featureID);
+		return isActivityAvailable() && getActionBarActivity().supportRequestWindowFeature(featureID);
 	}
 
 	/**
@@ -144,11 +144,11 @@ public class ActionBarFragment extends BaseFragment {
 	 * </p>
 	 *
 	 * @see #requestWindowFeature(int)
-	 * @see #isActionBarActivityAvailable()
+	 * @see #isActivityAvailable()
 	 * @see #getActionBarActivity()
 	 */
 	public ActionBar getActionBar() {
-		return isActionBarActivityAvailable() ? getActionBarActivity().getSupportActionBar() : null;
+		return isActivityAvailable() ? getActionBarActivity().getSupportActionBar() : null;
 	}
 
 	/**
@@ -157,10 +157,10 @@ public class ActionBarFragment extends BaseFragment {
 	 * </p>
 	 *
 	 * @see #setProgressBarVisibility(boolean)
-	 * @see #isActionBarActivityAvailable()
+	 * @see #isActivityAvailable()
 	 */
 	public void setProgress(int progress) {
-		if (isActionBarActivityAvailable()) {
+		if (isActivityAvailable()) {
 			getActionBarActivity().setSupportProgress(progress);
 		}
 	}
@@ -172,10 +172,10 @@ public class ActionBarFragment extends BaseFragment {
 	 *
 	 * @see #setProgress(int)
 	 * @see #setProgressBarIndeterminate(boolean)
-	 * @see #isActionBarActivityAvailable()
+	 * @see #isActivityAvailable()
 	 */
 	public void setProgressBarVisibility(boolean visible) {
-		if (isActionBarActivityAvailable()) {
+		if (isActivityAvailable()) {
 			getActionBarActivity().setSupportProgressBarVisibility(visible);
 		}
 	}
@@ -186,10 +186,10 @@ public class ActionBarFragment extends BaseFragment {
 	 * </p>
 	 *
 	 * @see #setProgressBarIndeterminateVisibility(boolean)
-	 * @see #isActionBarActivityAvailable()
+	 * @see #isActivityAvailable()
 	 */
 	public void setProgressBarIndeterminate(boolean indeterminate) {
-		if (isActionBarActivityAvailable()) {
+		if (isActivityAvailable()) {
 			getActionBarActivity().setSupportProgressBarIndeterminate(indeterminate);
 		}
 	}
@@ -200,10 +200,10 @@ public class ActionBarFragment extends BaseFragment {
 	 * </p>
 	 *
 	 * @see #setProgressBarIndeterminate(boolean)
-	 * @see #isActionBarActivityAvailable()
+	 * @see #isActivityAvailable()
 	 */
 	public void setProgressBarIndeterminateVisibility(boolean visible) {
-		if (isActionBarActivityAvailable()) {
+		if (isActivityAvailable()) {
 			getActionBarActivity().setSupportProgressBarIndeterminateVisibility(visible);
 		}
 	}
@@ -214,24 +214,11 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Returns flag indicating whether the parent ActionBarActivity of this fragment instance is
-	 * available or not.
-	 * </p>
-	 *
-	 * @return <code>True</code> if activity is available, <code>false</code> otherwise.
-	 * @see #getActionBarActivity()
-	 */
-	protected boolean isActionBarActivityAvailable() {
-		return getActionBarActivity() != null;
-	}
-
-	/**
-	 * <p>
 	 * Returns an instance of {@link android.support.v7.app.ActionBarActivity}.
 	 * </p>
 	 *
 	 * @return The current parent activity of this fragment instance casted to the ActionBarActivity.
-	 * @see #isActionBarActivityAvailable()
+	 * @see #isActivityAvailable()
 	 */
 	protected ActionBarActivity getActionBarActivity() {
 		return ((ActionBarActivity) getActivity());

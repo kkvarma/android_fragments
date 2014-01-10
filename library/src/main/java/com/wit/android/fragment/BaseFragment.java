@@ -29,6 +29,7 @@ import android.support.v4.app.Fragment;
  * </p>
  *
  * @author Martin Albedinsky
+ * @see com.wit.android.fragment.ActionBarFragment
  */
 public abstract class BaseFragment extends Fragment {
 
@@ -39,7 +40,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * Log TAG.
      */
-    private static final String TAG = BaseFragment.class.getSimpleName();
+    // private static final String TAG = BaseFragment.class.getSimpleName();
 
     /**
      * Flag indicating whether the debug output trough log-cat is enabled or not.
@@ -76,12 +77,13 @@ public abstract class BaseFragment extends Fragment {
      */
 
     /**
-     *
+     * Flag indicating whether this instance of fragment is restored (like after orientation change)
+     * or not.
      */
     private boolean bRestored = false;
 
     /**
-     *
+     * Flag indicating whether the view of this instance of fragment is restored or not.
      */
     private boolean bViewRestored = false;
 
@@ -99,9 +101,11 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * <p>
+     * Called to dispatch back press action to this fragment instance.
      * </p>
      *
-     * @return
+     * @return <code>True</code> if this instance of fragment processes dispatched back press action,
+     * <code>false</code> otherwise.
      */
     public boolean dispatchBackPress() {
         return onBackPress();
@@ -134,9 +138,11 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
+	 * Returns flag indicating whether this fragment instance was restored or not.
 	 * </p>
 	 *
-	 * @return
+	 * @return <code>True</code> if this fragment was restored (<i>like, after orientation change</i>),
+	 * <code>false</code> otherwise.
 	 */
 	public boolean isRestored() {
 		return bRestored;
@@ -144,12 +150,36 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
+	 * Returns flag indicating whether the view of this fragment instance was restored or not.
 	 * </p>
 	 *
-	 * @return
+	 * @return <code>True</code> if the view of this fragment was restored (<i>like, when the fragment
+	 * was showed from the back stack</i>), <code>false</code> otherwise.
 	 */
 	public boolean isViewRestored() {
 		return bViewRestored;
+	}
+
+	/**
+	 * <p>
+	 * Same as  {@link #getString(int)}, but first is performed check if the parent activity of this
+	 * fragment instance is available to prevent illegal state exceptions.
+	 * </p>
+	 */
+	public String obtainString(int resID) {
+		return isActivityAvailable() ? getString(resID) : "";
+	}
+
+	/**
+	 * <p>
+	 * <p>
+	 * Same as  {@link #getString(int, Object...)}, but first is performed check if the parent activity
+	 * of this fragment instance is available to prevent illegal state exceptions.
+	 * </p>
+	 * </p>
+	 */
+	public String obtainString(int resID, Object... args) {
+		return isActivityAvailable() ? getString(resID, args) : "";
 	}
 
     /**
@@ -162,12 +192,26 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
+	 * Invoked to process back press action dispatched to this fragment instance.
 	 * </p>
 	 *
-	 * @return
+	 * @return <code>True</code> if this instance of fragment processes dispatched back press action,
+	 * <code>false</code> otherwise.
+	 * @see #dispatchBackPress()
 	 */
 	protected boolean onBackPress() {
 		return false;
+	}
+
+	/**
+	 * <p>
+	 * Returns flag indicating whether the parent Activity of this fragment instance is available or not.
+	 * </p>
+	 *
+	 * @return <code>True</code> if activity is available, <code>false</code> otherwise.
+	 */
+	protected boolean isActivityAvailable() {
+		return getActivity() != null;
 	}
 
     /**
