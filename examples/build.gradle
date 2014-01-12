@@ -12,7 +12,7 @@ repositories {
  */
 dependencies {
     compile project(':library')
-    compile 'com.wit.android:android-examples:+@aar'
+    compile 'com.wit.android:examples:+@aar'
 }
 
 /**

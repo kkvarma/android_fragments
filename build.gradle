@@ -16,7 +16,7 @@ buildscript {
 /**
  * Library options ===========================================================
  */
-ext.libraryName = "android-fragments"
+ext.libraryName = "fragments"
 ext.libraryVersion = "0.2"
 
 /**

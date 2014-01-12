@@ -57,10 +57,8 @@ public class FragmentsFactory extends FragmentFactory {
 	public static final String PARAM_ACTION_BAR_TITLE = "com.wit.android.fragment.examples.app.fragment.factory.FragmentsFactory.Param.ActionBarTitle";
 	public static final String PARAM_ADD_TO_BACK_STACK = "com.wit.android.fragment.examples.app.fragment.factory.FragmentsFactory.Params.AddToBackStack";
 
-	/**
-	 */
 	@Override
-	public Fragment createFragmentInstance(int fragmentID, Bundle params) {
+	protected Fragment onCreateFragmentInstance(int fragmentID, Bundle params) {
 		Fragment fragment = null;
 		switch (fragmentID) {
 			default:
@@ -72,7 +70,7 @@ public class FragmentsFactory extends FragmentFactory {
 	/**
 	 */
 	@Override
-	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentID, Bundle params) {
+	protected FragmentController.ShowOptions onGetFragmentShowOptions(int fragmentID, Bundle params) {
 		final FragmentController.ShowOptions options = new FragmentController.ShowOptions();
 		switch (fragmentID) {
 			case FRAGMENT_DIRECTION_FROM_RIGHT_TO_LEFT:
@@ -113,12 +111,5 @@ public class FragmentsFactory extends FragmentFactory {
 				break;
 		}
 		return options.addToBackStack(params.getBoolean(PARAM_ADD_TO_BACK_STACK, false));
-	}
-
-	/**
-	 */
-	@Override
-	public String getFragmentTag(int fragmentID) {
-		return createFragmentTag(FragmentsFactory.class, Integer.toString(fragmentID));
 	}
 }
