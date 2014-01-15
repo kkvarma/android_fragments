@@ -32,7 +32,6 @@ import android.util.Log;
 import com.wit.android.fragment.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -1412,11 +1411,6 @@ public class FragmentController {
 		private String mName = "";
 
 		/**
-		 * Set of all show directions instances.
-		 */
-		private static HashMap<String, ShowDirection> aValues;
-
-		/**
 		 * Constructors ==========================
 		 */
 
@@ -1459,8 +1453,6 @@ public class FragmentController {
 			this.mInAnimBackResID = inAnimBack;
 			this.mOutAnimBackResID = outAnimBack;
 			this.mName = name;
-			// Add direction into initialized values.
-			insertIntoValues(this);
 		}
 
 		/**
@@ -1485,19 +1477,6 @@ public class FragmentController {
 		/**
 		 * Public --------------------------------
 		 */
-
-		/**
-		 * <p>
-		 * Parses an instance of ShowDirection from the current initialized directions.
-		 * </p>
-		 *
-		 * @param name Name of direction to parse.
-		 * @return The instance of parsed direction or <code>null</code> if there is not show direction
-		 * with the specified name within the current initialized directions set.
-		 */
-		public static ShowDirection parse(String name) {
-			return aValues.get(name);
-		}
 
 		/**
 		 */
@@ -1574,22 +1553,6 @@ public class FragmentController {
 		 */
 		public int getInAnimBackResID() {
 			return mInAnimBackResID;
-		}
-
-		/**
-		 * Protected -----------------------------
-		 */
-
-		/**
-		 * Inserts the given <var>direction</var> into the set of currently initialized directions.
-		 *
-		 * @param direction Instance of direction to insert.
-		 */
-		private static void insertIntoValues(ShowDirection direction) {
-			if (aValues == null) {
-				aValues = new HashMap<String, ShowDirection>();
-			}
-			aValues.put(direction.name(), direction);
 		}
 	}
 
