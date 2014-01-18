@@ -10,4 +10,5 @@ examples/build/
 .gradle
 
 # Intellij files
+.idea/libraries
 .idea/workspace.xml

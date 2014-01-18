@@ -44,6 +44,10 @@ public class DirectionFragment extends ExActionBarFragment {
 	 */
 	private static final String TAG = DirectionFragment.class.getSimpleName();
 
+	private static final String BUNDLE_LAYOUT_RES = "com.wit.android.fragment.examples.app.fragment.DirectionFragment.Bundle.LayoutRes";
+
+	private int mLayoutRes = -1;
+
 	public static DirectionFragment newInstance(String title) {
 		final DirectionFragment fragment = new DirectionFragment();
 		final Bundle args = new Bundle();
@@ -55,15 +59,29 @@ public class DirectionFragment extends ExActionBarFragment {
 	/**
 	 */
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(this.randomLayoutRes(), null);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (savedInstanceState != null) {
+			this.mLayoutRes = savedInstanceState.getInt(BUNDLE_LAYOUT_RES, mLayoutRes);
+		}
 	}
 
 	/**
 	 */
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(BUNDLE_LAYOUT_RES, mLayoutRes);
+	}
+
+	/**
+	 */
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(
+				mLayoutRes != -1 ? mLayoutRes : (mLayoutRes = randomLayoutRes()),
+				null
+		);
 	}
 
 	private int randomLayoutRes() {

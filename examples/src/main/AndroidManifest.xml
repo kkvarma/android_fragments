@@ -45,7 +45,7 @@
         </activity>
 
         <activity android:name=".app.HomeActivity" />
-        <activity android:name=".app.WebActivity" />
+        <activity android:name=".app.WebActivity" android:label="@string/Navigation.Label.WebFragment" />
 
     </application>
 
