@@ -87,11 +87,11 @@ public class DirectionFragment extends ExActionBarFragment {
 	private int randomLayoutRes() {
 		switch (new Random().nextInt(3)) {
 			case 1:
-				return R.layout.fragment_direction_2;
+				return R.layout.fragment_profile;
 			case 2:
-				return R.layout.fragment_direction_3;
+				return R.layout.fragment_logo;
 		}
-		return R.layout.fragment_direction_1;
+		return R.layout.fragment_sing_in;
 	}
 
 }

@@ -2,7 +2,7 @@
 <!--
 /*
 * =================================================================================
-* Copyright (C) 2012 - 2013 Martin Albedinsky [Wolf-ITechnologies]
+* Copyright (C) 2012 - 2014 Martin Albedinsky [Wolf-ITechnologies]
 * =================================================================================
 * Licensed under the Apache License, Version 2.0 or later (further "License" only);
 * *********************************************************************************
@@ -56,10 +56,25 @@
     <eat-comment/>
     <string name="Activity.Web.Toast.OnlyUrlIsAllowed">Only valid web URL is allowed here</string>
 
-    <!-- ## Direction fragment strings ## -->
+    <!-- ## Fragment SingIn strings ## -->
     <eat-comment/>
-    <string name="Fragment.Direction.Edit.Hint.Username">Username</string>
-    <string name="Fragment.Direction.Edit.Hint.Pass">password</string>
-    <string name="Fragment.Direction.Button.SignUp">Sign Up</string>
+    <string name="Fragment.SignIn.Edit.Hint.Username">Username</string>
+    <string name="Fragment.SignIn.Edit.Hint.Pass">password</string>
+    <string name="Fragment.SignIn.Button">Sign In</string>
+
+    <!-- ## Fragment Profile strings ## -->
+    <eat-comment/>
+    <string name="Fragment.Profile.Heading.PersonalInfo">PERSONAL INFORMATION</string>
+    <string name="Fragment.Profile.Label.Username">Username</string>
+    <string name="Fragment.Profile.Label.Username.value">android.developer</string>
+    <string name="Fragment.Profile.Label.DateOfBirth">Date of Birth:</string>
+    <string name="Fragment.Profile.Label.DateOfBirth.value">13. May 1983</string>
+    <string name="Fragment.Profile.Label.Gender">Gender:</string>
+    <string name="Fragment.Profile.Label.Gender.value">Male</string>
+    <string name="Fragment.Profile.Heading.Contact">CONTACT</string>
+    <string name="Fragment.Profile.Label.EMail">E-Mail Address:</string>
+    <string name="Fragment.Profile.Label.EMail.value">android.developer@google.com</string>
+    <string name="Fragment.Profile.Label.Phone">Phone Number:</string>
+    <string name="Fragment.Profile.Label.Phone.value">+230508473296</string>
 
 </resources>

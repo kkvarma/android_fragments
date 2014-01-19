@@ -27,6 +27,7 @@ import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -34,6 +35,9 @@ import android.widget.Toast;
 import com.wit.android.examples.internal.app.ExBaseActionBarActivity;
 import com.wit.android.fragment.WebFragment;
 import com.wit.android.fragment.examples.R;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <p>
@@ -59,6 +63,8 @@ public class WebActivity extends ExBaseActionBarActivity {
 	 */
 	private EditText mUrlEdit;
 	private View mActionView;
+
+	private final Matcher HTTP_MATCHER = Pattern.compile("^http://(.+)$").matcher("");
 
 	/**
 	 */
@@ -88,9 +94,7 @@ public class WebActivity extends ExBaseActionBarActivity {
 				processed = true;
 				break;
 			case android.R.id.home:
-				if (!dispatchBackPressed()) {
-					finish();
-				}
+				finish();
 				processed = true;
 				break;
 		}
@@ -102,6 +106,8 @@ public class WebActivity extends ExBaseActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
 		final FrameLayout contentLayout = new FrameLayout(this);
 		contentLayout.setId(R.id.Ex_App_Content_Container);
 		setContentView(contentLayout);
@@ -117,14 +123,15 @@ public class WebActivity extends ExBaseActionBarActivity {
 
 		getFragmentController().setFragmentContainerID(R.id.Ex_App_Content_Container);
 		if (savedInstanceState == null) {
+			final String googleUrl = "http://www.google.com";
+
 			final WebFragment webFragment = WebFragment.newInstance(
-					new WebFragment.WebOptions().content("" +
-							"http://www.google.com"
-					)
+					new WebFragment.WebOptions().content(googleUrl)
 			);
 			webFragment.setOnWebContentLoadingListener(new LoadingListener());
 
 			getFragmentController().showFragment(webFragment);
+			mUrlEdit.setText(googleUrl);
 		}
 	}
 
@@ -136,6 +143,7 @@ public class WebActivity extends ExBaseActionBarActivity {
 		final WebFragment fragment = (WebFragment) getFragmentController().getVisibleFragment();
 		if (fragment != null) {
 			fragment.loadContent(url);
+			mUrlEdit.setText(url);
 		}
 	}
 
@@ -173,9 +181,14 @@ public class WebActivity extends ExBaseActionBarActivity {
 		public void onDestroyActionMode(ActionMode actionMode) {
 			final Editable urlEditable = mUrlEdit.getText();
 			if (urlEditable != null && urlEditable.length() > 0) {
-				final String url = urlEditable.toString();
+				String url = urlEditable.toString();
+
+				// Check for http.
+				if (!HTTP_MATCHER.reset(url).matches()) {
+					url = "http://" + url;
+				}
+
 				if (WebFragment.isValidWebUrl(url)) {
-					// Load entered url into web fragment.
 					loadUrl(url);
 				} else {
 					Toast.makeText(WebActivity.this, R.string.Activity_Web_Toast_OnlyUrlIsAllowed, Toast.LENGTH_SHORT).show();
@@ -188,12 +201,12 @@ public class WebActivity extends ExBaseActionBarActivity {
 
 		@Override
 		public void onLoadingStarted(String webUrl) {
-
+			setSupportProgressBarIndeterminateVisibility(true);
 		}
 
 		@Override
 		public void onLoadingFinished(String webUrl) {
-
+			setSupportProgressBarIndeterminateVisibility(false);
 		}
 	}
 

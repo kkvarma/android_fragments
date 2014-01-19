@@ -18,12 +18,11 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment.examples.app.fragment.factory;
+package com.wit.android.fragment.examples.app.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.wit.android.fragment.examples.app.fragment.DirectionFragment;
 import com.wit.android.fragment.manage.FragmentController;
 import com.wit.android.fragment.manage.FragmentFactory;
 
@@ -54,8 +53,8 @@ public class FragmentsFactory extends FragmentFactory {
 	public static final int FRAGMENT_DIRECTION_FROM_TOP_TO_BACKGROUND = 0x0b;
 	public static final int FRAGMENT_DIRECTION_FROM_BOTTOM_TO_BACKGROUND = 0x0c;
 
-	public static final String PARAM_ACTION_BAR_TITLE = "com.wit.android.fragment.examples.app.fragment.factory.FragmentsFactory.Param.ActionBarTitle";
-	public static final String PARAM_ADD_TO_BACK_STACK = "com.wit.android.fragment.examples.app.fragment.factory.FragmentsFactory.Params.AddToBackStack";
+	public static final String PARAM_ACTION_BAR_TITLE = "com.wit.android.fragment.examples.app.fragment.FragmentsFactory.Param.ActionBarTitle";
+	public static final String PARAM_ADD_TO_BACK_STACK = "com.wit.android.fragment.examples.app.fragment.FragmentsFactory.Params.AddToBackStack";
 
 	@Override
 	protected Fragment onCreateFragmentInstance(int fragmentID, Bundle params) {
