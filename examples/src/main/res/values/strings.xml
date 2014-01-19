@@ -35,6 +35,7 @@
     <string name="Navigation.Header.Implementations">IMPLEMENTATIONS</string>
     <string name="Navigation.Label.WebFragment">Web Fragment</string>
     <string name="Navigation.Header.ShowDirections">SHOW DIRECTIONS</string>
+    <string name="Navigation.Label.None">None</string>
     <string name="Navigation.Label.FromRightToLeft">From RIGHT to LEFT</string>
     <string name="Navigation.Label.FromLeftToRight">From LEFT to RIGHT</string>
     <string name="Navigation.Label.FromBottomToTop">From BOTTOM to TOP</string>

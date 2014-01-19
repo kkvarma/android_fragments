@@ -40,6 +40,7 @@ public class FragmentsFactory extends FragmentFactory {
 	 */
 	private static final String TAG = FragmentsFactory.class.getSimpleName();
 
+	public static final int FRAGMENT_DIRECTION_NONE = 0x00;
 	public static final int FRAGMENT_DIRECTION_FROM_RIGHT_TO_LEFT = 0x01;
 	public static final int FRAGMENT_DIRECTION_FROM_LEFT_TO_RIGHT = 0x02;
 	public static final int FRAGMENT_DIRECTION_FROM_TOP_TO_BOTTOM = 0x03;
@@ -58,12 +59,7 @@ public class FragmentsFactory extends FragmentFactory {
 
 	@Override
 	protected Fragment onCreateFragmentInstance(int fragmentID, Bundle params) {
-		Fragment fragment = null;
-		switch (fragmentID) {
-			default:
-				fragment = DirectionFragment.newInstance(params.getString(PARAM_ACTION_BAR_TITLE));
-		}
-		return fragment;
+		return DirectionFragment.newInstance(params.getString(PARAM_ACTION_BAR_TITLE));
 	}
 
 	/**

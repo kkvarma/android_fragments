@@ -31,6 +31,7 @@ import com.wit.android.examples.model.navigation.INavigationItem;
 import com.wit.android.examples.model.navigation.NavigationHeader;
 import com.wit.android.examples.model.navigation.NavigationItem;
 import com.wit.android.fragment.examples.R;
+import com.wit.android.fragment.examples.app.fragment.DirectionFragment;
 import com.wit.android.fragment.examples.app.fragment.FragmentsFactory;
 import com.wit.android.fragment.manage.FragmentController;
 
@@ -53,10 +54,14 @@ public class HomeActivity extends ExHomeActivity {
 
 	private final FragmentController FRAGMENT_CONTROLLER = new FragmentController(getSupportFragmentManager());
 
+	{
+		// Set up fragment container id.
+		FRAGMENT_CONTROLLER.setFragmentContainerID(R.id.Ex_App_Content_Container);
+	}
+
 	private boolean bAddFragmentToBackStack = true;
 
 	/**
-	 *
 	 * @param view
 	 */
 	public void onAddToBackStackClick(View view) {
@@ -69,9 +74,6 @@ public class HomeActivity extends ExHomeActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-
-		// Set up fragment container id.
-		FRAGMENT_CONTROLLER.setFragmentContainerID(R.id.Ex_App_Content_Container);
 		// Set up fragment factory.
 		FRAGMENT_CONTROLLER.setFragmentFactory(new FragmentsFactory());
 	}
@@ -79,8 +81,7 @@ public class HomeActivity extends ExHomeActivity {
 	/**
 	 */
 	@Override
-	protected List<INavigationItem> onCreateNavigationItems() {
-		final Resources res = getResources();
+	protected List<INavigationItem> onCreateNavigationItems(Resources res) {
 		final List<INavigationItem> items = new ArrayList<INavigationItem>();
 
 		/**
@@ -97,6 +98,11 @@ public class HomeActivity extends ExHomeActivity {
 		 * Show directions.
 		 */
 		items.add(NavigationHeader.create(R.string.Navigation_Header_ShowDirections, res));
+		items.add(NavigationItem.create(
+				FragmentsFactory.FRAGMENT_DIRECTION_NONE,
+				R.string.Navigation_Label_None,
+				res
+		));
 		items.add(NavigationItem.create(
 				FragmentsFactory.FRAGMENT_DIRECTION_FROM_RIGHT_TO_LEFT,
 				R.string.Navigation_Label_FromRightToLeft,
@@ -186,5 +192,14 @@ public class HomeActivity extends ExHomeActivity {
 				});
 		}
 		return true;
+	}
+
+	/**
+	 */
+	@Override
+	protected int onShowInitialFragment() {
+		final int initialItemPos = 3;
+		FRAGMENT_CONTROLLER.showFragment(DirectionFragment.newInstance(getNavigationItem(initialItemPos).getText()));
+		return 1;
 	}
 }
