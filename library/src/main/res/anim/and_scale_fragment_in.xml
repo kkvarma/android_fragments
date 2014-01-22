@@ -2,7 +2,7 @@
 <!--
 /*
  * =================================================================================
- * Copyright (C) 2012 Martin Albedinsky [Wolf-ITechnologies]
+ * Copyright (C) 2012 - 2014 Martin Albedinsky [Wolf-ITechnologies]
  * =================================================================================
  * Licensed under the Apache License, Version 2.0 or later (further "License" only);
  * *********************************************************************************
@@ -30,10 +30,11 @@
 
     <scale
             android:duration="@integer/And.Anim.Fragment.Scale.In.duration"
-            android:fromXScale="0.5"
+            android:startOffset="@integer/And.Anim.Fragment.Scale.In.offset"
+            android:fromXScale="0.8"
             android:toXScale="1.0"
             android:pivotX="50%"
-            android:fromYScale="0.5"
+            android:fromYScale="0.8"
             android:toYScale="1.0"
             android:pivotY="50%"/>
 
