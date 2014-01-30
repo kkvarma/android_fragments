@@ -3,7 +3,15 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="D:\Libraries\Wolf-ITechnologies\workspace\android\publicRepositories\android_fragments" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/examples" />
+            <option value="$PROJECT_DIR$/library" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>

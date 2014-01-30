@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * =================================================================================
+ * Copyright (C) 2013 - 2014 Martin Albedinsky [Wolf-ITechnologies]
+ * =================================================================================
+ * Licensed under the Apache License, Version 2.0 or later (further "License" only);
+ * *********************************************************************************
+ * You may use this file only in compliance with the License. More details and copy
+ * of this License you may obtain at
+ *
+ * 		http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * You can redistribute, modify or publish any part of the code written in this
+ * file but as it is described in the License, the software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF
+ * ANY KIND.
+ *
+ * See the License for the specific language governing permissions and limitations
+ * under the License.
+ * =================================================================================
+ */
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bgr_fragment">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/cover"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="#000000" />
+
+        <LinearLayout
+                style="@style/Ex.App.Content.Layout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    style="@style/Ex.App.Section.Widget.Heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Fragment.Profile.Heading.PersonalInfo"/>
+
+            <LinearLayout
+                    style="@style/Ex.App.ListItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        style="@style/Ex.App.Section.Widget.Label"
+                        android:layout_width="0dip"
+                        android:layout_weight="0.4"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Fragment.Profile.Label.Username"/>
+
+                <TextView
+                        android:layout_width="0dip"
+                        android:layout_weight="0.6"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Fragment.Profile.Label.Username.value"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    style="@style/Ex.App.ListItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        style="@style/Ex.App.Section.Widget.Label"
+                        android:layout_width="0dip"
+                        android:layout_weight="0.4"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Fragment.Profile.Label.DateOfBirth"/>
+
+                <TextView
+                        android:layout_width="0dip"
+                        android:layout_weight="0.6"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Fragment.Profile.Label.DateOfBirth.value"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    style="@style/Ex.App.ListItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        style="@style/Ex.App.Section.Widget.Label"
+                        android:layout_width="0dip"
+                        android:layout_weight="0.4"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Fragment.Profile.Label.Gender"/>
+
+                <TextView
+                        android:layout_width="0dip"
+                        android:layout_weight="0.6"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Fragment.Profile.Label.Gender.value"/>
+
+            </LinearLayout>
+
+            <TextView
+                    style="@style/Ex.App.Section.Widget.Heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Fragment.Profile.Heading.Contact"/>
+
+            <LinearLayout
+                    style="@style/Ex.App.ListItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        style="@style/Ex.App.Section.Widget.Label"
+                        android:layout_width="0dip"
+                        android:layout_weight="0.4"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Fragment.Profile.Label.EMail"/>
+
+                <TextView
+                        android:layout_width="0dip"
+                        android:layout_weight="0.6"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Fragment.Profile.Label.EMail.value"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    style="@style/Ex.App.ListItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        style="@style/Ex.App.Section.Widget.Label"
+                        android:layout_width="0dip"
+                        android:layout_weight="0.4"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Fragment.Profile.Label.Phone"/>
+
+                <TextView
+                        android:layout_width="0dip"
+                        android:layout_weight="0.6"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Fragment.Profile.Label.Phone.value"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -3,11 +3,12 @@
 local.properties
 
 # Modules build directories
-android_fragments/build/
+library/build/
 examples/build/
 
 # Gradle files
 .gradle
 
 # Intellij files
+.idea/libraries
 .idea/workspace.xml
