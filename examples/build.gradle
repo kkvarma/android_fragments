@@ -1,9 +1,23 @@
 apply plugin: 'android'
 
-dependencies {
-    compile project(':android_fragments')
+/**
+ * Used repositories =========================================================
+ */
+repositories {
+    mavenLocal()
 }
 
+/**
+ * Examples dependencies =====================================================
+ */
+dependencies {
+    compile project(':library')
+    compile 'com.wit.android:examples:+@aar'
+}
+
+/**
+ * Android Project options ===================================================
+ */
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
@@ -11,5 +25,28 @@ android {
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
+    }
+
+    // Release.
+    if (project.hasProperty('examples.properties') && new File((String) project.property('examples.properties')).exists()) {
+        final Properties properties = new Properties();
+        properties.load(new FileInputStream(file(project.property('examples.properties'))))
+
+        // Signing configurations.
+        signingConfigs {
+            release {
+                storeFile file(properties['storeFile'])
+                storePassword properties['storePassword']
+                keyAlias properties['keyAlias']
+                keyPassword properties['keyPassword']
+            }
+        }
+
+        // Build types.
+        buildTypes {
+            release {
+                signingConfig signingConfigs.release
+            }
+        }
     }
 }

@@ -1,8 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+* =================================================================================
+* Copyright (C) 2012 - 2014 Martin Albedinsky [Wolf-ITechnologies]
+* =================================================================================
+* Licensed under the Apache License, Version 2.0 or later (further "License" only);
+* *********************************************************************************
+* You may use this file only in compliance with the License. More details and copy
+* of this License you may obtain at
+*
+*                 http://www.apache.org/licenses/LICENSE-2.0
+*
+* You can redistribute, modify or publish any part of the code written in this
+* file but as it is described in the License, the software distributed under the
+* License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF
+* ANY KIND.
+*
+* See the License for the specific language governing permissions and limitations
+* under the License.
+* =================================================================================
+*/
+-->
 <resources>
 
-    <string name="app_name">Examples</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <!-- ###### EXAMPLES STRINGS ###### -->
+    <eat-comment/>
+
+    <!-- ## Base strings ## -->
+    <eat-comment/>
+    <string name="App.name">Fragments</string>
+
+    <!-- ## Navigation strings ## -->
+    <eat-comment/>
+    <string name="Navigation.Header.Implementations">IMPLEMENTATIONS</string>
+    <string name="Navigation.Label.WebFragment">Web Fragment</string>
+    <string name="Navigation.Header.ShowDirections">SHOW DIRECTIONS</string>
+    <string name="Navigation.Label.None">None</string>
+    <string name="Navigation.Label.FromRightToLeft">From RIGHT to LEFT</string>
+    <string name="Navigation.Label.FromLeftToRight">From LEFT to RIGHT</string>
+    <string name="Navigation.Label.FromBottomToTop">From BOTTOM to TOP</string>
+    <string name="Navigation.Label.FromTopToBottom">From TOP to BOTTOM</string>
+    <string name="Navigation.Label.FromBackgroundToLeft">From BACKGROUND to LEFT</string>
+    <string name="Navigation.Label.FromBackgroundToRight">From BACKGROUND to RIGHT</string>
+    <string name="Navigation.Label.FromBackgroundToTop">From BACKGROUND to TOP</string>
+    <string name="Navigation.Label.FromBackgroundToBottom">From BACKGROUND to BOTTOM</string>
+    <string name="Navigation.Label.FromLeftToBackground">From LEFT to BACKGROUND</string>
+    <string name="Navigation.Label.FromRightToBackground">From RIGHT to BACKGROUND</string>
+    <string name="Navigation.Label.FromTopToBackground">From TOP to BACKGROUND</string>
+    <string name="Navigation.Label.FromBottomToBackground">From BOTTOM to BACKGROUND</string>
+
+    <!-- ## Home activity strings ## -->
+    <eat-comment/>
+    <string name="Activity.Home.Check.AddFragmentToBackStack">Add fragment to back stack</string>
+
+    <!-- ## Web activity strings ## -->
+    <eat-comment/>
+    <string name="Activity.Web.Toast.OnlyUrlIsAllowed">Only valid web URL is allowed here</string>
+
+    <!-- ## Fragment SingIn strings ## -->
+    <eat-comment/>
+    <string name="Fragment.SignIn.Edit.Hint.Username">Username</string>
+    <string name="Fragment.SignIn.Edit.Hint.Pass">password</string>
+    <string name="Fragment.SignIn.Button">Sign In</string>
+
+    <!-- ## Fragment Profile strings ## -->
+    <eat-comment/>
+    <string name="Fragment.Profile.Heading.PersonalInfo">PERSONAL INFORMATION</string>
+    <string name="Fragment.Profile.Label.Username">Username</string>
+    <string name="Fragment.Profile.Label.Username.value">android.developer</string>
+    <string name="Fragment.Profile.Label.DateOfBirth">Date of Birth:</string>
+    <string name="Fragment.Profile.Label.DateOfBirth.value">13. May 1983</string>
+    <string name="Fragment.Profile.Label.Gender">Gender:</string>
+    <string name="Fragment.Profile.Label.Gender.value">Male</string>
+    <string name="Fragment.Profile.Heading.Contact">CONTACT</string>
+    <string name="Fragment.Profile.Label.EMail">E-Mail Address:</string>
+    <string name="Fragment.Profile.Label.EMail.value">android.developer@google.com</string>
+    <string name="Fragment.Profile.Label.Phone">Phone Number:</string>
+    <string name="Fragment.Profile.Label.Phone.value">+230508473296</string>
 
 </resources>

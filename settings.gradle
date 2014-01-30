@@ -1,1 +1,7 @@
-include ':android_fragments', ':examples'
+/**
+ * Gradle project settings ===================================================
+ */
+// Release version:
+// include ':library'
+// Examples version:
+include ':examples', ':library'
