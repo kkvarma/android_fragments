@@ -57,9 +57,6 @@ Please, have a look to official wiki [page](https://github.com/Wolf-ITechnologie
 
 The **latest version** of this library will be always at the [**release**](https://github.com/Wolf-ITechnologies/android_fragments "Latest version") branch (<i>without version suffix</i>).
 
-## Related Projects ##
-**REMOVE IF THERE ARE NO RELATED PROJECTS**
-
 ## Support ##
 
 If You have any questions related to this project, feel free and contact us at **[github.public@wolf-itechnologies.com](mailto:github.public@wolf-itechnologies.com)**.
