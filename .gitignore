@@ -12,3 +12,7 @@ examples/build/
 # Intellij files
 .idea/libraries
 .idea/workspace.xml
+
+# =============== RELEASE ====================
+# exclude instrument tests
+library/src/instrumentTest/

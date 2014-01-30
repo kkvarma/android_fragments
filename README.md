@@ -2,47 +2,52 @@
 <img align="left" src="http://www.wolf-itechnologies.com/images/wit/android/wit_ic_android_100.png" />
 </a>
 
-Android Fragments (0.1)
+Fragments (1.0)
 ===============
-
-**Note, that this library is still under development and there can be in some release versions made some big changes in the logic. Please be careful, when You are pulling new version. Thank You for understanding. We hope, that this library will be soon available in the RELEASE version.**
 
 <h1 align="right">
 	From the <a href="" title="">Android Daily Development</a>
 	<br/>
 	series by
 	<br/>
-	<a href="" title="">Wolf-ITechnologies</a>
+	<a href="https://plus.google.com/u/0/104376986791224020588/" title="Google+ Page">Wolf-ITechnologies</a>
 </h1>
 <p align="right">
 	<a href="" title="">
 		<img src="http://www.wolf-itechnologies.com/images/wit/main/logo/wit_logo_200.png" />
 	</a>
 </p>
+<h6 align="right">
+	Design & Development{<a href="https://plus.google.com/u/2/104003516948492231224/" title="Google+">Martin Albedinsky</a>}
+</h6>
 
 ## Overview ##
+
+<h6 align="right">[
+<a href="https://github.com/Wolf-ITechnologies/android_fragments/wiki" title="Wiki home page">HOME</a>
+|
+<a href="https://github.com/Wolf-ITechnologies/android_fragments/wiki/Library-Structure" title="Structure and design of library">LIBRARY STRUCTURE</a>
+|
+<a href="https://github.com/Wolf-ITechnologies/android_fragments/tree/release/examples" title="Simple project with examples">EXAMPLES</a>
+|
+<a href="https://github.com/Wolf-ITechnologies/android_fragments/wiki/FAQ" title="Frequently asked questions">FAQ</a>
+]</h6>
 
 ## Design Goals ##
 
 ## Example Usage ##
 
-Please, follow to [this](#detailed-usage) section to see detailed usage.
+### Set-Up ###
+
+### Usage ###
+
+### Features ###
+
+> For **more** examples and detailed usage have a look to official wiki [page](https://github.com/Wolf-ITechnologies/android_fragments/wiki/Detailed-Usage).
 
 ## Compatibility ##
 
-Fully supported from the **Android API version 7**, so **every Android** powered device out there :).
-
-## Getting Started ##
-
-## Detailed Usage ##
-
-### Examples ###
-
-For even **more** examples and detailed usage have a look to official wiki [page](https://github.com/Wolf-ITechnologies/android_fragments/wiki/Detailed-Usage).
-
-### How it works ###
-
-### Features ###
+Supported from the **Android API version 7**, so almost **every Android** powered device out there :).
 
 ## Known Issues ##
 
@@ -50,7 +55,10 @@ Please, have a look to official wiki [page](https://github.com/Wolf-ITechnologie
 
 ## Developer info ##
 
-## Related Projects
+The **latest version** of this library will be always at the [**release**](https://github.com/Wolf-ITechnologies/android_fragments "Latest version") branch (<i>without version suffix</i>).
+
+## Related Projects ##
+**REMOVE IF THERE ARE NO RELATED PROJECTS**
 
 ## Support ##
 
@@ -60,9 +68,7 @@ If You have any questions related to this project, feel free and contact us at *
 
 Licensed under the **Apache License**: **[Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)** or later.
 
-> You can redistribute, modify or publish any part of the code written in this library but as it is described in the License, the software distributed under the License is distributed on an **"AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND**.
-
-**Note**, that the **Wolf-ITechnologies** company isn't responsible for any malfunctions in this library discovered after such changes have been made in the source code by You alone.
+> You can redistribute, modify or publish any part of the code presented within this repository but as it is described in the [**LICENSE**](https://github.com/Wolf-ITechnologies/android_fragments/blob/release/LICENSE.md), the software distributed under the License is distributed on an **"AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND**.
 
 ## Bee In Touch ##
 
