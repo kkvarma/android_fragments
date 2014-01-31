@@ -31,7 +31,7 @@ import com.wit.android.examples.model.navigation.INavigationItem;
 import com.wit.android.examples.model.navigation.NavigationHeader;
 import com.wit.android.examples.model.navigation.NavigationItem;
 import com.wit.android.fragment.examples.R;
-import com.wit.android.fragment.examples.app.fragment.DirectionFragment;
+import com.wit.android.fragment.examples.app.fragment.ImageFragment;
 import com.wit.android.fragment.examples.app.fragment.FragmentsFactory;
 import com.wit.android.fragment.manage.FragmentController;
 
@@ -199,7 +199,7 @@ public class HomeActivity extends ExHomeActivity {
 	@Override
 	protected int onShowInitialFragment() {
 		final int initialItemPos = 3;
-		FRAGMENT_CONTROLLER.showFragment(DirectionFragment.newInstance(getNavigationItem(initialItemPos).getText()));
+		FRAGMENT_CONTROLLER.showFragment(ImageFragment.newInstance(getNavigationItem(initialItemPos).getText()));
 		return 1;
 	}
 }
