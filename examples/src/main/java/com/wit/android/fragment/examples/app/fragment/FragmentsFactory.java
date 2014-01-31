@@ -59,7 +59,7 @@ public class FragmentsFactory extends FragmentFactory {
 
 	@Override
 	protected Fragment onCreateFragmentInstance(int fragmentID, Bundle params) {
-		return DirectionFragment.newInstance(params.getString(PARAM_ACTION_BAR_TITLE));
+		return ImageFragment.newInstance(params.getString(PARAM_ACTION_BAR_TITLE));
 	}
 
 	/**
