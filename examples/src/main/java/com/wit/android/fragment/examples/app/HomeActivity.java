@@ -31,8 +31,8 @@ import com.wit.android.examples.model.navigation.INavigationItem;
 import com.wit.android.examples.model.navigation.NavigationHeader;
 import com.wit.android.examples.model.navigation.NavigationItem;
 import com.wit.android.fragment.examples.R;
-import com.wit.android.fragment.examples.app.fragment.ImageFragment;
-import com.wit.android.fragment.examples.app.fragment.FragmentsFactory;
+import com.wit.android.fragment.examples.fragment.ImageFragment;
+import com.wit.android.fragment.examples.fragment.FragmentsFactory;
 import com.wit.android.fragment.manage.FragmentController;
 
 import java.util.ArrayList;

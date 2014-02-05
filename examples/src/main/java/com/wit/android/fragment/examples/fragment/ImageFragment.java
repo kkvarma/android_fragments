@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment.examples.app.fragment;
+package com.wit.android.fragment.examples.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -48,7 +48,7 @@ public class ImageFragment extends ExActionBarFragment {
 	/**
 	 *
 	 */
-	private static final String BUNDLE_IMAGE = "com.wit.android.fragment.examples.app.fragment.ImageFragment.Bundle.Image";
+	private static final String BUNDLE_IMAGE = "com.wit.android.fragment.examples.fragment.ImageFragment.Bundle.Image";
 
 	/**
 	 *
