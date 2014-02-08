@@ -22,7 +22,7 @@
  */
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.wit.android.fragment.examples"
+          package="com.wit.android.support.fragment.examples"
           android:versionCode="1"
           android:versionName="1.0">
 
@@ -36,7 +36,7 @@
             android:label="@string/App.name"
             android:theme="@style/Ex.App.Theme">
 
-        <activity android:name=".app.SplashActivity" android:noHistory="true" android:theme="@style/Ex.Theme.Splash">
+        <activity android:name="com.wit.android.support.fragment.examples.app.SplashActivity" android:noHistory="true" android:theme="@style/Ex.Theme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -44,8 +44,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".app.HomeActivity" />
-        <activity android:name=".app.WebActivity" android:label="@string/Navigation.Label.WebFragment" />
+        <activity android:name="com.wit.android.support.fragment.examples.app.HomeActivity" />
+        <activity android:name="com.wit.android.support.fragment.examples.app.WebActivity" android:label="@string/Navigation.Label.WebFragment" />
 
     </application>
 

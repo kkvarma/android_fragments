@@ -18,22 +18,59 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment.examples.app;
+package com.wit.android.support.fragment.manage;
 
-import com.wit.android.examples.annotations.ExDelay;
-import com.wit.android.examples.annotations.ExHomeActivity;
-import com.wit.android.examples.annotations.ExLogo;
-import com.wit.android.examples.app.ExSplashActivity;
-import com.wit.android.fragment.examples.R;
+import android.test.suitebuilder.annotation.SmallTest;
 
 /**
  * <p>
- * Description.
+ * Tests logic of {@link } in the {@link android.test.AndroidTestCase} environment.
  * </p>
  *
  * @author Martin Albedinsky
  */
-@ExDelay(2000)
-@ExLogo(R.drawable.ic_logo)
-@ExHomeActivity(HomeActivity.class)
-public class SplashActivity extends ExSplashActivity {}
+public class FragmentFactoryTest extends android.test.AndroidTestCase {
+
+	/**
+	 * Test Constants =============================
+	 */
+
+	/**
+	 * Debug/Test TAG.
+	 */
+	private static final String TAG = FragmentFactoryTest.class.getSimpleName();
+
+	/**
+	 * Test Members ===============================
+	 */
+
+	/**
+	 * Methods ====================================
+	 */
+
+	/**
+	 * Set-up methods -----------------------------
+	 */
+
+	/**
+	 * Set ups before each test.
+	 *
+	 * @throws Exception
+	 */
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+
+		// FIXME: to obtain context
+		// getContext();
+	}
+
+	/**
+	 * Test methods -------------------------------
+	 */
+
+	@SmallTest
+	public void testCreateFragmentTag() throws Exception {
+
+	}
+}

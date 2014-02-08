@@ -18,7 +18,13 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment;
+package com.wit.android.support.fragment.examples.app;
+
+import com.wit.android.examples.annotations.ExDelay;
+import com.wit.android.examples.annotations.ExHomeActivity;
+import com.wit.android.examples.annotations.ExLogo;
+import com.wit.android.examples.app.ExSplashActivity;
+import com.wit.android.support.fragment.examples.R;
 
 /**
  * <p>
@@ -27,10 +33,7 @@ package com.wit.android.fragment;
  *
  * @author Martin Albedinsky
  */
-public class TestConfig {
-
-	/**
-	 * Log TAG.
-	 */
-	private static final String TAG = TestConfig.class.getSimpleName();
-}
+@ExDelay(2000)
+@ExLogo(R.drawable.ic_logo)
+@ExHomeActivity(HomeActivity.class)
+public class SplashActivity extends ExSplashActivity {}
