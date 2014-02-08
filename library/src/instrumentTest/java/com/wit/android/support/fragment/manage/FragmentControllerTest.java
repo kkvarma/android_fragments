@@ -18,13 +18,13 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment.manage;
+package com.wit.android.support.fragment.manage;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
 /**
  * <p>
- * Tests logic of {@link com.wit.android.fragment.manage.FragmentController} in the {@link android.test.AndroidTestCase} environment.
+ * Tests logic of {@link com.wit.android.support.fragment.manage.FragmentController} in the {@link android.test.AndroidTestCase} environment.
  * </p>
  *
  * @author Martin Albedinsky

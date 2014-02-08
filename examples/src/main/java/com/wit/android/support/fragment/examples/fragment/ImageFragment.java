@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment.examples.fragment;
+package com.wit.android.support.fragment.examples.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,7 +27,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.wit.android.examples.app.fragment.ExActionBarFragment;
-import com.wit.android.fragment.examples.R;
+import com.wit.android.support.fragment.examples.R;
 
 import java.util.Random;
 
@@ -48,7 +48,7 @@ public class ImageFragment extends ExActionBarFragment {
 	/**
 	 *
 	 */
-	private static final String BUNDLE_IMAGE = "com.wit.android.fragment.examples.fragment.ImageFragment.Bundle.Image";
+	private static final String BUNDLE_IMAGE = "com.wit.android.support.fragment.examples.fragment.ImageFragment.Bundle.Image";
 
 	/**
 	 *
