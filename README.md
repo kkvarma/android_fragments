@@ -2,9 +2,8 @@
 <img align="left" src="http://www.wolf-itechnologies.com/images/wit/android/wit_ic_android_100.png" />
 </a>
 
-Android Fragments (1.0)
+Android Support Fragments (1.0)
 ===============
-<h6 align="right">[support]</h6>
 
 <h1 align="right">
 	From the <a href="" title="">Android Daily Development</a>
