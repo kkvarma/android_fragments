@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -117,36 +118,42 @@ public class FragmentController {
 
 	/**
 	 * <p>
-	 * Same as {@link #FragmentController(android.support.v4.app.FragmentManager, com.wit.android.support.fragment.manage.FragmentController.IFragmentFactory)},
-	 * but with <code>null</code> factory.
+	 * Creates a new instance of FragmentController within the given <var>parentFragment</var>'s context.
 	 * </p>
+	 *
+	 * @param parentFragment The fragment in which will be this manager used.
+	 * @see #FragmentController(android.support.v4.app.FragmentActivity)
 	 */
-	public FragmentController(FragmentManager fragmentManager) {
-		this(fragmentManager, null);
+	public FragmentController(Fragment parentFragment) {
+		this(parentFragment.getFragmentManager());
 	}
 
 	/**
 	 * <p>
-	 * Creates a new instance of FragmentController
-	 * </p>
-	 * <p>
-	 * <b>Note: </b>always use {@link android.support.v4.app.FragmentManager} provided by
-	 * {@link android.support.v4.app.FragmentActivity FragmentActivity}.
-	 * </p>
-	 * <p>
-	 * <b>Correct Fragment Manager:</b>
-	 * <ul>
-	 * <li><b>FragmentActivity</b> => <code>yourActivity.getSupportFragmentManager()</code></li>
-	 * <li><b>Fragment</b> => <code>yourFragment.getFragmentManager()</code></li>
-	 * </ul>
+	 * Creates a new instance of FragmentController within the given <var>parentActivity</var>'s context.
 	 * </p>
 	 *
-	 * @param fragmentManager Support fragment manager to manage fragments.
-	 * @param factory         Fragment factory to provide fragment instances to manage by this controller.
+	 * @param parentActivity The activity in which will be this manager used.
+	 * @see #FragmentController(android.support.v4.app.Fragment)
 	 */
-	public FragmentController(FragmentManager fragmentManager, IFragmentFactory factory) {
-		setFragmentManager(fragmentManager);
-		setFragmentFactory(factory);
+	public FragmentController(FragmentActivity parentActivity) {
+		this(parentActivity.getSupportFragmentManager());
+	}
+
+	/**
+	 * <p>
+	 * Creates a new instance of FragmentController with the given <var>fragmentManager</var>.
+	 * </p>
+	 *
+	 * @param fragmentManager Fragment manager to manage dialog fragments.
+	 * @throws java.lang.NullPointerException If the given fragment manager is <code>null</code>.
+	 * @see #FragmentController(android.support.v4.app.FragmentActivity)
+	 * @see #FragmentController(android.support.v4.app.Fragment)
+	 */
+	public FragmentController(FragmentManager fragmentManager) {
+		if ((mFragmentManager = fragmentManager) == null) {
+			throw new NullPointerException("Illegal fragment manager.");
+		}
 	}
 
 	/**
@@ -519,29 +526,6 @@ public class FragmentController {
 	public String getVisibleFragmentTag() {
 		final Fragment visibleFragment = getVisibleFragment();
 		return (visibleFragment != null) ? visibleFragment.getTag() : null;
-	}
-
-	/**
-	 * <p>
-	 * Sets the fragment manager for this fragment controller instance, which will be used to manage
-	 * fragments and operations above them.
-	 * </p>
-	 * <p>
-	 * <b>Note: </b>always use {@link android.support.v4.app.FragmentManager} provided by
-	 * {@link android.support.v4.app.FragmentActivity FragmentActivity}.
-	 * </p>
-	 * <p>
-	 * <b>Correct Fragment Manager:</b>
-	 * <ul>
-	 * <li><b>FragmentActivity</b> => <code>yourActivity.getSupportFragmentManager()</code></li>
-	 * <li><b>Fragment</b> => <code>yourFragment.getFragmentManager()</code></li>
-	 * </ul>
-	 * </p>
-	 *
-	 * @param fragmentManager Support fragment manager to manage fragments.
-	 */
-	public final void setFragmentManager(FragmentManager fragmentManager) {
-		this.mFragmentManager = fragmentManager;
 	}
 
 	/**

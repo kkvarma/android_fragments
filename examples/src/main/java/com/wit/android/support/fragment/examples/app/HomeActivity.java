@@ -52,7 +52,7 @@ public class HomeActivity extends ExHomeActivity {
 	 */
 	private static final String TAG = HomeActivity.class.getSimpleName();
 
-	private final FragmentController FRAGMENT_CONTROLLER = new FragmentController(getSupportFragmentManager());
+	private final FragmentController FRAGMENT_CONTROLLER = new FragmentController(this);
 
 	{
 		// Set up fragment container id.

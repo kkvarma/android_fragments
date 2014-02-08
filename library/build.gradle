@@ -17,6 +17,8 @@ android {
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
+        versionCode rootProject.libraryVersionCode
+        versionName rootProject.libraryVersionName
     }
 }
 
@@ -34,7 +36,7 @@ android.libraryVariants.all { variant ->
 
     task("${variant.name}Aar") {
         // Delete the old artifact file.
-        delete '../artifacts/' + rootProject.libraryName + '-' + rootProject.libraryVersion + '.aar'
+        delete '../artifacts/' + rootProject.libraryName + '-' + rootProject.libraryVersionName + '.aar'
         // Copy the updated artifact from the build/libs directory to the library artifacts directory.
         copy {
             from 'build/libs/library.aar'
@@ -44,7 +46,7 @@ android.libraryVariants.all { variant ->
             rename { String fileName ->
                 fileName.replace(
                         'library',
-                        rootProject.libraryName + '-' + rootProject.libraryVersion)
+                        rootProject.libraryName + '-' + rootProject.libraryVersionName)
             }
         }
     }
@@ -86,9 +88,9 @@ task updateArtifacts {
 def updateArtifact(artifactName, classifier) {
     // Delete the old artifact file.
     if (classifier.isEmpty()) {
-        delete '../artifacts/' + rootProject.libraryName + '-' + rootProject.libraryVersion + '.jar'
+        delete '../artifacts/' + rootProject.libraryName + '-' + rootProject.libraryVersionName + '.jar'
     } else {
-        delete '../artifacts/' + rootProject.libraryName + "-" + rootProject.libraryVersion + '-' + classifier + '.jar'
+        delete '../artifacts/' + rootProject.libraryName + "-" + rootProject.libraryVersionName + '-' + classifier + '.jar'
     }
 
     // Copy the updated artifact from the build/libs directory to the library artifacts directory.
@@ -100,7 +102,7 @@ def updateArtifact(artifactName, classifier) {
         rename { String fileName ->
             fileName.replace(
                     'library',
-                    rootProject.libraryName + '-' + rootProject.libraryVersion)
+                    rootProject.libraryName + '-' + rootProject.libraryVersionName)
         }
     }
 }
