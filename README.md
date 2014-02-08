@@ -28,8 +28,6 @@ Android Fragments (1.0)
 |
 <a href="https://github.com/Wolf-ITechnologies/android_fragments/wiki/Library-Structure" title="Structure and design of library">LIBRARY STRUCTURE</a>
 |
-<a href="https://github.com/Wolf-ITechnologies/android_fragments/tree/release/examples" title="Simple project with examples">EXAMPLES</a>
-|
 <a href="https://github.com/Wolf-ITechnologies/android_fragments/wiki/FAQ" title="Frequently asked questions">FAQ</a>
 ]</h6>
 
