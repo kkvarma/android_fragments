@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment.adapter;
+package com.wit.android.support.fragment.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;

@@ -18,69 +18,19 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment;
-
-import android.test.suitebuilder.annotation.SmallTest;
+package com.wit.android.support.fragment;
 
 /**
  * <p>
- * Tests logic of {@link } in the {@link android.test.AndroidTestCase} environment.
+ * Description.
  * </p>
  *
  * @author Martin Albedinsky
  */
-public class BaseFragmentTest extends android.test.AndroidTestCase {
+public class TestConfig {
 
 	/**
-	 * Test Constants =============================
+	 * Log TAG.
 	 */
-
-	/**
-	 * Debug/Test TAG.
-	 */
-	private static final String TAG = BaseFragmentTest.class.getSimpleName();
-
-	/**
-	 * Test Members ===============================
-	 */
-
-	/**
-	 * Methods ====================================
-	 */
-
-	/**
-	 * Set-up methods -----------------------------
-	 */
-
-	/**
-	 * Set ups before each test.
-	 *
-	 * @throws Exception
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-
-		// FIXME: to obtain context
-		// getContext();
-	}
-
-	/**
-	 * Test methods -------------------------------
-	 */
-
-	@SmallTest
-	public void testDispatchBackPress() throws Exception {
-
-	}
-
-	@SmallTest
-	public void testIsRestored() throws Exception {
-
-	}
-
-	@SmallTest
-	public void testIsViewRestored() throws Exception {
-
-	}
+	private static final String TAG = TestConfig.class.getSimpleName();
 }

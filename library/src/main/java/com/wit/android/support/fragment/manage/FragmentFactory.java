@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment.manage;
+package com.wit.android.support.fragment.manage;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,7 +26,7 @@ import android.support.v4.app.Fragment;
 /**
  * <h4>Class Overview</h4>
  * <p>
- * This is only helper implementation of {@link com.wit.android.fragment.manage.FragmentController.IFragmentFactory}.
+ * This is only helper implementation of {@link com.wit.android.support.fragment.manage.FragmentController.IFragmentFactory}.
  * </p>
  * <p>
  * Provides some methods useful when using custom fragment factory.

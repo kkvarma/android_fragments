@@ -33,8 +33,8 @@
 :: ------------------------------------------------------------------------------------
 :: Maven repository parameters.
 @SET MAVEN_LOCAL_PATH=C:\Users\Martin\.m2\repository\
-@SET MAVEN_LIBRARY_GROUP_PATH=%MAVEN_LOCAL_PATH%com\wit\android\
-@SET MAVEN_LIBRARY_GROUP_ID=com.wit.android
+@SET MAVEN_LIBRARY_GROUP_PATH=%MAVEN_LOCAL_PATH%com\wit\android\support\
+@SET MAVEN_LIBRARY_GROUP_ID=com.wit.android.support
 @SET MAVEN_LIBRARY_JAR_SOURCES=%MAVEN_LIBRARY_GROUP_PATH%%LIBRARY_NAME%\%LIBRARY_VERSION%\%LIBRARY_NAME%-%LIBRARY_VERSION%-sources.jar
 @SET MAVEN_LIBRARY_JAR_JAVADOC=%MAVEN_LIBRARY_GROUP_PATH%%LIBRARY_NAME%\%LIBRARY_VERSION%\%LIBRARY_NAME%-%LIBRARY_VERSION%-javadoc.jar
 :: Library parameters

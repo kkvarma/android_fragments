@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment;
+package com.wit.android.support.fragment;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
  * </p>
  *
  * @author Martin Albedinsky
- * @see com.wit.android.fragment.WebFragment.OnWebContentLoadingListener
+ * @see com.wit.android.support.fragment.WebFragment.OnWebContentLoadingListener
  */
 public class WebFragment extends BaseFragment {
 
@@ -67,11 +67,11 @@ public class WebFragment extends BaseFragment {
 	 */
 	/**
 	 */
-	private static final String BUNDLE_WEB_VIEW_CONTENT = "com.wit.android.fragment.WebFragment.Bundle.Content";
+	private static final String BUNDLE_WEB_VIEW_CONTENT = "com.wit.android.support.fragment.WebFragment.Bundle.Content";
 
-	private static final String BUNDLE_WEB_VIEW_CONTENT_TYPE = "com.wit.android.fragment.WebFragment.Bundle.ContentType";
+	private static final String BUNDLE_WEB_VIEW_CONTENT_TYPE = "com.wit.android.support.fragment.WebFragment.Bundle.ContentType";
 
-	private static final String BUNDLE_WEB_VIEW_JAVA_SCRIPT_ENABLED = "com.wit.android.fragment.WebFragment.Bundle.JavaScriptEnabled";
+	private static final String BUNDLE_WEB_VIEW_JAVA_SCRIPT_ENABLED = "com.wit.android.support.fragment.WebFragment.Bundle.JavaScriptEnabled";
 
 	/**
 	 * Source code copied from Android SDK [START] =====================================================
@@ -406,7 +406,7 @@ public class WebFragment extends BaseFragment {
 	 * this fragment instance.
 	 * </p>
 	 *
-	 * @return Type of the current content. See {@link com.wit.android.fragment.WebFragment.ContentType}
+	 * @return Type of the current content. See {@link com.wit.android.support.fragment.WebFragment.ContentType}
 	 * for possible values.
 	 */
 	public ContentType getContentType() {
@@ -639,7 +639,7 @@ public class WebFragment extends BaseFragment {
 	/**
 	 * <h4>Class Overview</h4>
 	 * <p>
-	 * Web options for {@link com.wit.android.fragment.WebFragment}.
+	 * Web options for {@link com.wit.android.support.fragment.WebFragment}.
 	 * </p>
 	 *
 	 * @author Martin Albedinsky
@@ -709,7 +709,7 @@ public class WebFragment extends BaseFragment {
 	/**
 	 * <h4>Interface Overview</h4>
 	 * <p>
-	 * Simple listener for {@link com.wit.android.fragment.WebFragment} with callbacks fired whenever
+	 * Simple listener for {@link com.wit.android.support.fragment.WebFragment} with callbacks fired whenever
 	 * loading process of specific <b>web url</b> was started/finished.
 	 * </p>
 	 *
@@ -724,7 +724,7 @@ public class WebFragment extends BaseFragment {
 		/**
 		 * <p>
 		 * Fired whenever loading process of the specified <var>webUrl</var> within an instance of
-		 * {@link com.wit.android.fragment.WebFragment} for which is this callback registered was started.
+		 * {@link com.wit.android.support.fragment.WebFragment} for which is this callback registered was started.
 		 * </p>
 		 *
 		 * @param webUrl Web url which is currently being loaded into web view.
@@ -734,7 +734,7 @@ public class WebFragment extends BaseFragment {
 		/**
 		 * <p>
 		 * Fired whenever loading process of the specified <var>webUrl</var> within an instance of
-		 * {@link com.wit.android.fragment.WebFragment} for which is this callback registered was finished.
+		 * {@link com.wit.android.support.fragment.WebFragment} for which is this callback registered was finished.
 		 * </p>
 		 *
 		 * @param webUrl Web url which was currently loaded into web view.

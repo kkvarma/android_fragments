@@ -18,18 +18,18 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment.manage;
+package com.wit.android.support.fragment;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
 /**
  * <p>
- * Tests logic of {@link } in the {@link android.test.AndroidTestCase} environment.
+ * Tests logic of {@link com.wit.android.support.fragment.WebFragment} in the {@link android.test.AndroidTestCase} environment.
  * </p>
  *
  * @author Martin Albedinsky
  */
-public class FragmentFactoryTest extends android.test.AndroidTestCase {
+public class WebFragmentTest extends android.test.AndroidTestCase {
 
 	/**
 	 * Test Constants =============================
@@ -38,7 +38,7 @@ public class FragmentFactoryTest extends android.test.AndroidTestCase {
 	/**
 	 * Debug/Test TAG.
 	 */
-	private static final String TAG = FragmentFactoryTest.class.getSimpleName();
+	private static final String TAG = WebFragmentTest.class.getSimpleName();
 
 	/**
 	 * Test Members ===============================
@@ -70,7 +70,92 @@ public class FragmentFactoryTest extends android.test.AndroidTestCase {
 	 */
 
 	@SmallTest
-	public void testCreateFragmentTag() throws Exception {
+	public void testNewInstance() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testOnCreate() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testOnCreateView() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testOnViewCreated() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testOnActivityCreated() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testOnSaveInstanceState() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testLoadContent() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testDispatchBackPress() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testGetContent() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testGetContentType() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testSetOnWebContentLoadingListener() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testGetWebView() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testOnGetWebViewClient() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testOnGetWebChromeClient() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testOnLoadURL() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testOnLoadData() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testDispatchLoadingStarted() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testDispatchLoadingFinished() throws Exception {
 
 	}
 }

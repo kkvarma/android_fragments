@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment.examples.app;
+package com.wit.android.support.fragment.examples.app;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -30,10 +30,10 @@ import com.wit.android.examples.app.ExHomeActivity;
 import com.wit.android.examples.model.navigation.INavigationItem;
 import com.wit.android.examples.model.navigation.NavigationHeader;
 import com.wit.android.examples.model.navigation.NavigationItem;
-import com.wit.android.fragment.examples.R;
-import com.wit.android.fragment.examples.app.fragment.ImageFragment;
-import com.wit.android.fragment.examples.app.fragment.FragmentsFactory;
-import com.wit.android.fragment.manage.FragmentController;
+import com.wit.android.support.fragment.examples.R;
+import com.wit.android.support.fragment.examples.fragment.ImageFragment;
+import com.wit.android.support.fragment.examples.fragment.FragmentsFactory;
+import com.wit.android.support.fragment.manage.FragmentController;
 
 import java.util.ArrayList;
 import java.util.List;

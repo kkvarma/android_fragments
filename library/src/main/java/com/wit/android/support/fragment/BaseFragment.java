@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment;
+package com.wit.android.support.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,7 +29,7 @@ import android.support.v4.app.Fragment;
  * </p>
  *
  * @author Martin Albedinsky
- * @see com.wit.android.fragment.ActionBarFragment
+ * @see com.wit.android.support.fragment.ActionBarFragment
  */
 public abstract class BaseFragment extends Fragment {
 

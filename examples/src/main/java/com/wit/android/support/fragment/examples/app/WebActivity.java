@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment.examples.app;
+package com.wit.android.support.fragment.examples.app;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -33,8 +33,8 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.wit.android.examples.internal.app.ExBaseActionBarActivity;
-import com.wit.android.fragment.WebFragment;
-import com.wit.android.fragment.examples.R;
+import com.wit.android.support.fragment.WebFragment;
+import com.wit.android.support.fragment.examples.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
