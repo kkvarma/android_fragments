@@ -2,7 +2,7 @@
 <img align="left" src="http://www.wolf-itechnologies.com/images/wit/android/wit_ic_android_100.png" />
 </a>
 
-Android Support Fragments (1.0)
+Android Fragments (1.0)
 ===============
 
 <h1 align="right">
@@ -47,7 +47,7 @@ Android Support Fragments (1.0)
 
 ## Compatibility ##
 
-Supported from the **Android API version 7**, so almost **every Android** powered device out there :).
+Supported from the **Android API version 13**.
 
 ## Known Issues ##
 

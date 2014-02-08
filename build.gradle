@@ -17,14 +17,15 @@ buildscript {
  * Library options ===========================================================
  */
 ext.libraryName = "fragments"
-ext.libraryVersion = "1.0"
+ext.libraryVersionCode = 100
+ext.libraryVersionName = "1.0"
 
 /**
  * Android SDK options =======================================================
  */
 ext.compileSdkVersion = 19
 ext.buildToolsVersion = "19.0.1"
-ext.minSdkVersion = 7
+ext.minSdkVersion = 13
 ext.targetSdkVersion = 19
 
 /**
@@ -32,5 +33,3 @@ ext.targetSdkVersion = 19
  */
 // Support library.
 ext.supportLibrary = 'com.android.support:support-v4:+'
-// Support Application compatibility library.
-ext.appCompatLibrary = 'com.android.support:appcompat-v7:+'
