@@ -9,7 +9,16 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.7.+'
+        classpath 'com.android.tools.build:gradle:0.8.+'
+    }
+}
+
+/**
+ * All projects global configuration =========================================
+ */
+allprojects {
+    repositories {
+        mavenCentral()
     }
 }
 
@@ -17,7 +26,8 @@ buildscript {
  * Library options ===========================================================
  */
 ext.libraryName = "fragments"
-ext.libraryVersion = "1.0"
+ext.libraryVersionCode = 100
+ext.libraryVersionName = "1.0"
 
 /**
  * Android SDK options =======================================================
