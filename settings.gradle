@@ -4,4 +4,4 @@
 // Release version:
 //include ':library'
 // Examples version:
-include ':library', ':examples'
+include ':examples', ':library'
