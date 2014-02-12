@@ -2,7 +2,7 @@
 <!--
 /*
  * =================================================================================
- * Copyright (C) 2012 Martin Albedinsky [Wolf-ITechnologies]
+ * Copyright (C) 2012 - 2014 Martin Albedinsky [Wolf-ITechnologies]
  * =================================================================================
  * Licensed under the Apache License, Version 2.0 or later (further "License" only);
  * *********************************************************************************
@@ -21,11 +21,8 @@
  * =================================================================================
  */
 -->
-<set xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <translate
-        android:duration="@integer/And.Anim.Fragment.Slide.In.duration"
-        android:fromYDelta="100%p"
-        android:toYDelta="0%p" />
-
-</set>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+           android:zAdjustment="top"
+           android:duration="@integer/And.Anim.Fragment.Slide.In.duration"
+           android:fromYDelta="100%p"
+           android:toYDelta="0%p"/>
