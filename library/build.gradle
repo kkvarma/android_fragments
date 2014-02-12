@@ -5,6 +5,8 @@ apply plugin: 'android-library'
  */
 dependencies {
     compile rootProject.supportLibrary
+    // Check release artifacts.
+    compile fileTree(dir: '../artifacts', include: ['*.jar', '*.aar'])
 }
 
 /**

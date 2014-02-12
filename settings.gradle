@@ -3,5 +3,3 @@
  */
 // Release version:
 include ':library'
-// Examples version:
-//include ':examples', ':library'
