@@ -22,6 +22,7 @@ package com.wit.android.support.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 /**
  * <h4>Class Overview</h4>
@@ -182,6 +183,17 @@ public abstract class BaseFragment extends Fragment {
 		return isActivityAvailable() ? getString(resID, args) : "";
 	}
 
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param view
+	 * @return
+	 */
+	public boolean dispatchViewClick(View view) {
+		return onViewClick(view, view.getId());
+	}
+
     /**
      * Getters + Setters ---------------------
      */
@@ -200,6 +212,18 @@ public abstract class BaseFragment extends Fragment {
 	 * @see #dispatchBackPress()
 	 */
 	protected boolean onBackPress() {
+		return false;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param view
+	 * @param id
+	 * @return
+	 */
+	protected boolean onViewClick(View view, int id) {
 		return false;
 	}
 
