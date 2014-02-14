@@ -27,10 +27,6 @@ import android.app.ActionBar;
  * <p>
  * Description.
  * </p>
- * <p>
- * <b>Note, that implementation of this fragment can be used only within the context of
- * {@link android.support.v7.app.ActionBarActivity}</b>.
- * </p>
  *
  * @author Martin Albedinsky
  */
@@ -93,7 +89,7 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#supportInvalidateOptionsMenu()}.
+	 * Same as {@link android.app.Activity#invalidateOptionsMenu()}.
 	 * </p>
 	 *
 	 * @see #isActivityAvailable()
@@ -106,7 +102,7 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#supportRequestWindowFeature(int)}.
+	 * Same as {@link android.app.Activity#requestWindowFeature(int)}.
 	 * </p>
 	 *
 	 * @see #getActionBar()
@@ -146,7 +142,7 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#getSupportActionBar()}
+	 * Same as {@link android.app.Activity#getActionBar()}
 	 * </p>
 	 *
 	 * @see #requestWindowFeature(int)
@@ -158,7 +154,7 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#setSupportProgress(int)}.
+	 * Same as {@link android.app.Activity#setProgress(int)}.
 	 * </p>
 	 *
 	 * @see #setProgressBarVisibility(boolean)
@@ -172,7 +168,7 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#setSupportProgressBarVisibility(boolean)}.
+	 * Same as {@link android.app.Activity#setProgressBarVisibility(boolean)}.
 	 * </p>
 	 *
 	 * @see #setProgress(int)
@@ -187,7 +183,7 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#setSupportProgressBarIndeterminate(boolean)}.
+	 * Same as {@link android.app.Activity#setProgressBarIndeterminate(boolean)}.
 	 * </p>
 	 *
 	 * @see #setProgressBarIndeterminateVisibility(boolean)
@@ -201,7 +197,7 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#setSupportProgressBarIndeterminateVisibility(boolean)}.
+	 * Same as {@link android.app.Activity#setProgressBarIndeterminateVisibility(boolean)}.
 	 * </p>
 	 *
 	 * @see #setProgressBarIndeterminate(boolean)
