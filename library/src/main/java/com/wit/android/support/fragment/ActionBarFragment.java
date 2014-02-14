@@ -140,6 +140,30 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
+	 * </p>
+	 *
+	 * @param resID
+	 */
+	public void setActionBarTitle(int resID) {
+		if (isActivityAvailable()) {
+			getActionBar().setTitle(resID);
+		}
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param title
+	 */
+	public void setActionBarTitle(CharSequence title) {
+		if (isActivityAvailable()) {
+			getActionBar().setTitle(title);
+		}
+	}
+
+	/**
+	 * <p>
 	 * Same as {@link android.support.v7.app.ActionBarActivity#getSupportActionBar()}
 	 * </p>
 	 *
