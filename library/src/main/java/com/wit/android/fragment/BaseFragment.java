@@ -22,9 +22,11 @@ package com.wit.android.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import com.wit.android.support.fragment.annotation.ContentView;
+import com.wit.android.fragment.annotation.ContentView;
 
 /**
  * <h4>Class Overview</h4>
