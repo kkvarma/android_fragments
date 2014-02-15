@@ -132,7 +132,7 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * @throws android.util.AndroidRuntimeException If the currently created parent activity isn't
-	 * instance of {@link android.support.v7.app.ActionBarActivity}.
+	 *                                              instance of {@link android.support.v7.app.ActionBarActivity}.
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -326,7 +326,6 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
-	 *
 	 * @param classOfFragment
 	 * @return
 	 */
