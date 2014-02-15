@@ -22,6 +22,9 @@ package com.wit.android.fragment;
 
 import android.app.ActionBar;
 
+import com.wit.android.support.fragment.annotation.ActionBarIcon;
+import com.wit.android.support.fragment.annotation.ActionBarTitle;
+
 /**
  * <h4>Class Overview</h4>
  * <p>
@@ -64,6 +67,16 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
+	 *
+	 */
+	private int mActionBarTitle = -1;
+
+	/**
+	 *
+	 */
+	private int mActionBarIcon = -1;
+
+	/**
 	 * Listeners -----------------------------
 	 */
 
@@ -78,6 +91,27 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 * Constructors ==========================
 	 */
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	public ActionBarFragment() {
+		super();
+		final Class<? extends ActionBarFragment> classOfFragment = getClass();
+		/**
+		 * Process class annotations.
+		 */
+		// Retrieve action bar title.
+		if (classOfFragment.isAnnotationPresent(ActionBarTitle.class)) {
+			this.mActionBarTitle = classOfFragment.getAnnotation(ActionBarTitle.class).value();
+		}
+		// Retrieve action bar icon.
+		final ActionBarIcon actionBarIcon = this.obtainActionBarIconFrom(classOfFragment);
+		if (actionBarIcon != null) {
+			this.mActionBarIcon = actionBarIcon.value();
+		}
+	}
 
 	/**
 	 * Methods ===============================
@@ -216,6 +250,21 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 * Private -------------------------------
 	 */
+
+	/**
+	 *
+	 * @param classOfFragment
+	 * @return
+	 */
+	private ActionBarIcon obtainActionBarIconFrom(Class<?> classOfFragment) {
+		if (!classOfFragment.isAnnotationPresent(ActionBarIcon.class)) {
+			final Class<?> parent = classOfFragment.getSuperclass();
+			if (parent != null) {
+				return obtainActionBarIconFrom(parent);
+			}
+		}
+		return classOfFragment.getAnnotation(ActionBarIcon.class);
+	}
 
 	/**
 	 * Abstract methods ----------------------
