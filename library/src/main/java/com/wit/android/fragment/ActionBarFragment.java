@@ -22,8 +22,8 @@ package com.wit.android.fragment;
 
 import android.app.ActionBar;
 
-import com.wit.android.support.fragment.annotation.ActionBarIcon;
-import com.wit.android.support.fragment.annotation.ActionBarTitle;
+import com.wit.android.fragment.annotation.ActionBarIcon;
+import com.wit.android.fragment.annotation.ActionBarTitle;
 
 /**
  * <h4>Class Overview</h4>
