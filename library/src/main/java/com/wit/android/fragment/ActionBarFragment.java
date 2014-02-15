@@ -122,6 +122,19 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
+	 */
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		if (mActionBarTitle > 0) {
+			setActionBarTitle(mActionBarTitle);
+		}
+		if (mActionBarIcon > 0) {
+			setActionBarIcon(mActionBarIcon);
+		}
+	}
+
+	/**
 	 * <p>
 	 * Same as {@link android.app.Activity#invalidateOptionsMenu()}.
 	 * </p>
@@ -252,7 +265,6 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
-	 *
 	 * @param classOfFragment
 	 * @return
 	 */
