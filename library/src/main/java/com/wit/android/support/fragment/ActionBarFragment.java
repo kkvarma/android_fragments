@@ -20,10 +20,13 @@
  */
 package com.wit.android.support.fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.AndroidRuntimeException;
+
+import com.wit.android.support.fragment.annotation.ActionBarTitle;
 
 /**
  * <h4>Class Overview</h4>
@@ -71,6 +74,11 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
+	 *
+	 */
+	private int mActionBarTitle = -1;
+
+	/**
 	 * Listeners -----------------------------
 	 */
 
@@ -85,6 +93,23 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 * Constructors ==========================
 	 */
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	public ActionBarFragment() {
+		super();
+		final Class<? extends ActionBarFragment> classOfFragment = getClass();
+		/**
+		 * Process class annotations.
+		 */
+		// Retrieve action bar title.
+		final ActionBarTitle actionBarTitle = this.obtainActionBarTitleFrom(classOfFragment);
+		if (actionBarTitle != null) {
+			this.mActionBarTitle = actionBarTitle.value();
+		}
+	}
 
 	/**
 	 * Methods ===============================
@@ -159,6 +184,30 @@ public class ActionBarFragment extends BaseFragment {
 	public void setActionBarTitle(CharSequence title) {
 		if (isActivityAvailable()) {
 			getActionBar().setTitle(title);
+		}
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param resID
+	 */
+	public void setActionBarIcon(int resID) {
+		if (isActivityAvailable()) {
+			getActionBar().setIcon(resID);
+		}
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param icon
+	 */
+	public void setActionBarIcon(Drawable icon) {
+		if (isActivityAvailable()) {
+			getActionBar().setIcon(icon);
 		}
 	}
 
@@ -251,6 +300,21 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 * Private -------------------------------
 	 */
+
+	/**
+	 *
+	 * @param classOfFragment
+	 * @return
+	 */
+	private ActionBarTitle obtainActionBarTitleFrom(Class<?> classOfFragment) {
+		if (!classOfFragment.isAnnotationPresent(ActionBarTitle.class)) {
+			final Class<?> parent = classOfFragment.getSuperclass();
+			if (parent != null) {
+				return obtainActionBarTitleFrom(parent);
+			}
+		}
+		return classOfFragment.getAnnotation(ActionBarTitle.class);
+	}
 
 	/**
 	 * Abstract methods ----------------------
