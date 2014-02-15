@@ -21,6 +21,7 @@
 package com.wit.android.fragment;
 
 import android.app.ActionBar;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -186,6 +187,30 @@ public class ActionBarFragment extends BaseFragment {
 	public void setActionBarTitle(CharSequence title) {
 		if (isActivityAvailable()) {
 			getActionBar().setTitle(title);
+		}
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param resID
+	 */
+	public void setActionBarIcon(int resID) {
+		if (isActivityAvailable()) {
+			getActionBar().setIcon(resID);
+		}
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param icon
+	 */
+	public void setActionBarIcon(Drawable icon) {
+		if (isActivityAvailable()) {
+			getActionBar().setIcon(icon);
 		}
 	}
 
