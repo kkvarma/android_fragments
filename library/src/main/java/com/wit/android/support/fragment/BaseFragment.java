@@ -126,18 +126,6 @@ public abstract class BaseFragment extends Fragment {
      */
 
     /**
-     * <p>
-     * Called to dispatch back press action to this fragment instance.
-     * </p>
-     *
-     * @return <code>True</code> if this instance of fragment processes dispatched back press action,
-     * <code>false</code> otherwise.
-     */
-    public boolean dispatchBackPress() {
-        return onBackPress();
-    }
-
-    /**
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -171,6 +159,18 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroy();
         this.bViewRestored = false;
     }
+
+	/**
+	 * <p>
+	 * Called to dispatch back press action to this fragment instance.
+	 * </p>
+	 *
+	 * @return <code>True</code> if this instance of fragment processes dispatched back press action,
+	 * <code>false</code> otherwise.
+	 */
+	public boolean dispatchBackPress() {
+		return onBackPress();
+	}
 
 	/**
 	 * <p>
