@@ -22,7 +22,11 @@ package com.wit.android.support.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+
+import com.wit.android.support.fragment.annotation.ContentView;
 
 /**
  * <h4>Class Overview</h4>
@@ -65,6 +69,11 @@ public abstract class BaseFragment extends Fragment {
      * Members ===============================
      */
 
+	/**
+	 *
+	 */
+	private int mContentView = -1;
+
     /**
      * Listeners -----------------------------
      */
@@ -91,6 +100,22 @@ public abstract class BaseFragment extends Fragment {
     /**
      * Constructors ==========================
      */
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	public BaseFragment() {
+		final Class<? extends BaseFragment> classOfFragment = getClass();
+		/**
+		 * Process class annotations.
+		 */
+		// Retrieve content view.
+		final ContentView contentView = this.obtainContentViewFrom(classOfFragment);
+		if (contentView != null) {
+			this.mContentView = contentView.value();
+		}
+	}
 
     /**
      * Methods ===============================
@@ -121,7 +146,17 @@ public abstract class BaseFragment extends Fragment {
         this.bRestored = savedInstanceState != null;
     }
 
-    /**
+	/**
+	 */
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		if (mContentView > 0) {
+			return inflater.inflate(mContentView, container, false);
+		}
+		return super.onCreateView(inflater, container, savedInstanceState);
+	}
+
+	/**
      */
     @Override
     public void onDestroyView() {
@@ -241,6 +276,21 @@ public abstract class BaseFragment extends Fragment {
     /**
      * Private -------------------------------
      */
+
+	/**
+	 *
+	 * @param classOfFragment
+	 * @return
+	 */
+	private ContentView obtainContentViewFrom(Class<?> classOfFragment) {
+		if (!classOfFragment.isAnnotationPresent(ContentView.class)) {
+			final Class<?> parent = classOfFragment.getSuperclass();
+			if (parent != null) {
+				return obtainContentViewFrom(parent);
+			}
+		}
+		return classOfFragment.getAnnotation(ContentView.class);
+	}
 
     /**
      * Abstract methods ----------------------
