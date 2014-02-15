@@ -34,7 +34,7 @@ ext.libraryVersionName = "1.0"
  */
 ext.compileSdkVersion = 19
 ext.buildToolsVersion = "19.0.1"
-ext.minSdkVersion = 13
+ext.minSdkVersion = 14
 ext.targetSdkVersion = 19
 
 /**
