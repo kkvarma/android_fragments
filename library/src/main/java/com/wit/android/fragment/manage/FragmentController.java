@@ -98,8 +98,18 @@ public class FragmentController {
 	private int mFragmentContainerID = -1;
 
 	/**
+	 *
+	 */
+	private String mLastFragmentTag = null;
+
+	/**
 	 * Listeners -----------------------------
 	 */
+
+	/**
+	 *
+	 */
+	private OnFragmentChangeListener lChangeListener;
 
 	/**
 	 * Arrays --------------------------------
@@ -123,6 +133,9 @@ public class FragmentController {
 	 */
 	public FragmentController(Fragment parentFragment) {
 		this(parentFragment.getFragmentManager());
+		if (parentFragment instanceof OnFragmentChangeListener) {
+			this.lChangeListener = (OnFragmentChangeListener) parentFragment;
+		}
 	}
 
 	/**
@@ -135,6 +148,9 @@ public class FragmentController {
 	 */
 	public FragmentController(Activity parentActivity) {
 		this(parentActivity.getFragmentManager());
+		if (parentActivity instanceof OnFragmentChangeListener) {
+			this.lChangeListener = (OnFragmentChangeListener) parentActivity;
+		}
 	}
 
 	/**
@@ -590,6 +606,16 @@ public class FragmentController {
 	}
 
 	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	public final String getLastFragmentTag() {
+		return mLastFragmentTag;
+	}
+
+	/**
 	 * Protected -----------------------------
 	 */
 
@@ -692,7 +718,7 @@ public class FragmentController {
 		if (options.addToBackStack) {
 			transaction.addToBackStack(fragment.getTag());
 			if (USER_LOG) {
-				Log.i(TAG, "Fragment(" + fragment + ") added to back stack with tag(" + fragment.getTag() + ").");
+				Log.i(TAG, "Fragment(" + fragment + ") added to back stack under the tag(" + fragment.getTag() + ").");
 			}
 		}
 		return onCommitTransaction(transaction, options);
@@ -751,7 +777,8 @@ public class FragmentController {
 	 * @return <code>True</code> if showing was successful, <code>false</code> otherwise.
 	 */
 	private boolean performShowFragment(Fragment fragment, ShowOptions options) {
-		return onShowFragment(fragment, options);
+		final boolean shown = onShowFragment(fragment, options);
+		return shown && notifyFragmentChanged(fragment.getId(), fragment.getTag(), false);
 	}
 
 	/**
@@ -770,7 +797,21 @@ public class FragmentController {
 			Log.e(TAG, "No such fragment instance for the requested fragment id(" + fragmentID + "). Please check your fragment factory.");
 			return false;
 		}
-		return onShowFragment(fragment, mFragmentFactory.getFragmentShowOptions(fragmentID, params));
+		final boolean shown = onShowFragment(fragment, mFragmentFactory.getFragmentShowOptions(fragmentID, params));
+		return shown && notifyFragmentChanged(fragmentID, fragment.getTag(), true);
+	}
+
+	/**
+	 * @param id
+	 * @param tag
+	 * @param factoryFragment
+	 */
+	private boolean notifyFragmentChanged(int id, String tag, boolean factoryFragment) {
+		this.mLastFragmentTag = tag;
+		if (lChangeListener != null) {
+			lChangeListener.onFragmentChanged(id, tag, factoryFragment);
+		}
+		return true;
 	}
 
 	/**
@@ -1053,491 +1094,6 @@ public class FragmentController {
 	}
 
 	/**
-	 * <h4>Class Overview</h4>
-	 * <p>
-	 * </p>
-	 */
-	public static class ShowDirection implements Parcelable {
-		/**
-		 * Constants =============================
-		 */
-
-		/**
-		 * <p>
-		 * Parcelable creator.
-		 * </p>
-		 */
-		public static final Creator<ShowDirection> CREATOR = new Creator<ShowDirection>() {
-			@Override
-			public ShowDirection createFromParcel(Parcel source) {
-				return new ShowDirection(source);
-			}
-
-			@Override
-			public ShowDirection[] newArray(int size) {
-				return new ShowDirection[size];
-			}
-		};
-
-		/**
-		 * <p>
-		 * Use this to show new incoming fragment which will replace the current fragment without any
-		 * animation.
-		 * </p>
-		 */
-		public static final ShowDirection NONE = new ShowDirection(0, 0, 0, 0, "NONE");
-
-		/**
-		 * <p>
-		 * Use this direction to slide a new incoming fragment from the left and outgoing (the current
-		 * one) will be slided to the right.
-		 * </p>
-		 * <h6>Powered by animations:</h6>
-		 * <ul>
-		 * <li><b>Incoming:</b> {@link R.anim#and_slide_fragment_in_right}</li>
-		 * <li><b>Outgoing:</b> {@link R.anim#and_slide_fragment_out_right}</li>
-		 * <li><b>Incoming (back-stack):</b> {@link R.anim#and_slide_fragment_in_left_back}</li>
-		 * <li><b>Outgoing (back-stack):</b> {@link R.anim#and_slide_fragment_out_left_back}</li>
-		 * </ul>
-		 */
-		public static final ShowDirection FROM_LEFT_TO_RIGHT = new ShowDirection(
-				// Incoming animation.
-				R.anim.and_slide_fragment_in_right,
-				// Outgoing animation.
-				R.anim.and_slide_fragment_out_right,
-				// Incoming back-stack animation.
-				R.anim.and_slide_fragment_in_left_back,
-				// Outgoing back-stack animation.
-				R.anim.and_slide_fragment_out_left_back,
-				"FROM_LEFT_TO_RIGHT"
-		);
-
-		/**
-		 * <p>
-		 * Use this direction to slide a new incoming fragment from the right and outgoing (the current
-		 * one) will be slided to the left.
-		 * </p>
-		 * <h6>Powered by animations:</h6>
-		 * <ul>
-		 * <li><b>Incoming:</b> {@link R.anim#and_slide_fragment_in_left}</li>
-		 * <li><b>Outgoing:</b> {@link R.anim#and_slide_fragment_out_left}</li>
-		 * <li><b>Incoming (back-stack):</b> {@link R.anim#and_slide_fragment_in_right_back}</li>
-		 * <li><b>Outgoing (back-stack):</b> {@link R.anim#and_slide_fragment_out_right_back}</li>
-		 * </ul>
-		 */
-		public static final ShowDirection FROM_RIGHT_TO_LEFT = new ShowDirection(
-				// Incoming animation.
-				R.anim.and_slide_fragment_in_left,
-				// Outgoing animation.
-				R.anim.and_slide_fragment_out_left,
-				// Incoming back-stack animation.
-				R.anim.and_slide_fragment_in_right_back,
-				// Outgoing back-stack animation.
-				R.anim.and_slide_fragment_out_right_back,
-				"FROM_RIGHT_TO_LEFT"
-		);
-
-		/**
-		 * <p>
-		 * Use this direction to slide a new incoming fragment from the top and outgoing (the current
-		 * one) will be slided to the bottom.
-		 * </p>
-		 * <h6>Powered by animations:</h6>
-		 * <ul>
-		 * <li><b>Incoming:</b> {@link R.anim#and_slide_fragment_in_bottom}</li>
-		 * <li><b>Outgoing:</b> {@link R.anim#and_slide_fragment_out_bottom}</li>
-		 * <li><b>Incoming (back-stack):</b> {@link R.anim#and_slide_fragment_in_top_back}</li>
-		 * <li><b>Outgoing (back-stack):</b> {@link R.anim#and_slide_fragment_out_top_back}</li>
-		 * </ul>
-		 */
-		public static final ShowDirection FROM_TOP_TO_BOTTOM = new ShowDirection(
-				// Incoming animation.
-				R.anim.and_slide_fragment_in_bottom,
-				// Outgoing animation.
-				R.anim.and_slide_fragment_out_bottom,
-				// Incoming back-stack animation.
-				R.anim.and_slide_fragment_in_top_back,
-				// Outgoing back-stack animation.
-				R.anim.and_slide_fragment_out_top_back,
-				"FROM_TOP_TO_BOTTOM");
-
-		/**
-		 * <p>
-		 * Use this direction to slide a new incoming fragment from the bottom and outgoing (the current
-		 * one) will be slided to the top.
-		 * </p>
-		 * <h6>Powered by animations:</h6>
-		 * <ul>
-		 * <li><b>Incoming:</b> {@link R.anim#and_slide_fragment_in_top}</li>
-		 * <li><b>Outgoing:</b> {@link R.anim#and_slide_fragment_out_top}</li>
-		 * <li><b>Incoming (back-stack):</b> {@link R.anim#and_slide_fragment_in_bottom_back}</li>
-		 * <li><b>Outgoing (back-stack):</b> {@link R.anim#and_slide_fragment_out_bottom_back}</li>
-		 * </ul>
-		 */
-		public static final ShowDirection FROM_BOTTOM_TO_TOP = new ShowDirection(
-				// Incoming animation.
-				R.anim.and_slide_fragment_in_top,
-				// Outgoing animation.
-				R.anim.and_slide_fragment_out_top,
-				// Incoming back-stack animation.
-				R.anim.and_slide_fragment_in_bottom_back,
-				// Outgoing back-stack animation.
-				R.anim.and_slide_fragment_out_bottom_back,
-				"FROM_BOTTOM_TO_TOP");
-
-		/**
-		 * <p>
-		 * Use this direction to scale (with fade) a new incoming fragment from the background and
-		 * outgoing (the current one) will be slided to the left.
-		 * </p>
-		 * <h6>Powered by animations:</h6>
-		 * <ul>
-		 * <li><b>Incoming:</b> {@link R.anim#and_scale_fragment_in}</li>
-		 * <li><b>Outgoing:</b> {@link R.anim#and_slide_fragment_out_left}</li>
-		 * <li><b>Incoming (back-stack):</b> {@link R.anim#and_slide_fragment_in_right_back}</li>
-		 * <li><b>Outgoing (back-stack):</b> {@link R.anim#and_scale_fragment_out_back}</li>
-		 * </ul>
-		 */
-		public static final ShowDirection FROM_BACKGROUND_TO_LEFT = new ShowDirection(
-				// Incoming animation.
-				R.anim.and_scale_fragment_in,
-				// Outgoing animation.
-				R.anim.and_slide_fragment_out_left,
-				// Incoming back-stack animation.
-				R.anim.and_slide_fragment_in_right_back,
-				// Outgoing back-stack animation.
-				R.anim.and_scale_fragment_out_back,
-				"FROM_BACKGROUND_TO_LEFT");
-
-		/**
-		 * <p>
-		 * Use this direction to scale (with fade) a new incoming fragment from the background and
-		 * outgoing (the current one) will be slided to the right.
-		 * </p>
-		 * <h6>Powered by animations:</h6>
-		 * <ul>
-		 * <li><b>Incoming:</b> {@link R.anim#and_scale_fragment_in}</li>
-		 * <li><b>Outgoing:</b> {@link R.anim#and_slide_fragment_out_right}</li>
-		 * <li><b>Incoming (back-stack):</b> {@link R.anim#and_slide_fragment_in_left_back}</li>
-		 * <li><b>Outgoing (back-stack):</b> {@link R.anim#and_scale_fragment_out_back}</li>
-		 * </ul>
-		 */
-		public static final ShowDirection FROM_BACKGROUND_TO_RIGHT = new ShowDirection(
-				// Incoming animation.
-				R.anim.and_scale_fragment_in,
-				// Outgoing animation.
-				R.anim.and_slide_fragment_out_right,
-				// Incoming back-stack animation.
-				R.anim.and_slide_fragment_in_left_back,
-				// Outgoing back-stack animation.
-				R.anim.and_scale_fragment_out_back,
-				"FROM_BACKGROUND_TO_RIGHT");
-
-		/**
-		 * <p>
-		 * Use this direction to scale (with fade) a new incoming fragment from the background and
-		 * outgoing (the current one) will be slided to the top.
-		 * </p>
-		 * <h6>Powered by animations:</h6>
-		 * <ul>
-		 * <li><b>Incoming:</b> {@link R.anim#and_scale_fragment_in}</li>
-		 * <li><b>Outgoing:</b> {@link R.anim#and_slide_fragment_out_top}</li>
-		 * <li><b>Incoming (back-stack):</b> {@link R.anim#and_slide_fragment_in_bottom_back}</li>
-		 * <li><b>Outgoing (back-stack):</b> {@link R.anim#and_scale_fragment_out_back}</li>
-		 * </ul>
-		 */
-		public static final ShowDirection FROM_BACKGROUND_TO_TOP = new ShowDirection(
-				// Incoming animation.
-				R.anim.and_scale_fragment_in,
-				// Outgoing animation.
-				R.anim.and_slide_fragment_out_top,
-				// Incoming back-stack animation.
-				R.anim.and_slide_fragment_in_bottom_back,
-				// Outgoing back-stack animation.
-				R.anim.and_scale_fragment_out_back,
-				"FROM_BACKGROUND_TO_TOP");
-
-		/**
-		 * <p>
-		 * Use this direction to scale (with fade) a new incoming fragment from the background and
-		 * outgoing (the current one) will be slided to the bottom.
-		 * </p>
-		 * <h6>Powered by animations:</h6>
-		 * <ul>
-		 * <li><b>Incoming:</b> {@link R.anim#and_scale_fragment_in}</li>
-		 * <li><b>Outgoing:</b> {@link R.anim#and_slide_fragment_out_bottom}</li>
-		 * <li><b>Incoming (back-stack):</b> {@link R.anim#and_slide_fragment_in_top_back}</li>
-		 * <li><b>Outgoing (back-stack):</b> {@link R.anim#and_scale_fragment_out_back}</li>
-		 * </ul>
-		 */
-		public static final ShowDirection FROM_BACKGROUND_TO_BOTTOM = new ShowDirection(
-				// Incoming animation.
-				R.anim.and_scale_fragment_in,
-				// Outgoing animation.
-				R.anim.and_slide_fragment_out_bottom,
-				// Incoming back-stack animation.
-				R.anim.and_slide_fragment_in_top_back,
-				// Outgoing back-stack animation.
-				R.anim.and_scale_fragment_out_back,
-				"FROM_BACKGROUND_TO_BOTTOM");
-
-		/**
-		 * <p>
-		 * Use this direction to slide a new incoming fragment from the left and outgoing (the current
-		 * one) will be scaled (with fade) to the background.
-		 * </p>
-		 * <h6>Powered by animations:</h6>
-		 * <ul>
-		 * <li><b>Incoming:</b> {@link R.anim#and_slide_fragment_in_right}</li>
-		 * <li><b>Outgoing:</b> {@link R.anim#and_scale_fragment_out}</li>
-		 * <li><b>Incoming (back-stack):</b> {@link R.anim#and_scale_fragment_in_back}</li>
-		 * <li><b>Outgoing (back-stack):</b> {@link R.anim#and_slide_fragment_out_left_back}</li>
-		 * </ul>
-		 */
-		public static final ShowDirection FROM_LEFT_TO_BACKGROUND = new ShowDirection(
-				// Incoming animation.
-				R.anim.and_slide_fragment_in_right,
-				// Outgoing animation.
-				R.anim.and_scale_fragment_out,
-				// Incoming back-stack animation.
-				R.anim.and_scale_fragment_in_back,
-				// Outgoing back-stack animation.
-				R.anim.and_slide_fragment_out_left_back,
-				"FROM_LEFT_TO_BACKGROUND");
-
-		/**
-		 * <p>
-		 * Use this direction to slide a new incoming fragment from the right and outgoing (the current
-		 * one) will be scaled (with fade) to the background.
-		 * </p>
-		 * <h6>Powered by animations:</h6>
-		 * <ul>
-		 * <li><b>Incoming:</b> {@link R.anim#and_slide_fragment_in_left}</li>
-		 * <li><b>Outgoing:</b> {@link R.anim#and_scale_fragment_out}</li>
-		 * <li><b>Incoming (back-stack):</b> {@link R.anim#and_scale_fragment_in_back}</li>
-		 * <li><b>Outgoing (back-stack):</b> {@link R.anim#and_slide_fragment_out_right_back}</li>
-		 * </ul>
-		 */
-		public static final ShowDirection FROM_RIGHT_TO_BACKGROUND = new ShowDirection(
-				// Incoming animation.
-				R.anim.and_slide_fragment_in_left,
-				// Outgoing animation.
-				R.anim.and_scale_fragment_out,
-				// Incoming back-stack animation.
-				R.anim.and_scale_fragment_in_back,
-				// Outgoing back-stack animation.
-				R.anim.and_slide_fragment_out_right_back,
-				"FROM_RIGHT_TO_BACKGROUND");
-
-		/**
-		 * <p>
-		 * Use this direction to slide a new incoming fragment from the top and outgoing (the current
-		 * one) will be scaled (with fade) to the background.
-		 * </p>
-		 * <h6>Powered by animations:</h6>
-		 * <ul>
-		 * <li><b>Incoming:</b> {@link R.anim#and_slide_fragment_in_bottom}</li>
-		 * <li><b>Outgoing:</b> {@link R.anim#and_scale_fragment_out}</li>
-		 * <li><b>Incoming (back-stack):</b> {@link R.anim#and_scale_fragment_in_back}</li>
-		 * <li><b>Outgoing (back-stack):</b> {@link R.anim#and_slide_fragment_out_top_back}</li>
-		 * </ul>
-		 */
-		public static final ShowDirection FROM_TOP_TO_BACKGROUND = new ShowDirection(
-				// Incoming animation.
-				R.anim.and_slide_fragment_in_bottom,
-				// Outgoing animation.
-				R.anim.and_scale_fragment_out,
-				// Incoming back-stack animation.
-				R.anim.and_scale_fragment_in_back,
-				// Outgoing back-stack animation.
-				R.anim.and_slide_fragment_out_top_back,
-				"FROM_TOP_TO_BACKGROUND");
-
-		/**
-		 * <p>
-		 * Use this direction to slide a new incoming fragment from the bottom and outgoing (the current
-		 * one) will be scaled (with fade) to the background.
-		 * </p>
-		 * <h6>Powered by animations:</h6>
-		 * <ul>
-		 * <li><b>Incoming:</b> {@link R.anim#and_slide_fragment_in_top}</li>
-		 * <li><b>Outgoing:</b> {@link R.anim#and_scale_fragment_out}</li>
-		 * <li><b>Incoming (back-stack):</b> {@link R.anim#and_scale_fragment_in_back}</li>
-		 * <li><b>Outgoing (back-stack):</b> {@link R.anim#and_slide_fragment_out_bottom_back}</li>
-		 * </ul>
-		 */
-		public static final ShowDirection FROM_BOTTOM_TO_BACKGROUND = new ShowDirection(
-				// Incoming animation.
-				R.anim.and_slide_fragment_in_top,
-				// Outgoing animation.
-				R.anim.and_scale_fragment_out,
-				// Incoming back-stack animation.
-				R.anim.and_scale_fragment_in_back,
-				// Outgoing back-stack animation.
-				R.anim.and_slide_fragment_out_bottom_back,
-				"FROM_BOTTOM_TO_BACKGROUND");
-
-		/**
-		 * Members ===============================
-		 */
-
-		/**
-		 * Animation resource id.
-		 */
-		private int mInAnimResID, mOutAnimResID, mInAnimBackResID, mOutAnimBackResID;
-
-		/**
-		 * Name of this show direction.
-		 */
-		private String mName = "";
-
-		/**
-		 * Constructors ==========================
-		 */
-
-		/**
-		 * <p>
-		 * Creates a new instance of ShowDirection with the given animations. The back-stack animation
-		 * resource ids will be set to <code>0</code>.
-		 * </p>
-		 *
-		 * @param inAnim  Animation resource id for a new incoming fragment.
-		 * @param outAnim Animation resource id for the current outgoing fragment to the back stack.
-		 */
-		public ShowDirection(int inAnim, int outAnim) {
-			this(inAnim, outAnim, 0, 0);
-		}
-
-		/**
-		 * <p>
-		 * Same as {@link #ShowDirection(int, int, int, int, String)} with empty name.
-		 * </p>
-		 */
-		public ShowDirection(int inAnim, int outAnim, int inAnimBack, int outAnimBack) {
-			this(inAnim, outAnim, inAnimBack, outAnimBack, "");
-		}
-
-		/**
-		 * <p>
-		 * Creates a new instance of ShowDirection with the given animations and name.
-		 * </p>
-		 *
-		 * @param inAnim      Animation resource id for a new incoming fragment.
-		 * @param outAnim     Animation resource id for the current outgoing fragment to the back stack.
-		 * @param inAnimBack  Animation resource id for the incoming fragment from the back stack.
-		 * @param outAnimBack Animation resource id for the current outgoing fragment.
-		 * @param name        Name for this show direction. Can be obtained by {@link #name()}.
-		 */
-		public ShowDirection(int inAnim, int outAnim, int inAnimBack, int outAnimBack, String name) {
-			this.mInAnimResID = inAnim;
-			this.mOutAnimResID = outAnim;
-			this.mInAnimBackResID = inAnimBack;
-			this.mOutAnimBackResID = outAnimBack;
-			this.mName = name;
-		}
-
-		/**
-		 * <p>
-		 * Called by {@link #CREATOR}.
-		 * </p>
-		 *
-		 * @param input Parcelable source with saved data.
-		 */
-		protected ShowDirection(Parcel input) {
-			this.mInAnimResID = input.readInt();
-			this.mOutAnimResID = input.readInt();
-			this.mInAnimBackResID = input.readInt();
-			this.mOutAnimBackResID = input.readInt();
-			this.mName = input.readString();
-		}
-
-		/**
-		 * Methods ===============================
-		 */
-
-		/**
-		 * Public --------------------------------
-		 */
-
-		/**
-		 */
-		@Override
-		public void writeToParcel(Parcel dest, int flags) {
-			dest.writeInt(mInAnimResID);
-			dest.writeInt(mOutAnimResID);
-			dest.writeInt(mInAnimBackResID);
-			dest.writeInt(mOutAnimBackResID);
-			dest.writeString(mName);
-		}
-
-		/**
-		 */
-		@Override
-		public int describeContents() {
-			return 0;
-		}
-
-		/**
-		 * Getters + Setters ---------------------
-		 */
-
-		/**
-		 * <p>
-		 * Returns the name of this show direction.
-		 * </p>
-		 *
-		 * @return Direction name.
-		 */
-		public String name() {
-			return mName;
-		}
-
-		/**
-		 * <p>
-		 * Returns the id of the animation for a new incoming fragment.
-		 * </p>
-		 *
-		 * @return Animation resource id.
-		 */
-		public int getInAnimResID() {
-			return mInAnimResID;
-		}
-
-		/**
-		 * <p>
-		 * Returns the id of the animation for the current outgoing fragment to back stack.
-		 * </p>
-		 *
-		 * @return Animation resource id.
-		 */
-		public int getOutAnimResID() {
-			return mOutAnimResID;
-		}
-
-		/**
-		 * <p>
-		 * Returns the id of the animation for the current outgoing fragment.
-		 * </p>
-		 *
-		 * @return Animation resource id.
-		 */
-		public int getOutAnimBackResID() {
-			return mOutAnimBackResID;
-		}
-
-		/**
-		 * <p>
-		 * Returns the id of the animation for the incoming fragment from the back stack.
-		 * </p>
-		 *
-		 * @return Animation resource id.
-		 */
-		public int getInAnimBackResID() {
-			return mInAnimBackResID;
-		}
-	}
-
-	/**
 	 * Interface =============================
 	 */
 
@@ -1605,5 +1161,25 @@ public class FragmentController {
 		 * if this fragment factory doesn't provides tag for requested fragment.
 		 */
 		public String getFragmentTag(int fragmentID);
+	}
+
+	/**
+	 * <h4>Class Overview</h4>
+	 * <p>
+	 * </p>
+	 *
+	 * @author Martin Albedinsky
+	 */
+	public static interface OnFragmentChangeListener {
+
+		/**
+		 * <p>
+		 * </p>
+		 *
+		 * @param id
+		 * @param tag
+		 * @param factoryFragment
+		 */
+		public void onFragmentChanged(int id, String tag, boolean factoryFragment);
 	}
 }

@@ -21,21 +21,8 @@
  * =================================================================================
  */
 -->
-<set xmlns:android="http://schemas.android.com/apk/res/android"
-     android:zAdjustment="bottom">
-
-    <alpha
-            android:duration="@integer/And.Anim.Fragment.Alpha.Out.Back.duration"
-            android:fromAlpha="1.0"
-            android:toAlpha="0.5"/>
-
-    <scale
-            android:duration="@integer/And.Anim.Fragment.Scale.Out.Back.duration"
-            android:fromXScale="1.0"
-            android:toXScale="0.8"
-            android:pivotX="50%"
-            android:fromYScale="1.0"
-            android:toYScale="0.8"
-            android:pivotY="50%"/>
-
-</set>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+           android:zAdjustment="top"
+           android:duration="@integer/Anim.Fragment.Slide.Out.duration"
+           android:fromXDelta="0%p"
+           android:toXDelta="100%p"/>
