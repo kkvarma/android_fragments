@@ -156,6 +156,14 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(mOptionsMenu > 0);
+	}
+
+	/**
 	 * @throws android.util.AndroidRuntimeException If the currently created parent activity isn't
 	 *                                              instance of {@link android.support.v7.app.ActionBarActivity}.
 	 */
