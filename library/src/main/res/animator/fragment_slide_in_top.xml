@@ -21,8 +21,9 @@
  * =================================================================================
  */
 -->
-<translate xmlns:android="http://schemas.android.com/apk/res/android"
-           android:zAdjustment="top"
-           android:duration="@integer/Anim.Fragment.Slide.Out.Back.duration"
-           android:fromYDelta="0%p"
-           android:toYDelta="100%p"/>
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+                android:propertyName="yFraction"
+                android:valueFrom="1.0f"
+                android:valueTo="0.0f"
+                android:zAdjustment="top"
+                android:duration="@integer/Anim.Fragment.Slide.In.duration"/>

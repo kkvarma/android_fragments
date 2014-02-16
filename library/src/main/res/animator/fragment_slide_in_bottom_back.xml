@@ -21,22 +21,9 @@
  * =================================================================================
  */
 -->
-<set xmlns:android="http://schemas.android.com/apk/res/android"
-     android:zAdjustment="bottom">
-
-    <alpha
-            android:duration="@integer/Anim.Fragment.Alpha.In.Back.duration"
-            android:fromAlpha="0.5"
-            android:toAlpha="1.0"/>
-
-    <scale
-            android:duration="@integer/Anim.Fragment.Scale.In.Back.duration"
-            android:startOffset="@integer/Anim.Fragment.Scale.In.Back.offset"
-            android:fromXScale="0.8"
-            android:toXScale="1.0"
-            android:pivotX="50%"
-            android:fromYScale="0.8"
-            android:toYScale="1.0"
-            android:pivotY="50%"/>
-
-</set>
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+                android:propertyName="yFraction"
+                android:valueFrom="-1.0f"
+                android:valueTo="0.0f"
+                android:zAdjustment="top"
+                android:duration="@integer/Anim.Fragment.Slide.In.Back.duration"/>
