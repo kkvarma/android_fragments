@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 
 import com.wit.android.support.fragment.manage.FragmentController;
 import com.wit.android.support.fragment.manage.FragmentFactory;
+import com.wit.android.support.fragment.manage.ShowDirection;
 
 /**
  * <p>
@@ -69,40 +70,40 @@ public class FragmentsFactory extends FragmentFactory {
 		final FragmentController.ShowOptions options = new FragmentController.ShowOptions();
 		switch (fragmentID) {
 			case FRAGMENT_DIRECTION_FROM_RIGHT_TO_LEFT:
-				options.showDirection(FragmentController.ShowDirection.FROM_RIGHT_TO_LEFT);
+				options.showDirection(ShowDirection.FROM_RIGHT_TO_LEFT);
 				break;
 			case FRAGMENT_DIRECTION_FROM_LEFT_TO_RIGHT:
-				options.showDirection(FragmentController.ShowDirection.FROM_LEFT_TO_RIGHT);
+				options.showDirection(ShowDirection.FROM_LEFT_TO_RIGHT);
 				break;
 			case FRAGMENT_DIRECTION_FROM_TOP_TO_BOTTOM:
-				options.showDirection(FragmentController.ShowDirection.FROM_TOP_TO_BOTTOM);
+				options.showDirection(ShowDirection.FROM_TOP_TO_BOTTOM);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BOTTOM_TO_TOP:
-				options.showDirection(FragmentController.ShowDirection.FROM_BOTTOM_TO_TOP);
+				options.showDirection(ShowDirection.FROM_BOTTOM_TO_TOP);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_LEFT:
-				options.showDirection(FragmentController.ShowDirection.FROM_BACKGROUND_TO_LEFT);
+				options.showDirection(ShowDirection.FROM_BACKGROUND_TO_LEFT);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_RIGHT:
-				options.showDirection(FragmentController.ShowDirection.FROM_BACKGROUND_TO_RIGHT);
+				options.showDirection(ShowDirection.FROM_BACKGROUND_TO_RIGHT);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_TOP:
-				options.showDirection(FragmentController.ShowDirection.FROM_BACKGROUND_TO_TOP);
+				options.showDirection(ShowDirection.FROM_BACKGROUND_TO_TOP);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_BOTTOM:
-				options.showDirection(FragmentController.ShowDirection.FROM_BACKGROUND_TO_BOTTOM);
+				options.showDirection(ShowDirection.FROM_BACKGROUND_TO_BOTTOM);
 				break;
 			case FRAGMENT_DIRECTION_FROM_LEFT_TO_BACKGROUND:
-				options.showDirection(FragmentController.ShowDirection.FROM_LEFT_TO_BACKGROUND);
+				options.showDirection(ShowDirection.FROM_LEFT_TO_BACKGROUND);
 				break;
 			case FRAGMENT_DIRECTION_FROM_RIGHT_TO_BACKGROUND:
-				options.showDirection(FragmentController.ShowDirection.FROM_RIGHT_TO_BACKGROUND);
+				options.showDirection(ShowDirection.FROM_RIGHT_TO_BACKGROUND);
 				break;
 			case FRAGMENT_DIRECTION_FROM_TOP_TO_BACKGROUND:
-				options.showDirection(FragmentController.ShowDirection.FROM_TOP_TO_BACKGROUND);
+				options.showDirection(ShowDirection.FROM_TOP_TO_BACKGROUND);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BOTTOM_TO_BACKGROUND:
-				options.showDirection(FragmentController.ShowDirection.FROM_BOTTOM_TO_BACKGROUND);
+				options.showDirection(ShowDirection.FROM_BOTTOM_TO_BACKGROUND);
 				break;
 		}
 		return options.addToBackStack(params.getBoolean(PARAM_ADD_TO_BACK_STACK, false));

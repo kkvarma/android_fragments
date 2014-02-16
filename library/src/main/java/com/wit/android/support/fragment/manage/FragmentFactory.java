@@ -178,8 +178,7 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	 * for requested fragment.
 	 */
 	protected FragmentController.ShowOptions onGetFragmentShowOptions(int fragmentID, Bundle params) {
-		// Fragment controller will use default options.
-		return null;
+		return new FragmentController.ShowOptions().tag(getFragmentTag(fragmentID));
 	}
 
 	/**
