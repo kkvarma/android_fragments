@@ -27,6 +27,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.wit.android.fragment.annotation.ContentView;
+import com.wit.android.fragment.annotation.ClickableViews;
+import com.wit.android.fragment.annotation.ContentView;
 
 /**
  * <h4>Class Overview</h4>
@@ -82,6 +84,11 @@ public abstract class BaseFragment extends Fragment {
      * Arrays --------------------------------
      */
 
+	/**
+	 *
+	 */
+	private int[] aClickableViewIDs = {};
+
     /**
      * Booleans ------------------------------
      */
@@ -115,6 +122,10 @@ public abstract class BaseFragment extends Fragment {
 		if (contentView != null) {
 			this.mContentView = contentView.value();
 		}
+		// Retrieve clickable view ids.
+		if (classOfFragment.isAnnotationPresent(ClickableViews.class)) {
+			this.aClickableViewIDs = classOfFragment.getAnnotation(ClickableViews.class).value();
+		}
 	}
 
     /**
@@ -142,6 +153,20 @@ public abstract class BaseFragment extends Fragment {
 			return inflater.inflate(mContentView, container, false);
 		}
 		return super.onCreateView(inflater, container, savedInstanceState);
+	}
+
+	/**
+	 */
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		if (aClickableViewIDs.length > 0) {
+			// Set up clickable views.
+			final ClickListener clickListener = new ClickListener();
+			for (int id : aClickableViewIDs) {
+				view.findViewById(id).setOnClickListener(clickListener);
+			}
+		}
 	}
 
 	/**
@@ -299,6 +324,19 @@ public abstract class BaseFragment extends Fragment {
     /**
      * Inner classes =========================
      */
+
+	/**
+	 *
+	 */
+	private final class ClickListener implements View.OnClickListener {
+
+		/**
+		 */
+	    @Override
+	    public void onClick(View view) {
+			dispatchViewClick(view);
+	    }
+    }
 
     /**
      * Interface =============================
