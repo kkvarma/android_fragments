@@ -25,10 +25,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.AndroidRuntimeException;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import com.wit.android.support.fragment.annotation.ActionBarIcon;
 import com.wit.android.support.fragment.annotation.ActionBarTitle;
+import com.wit.android.support.fragment.annotation.OptionsMenu;
 
 /**
  * <h4>Class Overview</h4>
@@ -86,6 +89,16 @@ public class ActionBarFragment extends BaseFragment {
 	private int mActionBarIcon = -1;
 
 	/**
+	 *
+	 */
+	private int mOptionsMenu = -1;
+
+	/**
+	 *
+	 */
+	private int mOptionsMenuFlags = OptionsMenu.DEFAULT;
+
+	/**
 	 * Listeners -----------------------------
 	 */
 
@@ -96,6 +109,11 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 * Booleans ------------------------------
 	 */
+
+	/**
+	 *
+	 */
+	private boolean bClearOptionsMenu = true;
 
 	/**
 	 * Constructors ==========================
@@ -116,9 +134,16 @@ public class ActionBarFragment extends BaseFragment {
 			this.mActionBarTitle = classOfFragment.getAnnotation(ActionBarTitle.class).value();
 		}
 		// Retrieve action bar icon.
-		final ActionBarIcon actionBarIcon = this.obtainActionBarIconFrom(classOfFragment);
+		final ActionBarIcon actionBarIcon = obtainAnnotationFrom(ActionBarIcon.class, classOfFragment);
 		if (actionBarIcon != null) {
 			this.mActionBarIcon = actionBarIcon.value();
+		}
+		// Retrieve options menu.
+		final OptionsMenu optionsMenu = obtainAnnotationFrom(OptionsMenu.class, classOfFragment);
+		if (optionsMenu != null) {
+			this.mOptionsMenu = optionsMenu.value();
+			this.mOptionsMenuFlags = optionsMenu.flags();
+			this.bClearOptionsMenu = optionsMenu.clear();
 		}
 	}
 
@@ -143,6 +168,34 @@ public class ActionBarFragment extends BaseFragment {
 					"ActionBarFragment implementation can be used only within the context of ActionBarActivity."
 			);
 		}
+	}
+
+	/**
+	 */
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		if (mOptionsMenu > 0) {
+			if (bClearOptionsMenu) {
+				menu.clear();
+			}
+			switch (mOptionsMenuFlags) {
+				case OptionsMenu.IGNORE_SUPER:
+					inflater.inflate(mOptionsMenu, menu);
+					break;
+				case OptionsMenu.BEFORE_SUPER:
+					inflater.inflate(mOptionsMenu, menu);
+					super.onCreateOptionsMenu(menu, inflater);
+					break;
+				case OptionsMenu.DEFAULT:
+					super.onCreateOptionsMenu(menu, inflater);
+					inflater.inflate(mOptionsMenu, menu);
+					break;
+				default:
+					throw new IllegalArgumentException("Unknown options menu flags(" + mOptionsMenuFlags + ").");
+			}
+			return;
+		}
+		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	/**
@@ -324,20 +377,6 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 * Private -------------------------------
 	 */
-
-	/**
-	 * @param classOfFragment
-	 * @return
-	 */
-	private ActionBarIcon obtainActionBarIconFrom(Class<?> classOfFragment) {
-		if (!classOfFragment.isAnnotationPresent(ActionBarIcon.class)) {
-			final Class<?> parent = classOfFragment.getSuperclass();
-			if (parent != null) {
-				return obtainActionBarIconFrom(parent);
-			}
-		}
-		return classOfFragment.getAnnotation(ActionBarIcon.class);
-	}
 
 	/**
 	 * Abstract methods ----------------------
