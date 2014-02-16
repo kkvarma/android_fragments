@@ -11,4 +11,5 @@ examples/build/
 
 # Intellij files
 .idea/libraries
+.idea/dictionaries
 .idea/workspace.xml
