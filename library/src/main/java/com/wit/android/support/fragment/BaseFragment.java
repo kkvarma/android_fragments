@@ -29,6 +29,8 @@ import android.view.ViewGroup;
 import com.wit.android.support.fragment.annotation.ClickableViews;
 import com.wit.android.support.fragment.annotation.ContentView;
 
+import java.lang.annotation.Annotation;
+
 /**
  * <h4>Class Overview</h4>
  * <p>
@@ -117,7 +119,7 @@ public abstract class BaseFragment extends Fragment {
 		 * Process class annotations.
 		 */
 		// Retrieve content view.
-		final ContentView contentView = this.obtainContentViewFrom(classOfFragment);
+		final ContentView contentView = obtainAnnotationFrom(ContentView.class, classOfFragment);
 		if (contentView != null) {
 			this.mContentView = contentView.value();
 		}
@@ -297,24 +299,24 @@ public abstract class BaseFragment extends Fragment {
 		return getActivity() != null;
 	}
 
+	/**
+	 *
+	 * @param annotatedClass
+	 * @return
+	 */
+	static <A extends Annotation> A obtainAnnotationFrom(Class<A> classOfAnnotation, Class<?> annotatedClass) {
+		if (!annotatedClass.isAnnotationPresent(classOfAnnotation)) {
+			final Class<?> parent = annotatedClass.getSuperclass();
+			if (parent != null) {
+				return obtainAnnotationFrom(classOfAnnotation, parent);
+			}
+		}
+		return annotatedClass.getAnnotation(classOfAnnotation);
+	}
+
     /**
      * Private -------------------------------
      */
-
-	/**
-	 *
-	 * @param classOfFragment
-	 * @return
-	 */
-	private ContentView obtainContentViewFrom(Class<?> classOfFragment) {
-		if (!classOfFragment.isAnnotationPresent(ContentView.class)) {
-			final Class<?> parent = classOfFragment.getSuperclass();
-			if (parent != null) {
-				return obtainContentViewFrom(parent);
-			}
-		}
-		return classOfFragment.getAnnotation(ContentView.class);
-	}
 
     /**
      * Abstract methods ----------------------
