@@ -26,21 +26,21 @@
 
     <objectAnimator
             android:propertyName="alpha"
-            android:valueFrom="1.0f"
-            android:valueTo="0.5f"
+            android:valueFrom="1.0"
+            android:valueTo="0.5"
             android:duration="@integer/Anim.Fragment.Alpha.Out.duration"/>
 
     <set android:duration="@integer/Anim.Fragment.Scale.Out.duration">
 
         <objectAnimator
                 android:propertyName="scaleX"
-                android:valueFrom="1.0f"
-                android:valueTo="0.8f"/>
+                android:valueFrom="1.0"
+                android:valueTo="0.8"/>
 
         <objectAnimator
                 android:propertyName="scaleX"
-                android:valueFrom="1.0f"
-                android:valueTo="0.8f"/>
+                android:valueFrom="1.0"
+                android:valueTo="0.8"/>
 
     </set>
 
