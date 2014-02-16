@@ -18,12 +18,12 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.support.fragment.manage;
+package com.wit.android.fragment.manage;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.wit.android.support.fragment.R;
+import com.wit.android.fragment.R;
 
 /**
  * <h4>Class Overview</h4>
@@ -94,10 +94,10 @@ public class ShowDirection implements Parcelable {
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
-	 * <li><b>Incoming:</b> {@link com.wit.android.support.fragment.R.anim#fragment_slide_in_right}</li>
-	 * <li><b>Outgoing:</b> {@link com.wit.android.support.fragment.R.anim#fragment_slide_out_right}</li>
-	 * <li><b>Incoming (back-stack):</b> {@link com.wit.android.support.fragment.R.anim#fragment_slide_in_left_back}</li>
-	 * <li><b>Outgoing (back-stack):</b> {@link com.wit.android.support.fragment.R.anim#fragment_slide_out_left_back}</li>
+	 * <li><b>Incoming:</b> {@link com.wit.android.fragment.R.anim#fragment_slide_in_right}</li>
+	 * <li><b>Outgoing:</b> {@link com.wit.android.fragment.R.anim#fragment_slide_out_right}</li>
+	 * <li><b>Incoming (back-stack):</b> {@link com.wit.android.fragment.R.anim#fragment_slide_in_left_back}</li>
+	 * <li><b>Outgoing (back-stack):</b> {@link com.wit.android.fragment.R.anim#fragment_slide_out_left_back}</li>
 	 * </ul>
 	 */
 	public static final ShowDirection FROM_LEFT_TO_RIGHT = new ShowDirection(
