@@ -29,7 +29,7 @@ import android.view.View;
 
 import com.wit.android.fragment.annotation.ActionBarIcon;
 import com.wit.android.fragment.annotation.ActionBarTitle;
-import com.wit.android.support.fragment.annotation.OptionsMenu;
+import com.wit.android.fragment.annotation.OptionsMenu;
 
 /**
  * <h4>Class Overview</h4>
