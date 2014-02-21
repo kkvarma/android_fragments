@@ -3,11 +3,6 @@ apply plugin: 'android-library'
 /**
  * Library dependencies ======================================================
  */
-dependencies {
-    compile rootProject.supportLibrary
-    // Check release artifacts.
-    compile fileTree(dir: '../artifacts', include: ['*.jar', '*.aar'])
-}
 
 /**
  * Android Library options ===================================================

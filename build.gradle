@@ -40,5 +40,3 @@ ext.targetSdkVersion = 19
 /**
  * Global dependencies =======================================================
  */
-// Support library.
-ext.supportLibrary = 'com.android.support:support-v4:+'
