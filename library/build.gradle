@@ -20,6 +20,11 @@ android {
         versionCode rootProject.libraryVersionCode
         versionName rootProject.libraryVersionName
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 /**

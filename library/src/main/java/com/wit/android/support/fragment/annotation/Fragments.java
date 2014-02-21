@@ -51,4 +51,10 @@ public @interface Fragments {
 	 * @return
 	 */
 	int[] value();
+
+	/**
+	 *
+	 * @return
+	 */
+	boolean createTags() default true;
 }
