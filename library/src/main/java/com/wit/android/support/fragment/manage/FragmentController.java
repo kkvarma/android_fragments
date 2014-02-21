@@ -203,14 +203,15 @@ public class FragmentController {
 	 * @param params     Parameters to be passed to the current factory by
 	 *                   {@link com.wit.android.support.fragment.manage.FragmentController.IFragmentFactory#createFragmentInstance(int, android.os.Bundle)}.
 	 * @return <code>True</code> if transaction for the requested fragment was successfully created
-	 * and committed or if fragment is currently being shown and should not be replaced by the new one,
-	 * <code>false</code> otherwise.
+	 * and committed or if fragment is currently being visible and should not be replaced by the new
+	 * one, <code>false</code> otherwise (like the current factory doesn't provides requested fragment
+	 * or some error occurs).
 	 * @throws IllegalStateException If there is no factory currently available.
 	 * @see #hasFactory()
 	 */
 	public final boolean showFragment(int fragmentID, Bundle params) {
 		// Check if we have fragment factory.
-		return this.checkFragmentFactory() && this.performShowFragment(fragmentID, params);
+		return this.checkFragmentFactory(fragmentID) && this.performShowFragment(fragmentID, params);
 	}
 
 	/**
@@ -264,7 +265,7 @@ public class FragmentController {
 	 */
 	public Fragment findFactoryFragmentByID(int fragmentID) {
 		// Check if we have fragment factory.
-		return this.checkFragmentFactory() ? findFragmentByTag(mFragmentFactory.getFragmentTag(fragmentID)) : null;
+		return this.checkFragmentFactory(fragmentID) ? findFragmentByTag(mFragmentFactory.getFragmentTag(fragmentID)) : null;
 	}
 
 	/**
@@ -423,7 +424,7 @@ public class FragmentController {
 	 */
 	public boolean showFragmentOptionsMenu(int fragmentID, boolean enable) {
 		// Check if we have fragment factory.
-		return this.checkFragmentFactory() && showFragmentOptionsMenu(mFragmentFactory.getFragmentTag(fragmentID), enable);
+		return this.checkFragmentFactory(fragmentID) && showFragmentOptionsMenu(mFragmentFactory.getFragmentTag(fragmentID), enable);
 	}
 
 	/**
@@ -444,35 +445,6 @@ public class FragmentController {
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * <p>
-	 * Called to restore state of this fragment controller instance.
-	 * </p>
-	 *
-	 * @param savedState Should be the bundle with saved state in {@link #dispatchSaveInstanceState(android.os.Bundle)}.
-	 */
-	public final void dispatchRestoreInstanceState(Bundle savedState) {
-		if (savedState != null) {
-			onRestoreInstanceState(savedState);
-		}
-	}
-
-	/**
-	 * <p>
-	 * Called to save state of this fragment controller instance. If the given <var>outState</var>
-	 * is invalid, a new bundle will be created.
-	 * </p>
-	 *
-	 * @param outState Outgoing state in which should this fragment controller instance save its state.
-	 * @see #dispatchRestoreInstanceState(android.os.Bundle)
-	 */
-	public final void dispatchSaveInstanceState(Bundle outState) {
-		if (outState == null) {
-			outState = new Bundle();
-		}
-		onSaveInstanceState(outState);
 	}
 
 	/**
@@ -503,6 +475,24 @@ public class FragmentController {
 	/**
 	 * Getters + Setters ---------------------
 	 */
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param listener
+	 */
+	public void setOnFragmentChangeListner(OnFragmentChangeListener listener) {
+		this.lChangeListener = listener;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	public void removeOnFragmentChangeListener() {
+		this.lChangeListener = null;
+	}
 
 	/**
 	 * <p>
@@ -613,53 +603,8 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @return
-	 */
-	public final int getLastFactoryFragmentID() {
-		// Check if we have last fragment and fragment factory.
-		if (mLastFragment != null && this.checkFragmentFactory()) {
-			return mFragmentFactory.getFragmentID(mLastFragment.getName());
-		}
-		return -1;
-	}
-
-	/**
 	 * Protected -----------------------------
 	 */
-
-	/**
-	 * <p>
-	 * Invoked to save state of this fragment controller instance. This is invoked whenever
-	 * {@link #dispatchSaveInstanceState(android.os.Bundle)} is called.
-	 * </p>
-	 * <p>
-	 * <b>This implementation does nothing.</b>
-	 * </p>
-	 *
-	 * @param outState Outgoing state. Always valid bundle.
-	 * @see #onRestoreInstanceState(android.os.Bundle)
-	 */
-	protected void onSaveInstanceState(Bundle outState) {
-	}
-
-	/**
-	 * <p>
-	 * Invoked to restore state of this fragment controller instance. Note, that this is invoked
-	 * only in case that the bundle passed to {@link #dispatchRestoreInstanceState(android.os.Bundle)}
-	 * is valid.
-	 * </p>
-	 * <p>
-	 * <b>This implementation does nothing.</b>
-	 * </p>
-	 *
-	 * @param savedState Bundle with saved data populated in {@link #onSaveInstanceState(Bundle)}.
-	 *                   Always valid bundle.
-	 */
-	protected void onRestoreInstanceState(Bundle savedState) {
-	}
 
 	/**
 	 * <p>
@@ -797,18 +742,18 @@ public class FragmentController {
 	/**
 	 * Checks if the current fragment factory is available or not.
 	 *
-	 * @return Always <code>true</code> or throws exception.
+	 * @param fragmentID
+	 * @return
 	 * @throws java.lang.IllegalStateException If the current factory isn't available.
 	 */
-	private boolean checkFragmentFactory() {
+	private boolean checkFragmentFactory(int fragmentID) {
 		if (mFragmentFactory == null) {
 			throw new IllegalStateException("No fragment factory found.");
 		}
-		return true;
+		return mFragmentFactory.isFragmentProvided(fragmentID);
 	}
 
 	/**
-	 *
 	 * @param entriesCount
 	 * @param action
 	 */
@@ -826,22 +771,14 @@ public class FragmentController {
 	}
 
 	/**
-	 *
 	 * @param changedEntry
 	 * @param added
 	 */
 	private void dispatchFragmentChanged(FragmentManager.BackStackEntry changedEntry, boolean added) {
-		if (lChangeListener == null) {
-			return;
+		if (lChangeListener != null) {
+			// Dispatch to listener.
+			lChangeListener.onFragmentChanged(added, changedEntry.getId(), changedEntry.getName());
 		}
-
-		final String tag = changedEntry.getName();
-		int id = changedEntry.getId();
-
-		// Resolve if it is factory fragment.
-		boolean factoryFragment = (mFragmentFactory != null && (id = mFragmentFactory.getFragmentID(tag)) >= 0);
-		// Dispatch to listener.
-		lChangeListener.onFragmentChanged(id, tag, added, factoryFragment);
 	}
 
 	/**
@@ -1214,10 +1151,10 @@ public class FragmentController {
 		 * <p>
 		 * </p>
 		 *
-		 * @param fragmentTag
+		 * @param fragmentID
 		 * @return
 		 */
-		public int getFragmentID(String fragmentTag);
+		public boolean isFragmentProvided(int fragmentID);
 	}
 
 	/**
@@ -1237,11 +1174,10 @@ public class FragmentController {
 		 * <p>
 		 * </p>
 		 *
+		 * @param added
 		 * @param id
 		 * @param tag
-		 * @param added
-		 * @param factoryFragment
 		 */
-		public void onFragmentChanged(int id, String tag, boolean added, boolean factoryFragment);
+		public void onFragmentChanged(boolean added, int id, String tag);
 	}
 }

@@ -23,6 +23,7 @@ package com.wit.android.support.fragment.examples.app;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -45,7 +46,7 @@ import java.util.List;
  *
  * @author Martin Albedinsky
  */
-public class HomeActivity extends ExHomeActivity {
+public class HomeActivity extends ExHomeActivity implements FragmentController.OnFragmentChangeListener {
 
 	/**
 	 * Log TAG.
@@ -66,6 +67,13 @@ public class HomeActivity extends ExHomeActivity {
 	 */
 	public void onAddToBackStackClick(View view) {
 		this.bAddFragmentToBackStack = ((CheckBox) view).isChecked();
+	}
+
+	/**
+	 */
+	@Override
+	public void onFragmentChanged(boolean added, int id, String tag) {
+		Log.d(TAG, "onFragmentChanged(" + added + ") id: " + id + " | tag: " + tag);
 	}
 
 	/**

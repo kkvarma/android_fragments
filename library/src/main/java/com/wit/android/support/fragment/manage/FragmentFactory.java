@@ -22,6 +22,11 @@ package com.wit.android.support.fragment.manage;
 
 import android.os.Bundle;
 
+import com.wit.android.support.fragment.annotation.Fragments;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <h4>Class Overview</h4>
  * <p>
@@ -75,12 +80,36 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	 */
 
 	/**
+	 *
+	 */
+	private List<Integer> aFragmentIDs = null;
+
+	/**
 	 * Booleans ------------------------------
 	 */
 
 	/**
 	 * Constructors ==========================
 	 */
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	public FragmentFactory() {
+		final Class<?> classOfFactory = ((Object) this).getClass();
+		/**
+		 * Process class annotations.
+		 */
+		// Retrieve fragment ids.
+		if (classOfFactory.isAnnotationPresent(Fragments.class)) {
+			final int[] ids = classOfFactory.getAnnotation(Fragments.class).value();
+			this.aFragmentIDs = new ArrayList<Integer>(ids.length);
+			for (int id : ids) {
+				aFragmentIDs.add(id);
+			}
+		}
+	}
 
 	/**
 	 * Methods ===============================
@@ -120,21 +149,21 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	 */
 	@Override
 	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentID, Bundle params) {
-		return new FragmentController.ShowOptions().tag(getFragmentTag(fragmentID));
+		return isFragmentProvided(fragmentID) ? new FragmentController.ShowOptions().tag(getFragmentTag(fragmentID)) : null;
 	}
 
 	/**
 	 */
 	@Override
 	public String getFragmentTag(int fragmentID) {
-		return FragmentFactory.createFragmentTag(this.getClass(), Integer.toString(fragmentID));
+		return isFragmentProvided(fragmentID) ? FragmentFactory.createFragmentTag(this.getClass(), Integer.toString(fragmentID)) : null;
 	}
 
 	/**
 	 */
 	@Override
-	public int getFragmentID(String fragmentTag) {
-		return -1;
+	public boolean isFragmentProvided(int fragmentID) {
+		return (aFragmentIDs != null) && aFragmentIDs.contains(fragmentID);
 	}
 
 	/**

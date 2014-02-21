@@ -23,6 +23,7 @@ package com.wit.android.support.fragment.examples.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.wit.android.support.fragment.annotation.Fragments;
 import com.wit.android.support.fragment.manage.FragmentController;
 import com.wit.android.support.fragment.manage.FragmentFactory;
 import com.wit.android.support.fragment.manage.ShowDirection;
@@ -34,6 +35,23 @@ import com.wit.android.support.fragment.manage.ShowDirection;
  *
  * @author Martin Albedinsky
  */
+@Fragments({
+		FragmentsFactory.FRAGMENT_DIRECTION_NONE,
+		FragmentsFactory.FRAGMENT_DIRECTION_FROM_RIGHT_TO_BACKGROUND,
+		FragmentsFactory.FRAGMENT_DIRECTION_NONE,
+		FragmentsFactory.FRAGMENT_DIRECTION_FROM_RIGHT_TO_LEFT,
+		FragmentsFactory.FRAGMENT_DIRECTION_FROM_LEFT_TO_RIGHT,
+		FragmentsFactory.FRAGMENT_DIRECTION_FROM_TOP_TO_BOTTOM,
+		FragmentsFactory.FRAGMENT_DIRECTION_FROM_BOTTOM_TO_TOP,
+		FragmentsFactory.FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_LEFT,
+		FragmentsFactory.FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_RIGHT,
+		FragmentsFactory.FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_TOP,
+		FragmentsFactory.FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_BOTTOM,
+		FragmentsFactory.FRAGMENT_DIRECTION_FROM_LEFT_TO_BACKGROUND,
+		FragmentsFactory.FRAGMENT_DIRECTION_FROM_RIGHT_TO_BACKGROUND,
+		FragmentsFactory.FRAGMENT_DIRECTION_FROM_TOP_TO_BACKGROUND,
+		FragmentsFactory.FRAGMENT_DIRECTION_FROM_BOTTOM_TO_BACKGROUND
+})
 public class FragmentsFactory extends FragmentFactory {
 
 	/**
@@ -67,7 +85,7 @@ public class FragmentsFactory extends FragmentFactory {
 	 */
 	@Override
 	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentID, Bundle params) {
-		final FragmentController.ShowOptions options = new FragmentController.ShowOptions();
+		final FragmentController.ShowOptions options = super.getFragmentShowOptions(fragmentID, params);
 		switch (fragmentID) {
 			case FRAGMENT_DIRECTION_FROM_RIGHT_TO_LEFT:
 				options.showDirection(ShowDirection.FROM_RIGHT_TO_LEFT);

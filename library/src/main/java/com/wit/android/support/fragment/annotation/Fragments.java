@@ -35,7 +35,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ContentView {
+public @interface Fragments {
 
 	/**
 	 * Constants =============================
@@ -50,11 +50,5 @@ public @interface ContentView {
 	 *
 	 * @return
 	 */
-	int value();
-
-	/**
-	 *
-	 * @return
-	 */
-	boolean attachToRoot() default false;
+	int[] value();
 }
