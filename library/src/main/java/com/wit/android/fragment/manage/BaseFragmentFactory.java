@@ -23,7 +23,7 @@ package com.wit.android.fragment.manage;
 import android.os.Bundle;
 import android.util.SparseArray;
 
-import com.wit.android.support.fragment.annotation.Fragments;
+import com.wit.android.fragment.annotation.Fragments;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * <h4>Class Overview</h4>
  * <p>
- * This is only helper implementation of {@link com.wit.android.support.fragment.manage.FragmentController.FragmentFactory}.
+ * This is only helper implementation of {@link com.wit.android.fragment.manage.FragmentController.FragmentFactory}.
  * </p>
  * <p>
  * Provides some methods useful when using custom fragment factory.
