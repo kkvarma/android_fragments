@@ -125,7 +125,7 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 	public ActionBarFragment() {
 		super();
-		final Class<? extends ActionBarFragment> classOfFragment = getClass();
+		final Class<?> classOfFragment = ((Object) this).getClass();
 		/**
 		 * Process class annotations.
 		 */

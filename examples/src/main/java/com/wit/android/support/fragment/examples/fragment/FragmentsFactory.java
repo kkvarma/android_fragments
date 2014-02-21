@@ -24,8 +24,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.wit.android.support.fragment.annotation.Fragments;
+import com.wit.android.support.fragment.manage.BaseFragmentFactory;
 import com.wit.android.support.fragment.manage.FragmentController;
-import com.wit.android.support.fragment.manage.FragmentFactory;
 import com.wit.android.support.fragment.manage.ShowDirection;
 
 /**
@@ -52,7 +52,7 @@ import com.wit.android.support.fragment.manage.ShowDirection;
 		FragmentsFactory.FRAGMENT_DIRECTION_FROM_TOP_TO_BACKGROUND,
 		FragmentsFactory.FRAGMENT_DIRECTION_FROM_BOTTOM_TO_BACKGROUND
 })
-public class FragmentsFactory extends FragmentFactory {
+public class FragmentsFactory extends BaseFragmentFactory {
 
 	/**
 	 * Log TAG.
