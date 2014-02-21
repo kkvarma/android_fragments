@@ -1,6 +1,6 @@
 /*
  * =================================================================================
- * Copyright (C) 2014 Martin Albedinsky [Wolf-ITechnologies]
+ * Copyright (C) 2013 Martin Albedinsky [Wolf-ITechnologies]
  * =================================================================================
  * Licensed under the Apache License, Version 2.0 or later (further "License" only);
  * ---------------------------------------------------------------------------------
@@ -18,43 +18,69 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.support.fragment.annotation;
+package com.wit.android.fragment;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import android.test.suitebuilder.annotation.SmallTest;
 
 /**
- * <h4>Annotation Overview</h4>
  * <p>
- * Description.
+ * Tests logic of {@link } in the {@link android.test.AndroidTestCase} environment.
  * </p>
  *
  * @author Martin Albedinsky
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ContentView {
+public class BaseFragmentTest extends android.test.AndroidTestCase {
 
 	/**
-	 * Constants =============================
+	 * Test Constants =============================
 	 */
 
 	/**
-	 * Methods ===============================
+	 * Debug/Test TAG.
+	 */
+	private static final String TAG = BaseFragmentTest.class.getSimpleName();
+
+	/**
+	 * Test Members ===============================
 	 */
 
 	/**
+	 * Methods ====================================
+	 */
+
+	/**
+	 * Set-up methods -----------------------------
+	 */
+
+	/**
+	 * Set ups before each test.
 	 *
-	 *
-	 * @return
+	 * @throws Exception
 	 */
-	int value();
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+
+		// FIXME: to obtain context
+		// getContext();
+	}
 
 	/**
-	 *
-	 * @return
+	 * Test methods -------------------------------
 	 */
-	boolean attachToRoot() default false;
+
+	@SmallTest
+	public void testDispatchBackPress() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testIsRestored() throws Exception {
+
+	}
+
+	@SmallTest
+	public void testIsViewRestored() throws Exception {
+
+	}
 }
