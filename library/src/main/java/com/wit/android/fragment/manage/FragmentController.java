@@ -98,7 +98,7 @@ public class FragmentController {
 	/**
 	 *
 	 */
-	private FragmentManager.BackStackEntry mLastFragment = null;
+	private FragmentManager.BackStackEntry mTopBackStackEntry = null;
 
 	/**
 	 * Listeners -----------------------------
@@ -107,7 +107,12 @@ public class FragmentController {
 	/**
 	 *
 	 */
-	private OnFragmentChangeListener lChangeListener;
+	private OnBackStackChangeListener lBackStackListener;
+
+	/**
+	 *
+	 */
+	private OnFragmentChangeListener lFragmentListener;
 
 	/**
 	 * Arrays --------------------------------
@@ -131,8 +136,11 @@ public class FragmentController {
 	 */
 	public FragmentController(Fragment parentFragment) {
 		this(parentFragment.getFragmentManager());
+		if (parentFragment instanceof OnBackStackChangeListener) {
+			this.lBackStackListener = (OnBackStackChangeListener) parentFragment;
+		}
 		if (parentFragment instanceof OnFragmentChangeListener) {
-			this.lChangeListener = (OnFragmentChangeListener) parentFragment;
+			this.lFragmentListener = (OnFragmentChangeListener) parentFragment;
 		}
 	}
 
@@ -146,8 +154,11 @@ public class FragmentController {
 	 */
 	public FragmentController(Activity parentActivity) {
 		this(parentActivity.getFragmentManager());
+		if (parentActivity instanceof OnBackStackChangeListener) {
+			this.lBackStackListener = (OnBackStackChangeListener) parentActivity;
+		}
 		if (parentActivity instanceof OnFragmentChangeListener) {
-			this.lChangeListener = (OnFragmentChangeListener) parentActivity;
+			this.lFragmentListener = (OnFragmentChangeListener) parentActivity;
 		}
 	}
 
@@ -169,7 +180,7 @@ public class FragmentController {
 		// Check for back stacked fragments.
 		final int n = mFragmentManager.getBackStackEntryCount();
 		if (n > 0) {
-			this.mLastFragment = mFragmentManager.getBackStackEntryAt(n - 1);
+			this.mTopBackStackEntry = mFragmentManager.getBackStackEntryAt(n - 1);
 		}
 	}
 
@@ -186,8 +197,8 @@ public class FragmentController {
 	 * Same as {@link #showFragment(int, android.os.Bundle)} without params.
 	 * </p>
 	 */
-	public final boolean showFragment(int fragmentID) {
-		return this.showFragment(fragmentID, null);
+	public boolean showFragment(int fragmentID) {
+		return showFragment(fragmentID, null);
 	}
 
 	/**
@@ -206,7 +217,7 @@ public class FragmentController {
 	 * @throws IllegalStateException If there is no factory currently available.
 	 * @see #hasFactory()
 	 */
-	public final boolean showFragment(int fragmentID, Bundle params) {
+	public boolean showFragment(int fragmentID, Bundle params) {
 		// Check if we have fragment factory.
 		return this.checkFragmentFactory(fragmentID) && this.performShowFragment(fragmentID, params);
 	}
@@ -217,8 +228,8 @@ public class FragmentController {
 	 * with default {@link com.wit.android.fragment.manage.FragmentController.ShowOptions}.
 	 * </p>
 	 */
-	public final boolean showFragment(Fragment fragment) {
-		return this.showFragment(fragment, new ShowOptions());
+	public boolean showFragment(Fragment fragment) {
+		return showFragment(fragment, new ShowOptions());
 	}
 
 	/**
@@ -232,7 +243,7 @@ public class FragmentController {
 	 * and committed or if fragment is currently being shown and should not be replaced by the new one,
 	 * <code>false</code> otherwise.
 	 */
-	public final boolean showFragment(Fragment fragment, ShowOptions options) {
+	public boolean showFragment(Fragment fragment, ShowOptions options) {
 		return this.performShowFragment(fragment, options);
 	}
 
@@ -453,7 +464,7 @@ public class FragmentController {
 	 * @return Fragment transaction.
 	 */
 	@SuppressLint("CommitTransaction")
-	public final FragmentTransaction beginTransaction() {
+	public FragmentTransaction beginTransaction() {
 		return mFragmentManager.beginTransaction();
 	}
 
@@ -470,6 +481,16 @@ public class FragmentController {
 	}
 
 	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	public boolean hasBackStackEntries() {
+		return mFragmentManager.getBackStackEntryCount() > 0;
+	}
+
+	/**
 	 * Getters + Setters ---------------------
 	 */
 
@@ -479,8 +500,8 @@ public class FragmentController {
 	 *
 	 * @param listener
 	 */
-	public void setOnFragmentChangeListner(OnFragmentChangeListener listener) {
-		this.lChangeListener = listener;
+	public void setOnFragmentChangeListner(OnBackStackChangeListener listener) {
+		this.lBackStackListener = listener;
 	}
 
 	/**
@@ -488,7 +509,7 @@ public class FragmentController {
 	 * </p>
 	 */
 	public void removeOnFragmentChangeListener() {
-		this.lChangeListener = null;
+		this.lBackStackListener = null;
 	}
 
 	/**
@@ -522,7 +543,7 @@ public class FragmentController {
 	 *
 	 * @return Current fragment manager, or <code>null</code> if there is no fragment manager available.
 	 */
-	public final FragmentManager getFragmentManager() {
+	public FragmentManager getFragmentManager() {
 		return mFragmentManager;
 	}
 
@@ -535,7 +556,7 @@ public class FragmentController {
 	 *                 which will be view of all managed fragments placed.
 	 * @see #getFragmentContainerID()
 	 */
-	public final void setFragmentContainerID(int layoutID) {
+	public void setFragmentContainerID(int layoutID) {
 		this.mFragmentContainerID = layoutID;
 	}
 
@@ -548,7 +569,7 @@ public class FragmentController {
 	 * be view of all managed fragments placed or <code>-1</code> as default.
 	 * @see #setFragmentContainerID(int)
 	 */
-	public final int getFragmentContainerID() {
+	public int getFragmentContainerID() {
 		return mFragmentContainerID;
 	}
 
@@ -562,7 +583,7 @@ public class FragmentController {
 	 * @see #getFragmentFactory()
 	 * @see #hasFactory()
 	 */
-	public final void setFragmentFactory(FragmentFactory factory) {
+	public void setFragmentFactory(FragmentFactory factory) {
 		this.mFragmentFactory = factory;
 	}
 
@@ -575,7 +596,7 @@ public class FragmentController {
 	 * @see #setFragmentFactory(com.wit.android.fragment.manage.FragmentController.FragmentFactory)
 	 * @see #hasFactory()
 	 */
-	public final FragmentFactory getFragmentFactory() {
+	public FragmentFactory getFragmentFactory() {
 		return mFragmentFactory;
 	}
 
@@ -585,18 +606,8 @@ public class FragmentController {
 	 *
 	 * @return
 	 */
-	public final String getLastFragmentTag() {
-		return (mLastFragment != null) ? mLastFragment.getName() : null;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @return
-	 */
-	public final int getLastFragmentID() {
-		return (mLastFragment != null) ? mLastFragment.getId() : -1;
+	public FragmentManager.BackStackEntry getTopBackStackEntry() {
+		return mTopBackStackEntry;
 	}
 
 	/**
@@ -709,17 +720,6 @@ public class FragmentController {
 	 */
 
 	/**
-	 * Performs showing of the given fragment instance using the given options.
-	 *
-	 * @param fragment Fragment to show.
-	 * @param options  Show options for the given fragment.
-	 * @return <code>True</code> if showing was successful, <code>false</code> otherwise.
-	 */
-	private boolean performShowFragment(Fragment fragment, ShowOptions options) {
-		return onShowFragment(fragment, options);
-	}
-
-	/**
 	 * Performs showing of a fragment obtained from the current fragment factory.
 	 *
 	 * @param fragmentID The id of fragment from the current fragment factory to show.
@@ -735,7 +735,20 @@ public class FragmentController {
 			Log.e(TAG, "No such fragment instance for the requested fragment id(" + fragmentID + "). Please check your fragment factory.");
 			return false;
 		}
-		return onShowFragment(fragment, mFragmentFactory.getFragmentShowOptions(fragmentID, params));
+		final boolean success = onShowFragment(fragment, mFragmentFactory.getFragmentShowOptions(fragmentID, params));
+		return success && dispatchFragmentChanged(fragmentID, fragment.getTag(), true);
+	}
+
+	/**
+	 * Performs showing of the given fragment instance using the given options.
+	 *
+	 * @param fragment Fragment to show.
+	 * @param options  Show options for the given fragment.
+	 * @return <code>True</code> if showing was successful, <code>false</code> otherwise.
+	 */
+	private boolean performShowFragment(Fragment fragment, ShowOptions options) {
+		final boolean success = onShowFragment(fragment, options);
+		return success && dispatchFragmentChanged(fragment.getId(), fragment.getTag(), false);
 	}
 
 	/**
@@ -761,11 +774,11 @@ public class FragmentController {
 		if (entriesCount > 0) {
 			final FragmentManager.BackStackEntry entry = mFragmentManager.getBackStackEntryAt(entriesCount - 1);
 			if (entry != null) {
-				dispatchFragmentChanged(mLastFragment = entry, added);
+				dispatchBackStackEntryChange(mTopBackStackEntry = entry, added);
 			}
-		} else if (mLastFragment != null) {
-			dispatchFragmentChanged(mLastFragment, false);
-			this.mLastFragment = null;
+		} else if (mTopBackStackEntry != null) {
+			dispatchBackStackEntryChange(mTopBackStackEntry, false);
+			this.mTopBackStackEntry = null;
 		}
 	}
 
@@ -773,11 +786,23 @@ public class FragmentController {
 	 * @param changedEntry
 	 * @param added
 	 */
-	private void dispatchFragmentChanged(FragmentManager.BackStackEntry changedEntry, boolean added) {
-		if (lChangeListener != null) {
+	private void dispatchBackStackEntryChange(FragmentManager.BackStackEntry changedEntry, boolean added) {
+		if (lBackStackListener != null) {
 			// Dispatch to listener.
-			lChangeListener.onFragmentChanged(added, changedEntry.getId(), changedEntry.getName());
+			lBackStackListener.onBackStackChanged(added, changedEntry.getId(), changedEntry.getName());
 		}
+	}
+
+	/**
+	 * @param id
+	 * @param tag
+	 * @param factory
+	 */
+	private boolean dispatchFragmentChanged(int id, String tag, boolean factory) {
+		if (lFragmentListener != null) {
+			lFragmentListener.onFragmentChanged(id, tag, factory);
+		}
+		return true;
 	}
 
 	/**
@@ -1173,10 +1198,34 @@ public class FragmentController {
 		 * <p>
 		 * </p>
 		 *
+		 * @param id
+		 * @param tag
+		 * @param factory
+		 */
+		public void onFragmentChanged(int id, String tag, boolean factory);
+	}
+
+	/**
+	 * <h4>Class Overview</h4>
+	 * <p>
+	 * </p>
+	 *
+	 * @author Martin Albedinsky
+	 */
+	public static interface OnBackStackChangeListener {
+
+		/**
+		 * Methods ===============================
+		 */
+
+		/**
+		 * <p>
+		 * </p>
+		 *
 		 * @param added
 		 * @param id
 		 * @param tag
 		 */
-		public void onFragmentChanged(boolean added, int id, String tag);
+		public void onBackStackChanged(boolean added, int id, String tag);
 	}
 }
