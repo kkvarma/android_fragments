@@ -46,7 +46,7 @@ import java.util.List;
  *
  * @author Martin Albedinsky
  */
-public class HomeActivity extends ExHomeActivity implements FragmentController.OnFragmentChangeListener {
+public class HomeActivity extends ExHomeActivity implements FragmentController.OnFragmentChangeListener, FragmentController.OnBackStackChangeListener {
 
 	/**
 	 * Log TAG.
@@ -72,8 +72,15 @@ public class HomeActivity extends ExHomeActivity implements FragmentController.O
 	/**
 	 */
 	@Override
-	public void onFragmentChanged(boolean added, int id, String tag) {
-		Log.d(TAG, "onFragmentChanged(" + added + ") id: " + id + " | tag: " + tag);
+	public void onBackStackChanged(boolean added, int id, String tag) {
+		Log.d(TAG, "onBackStackChanged(" + added + ") id: " + id + " | tag: " + tag);
+	}
+
+	/**
+	 */
+	@Override
+	public void onFragmentChanged(int id, String tag, boolean factory) {
+		Log.d(TAG, "onFragmentChanged(" + factory + ") id: " + id + " | tag: " + tag);
 	}
 
 	/**
