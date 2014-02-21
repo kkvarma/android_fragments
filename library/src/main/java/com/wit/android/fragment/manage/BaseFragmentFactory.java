@@ -21,8 +21,9 @@
 package com.wit.android.fragment.manage;
 
 import android.os.Bundle;
+import android.util.SparseArray;
 
-import com.wit.android.fragment.annotation.Fragments;
+import com.wit.android.support.fragment.annotation.Fragments;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ import java.util.List;
 /**
  * <h4>Class Overview</h4>
  * <p>
- * This is only helper implementation of {@link com.wit.android.fragment.manage.FragmentController.IFragmentFactory}.
+ * This is only helper implementation of {@link com.wit.android.support.fragment.manage.FragmentController.FragmentFactory}.
  * </p>
  * <p>
  * Provides some methods useful when using custom fragment factory.
@@ -38,7 +39,7 @@ import java.util.List;
  *
  * @author Martin Albedinsky
  */
-public abstract class FragmentFactory implements FragmentController.IFragmentFactory {
+public abstract class BaseFragmentFactory implements FragmentController.FragmentFactory {
 
 	/**
 	 * Constants =============================
@@ -47,7 +48,7 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = FragmentFactory.class.getSimpleName();
+	// private static final String TAG = BaseFragmentFactory.class.getSimpleName();
 
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
@@ -85,6 +86,11 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	private List<Integer> aFragmentIDs = null;
 
 	/**
+	 *
+	 */
+	private SparseArray<String> aFragmentTags = null;
+
+	/**
 	 * Booleans ------------------------------
 	 */
 
@@ -96,17 +102,28 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	 * <p>
 	 * </p>
 	 */
-	public FragmentFactory() {
+	public BaseFragmentFactory() {
 		final Class<?> classOfFactory = ((Object) this).getClass();
 		/**
 		 * Process class annotations.
 		 */
 		// Retrieve fragment ids.
 		if (classOfFactory.isAnnotationPresent(Fragments.class)) {
-			final int[] ids = classOfFactory.getAnnotation(Fragments.class).value();
-			this.aFragmentIDs = new ArrayList<Integer>(ids.length);
+			final Fragments fragments = classOfFactory.getAnnotation(Fragments.class);
+
+			final int[] ids = fragments.value();
+			this.aFragmentIDs = new ArrayList<>(ids.length);
 			for (int id : ids) {
 				aFragmentIDs.add(id);
+			}
+
+			// Create also tags if requested.
+			if (fragments.createTags()) {
+				final SparseArray<String> tags = new SparseArray<>(ids.length);
+				for (int id : ids) {
+					tags.put(id, getFragmentTag(id));
+				}
+				this.aFragmentTags = tags;
 			}
 		}
 	}
@@ -137,7 +154,7 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	 * @return Fragment tag in required format, or <code>null</code> if the <var>fragmentName</var> is
 	 * <code>null</code> or empty.
 	 */
-	public static String createFragmentTag(Class<? extends FragmentController.IFragmentFactory> classOfFactory, String fragmentName) {
+	public static String createFragmentTag(Class<? extends FragmentController.FragmentFactory> classOfFactory, String fragmentName) {
 		// Only valid fragment name is allowed.
 		if (fragmentName == null || fragmentName.length() == 0) {
 			return null;
@@ -156,7 +173,10 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	 */
 	@Override
 	public String getFragmentTag(int fragmentID) {
-		return isFragmentProvided(fragmentID) ? FragmentFactory.createFragmentTag(this.getClass(), Integer.toString(fragmentID)) : null;
+		if (isFragmentProvided(fragmentID)) {
+			return (aFragmentTags != null) ? aFragmentTags.get(fragmentID) : createFragmentTag(getClass(), Integer.toString(fragmentID));
+		}
+		return null;
 	}
 
 	/**

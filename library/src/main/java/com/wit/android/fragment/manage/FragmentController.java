@@ -36,7 +36,7 @@ import android.util.Log;
  * </p>
  *
  * @author Martin Albedinsky
- * @see com.wit.android.fragment.manage.FragmentController.IFragmentFactory
+ * @see com.wit.android.fragment.manage.FragmentController.FragmentFactory
  * @see com.wit.android.fragment.manage.FragmentController.ShowOptions
  */
 public class FragmentController {
@@ -87,7 +87,7 @@ public class FragmentController {
 	/**
 	 * Fragment factory which provides fragment instances to show (manage) by this controller.
 	 */
-	private IFragmentFactory mFragmentFactory = null;
+	private FragmentFactory mFragmentFactory = null;
 
 	/**
 	 * Id of a layout container within the current window view hierarchy, into which will be view of
@@ -198,7 +198,7 @@ public class FragmentController {
 	 *
 	 * @param fragmentID The id of fragment from the current fragment factory to show.
 	 * @param params     Parameters to be passed to the current factory by
-	 *                   {@link com.wit.android.fragment.manage.FragmentController.IFragmentFactory#createFragmentInstance(int, android.os.Bundle)}.
+	 *                   {@link com.wit.android.fragment.manage.FragmentController.FragmentFactory#createFragmentInstance(int, android.os.Bundle)}.
 	 * @return <code>True</code> if transaction for the requested fragment was successfully created
 	 * and committed or if fragment is currently being visible and should not be replaced by the new
 	 * one, <code>false</code> otherwise (like the current factory doesn't provides requested fragment
@@ -298,7 +298,7 @@ public class FragmentController {
 	 */
 	/*public Fragment getVisibleFragment() {
 		final List<Fragment> fragments = mFragmentManager.getFragments();
-		final List<Fragment> visibleFragments = new ArrayList<Fragment>();
+		final List<Fragment> visibleFragments = new ArrayList<>();
 
 		if (fragments != null) {
 			// Get only visible fragments.
@@ -355,7 +355,7 @@ public class FragmentController {
 	 */
 	/*public Fragment getVisibleSecondFragment() {
 		final List<Fragment> fragments = mFragmentManager.getFragments();
-		final List<Fragment> visibleFragments = new ArrayList<Fragment>();
+		final List<Fragment> visibleFragments = new ArrayList<>();
 
 		if (fragments != null) {
 			// Get only visible fragments.
@@ -562,7 +562,7 @@ public class FragmentController {
 	 * @see #getFragmentFactory()
 	 * @see #hasFactory()
 	 */
-	public final void setFragmentFactory(IFragmentFactory factory) {
+	public final void setFragmentFactory(FragmentFactory factory) {
 		this.mFragmentFactory = factory;
 	}
 
@@ -572,10 +572,10 @@ public class FragmentController {
 	 * </p>
 	 *
 	 * @return Current fragment factory, or <code>null</code> if there is no factory available.
-	 * @see #setFragmentFactory(com.wit.android.fragment.manage.FragmentController.IFragmentFactory)
+	 * @see #setFragmentFactory(com.wit.android.fragment.manage.FragmentController.FragmentFactory)
 	 * @see #hasFactory()
 	 */
-	public final IFragmentFactory getFragmentFactory() {
+	public final FragmentFactory getFragmentFactory() {
 		return mFragmentFactory;
 	}
 
@@ -724,7 +724,7 @@ public class FragmentController {
 	 *
 	 * @param fragmentID The id of fragment from the current fragment factory to show.
 	 * @param params     Parameters to be passed to the current factory by
-	 *                   {@link com.wit.android.fragment.manage.FragmentController.IFragmentFactory#createFragmentInstance(int, android.os.Bundle)}.
+	 *                   {@link com.wit.android.fragment.manage.FragmentController.FragmentFactory#createFragmentInstance(int, android.os.Bundle)}.
 	 * @return <code>True</code> if showing was successful, <code>false</code> otherwise.
 	 */
 	private boolean performShowFragment(int fragmentID, Bundle params) {
@@ -796,7 +796,7 @@ public class FragmentController {
 	 * <h4>Default SetUp:</h4>
 	 * <ul>
 	 * <li>tag: {@link com.wit.android.fragment.manage.FragmentController#FRAGMENT_TAG}</li>
-	 * <li>show direction: {@link com.wit.android.fragment.manage.FragmentController.ShowDirection#NONE}</li>
+	 * <li>show direction: {@link com.wit.android.fragment.manage.ShowDirection#NONE}</li>
 	 * <li>container id: <b>-1</b></li>
 	 * <li>back-stacking: <b>false</b></li>
 	 * <li>replacing same: <b>true</b></li>
@@ -806,7 +806,7 @@ public class FragmentController {
 	 *
 	 * @author Martin Albedinsky
 	 * @see com.wit.android.fragment.manage.FragmentController
-	 * @see com.wit.android.fragment.manage.FragmentController.IFragmentFactory
+	 * @see com.wit.android.fragment.manage.FragmentController.FragmentFactory
 	 */
 	public static class ShowOptions implements Parcelable {
 		/**
@@ -984,7 +984,7 @@ public class FragmentController {
 		 *
 		 * @param direction Show direction.
 		 * @return This options.
-		 * @see com.wit.android.fragment.manage.FragmentController.ShowDirection
+		 * @see com.wit.android.fragment.manage.ShowDirection
 		 */
 		public ShowOptions showDirection(ShowDirection direction) {
 			this.showDirection = direction;
@@ -1090,7 +1090,7 @@ public class FragmentController {
 	 * @author Martin Albedinsky
 	 * @see com.wit.android.fragment.manage.FragmentController
 	 */
-	public static interface IFragmentFactory {
+	public static interface FragmentFactory {
 
 		/**
 		 * Methods ===============================
