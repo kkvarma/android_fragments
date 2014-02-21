@@ -21,9 +21,8 @@
 package com.wit.android.fragment.manage;
 
 import android.os.Bundle;
-import android.app.Fragment;
 
-import com.wit.android.support.fragment.annotation.Fragments;
+import com.wit.android.fragment.annotation.Fragments;
 
 import java.util.ArrayList;
 import java.util.List;

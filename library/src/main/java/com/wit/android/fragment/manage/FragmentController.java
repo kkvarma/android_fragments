@@ -30,8 +30,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.wit.android.fragment.R;
-
 /**
  * <h4>Class Overview</h4>
  * <p>
@@ -512,10 +510,10 @@ public class FragmentController {
 	 *
 	 * @return
 	 */
-	public String getVisibleSecondFragmentTag() {
+	/*public String getVisibleSecondFragmentTag() {
 		final Fragment visibleFragment = getVisibleSecondFragment();
 		return (visibleFragment != null) ? visibleFragment.getTag() : null;
-	}
+	}*/
 
 	/**
 	 * <p>
