@@ -76,7 +76,7 @@ public abstract class BaseFragment extends Fragment {
 	/**
 	 *
 	 */
-	private int mContentView = -1;
+	private ContentView mContentView = null;
 
     /**
      * Listeners -----------------------------
@@ -115,15 +115,12 @@ public abstract class BaseFragment extends Fragment {
 	 * </p>
 	 */
 	public BaseFragment() {
-		final Class<? extends BaseFragment> classOfFragment = getClass();
+		final Class<?> classOfFragment = ((Object) this).getClass();
 		/**
 		 * Process class annotations.
 		 */
 		// Retrieve content view.
-		final ContentView contentView = obtainAnnotationFrom(ContentView.class, classOfFragment);
-		if (contentView != null) {
-			this.mContentView = contentView.value();
-		}
+		this.mContentView = obtainAnnotationFrom(ContentView.class, classOfFragment);
 		// Retrieve clickable view ids.
 		if (classOfFragment.isAnnotationPresent(ClickableViews.class)) {
 			this.aClickableViewIDs = classOfFragment.getAnnotation(ClickableViews.class).value();
@@ -151,8 +148,12 @@ public abstract class BaseFragment extends Fragment {
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		if (mContentView > 0) {
-			return inflater.inflate(mContentView, container, false);
+		if (mContentView != null) {
+			if (mContentView.attachToRoot()) {
+				inflater.inflate(mContentView.value(), container, true);
+				return null;
+			}
+			return inflater.inflate(mContentView.value(), container, false);
 		}
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}

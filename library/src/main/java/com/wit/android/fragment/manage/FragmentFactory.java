@@ -23,6 +23,11 @@ package com.wit.android.fragment.manage;
 import android.os.Bundle;
 import android.app.Fragment;
 
+import com.wit.android.support.fragment.annotation.Fragments;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <h4>Class Overview</h4>
  * <p>
@@ -76,12 +81,36 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	 */
 
 	/**
+	 *
+	 */
+	private List<Integer> aFragmentIDs = null;
+
+	/**
 	 * Booleans ------------------------------
 	 */
 
 	/**
 	 * Constructors ==========================
 	 */
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	public FragmentFactory() {
+		final Class<?> classOfFactory = ((Object) this).getClass();
+		/**
+		 * Process class annotations.
+		 */
+		// Retrieve fragment ids.
+		if (classOfFactory.isAnnotationPresent(Fragments.class)) {
+			final int[] ids = classOfFactory.getAnnotation(Fragments.class).value();
+			this.aFragmentIDs = new ArrayList<Integer>(ids.length);
+			for (int id : ids) {
+				aFragmentIDs.add(id);
+			}
+		}
+	}
 
 	/**
 	 * Methods ===============================
@@ -120,22 +149,22 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	/**
 	 */
 	@Override
-	public Fragment createFragmentInstance(int fragmentID, Bundle params) {
-		return onCreateFragmentInstance(fragmentID, params);
-	}
-
-	/**
-	 */
-	@Override
 	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentID, Bundle params) {
-		return onGetFragmentShowOptions(fragmentID, params);
+		return isFragmentProvided(fragmentID) ? new FragmentController.ShowOptions().tag(getFragmentTag(fragmentID)) : null;
 	}
 
 	/**
 	 */
 	@Override
 	public String getFragmentTag(int fragmentID) {
-		return onGetFragmentTag(fragmentID);
+		return isFragmentProvided(fragmentID) ? FragmentFactory.createFragmentTag(this.getClass(), Integer.toString(fragmentID)) : null;
+	}
+
+	/**
+	 */
+	@Override
+	public boolean isFragmentProvided(int fragmentID) {
+		return (aFragmentIDs != null) && aFragmentIDs.contains(fragmentID);
 	}
 
 	/**
@@ -147,59 +176,12 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	 */
 
 	/**
-	 * <p>
-	 * Invoked to obtain a tag for fragment associated with the specified <var>fragmentID</var>.
-	 * </p>
-	 * <p>
-	 * <b>This implementation creates tag for requested fragment using {@link #createFragmentTag(Class, String)},
-	 * where the current class of this fragment factory and the specified <var>fragmentID</var>
-	 * as String</b> will be passed as parameters.
-	 * </p>
-	 *
-	 * @param fragmentID The id of fragment for which is tag requested.
-	 * @return Tag for fragment or <code>null</code> if this factory doesn't provides tag for requested
-	 * fragment.
-	 */
-	protected String onGetFragmentTag(int fragmentID) {
-		return FragmentFactory.createFragmentTag(this.getClass(), Integer.toString(fragmentID));
-	}
-
-	/**
-	 * <p>
-	 * Invoked to obtain a ShowOptions object for fragment associated with the specified <var>fragmentID</var>.
-	 * </p>
-	 * <p>
-	 * <b>This implementation returns always <code>null</code> to use default ShowOptions.</b>
-	 * </p>
-	 *
-	 * @param fragmentID The id of fragment for which are options requested.
-	 * @param params     Same params as for {@link #onCreateFragmentInstance(int, android.os.Bundle)}.
-	 * @return ShowOptions object or <code>null</code> if this factory doesn't provides ShowOptions
-	 * for requested fragment.
-	 */
-	protected FragmentController.ShowOptions onGetFragmentShowOptions(int fragmentID, Bundle params) {
-		return new FragmentController.ShowOptions().tag(getFragmentTag(fragmentID));
-	}
-
-	/**
 	 * Private -------------------------------
 	 */
 
 	/**
 	 * Abstract methods ----------------------
 	 */
-
-	/**
-	 * <p>
-	 * Invoked to create an instance of fragment associated with the specified <var>fragmentID</var>.
-	 * </p>
-	 *
-	 * @param fragmentID The id of fragment to create.
-	 * @param params     Bundle with parameters for requested fragment.
-	 * @return The instance of fragment or <code>null</code> if this factory doesn't provides requested
-	 * fragment.
-	 */
-	protected abstract Fragment onCreateFragmentInstance(int fragmentID, Bundle params);
 
 	/**
 	 * Inner classes =========================
