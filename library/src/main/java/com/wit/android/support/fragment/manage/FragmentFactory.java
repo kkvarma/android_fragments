@@ -21,7 +21,6 @@
 package com.wit.android.support.fragment.manage;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
 /**
  * <h4>Class Overview</h4>
@@ -120,22 +119,22 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	/**
 	 */
 	@Override
-	public Fragment createFragmentInstance(int fragmentID, Bundle params) {
-		return onCreateFragmentInstance(fragmentID, params);
-	}
-
-	/**
-	 */
-	@Override
 	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentID, Bundle params) {
-		return onGetFragmentShowOptions(fragmentID, params);
+		return new FragmentController.ShowOptions().tag(getFragmentTag(fragmentID));
 	}
 
 	/**
 	 */
 	@Override
 	public String getFragmentTag(int fragmentID) {
-		return onGetFragmentTag(fragmentID);
+		return FragmentFactory.createFragmentTag(this.getClass(), Integer.toString(fragmentID));
+	}
+
+	/**
+	 */
+	@Override
+	public int getFragmentID(String fragmentTag) {
+		return -1;
 	}
 
 	/**
@@ -147,59 +146,12 @@ public abstract class FragmentFactory implements FragmentController.IFragmentFac
 	 */
 
 	/**
-	 * <p>
-	 * Invoked to obtain a tag for fragment associated with the specified <var>fragmentID</var>.
-	 * </p>
-	 * <p>
-	 * <b>This implementation creates tag for requested fragment using {@link #createFragmentTag(Class, String)},
-	 * where the current class of this fragment factory and the specified <var>fragmentID</var>
-	 * as String</b> will be passed as parameters.
-	 * </p>
-	 *
-	 * @param fragmentID The id of fragment for which is tag requested.
-	 * @return Tag for fragment or <code>null</code> if this factory doesn't provides tag for requested
-	 * fragment.
-	 */
-	protected String onGetFragmentTag(int fragmentID) {
-		return FragmentFactory.createFragmentTag(this.getClass(), Integer.toString(fragmentID));
-	}
-
-	/**
-	 * <p>
-	 * Invoked to obtain a ShowOptions object for fragment associated with the specified <var>fragmentID</var>.
-	 * </p>
-	 * <p>
-	 * <b>This implementation returns always <code>null</code> to use default ShowOptions.</b>
-	 * </p>
-	 *
-	 * @param fragmentID The id of fragment for which are options requested.
-	 * @param params     Same params as for {@link #onCreateFragmentInstance(int, android.os.Bundle)}.
-	 * @return ShowOptions object or <code>null</code> if this factory doesn't provides ShowOptions
-	 * for requested fragment.
-	 */
-	protected FragmentController.ShowOptions onGetFragmentShowOptions(int fragmentID, Bundle params) {
-		return new FragmentController.ShowOptions().tag(getFragmentTag(fragmentID));
-	}
-
-	/**
 	 * Private -------------------------------
 	 */
 
 	/**
 	 * Abstract methods ----------------------
 	 */
-
-	/**
-	 * <p>
-	 * Invoked to create an instance of fragment associated with the specified <var>fragmentID</var>.
-	 * </p>
-	 *
-	 * @param fragmentID The id of fragment to create.
-	 * @param params     Bundle with parameters for requested fragment.
-	 * @return The instance of fragment or <code>null</code> if this factory doesn't provides requested
-	 * fragment.
-	 */
-	protected abstract Fragment onCreateFragmentInstance(int fragmentID, Bundle params);
 
 	/**
 	 * Inner classes =========================

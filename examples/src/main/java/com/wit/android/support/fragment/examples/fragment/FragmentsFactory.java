@@ -59,14 +59,14 @@ public class FragmentsFactory extends FragmentFactory {
 	public static final String PARAM_ADD_TO_BACK_STACK = "com.wit.android.support.fragment.examples.fragment.FragmentsFactory.Params.AddToBackStack";
 
 	@Override
-	protected Fragment onCreateFragmentInstance(int fragmentID, Bundle params) {
+	public Fragment createFragmentInstance(int fragmentID, Bundle params) {
 		return ImageFragment.newInstance(params.getString(PARAM_ACTION_BAR_TITLE));
 	}
 
 	/**
 	 */
 	@Override
-	protected FragmentController.ShowOptions onGetFragmentShowOptions(int fragmentID, Bundle params) {
+	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentID, Bundle params) {
 		final FragmentController.ShowOptions options = new FragmentController.ShowOptions();
 		switch (fragmentID) {
 			case FRAGMENT_DIRECTION_FROM_RIGHT_TO_LEFT:
