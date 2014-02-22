@@ -153,7 +153,7 @@ public class WebActivity extends ExBaseActionBarActivity {
 	 */
 	private boolean dispatchBackPressed() {
 		final WebFragment webFragment = (WebFragment) getFragmentController().getVisibleFragment();
-		return (webFragment != null && webFragment.dispatchBackPress());
+		return (webFragment != null && webFragment.dispatchBackPressed());
 	}
 
 	/**
