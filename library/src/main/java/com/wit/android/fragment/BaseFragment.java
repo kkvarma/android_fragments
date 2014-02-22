@@ -196,8 +196,8 @@ public abstract class BaseFragment extends Fragment {
 	 * @return <code>True</code> if this instance of fragment processes dispatched back press action,
 	 * <code>false</code> otherwise.
 	 */
-	public boolean dispatchBackPress() {
-		return onBackPress();
+	public boolean dispatchBackPressed() {
+		return onBackPressed();
 	}
 
 	/**
@@ -272,9 +272,9 @@ public abstract class BaseFragment extends Fragment {
 	 *
 	 * @return <code>True</code> if this instance of fragment processes dispatched back press action,
 	 * <code>false</code> otherwise.
-	 * @see #dispatchBackPress()
+	 * @see #dispatchBackPressed()
 	 */
-	protected boolean onBackPress() {
+	protected boolean onBackPressed() {
 		return false;
 	}
 
