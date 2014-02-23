@@ -132,7 +132,7 @@ public class ImageFragment extends ExActionBarFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		final ImageView mImageView = (ImageView) view.findViewById(R.id.Fragment_Image_ImageView);
-		mImageView.setImageResource(mImage.RES);
+		final ImageView imageView = (ImageView) view.findViewById(R.id.Fragment_Image_ImageView);
+		imageView.setImageResource(mImage.RES);
 	}
 }
