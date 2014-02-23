@@ -93,7 +93,7 @@ public class FragmentController {
 	 * Id of a layout container within the current window view hierarchy, into which will be view of
 	 * all managed fragments placed.
 	 */
-	private int mFragmentContainerID = -1;
+	private int mFragmentContainerId = -1;
 
 	/**
 	 *
@@ -197,17 +197,17 @@ public class FragmentController {
 	 * Same as {@link #showFragment(int, android.os.Bundle)} without params.
 	 * </p>
 	 */
-	public boolean showFragment(int fragmentID) {
-		return showFragment(fragmentID, null);
+	public boolean showFragment(int fragmentId) {
+		return showFragment(fragmentId, null);
 	}
 
 	/**
 	 * <p>
 	 * Shows a fragment instance provided by the current factory represented by the specified
-	 * <var>fragmentID</var>.
+	 * <var>fragmentId</var>.
 	 * </p>
 	 *
-	 * @param fragmentID The id of fragment from the current fragment factory to show.
+	 * @param fragmentId The id of fragment from the current fragment factory to show.
 	 * @param params     Parameters to be passed to the current factory by
 	 *                   {@link com.wit.android.fragment.manage.FragmentController.FragmentFactory#createFragmentInstance(int, android.os.Bundle)}.
 	 * @return <code>True</code> if transaction for the requested fragment was successfully created
@@ -217,9 +217,9 @@ public class FragmentController {
 	 * @throws IllegalStateException If there is no factory currently available.
 	 * @see #hasFactory()
 	 */
-	public boolean showFragment(int fragmentID, Bundle params) {
+	public boolean showFragment(int fragmentId, Bundle params) {
 		// Check if we have fragment factory.
-		return this.checkFragmentFactory(fragmentID) && this.performShowFragment(fragmentID, params);
+		return this.checkFragmentFactory(fragmentId) && this.performShowFragment(fragmentId, params);
 	}
 
 	/**
@@ -255,25 +255,25 @@ public class FragmentController {
 	 * @return Found an instance of fragment or <code>null</code> if there is no fragment with the
 	 * specified id within the current fragment manager.
 	 * @see #findFragmentByTag(String)
-	 * @see #findFactoryFragmentByID(int)
+	 * @see #findFactoryFragmentById(int)
 	 */
-	public Fragment findFragmentByID(int fragmentID) {
-		return mFragmentManager.findFragmentById(fragmentID);
+	public Fragment findFragmentById(int fragmentId) {
+		return mFragmentManager.findFragmentById(fragmentId);
 	}
 
 	/**
 	 * <p>
 	 * Same as {@link #findFragmentByTag(String)}, where fragment tag will be requested from the
-	 * current fragment factory by the specified <var>fragmentID</var>.
+	 * current fragment factory by the specified <var>fragmentId</var>.
 	 * </p>
 	 *
-	 * @param fragmentID The id of fragment from the current factory to obtain.
+	 * @param fragmentId The id of fragment from the current factory to obtain.
 	 * @throws IllegalStateException If there is no factory currently available.
 	 * @see #hasFactory()
 	 */
-	public Fragment findFactoryFragmentByID(int fragmentID) {
+	public Fragment findFactoryFragmentById(int fragmentId) {
 		// Check if we have fragment factory.
-		return this.checkFragmentFactory(fragmentID) ? findFragmentByTag(mFragmentFactory.getFragmentTag(fragmentID)) : null;
+		return this.checkFragmentFactory(fragmentId) ? findFragmentByTag(mFragmentFactory.getFragmentTag(fragmentId)) : null;
 	}
 
 	/**
@@ -283,7 +283,7 @@ public class FragmentController {
 	 *
 	 * @return Found an instance of fragment or <code>null</code> if there is no fragment with the
 	 * specified tag within the current fragment manager.
-	 * @see #findFragmentByID(int)
+	 * @see #findFragmentById(int)
 	 */
 	public Fragment findFragmentByTag(String fragmentTag) {
 		return mFragmentManager.findFragmentByTag(fragmentTag);
@@ -424,15 +424,15 @@ public class FragmentController {
 	/**
 	 * <p>
 	 * Same as {@link #showFragmentOptionsMenu(String, boolean)}, where fragment tag will be requested
-	 * form the current fragment factory by the specified <var>fragmentID</var>.
+	 * form the current fragment factory by the specified <var>fragmentId</var>.
 	 * </p>
 	 *
-	 * @param fragmentID The id of fragment from the current fragment factory, of which options to
+	 * @param fragmentId The id of fragment from the current fragment factory, of which options to
 	 *                   show/hide.
 	 */
-	public boolean showFragmentOptionsMenu(int fragmentID, boolean enable) {
+	public boolean showFragmentOptionsMenu(int fragmentId, boolean enable) {
 		// Check if we have fragment factory.
-		return this.checkFragmentFactory(fragmentID) && showFragmentOptionsMenu(mFragmentFactory.getFragmentTag(fragmentID), enable);
+		return this.checkFragmentFactory(fragmentId) && showFragmentOptionsMenu(mFragmentFactory.getFragmentTag(fragmentId), enable);
 	}
 
 	/**
@@ -552,12 +552,12 @@ public class FragmentController {
 	 * Sets an id of layout container for fragment views.
 	 * </p>
 	 *
-	 * @param layoutID The id of a layout container within the current window view hierarchy, into
+	 * @param layoutId The id of a layout container within the current window view hierarchy, into
 	 *                 which will be view of all managed fragments placed.
-	 * @see #getFragmentContainerID()
+	 * @see #getFragmentContainerId()
 	 */
-	public void setFragmentContainerID(int layoutID) {
-		this.mFragmentContainerID = layoutID;
+	public void setFragmentContainerId(int layoutId) {
+		this.mFragmentContainerId = layoutId;
 	}
 
 	/**
@@ -567,16 +567,16 @@ public class FragmentController {
 	 *
 	 * @return The id of a layout container within the current window view hierarchy, into which will
 	 * be view of all managed fragments placed or <code>-1</code> as default.
-	 * @see #setFragmentContainerID(int)
+	 * @see #setFragmentContainerId(int)
 	 */
-	public int getFragmentContainerID() {
-		return mFragmentContainerID;
+	public int getFragmentContainerId() {
+		return mFragmentContainerId;
 	}
 
 	/**
 	 * <p>
 	 * Sets the fragment factory for this fragment controller instance, which will be used to obtain
-	 * instances of fragments requested by this controller by specific <b>fragmentID</b>.
+	 * instances of fragments requested by this controller by specific <b>fragmentId</b>.
 	 * </p>
 	 *
 	 * @param factory Fragment factory to provide fragment instances, show options and fragment tags.
@@ -645,13 +645,13 @@ public class FragmentController {
 		}
 
 		// Check if we have place where the fragment should be placed.
-		if (options.containerID == -1) {
-			if (mFragmentContainerID == -1) {
+		if (options.containerId == -1) {
+			if (mFragmentContainerId == -1) {
 				// No id provided for the layout where should be fragment
 				// placed.
 				throw new IllegalStateException("There is no id provided for the layout container into which should be requested fragment's view placed.");
 			} else {
-				options.containerID = mFragmentContainerID;
+				options.containerId = mFragmentContainerId;
 			}
 		}
 
@@ -669,8 +669,8 @@ public class FragmentController {
 			 * currently outgoing fragment.
 			 * </pre>
 			 */
-			transaction.setCustomAnimations(dir.getInAnimResID(), dir.getOutAnimResID(), dir.getInAnimBackResID(),
-					dir.getOutAnimBackResID());
+			transaction.setCustomAnimations(dir.getInAnimResId(), dir.getOutAnimResId(), dir.getInAnimBackResId(),
+					dir.getOutAnimBackResId());
 		}
 
 		if (DEBUG) {
@@ -678,7 +678,7 @@ public class FragmentController {
 		}
 
 		// Fragment's view replaces the view of the current fragment container layout.
-		transaction.replace(options.containerID, fragment, options.tag);
+		transaction.replace(options.containerId, fragment, options.tag);
 
 		// Add fragment to back stack if requested.
 		if (options.addToBackStack) {
@@ -722,21 +722,21 @@ public class FragmentController {
 	/**
 	 * Performs showing of a fragment obtained from the current fragment factory.
 	 *
-	 * @param fragmentID The id of fragment from the current fragment factory to show.
+	 * @param fragmentId The id of fragment from the current fragment factory to show.
 	 * @param params     Parameters to be passed to the current factory by
 	 *                   {@link com.wit.android.fragment.manage.FragmentController.FragmentFactory#createFragmentInstance(int, android.os.Bundle)}.
 	 * @return <code>True</code> if showing was successful, <code>false</code> otherwise.
 	 */
-	private boolean performShowFragment(int fragmentID, Bundle params) {
+	private boolean performShowFragment(int fragmentId, Bundle params) {
 		// First obtain fragment instance then fragment tag.
-		Fragment fragment = mFragmentFactory.createFragmentInstance(fragmentID, params);
+		Fragment fragment = mFragmentFactory.createFragmentInstance(fragmentId, params);
 		if (fragment == null) {
 			// Invalid fragment instance.
-			Log.e(TAG, "No such fragment instance for the requested fragment id(" + fragmentID + "). Please check your fragment factory.");
+			Log.e(TAG, "No such fragment instance for the requested fragment id(" + fragmentId + "). Please check your fragment factory.");
 			return false;
 		}
-		final boolean success = onShowFragment(fragment, mFragmentFactory.getFragmentShowOptions(fragmentID, params));
-		return success && dispatchFragmentChanged(fragmentID, fragment.getTag(), true);
+		final boolean success = onShowFragment(fragment, mFragmentFactory.getFragmentShowOptions(fragmentId, params));
+		return success && dispatchFragmentChanged(fragmentId, fragment.getTag(), true);
 	}
 
 	/**
@@ -754,15 +754,15 @@ public class FragmentController {
 	/**
 	 * Checks if the current fragment factory is available or not.
 	 *
-	 * @param fragmentID
+	 * @param fragmentId
 	 * @return
 	 * @throws java.lang.IllegalStateException If the current factory isn't available.
 	 */
-	private boolean checkFragmentFactory(int fragmentID) {
+	private boolean checkFragmentFactory(int fragmentId) {
 		if (mFragmentFactory == null) {
 			throw new IllegalStateException("No fragment factory found.");
 		}
-		return mFragmentFactory.isFragmentProvided(fragmentID);
+		return mFragmentFactory.isFragmentProvided(fragmentId);
 	}
 
 	/**
@@ -872,7 +872,7 @@ public class FragmentController {
 		/**
 		 * Container layout id.
 		 */
-		protected int containerID = -1;
+		protected int containerId = -1;
 
 		/**
 		 * Booleans ------------------------------
@@ -914,7 +914,7 @@ public class FragmentController {
 		 * @param input Parcelable source with saved data.
 		 */
 		protected ShowOptions(Parcel input) {
-			this.containerID = input.readInt();
+			this.containerId = input.readInt();
 			this.tag = input.readString();
 			this.addToBackStack = input.readInt() == 1;
 			this.replaceSame = input.readInt() == 1;
@@ -934,7 +934,7 @@ public class FragmentController {
 		 */
 		@Override
 		public void writeToParcel(Parcel dest, int flags) {
-			dest.writeInt(containerID);
+			dest.writeInt(containerId);
 			dest.writeString(tag);
 			dest.writeInt(addToBackStack ? 1 : 0);
 			dest.writeInt(replaceSame ? 1 : 0);
@@ -967,7 +967,7 @@ public class FragmentController {
 			builder.append(replaceSame);
 			builder.append("), ");
 			builder.append(" container(");
-			builder.append(containerID);
+			builder.append(containerId);
 			builder.append(")]");
 			return builder.toString();
 		}
@@ -1024,12 +1024,12 @@ public class FragmentController {
 		 * <b>Note</b>, that this container id will be used only for this options.
 		 * </p>
 		 *
-		 * @param layoutID The id of layout container.
+		 * @param layoutId The id of layout container.
 		 * @return This options.
-		 * @see com.wit.android.fragment.manage.FragmentController#setFragmentContainerID(int)
+		 * @see com.wit.android.fragment.manage.FragmentController#setFragmentContainerId(int)
 		 */
-		public ShowOptions containerID(int layoutID) {
-			this.containerID = layoutID;
+		public ShowOptions containerId(int layoutId) {
+			this.containerId = layoutId;
 			return this;
 		}
 
@@ -1123,62 +1123,62 @@ public class FragmentController {
 
 		/**
 		 * <p>
-		 * Returns an instance of fragment associated with the specified <var>fragmentID</var> within
+		 * Returns an instance of fragment associated with the specified <var>fragmentId</var> within
 		 * this fragment factory.
 		 * </p>
 		 * <p>
 		 * This is in most cases invoked from instance of {@link com.wit.android.fragment.manage.FragmentController},
 		 * when that instance of FragmentController was requested to show fragment with the specified
-		 * <var>fragmentID</var>.
+		 * <var>fragmentId</var>.
 		 * </p>
 		 *
-		 * @param fragmentID The id of fragment to create.
+		 * @param fragmentId The id of fragment to create.
 		 * @param params     Bundle with parameters for requested fragment.
-		 * @return The instance of fragment associated with the specified <var>fragmentID</var> or
+		 * @return The instance of fragment associated with the specified <var>fragmentId</var> or
 		 * <code>null</code> if this fragment factory doesn't provides requested fragment.
 		 */
-		public Fragment createFragmentInstance(int fragmentID, Bundle params);
+		public Fragment createFragmentInstance(int fragmentId, Bundle params);
 
 		/**
 		 * <p>
-		 * Returns a ShowOptions object for fragment associated with the specified <var>fragmentID</var>
+		 * Returns a ShowOptions object for fragment associated with the specified <var>fragmentId</var>
 		 * within this fragment factory.
 		 * </p>
 		 * <p>
 		 * This is in most cases invoked form instance of {@link com.wit.android.fragment.manage.FragmentController},
 		 * when that instance of FragmentController was requested to show fragment with the specified
-		 * <var>fragmentID</var>. In such a case, if this fragment factory will not provide valid
+		 * <var>fragmentId</var>. In such a case, if this fragment factory will not provide valid
 		 * ShowOptions, FragmentController will use default ones.
 		 * </p>
 		 *
-		 * @param fragmentID The id of fragment for which are options requested.
+		 * @param fragmentId The id of fragment for which are options requested.
 		 * @param params     Same params as for {@link #createFragmentInstance(int, android.os.Bundle)}.
-		 * @return ShowOptions object for fragment associated with the specified <var>fragmentID</var>
+		 * @return ShowOptions object for fragment associated with the specified <var>fragmentId</var>
 		 * or <code>null</code> if this fragment factory doesn't provides ShowOptions for requested
 		 * fragment.
 		 */
-		public ShowOptions getFragmentShowOptions(int fragmentID, Bundle params);
+		public ShowOptions getFragmentShowOptions(int fragmentId, Bundle params);
 
 		/**
 		 * <p>
-		 * Returns a tag for fragment associated with the specified <var>fragmentID</var> within
+		 * Returns a tag for fragment associated with the specified <var>fragmentId</var> within
 		 * this fragment factory.
 		 * </p>
 		 *
-		 * @param fragmentID The id of fragment for which is tag requested.
-		 * @return Tag for fragment associated with the specified <var>fragmentID</var> or <code>null</code>
+		 * @param fragmentId The id of fragment for which is tag requested.
+		 * @return Tag for fragment associated with the specified <var>fragmentId</var> or <code>null</code>
 		 * if this fragment factory doesn't provides tag for requested fragment.
 		 */
-		public String getFragmentTag(int fragmentID);
+		public String getFragmentTag(int fragmentId);
 
 		/**
 		 * <p>
 		 * </p>
 		 *
-		 * @param fragmentID
+		 * @param fragmentId
 		 * @return
 		 */
-		public boolean isFragmentProvided(int fragmentID);
+		public boolean isFragmentProvided(int fragmentId);
 	}
 
 	/**

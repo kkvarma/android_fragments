@@ -394,7 +394,7 @@ public class ShowDirection implements Parcelable {
 	/**
 	 * Animation resource id.
 	 */
-	private int mInAnimResID, mOutAnimResID, mInAnimBackResID, mOutAnimBackResID;
+	private int mInAnimResId, mOutAnimResId, mInAnimBackResId, mOutAnimBackResId;
 
 	/**
 	 * Name of this show direction.
@@ -449,10 +449,10 @@ public class ShowDirection implements Parcelable {
 	 * @param name        Name for this show direction. Can be obtained by {@link #name()}.
 	 */
 	public ShowDirection(int inAnim, int outAnim, int inAnimBack, int outAnimBack, String name) {
-		this.mInAnimResID = inAnim;
-		this.mOutAnimResID = outAnim;
-		this.mInAnimBackResID = inAnimBack;
-		this.mOutAnimBackResID = outAnimBack;
+		this.mInAnimResId = inAnim;
+		this.mOutAnimResId = outAnim;
+		this.mInAnimBackResId = inAnimBack;
+		this.mOutAnimBackResId = outAnimBack;
 		this.mName = name;
 	}
 
@@ -464,10 +464,10 @@ public class ShowDirection implements Parcelable {
 	 * @param input Parcelable source with saved data.
 	 */
 	protected ShowDirection(Parcel input) {
-		this.mInAnimResID = input.readInt();
-		this.mOutAnimResID = input.readInt();
-		this.mInAnimBackResID = input.readInt();
-		this.mOutAnimBackResID = input.readInt();
+		this.mInAnimResId = input.readInt();
+		this.mOutAnimResId = input.readInt();
+		this.mInAnimBackResId = input.readInt();
+		this.mOutAnimBackResId = input.readInt();
 		this.mName = input.readString();
 	}
 
@@ -483,10 +483,10 @@ public class ShowDirection implements Parcelable {
 	 */
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(mInAnimResID);
-		dest.writeInt(mOutAnimResID);
-		dest.writeInt(mInAnimBackResID);
-		dest.writeInt(mOutAnimBackResID);
+		dest.writeInt(mInAnimResId);
+		dest.writeInt(mOutAnimResId);
+		dest.writeInt(mInAnimBackResId);
+		dest.writeInt(mOutAnimBackResId);
 		dest.writeString(mName);
 	}
 
@@ -519,8 +519,8 @@ public class ShowDirection implements Parcelable {
 	 *
 	 * @return Animation resource id.
 	 */
-	public int getInAnimResID() {
-		return mInAnimResID;
+	public int getInAnimResId() {
+		return mInAnimResId;
 	}
 
 	/**
@@ -530,8 +530,8 @@ public class ShowDirection implements Parcelable {
 	 *
 	 * @return Animation resource id.
 	 */
-	public int getOutAnimResID() {
-		return mOutAnimResID;
+	public int getOutAnimResId() {
+		return mOutAnimResId;
 	}
 
 	/**
@@ -541,8 +541,8 @@ public class ShowDirection implements Parcelable {
 	 *
 	 * @return Animation resource id.
 	 */
-	public int getOutAnimBackResID() {
-		return mOutAnimBackResID;
+	public int getOutAnimBackResId() {
+		return mOutAnimBackResId;
 	}
 
 	/**
@@ -552,8 +552,8 @@ public class ShowDirection implements Parcelable {
 	 *
 	 * @return Animation resource id.
 	 */
-	public int getInAnimBackResID() {
-		return mInAnimBackResID;
+	public int getInAnimBackResId() {
+		return mInAnimBackResId;
 	}
 
 	/**

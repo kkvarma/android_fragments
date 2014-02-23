@@ -83,7 +83,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	/**
 	 *
 	 */
-	private List<Integer> aFragmentIDs = null;
+	private List<Integer> aFragmentIds = null;
 
 	/**
 	 *
@@ -112,9 +112,9 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 			final Fragments fragments = classOfFactory.getAnnotation(Fragments.class);
 
 			final int[] ids = fragments.value();
-			this.aFragmentIDs = new ArrayList<>(ids.length);
+			this.aFragmentIds = new ArrayList<>(ids.length);
 			for (int id : ids) {
-				aFragmentIDs.add(id);
+				aFragmentIds.add(id);
 			}
 
 			// Create also tags if requested.
@@ -165,16 +165,16 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	/**
 	 */
 	@Override
-	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentID, Bundle params) {
-		return isFragmentProvided(fragmentID) ? new FragmentController.ShowOptions().tag(getFragmentTag(fragmentID)) : null;
+	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentId, Bundle params) {
+		return isFragmentProvided(fragmentId) ? new FragmentController.ShowOptions().tag(getFragmentTag(fragmentId)) : null;
 	}
 
 	/**
 	 */
 	@Override
-	public String getFragmentTag(int fragmentID) {
-		if (isFragmentProvided(fragmentID)) {
-			return (aFragmentTags != null) ? aFragmentTags.get(fragmentID) : createFragmentTag(getClass(), Integer.toString(fragmentID));
+	public String getFragmentTag(int fragmentId) {
+		if (isFragmentProvided(fragmentId)) {
+			return (aFragmentTags != null) ? aFragmentTags.get(fragmentId) : createFragmentTag(getClass(), Integer.toString(fragmentId));
 		}
 		return null;
 	}
@@ -182,8 +182,8 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	/**
 	 */
 	@Override
-	public boolean isFragmentProvided(int fragmentID) {
-		return (aFragmentIDs != null) && aFragmentIDs.contains(fragmentID);
+	public boolean isFragmentProvided(int fragmentId) {
+		return (aFragmentIds != null) && aFragmentIds.contains(fragmentId);
 	}
 
 	/**

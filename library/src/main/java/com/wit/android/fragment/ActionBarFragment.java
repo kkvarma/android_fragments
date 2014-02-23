@@ -27,8 +27,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
-import com.wit.android.fragment.annotation.ActionBarIcon;
-import com.wit.android.fragment.annotation.ActionBarTitle;
+import com.wit.android.fragment.annotation.ActionBarOptions;
 import com.wit.android.fragment.annotation.OptionsMenu;
 
 /**
@@ -75,22 +74,12 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 *
 	 */
-	private int mActionBarTitle = -1;
+	private ActionBarOptions mActionBarOptions;
 
 	/**
 	 *
 	 */
-	private int mActionBarIcon = -1;
-
-	/**
-	 *
-	 */
-	private int mOptionsMenu = -1;
-
-	/**
-	 *
-	 */
-	private int mOptionsMenuFlags = OptionsMenu.DEFAULT;
+	private OptionsMenu mOptionsMenu;
 
 	/**
 	 * Listeners -----------------------------
@@ -103,11 +92,6 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 * Booleans ------------------------------
 	 */
-
-	/**
-	 *
-	 */
-	private boolean bClearOptionsMenu = true;
 
 	/**
 	 * Constructors ==========================
@@ -123,21 +107,14 @@ public class ActionBarFragment extends BaseFragment {
 		/**
 		 * Process class annotations.
 		 */
-		// Retrieve action bar title.
-		if (classOfFragment.isAnnotationPresent(ActionBarTitle.class)) {
-			this.mActionBarTitle = classOfFragment.getAnnotation(ActionBarTitle.class).value();
-		}
-		// Retrieve action bar icon.
-		final ActionBarIcon actionBarIcon = obtainAnnotationFrom(ActionBarIcon.class, classOfFragment);
-		if (actionBarIcon != null) {
-			this.mActionBarIcon = actionBarIcon.value();
+		// Retrieve action bar options.
+		if (classOfFragment.isAnnotationPresent(ActionBarOptions.class)) {
+			this.mActionBarOptions = classOfFragment.getAnnotation(ActionBarOptions.class);
 		}
 		// Retrieve options menu.
 		final OptionsMenu optionsMenu = obtainAnnotationFrom(OptionsMenu.class, classOfFragment);
 		if (optionsMenu != null) {
-			this.mOptionsMenu = optionsMenu.value();
-			this.mOptionsMenuFlags = optionsMenu.flags();
-			this.bClearOptionsMenu = optionsMenu.clear();
+			this.mOptionsMenu = optionsMenu;
 		}
 	}
 
@@ -154,7 +131,7 @@ public class ActionBarFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(mOptionsMenu > 0);
+		setHasOptionsMenu(mOptionsMenu != null);
 	}
 
 	/**
@@ -163,24 +140,24 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		if (mOptionsMenu > 0) {
-			if (bClearOptionsMenu) {
+		if (mOptionsMenu != null) {
+			if (mOptionsMenu.clear()) {
 				menu.clear();
 			}
-			switch (mOptionsMenuFlags) {
+			switch (mOptionsMenu.flags()) {
 				case OptionsMenu.IGNORE_SUPER:
-					inflater.inflate(mOptionsMenu, menu);
+					inflater.inflate(mOptionsMenu.value(), menu);
 					break;
 				case OptionsMenu.BEFORE_SUPER:
-					inflater.inflate(mOptionsMenu, menu);
+					inflater.inflate(mOptionsMenu.value(), menu);
 					super.onCreateOptionsMenu(menu, inflater);
 					break;
 				case OptionsMenu.DEFAULT:
 					super.onCreateOptionsMenu(menu, inflater);
-					inflater.inflate(mOptionsMenu, menu);
+					inflater.inflate(mOptionsMenu.value(), menu);
 					break;
 				default:
-					throw new IllegalArgumentException("Unknown options menu flags(" + mOptionsMenuFlags + ").");
+					throw new IllegalArgumentException("Unknown options menu flags(" + mOptionsMenu.flags() + ").");
 			}
 			return;
 		}
@@ -192,11 +169,14 @@ public class ActionBarFragment extends BaseFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		if (mActionBarTitle > 0) {
-			setActionBarTitle(mActionBarTitle);
-		}
-		if (mActionBarIcon > 0) {
-			setActionBarIcon(mActionBarIcon);
+		// Resolve action bar options.
+		if (mActionBarOptions != null) {
+			if (mActionBarOptions.title() >= 0) {
+				setActionBarTitle(mActionBarOptions.title());
+			}
+			if (mActionBarOptions.icon() >= 0) {
+				setActionBarIcon(mActionBarOptions.icon());
+			}
 		}
 	}
 
@@ -221,8 +201,8 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #getActionBar()
 	 * @see #isActivityAvailable()
 	 */
-	public boolean requestWindowFeature(int featureID) {
-		return isActivityAvailable() && getActivity().requestWindowFeature(featureID);
+	public boolean requestWindowFeature(int featureId) {
+		return isActivityAvailable() && getActivity().requestWindowFeature(featureId);
 	}
 
 	/**
@@ -233,11 +213,11 @@ public class ActionBarFragment extends BaseFragment {
 	 * <p>
 	 * </p>
 	 *
-	 * @param resID
+	 * @param resId
 	 */
-	public void setActionBarTitle(int resID) {
+	public void setActionBarTitle(int resId) {
 		if (isActivityAvailable()) {
-			getActionBar().setTitle(resID);
+			getActionBar().setTitle(resId);
 		}
 	}
 
@@ -257,11 +237,11 @@ public class ActionBarFragment extends BaseFragment {
 	 * <p>
 	 * </p>
 	 *
-	 * @param resID
+	 * @param resId
 	 */
-	public void setActionBarIcon(int resID) {
+	public void setActionBarIcon(int resId) {
 		if (isActivityAvailable()) {
-			getActionBar().setIcon(resID);
+			getActionBar().setIcon(resId);
 		}
 	}
 
