@@ -28,8 +28,10 @@ import android.view.ViewGroup;
 
 import com.wit.android.support.fragment.annotation.ClickableViews;
 import com.wit.android.support.fragment.annotation.ContentView;
+import com.wit.android.support.fragment.annotation.InjectView;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 
 /**
  * <h4>Class Overview</h4>
@@ -88,7 +90,7 @@ public abstract class BaseFragment extends Fragment {
 	/**
 	 *
 	 */
-	private int[] aClickableViewIDs = {};
+	private int[] aClickableViewIds = {};
 
     /**
      * Booleans ------------------------------
@@ -122,7 +124,7 @@ public abstract class BaseFragment extends Fragment {
 		this.mContentView = obtainAnnotationFrom(ContentView.class, classOfFragment);
 		// Retrieve clickable view ids.
 		if (classOfFragment.isAnnotationPresent(ClickableViews.class)) {
-			this.aClickableViewIDs = classOfFragment.getAnnotation(ClickableViews.class).value();
+			this.aClickableViewIds = classOfFragment.getAnnotation(ClickableViews.class).value();
 		}
 	}
 
@@ -162,13 +164,15 @@ public abstract class BaseFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		if (aClickableViewIDs.length > 0) {
+		if (aClickableViewIds.length > 0) {
 			// Set up clickable views.
 			final ClickListener clickListener = new ClickListener();
-			for (int id : aClickableViewIDs) {
+			for (int id : aClickableViewIds) {
 				view.findViewById(id).setOnClickListener(clickListener);
 			}
 		}
+		// Check views which should be injected.
+		this.checkViewsToInject(((Object) this).getClass(), view);
 	}
 
 	/**
@@ -225,12 +229,22 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	public boolean isViewCreated() {
+		return getView() != null;
+	}
+
+	/**
+	 * <p>
 	 * Same as  {@link #getString(int)}, but first is performed check if the parent activity of this
 	 * fragment instance is available to prevent illegal state exceptions.
 	 * </p>
 	 */
-	public String obtainString(int resID) {
-		return isActivityAvailable() ? getString(resID) : "";
+	public String obtainString(int resId) {
+		return isActivityAvailable() ? getString(resId) : "";
 	}
 
 	/**
@@ -241,8 +255,8 @@ public abstract class BaseFragment extends Fragment {
 	 * </p>
 	 * </p>
 	 */
-	public String obtainString(int resID, Object... args) {
-		return isActivityAvailable() ? getString(resID, args) : "";
+	public String obtainString(int resId, Object... args) {
+		return isActivityAvailable() ? getString(resId, args) : "";
 	}
 
 	/**
@@ -318,6 +332,41 @@ public abstract class BaseFragment extends Fragment {
     /**
      * Private -------------------------------
      */
+
+	/**
+	 *
+	 * @param classOfFragment
+	 * @param view
+	 */
+	private void checkViewsToInject(Class<?> classOfFragment, View view) {
+		// Process annotated fields.
+		final Field[] fields = classOfFragment.getDeclaredFields();
+		if (fields.length > 0) {
+			for (Field field : fields) {
+				if (field.isAnnotationPresent(InjectView.class)) {
+					// Check correct type of the field.
+					final Class<?> classOfField = field.getType();
+					if (View.class.isAssignableFrom(classOfField)) {
+						field.setAccessible(true);
+						try {
+							field.set(
+									this,
+									view.findViewById(field.getAnnotation(InjectView.class).value())
+							);
+						} catch (IllegalAccessException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+
+		// Process also super fields if is presented.
+		final Class<?> superOfFragment = classOfFragment.getSuperclass();
+		if (superOfFragment != null) {
+			checkViewsToInject(superOfFragment, view);
+		}
+	}
 
     /**
      * Abstract methods ----------------------

@@ -35,7 +35,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ActionBarTitle {
+public @interface ActionBarOptions {
 
 	/**
 	 * Constants =============================
@@ -50,5 +50,17 @@ public @interface ActionBarTitle {
 	 *
 	 * @return
 	 */
-	int value();
+	int title();
+
+	/**
+	 *
+	 * @return
+	 */
+	int icon() default -1;
+
+	/**
+	 *
+	 * @return
+	 */
+	boolean homeAsUp() default false;
 }

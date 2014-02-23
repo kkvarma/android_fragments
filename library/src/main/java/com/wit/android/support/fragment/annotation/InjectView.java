@@ -33,9 +33,9 @@ import java.lang.annotation.Target;
  *
  * @author Martin Albedinsky
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ActionBarIcon {
+public @interface InjectView {
 
 	/**
 	 * Constants =============================
