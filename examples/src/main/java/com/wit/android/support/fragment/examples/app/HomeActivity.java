@@ -57,7 +57,7 @@ public class HomeActivity extends ExHomeActivity implements FragmentController.O
 
 	{
 		// Set up fragment container id.
-		FRAGMENT_CONTROLLER.setFragmentContainerID(R.id.Ex_App_Content_Container);
+		FRAGMENT_CONTROLLER.setFragmentContainerId(R.id.Ex_App_Content_Container);
 	}
 
 	private boolean bAddFragmentToBackStack = true;
