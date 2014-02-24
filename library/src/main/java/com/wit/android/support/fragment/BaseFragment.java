@@ -44,7 +44,7 @@ import java.lang.reflect.Field;
 public abstract class BaseFragment extends Fragment {
 
     /**
-     * Constants =============================
+     * Constants ===================================================================================
      */
 
     /**
@@ -63,15 +63,15 @@ public abstract class BaseFragment extends Fragment {
     // private static final boolean USER_LOG = true;
 
     /**
-     * Enums =================================
+     * Enums =======================================================================================
      */
 
     /**
-     * Static members ========================
+     * Static members ==============================================================================
      */
 
     /**
-     * Members ===============================
+     * Members =====================================================================================
      */
 
 	/**
@@ -79,21 +79,21 @@ public abstract class BaseFragment extends Fragment {
 	 */
 	private ContentView mContentView = null;
 
-    /**
-     * Listeners -----------------------------
-     */
-
-    /**
-     * Arrays --------------------------------
-     */
-
 	/**
 	 *
 	 */
-	private int[] aClickableViewIds = {};
+	private ClickableViews mClickableViews = null;
 
     /**
-     * Booleans ------------------------------
+     * Listeners -----------------------------------------------------------------------------------
+     */
+
+    /**
+     * Arrays --------------------------------------------------------------------------------------
+     */
+
+    /**
+     * Booleans ------------------------------------------------------------------------------------
      */
 
     /**
@@ -108,7 +108,7 @@ public abstract class BaseFragment extends Fragment {
     private boolean bViewRestored = false;
 
     /**
-     * Constructors ==========================
+     * Constructors ================================================================================
      */
 
 	/**
@@ -124,16 +124,16 @@ public abstract class BaseFragment extends Fragment {
 		this.mContentView = obtainAnnotationFrom(ContentView.class, classOfFragment);
 		// Retrieve clickable view ids.
 		if (classOfFragment.isAnnotationPresent(ClickableViews.class)) {
-			this.aClickableViewIds = classOfFragment.getAnnotation(ClickableViews.class).value();
+			this.mClickableViews = classOfFragment.getAnnotation(ClickableViews.class);
 		}
 	}
 
     /**
-     * Methods ===============================
+     * Methods =====================================================================================
      */
 
     /**
-     * Public --------------------------------
+     * Public --------------------------------------------------------------------------------------
      */
 
     /**
@@ -164,10 +164,10 @@ public abstract class BaseFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		if (aClickableViewIds.length > 0) {
+		if (mClickableViews != null && mClickableViews.value().length > 0) {
 			// Set up clickable views.
 			final ClickListener clickListener = new ClickListener();
-			for (int id : aClickableViewIds) {
+			for (int id : mClickableViews.value()) {
 				view.findViewById(id).setOnClickListener(clickListener);
 			}
 		}
@@ -271,11 +271,11 @@ public abstract class BaseFragment extends Fragment {
 	}
 
     /**
-     * Getters + Setters ---------------------
+     * Getters + Setters ---------------------------------------------------------------------------
      */
 
     /**
-     * Protected -----------------------------
+     * Protected -----------------------------------------------------------------------------------
      */
 
 	/**
@@ -330,7 +330,7 @@ public abstract class BaseFragment extends Fragment {
 	}
 
     /**
-     * Private -------------------------------
+     * Private -------------------------------------------------------------------------------------
      */
 
 	/**
@@ -369,11 +369,11 @@ public abstract class BaseFragment extends Fragment {
 	}
 
     /**
-     * Abstract methods ----------------------
+     * Abstract methods ----------------------------------------------------------------------------
      */
 
     /**
-     * Inner classes =========================
+     * Inner classes ===============================================================================
      */
 
 	/**
@@ -390,6 +390,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * Interface =============================
+     * Interface ===================================================================================
      */
 }
