@@ -23,7 +23,7 @@ package com.wit.android.fragment.manage;
 import android.os.Bundle;
 import android.util.SparseArray;
 
-import com.wit.android.fragment.annotation.Fragments;
+import com.wit.android.fragment.annotation.FactoryFragments;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,8 +108,8 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 		 * Process class annotations.
 		 */
 		// Retrieve fragment ids.
-		if (classOfFactory.isAnnotationPresent(Fragments.class)) {
-			final Fragments fragments = classOfFactory.getAnnotation(Fragments.class);
+		if (classOfFactory.isAnnotationPresent(FactoryFragments.class)) {
+			final FactoryFragments fragments = classOfFactory.getAnnotation(FactoryFragments.class);
 
 			final int[] ids = fragments.value();
 			this.aFragmentIds = new ArrayList<>(ids.length);
