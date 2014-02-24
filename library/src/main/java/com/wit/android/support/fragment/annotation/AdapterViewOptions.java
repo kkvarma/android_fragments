@@ -35,11 +35,23 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Fragments {
+public @interface AdapterViewOptions {
 
 	/**
 	 * Constants =============================
 	 */
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	public static final int VIEW_DEFAULT_ID = android.R.id.list;
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	public static final int EMPTY_VIEW_DEFAULT_ID = android.R.id.empty;
 
 	/**
 	 * Methods ===============================
@@ -50,11 +62,11 @@ public @interface Fragments {
 	 *
 	 * @return
 	 */
-	int[] value();
+	int viewId() default VIEW_DEFAULT_ID;
 
 	/**
 	 *
 	 * @return
 	 */
-	boolean createTags() default true;
+	int emptyViewId() default EMPTY_VIEW_DEFAULT_ID;
 }
