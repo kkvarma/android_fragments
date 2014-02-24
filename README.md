@@ -47,7 +47,7 @@ Android Fragments (2.0)
 
 ## Compatibility ##
 
-Supported from the **Android API version 13**.
+Supported from the **Android API version 14**.
 
 ## Known Issues ##
 
