@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
 public class WebFragment extends BaseFragment {
 
 	/**
-	 * Constants =============================
+	 * Constants ===================================================================================
 	 */
 
 	/**
@@ -74,7 +74,7 @@ public class WebFragment extends BaseFragment {
 	private static final String BUNDLE_WEB_VIEW_JAVA_SCRIPT_ENABLED = "com.wit.android.support.fragment.WebFragment.Bundle.JavaScriptEnabled";
 
 	/**
-	 * Source code copied from Android SDK [START] =====================================================
+	 * Source code copied from Android SDK [START] =================================================
 	 * to preserve min library SDK version at 7.
 	 */
 	private static final String GOOD_IRI_CHAR = "a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF";
@@ -130,7 +130,7 @@ public class WebFragment extends BaseFragment {
 					+ "\\-\\.\\+\\!\\*\\'\\(\\)\\,\\_])|(?:\\%[a-fA-F0-9]{2}))*)?"
 					+ "(?:\\b|$)"); // and finally, a word boundary or end of input.  This is to stop foo.sure from matching as foo.su
 	/**
-	 * Source code copied from Android SDK [END] =======================================================
+	 * Source code copied from Android SDK [END] ===================================================
 	 */
 
 	/**
@@ -147,7 +147,7 @@ public class WebFragment extends BaseFragment {
 	 * Width of dialog window drop shadow. In pixels.
 
 	 /**
-	 * Enums =================================
+	 * Enums =======================================================================================
 	 */
 
 	/**
@@ -177,11 +177,11 @@ public class WebFragment extends BaseFragment {
 	}
 
 	/**
-	 * Static members ========================
+	 * Static members ==============================================================================
 	 */
 
 	/**
-	 * Members ===============================
+	 * Members =====================================================================================
 	 */
 
 	/**
@@ -209,11 +209,11 @@ public class WebFragment extends BaseFragment {
 	private OnWebContentLoadingListener iWebContentLoadingListener;
 
 	/**
-	 * Arrays --------------------------------
+	 * Arrays --------------------------------------------------------------------------------------
 	 */
 
 	/**
-	 * Booleans ------------------------------
+	 * Booleans ------------------------------------------------------------------------------------
 	 */
 
 	/**
@@ -228,15 +228,15 @@ public class WebFragment extends BaseFragment {
 	private boolean bReadyToLoadContent = false;
 
 	/**
-	 * Constructors ==========================
+	 * Constructors ================================================================================
 	 */
 
 	/**
-	 * Methods ===============================
+	 * Methods =====================================================================================
 	 */
 
 	/**
-	 * Public --------------------------------
+	 * Public --------------------------------------------------------------------------------------
 	 */
 
 	/**
@@ -384,7 +384,7 @@ public class WebFragment extends BaseFragment {
 	}
 
 	/**
-	 * Getters + Setters ---------------------
+	 * Getters + Setters ---------------------------------------------------------------------------
 	 */
 
 	/**
@@ -435,7 +435,7 @@ public class WebFragment extends BaseFragment {
 	}
 
 	/**
-	 * Protected -----------------------------
+	 * Protected -----------------------------------------------------------------------------------
 	 */
 
 	/**
@@ -603,7 +603,7 @@ public class WebFragment extends BaseFragment {
 	}
 
 	/**
-	 * Private -------------------------------
+	 * Private -------------------------------------------------------------------------------------
 	 */
 
 	/**
@@ -629,11 +629,11 @@ public class WebFragment extends BaseFragment {
 	}
 
 	/**
-	 * Abstract methods ----------------------
+	 * Abstract methods ----------------------------------------------------------------------------
 	 */
 
 	/**
-	 * Inner classes =========================
+	 * Inner classes ===============================================================================
 	 */
 
 	/**
@@ -646,7 +646,7 @@ public class WebFragment extends BaseFragment {
 	 */
 	public static class WebOptions {
 		/**
-		 * Members ===============================
+		 * Members =================================================================================
 		 */
 
 		/**
@@ -660,19 +660,11 @@ public class WebFragment extends BaseFragment {
 		private boolean javascriptEnabled = true;
 
 		/**
-		 * Constructors ==========================
+		 * Constructors ============================================================================
 		 */
 
 		/**
-		 * Methods ===============================
-		 */
-
-		/**
-		 * Public --------------------------------
-		 */
-
-		/**
-		 * Getters + Setters ---------------------
+		 * Methods =================================================================================
 		 */
 
 		/**
@@ -703,7 +695,7 @@ public class WebFragment extends BaseFragment {
 	}
 
 	/**
-	 * Interface =============================
+	 * Interface ===================================================================================
 	 */
 
 	/**
@@ -716,10 +708,6 @@ public class WebFragment extends BaseFragment {
 	 * @author Martin Albedinsky
 	 */
 	public static interface OnWebContentLoadingListener {
-
-		/**
-		 * Methods ===============================
-		 */
 
 		/**
 		 * <p>

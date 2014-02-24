@@ -45,7 +45,7 @@ import java.util.List;
 public class FragmentController {
 
 	/**
-	 * Constants =============================
+	 * Constants ===================================================================================
 	 */
 
 	/**
@@ -71,15 +71,15 @@ public class FragmentController {
 	private static final boolean USER_LOG = true;
 
 	/**
-	 * Enums =================================
+	 * Enums =======================================================================================
 	 */
 
 	/**
-	 * Static members ========================
+	 * Static members ==============================================================================
 	 */
 
 	/**
-	 * Members ===============================
+	 * Members =====================================================================================
 	 */
 
 	/**
@@ -104,7 +104,7 @@ public class FragmentController {
 	private FragmentManager.BackStackEntry mTopBackStackEntry = null;
 
 	/**
-	 * Listeners -----------------------------
+	 * Listeners -----------------------------------------------------------------------------------
 	 */
 
 	/**
@@ -118,15 +118,15 @@ public class FragmentController {
 	private OnFragmentChangeListener lFragmentListener;
 
 	/**
-	 * Arrays --------------------------------
+	 * Arrays --------------------------------------------------------------------------------------
 	 */
 
 	/**
-	 * Booleans ------------------------------
+	 * Booleans ------------------------------------------------------------------------------------
 	 */
 
 	/**
-	 * Constructors ==========================
+	 * Constructors ================================================================================
 	 */
 
 	/**
@@ -140,10 +140,10 @@ public class FragmentController {
 	public FragmentController(Fragment parentFragment) {
 		this(parentFragment.getFragmentManager());
 		if (parentFragment instanceof OnBackStackChangeListener) {
-			this.lBackStackListener = (OnBackStackChangeListener) parentFragment;
+			setOnBackStackChangeListener((OnBackStackChangeListener) parentFragment);
 		}
 		if (parentFragment instanceof OnFragmentChangeListener) {
-			this.lFragmentListener = (OnFragmentChangeListener) parentFragment;
+			setOnFragmentChangeListener((OnFragmentChangeListener) parentFragment);
 		}
 	}
 
@@ -158,10 +158,10 @@ public class FragmentController {
 	public FragmentController(FragmentActivity parentActivity) {
 		this(parentActivity.getSupportFragmentManager());
 		if (parentActivity instanceof OnBackStackChangeListener) {
-			this.lBackStackListener = (OnBackStackChangeListener) parentActivity;
+			setOnBackStackChangeListener((OnBackStackChangeListener) parentActivity);
 		}
 		if (parentActivity instanceof OnFragmentChangeListener) {
-			this.lFragmentListener = (OnFragmentChangeListener) parentActivity;
+			setOnFragmentChangeListener((OnFragmentChangeListener) parentActivity);
 		}
 	}
 
@@ -188,11 +188,11 @@ public class FragmentController {
 	}
 
 	/**
-	 * Methods ===============================
+	 * Methods =====================================================================================
 	 */
 
 	/**
-	 * Public --------------------------------
+	 * Public --------------------------------------------------------------------------------------
 	 */
 
 	/**
@@ -494,7 +494,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * Getters + Setters ---------------------
+	 * Getters + Setters ---------------------------------------------------------------------------
 	 */
 
 	/**
@@ -503,8 +503,18 @@ public class FragmentController {
 	 *
 	 * @param listener
 	 */
-	public void setOnFragmentChangeListner(OnBackStackChangeListener listener) {
+	public void setOnBackStackChangeListener(OnBackStackChangeListener listener) {
 		this.lBackStackListener = listener;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param listener
+	 */
+	public void setOnFragmentChangeListener(OnFragmentChangeListener listener) {
+		this.lFragmentListener = listener;
 	}
 
 	/**
@@ -614,7 +624,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * Protected -----------------------------
+	 * Protected -----------------------------------------------------------------------------------
 	 */
 
 	/**
@@ -717,7 +727,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * Private -------------------------------
+	 * Private -------------------------------------------------------------------------------------
 	 */
 
 	/**
@@ -807,11 +817,11 @@ public class FragmentController {
 	}
 
 	/**
-	 * Abstract methods ----------------------
+	 * Abstract methods ----------------------------------------------------------------------------
 	 */
 
 	/**
-	 * Inner classes =========================
+	 * Inner classes ===============================================================================
 	 */
 
 	/**
@@ -1104,7 +1114,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * Interface =============================
+	 * Interface ===================================================================================
 	 */
 
 	/**
@@ -1117,10 +1127,6 @@ public class FragmentController {
 	 * @see com.wit.android.support.fragment.manage.FragmentController
 	 */
 	public static interface FragmentFactory {
-
-		/**
-		 * Methods ===============================
-		 */
 
 		/**
 		 * <p>
@@ -1192,10 +1198,6 @@ public class FragmentController {
 	public static interface OnFragmentChangeListener {
 
 		/**
-		 * Methods ===============================
-		 */
-
-		/**
 		 * <p>
 		 * </p>
 		 *
@@ -1214,10 +1216,6 @@ public class FragmentController {
 	 * @author Martin Albedinsky
 	 */
 	public static interface OnBackStackChangeListener {
-
-		/**
-		 * Methods ===============================
-		 */
 
 		/**
 		 * <p>
