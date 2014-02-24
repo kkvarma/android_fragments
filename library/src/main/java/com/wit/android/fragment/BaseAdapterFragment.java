@@ -145,6 +145,14 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		// There can be @ContentView annotation presented, so the parent can create content view.
+		final View view = super.onCreateView(inflater, container, savedInstanceState);
+		if (view != null) {
+			return view;
+		}
+		/**
+		 * Build our custom adapter view layout.
+		 */
 		final FrameLayout layout = new FrameLayout(inflater.getContext());
 		// Resolve empty view.
 		final View emptyView = onCreateEmptyView(inflater, layout, savedInstanceState);
