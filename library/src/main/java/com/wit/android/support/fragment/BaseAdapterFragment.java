@@ -31,6 +31,8 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.wit.android.support.fragment.annotation.AdapterViewOptions;
+
 /**
  * <h4>Class Overview</h4>
  * <p>
@@ -98,6 +100,11 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	private CharSequence mEmptyText = "";
 
 	/**
+	 *
+	 */
+	private AdapterViewOptions mAdapterViewOptions;
+
+	/**
 	 * Listeners -----------------------------
 	 */
 
@@ -112,6 +119,19 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	/**
 	 * Constructors ==========================
 	 */
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	public BaseAdapterFragment() {
+		final Class<?> classOfFragment = ((Object) this).getClass();
+		/**
+		 * Process class annotations.
+		 */
+		// Retrieve adapter view options.
+		this.mAdapterViewOptions = obtainAnnotationFrom(AdapterViewOptions.class, classOfFragment);
+	}
 
 	/**
 	 * Methods ===============================
@@ -139,6 +159,8 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 		// Resolve adapter view.
 		final View adapterView = onCreateAdapterView(inflater, layout, savedInstanceState);
 		if (adapterView != null) {
+			// Ensure that adapter view will have correct id.
+			adapterView.setId(mAdapterViewOptions != null ? mAdapterViewOptions.viewId() : AdapterViewOptions.VIEW_DEFAULT_ID);
 			layout.addView(adapterView, createAdapterViewParams());
 		}
 		return layout;
@@ -147,22 +169,34 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	/**
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		this.ensureAdapterView(view);
+		onViewCreated(view, mAdapterView, savedInstanceState);
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param view
+	 * @param adapterView
+	 * @param savedInstanceState
+	 */
+	@SuppressWarnings("unchecked")
+	protected void onViewCreated(View view, V adapterView, Bundle savedInstanceState) {
 		// Base set up.
 		if (mAdapter != null) {
-			mAdapterView.setAdapter(mAdapter);
+			adapterView.setAdapter(mAdapter);
 		}
 		if (mEmptyView != null) {
-			mAdapterView.setEmptyView(mEmptyView);
+			adapterView.setEmptyView(mEmptyView);
 			if (mEmptyView instanceof TextView) {
 				((TextView) mEmptyView).setText(mEmptyText);
 			}
 		}
-		mAdapterView.setOnItemClickListener(this);
-		mAdapterView.setOnItemLongClickListener(this);
+		adapterView.setOnItemClickListener(this);
+		adapterView.setOnItemLongClickListener(this);
 	}
 
 	/**
@@ -370,16 +404,18 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 */
 
 	/**
-	 *
 	 * @param view
 	 */
 	@SuppressWarnings("unchecked")
 	private void ensureAdapterView(View view) {
-		if ((mAdapterView = (V) view.findViewById(android.R.id.list)) == null) {
-			throw new IllegalArgumentException("Missing adapter view(@id/android:list) within adapter fragment layout.");
+		final int viewId = (mAdapterViewOptions != null) ? mAdapterViewOptions.viewId() : AdapterViewOptions.VIEW_DEFAULT_ID;
+		if ((mAdapterView = (V) view.findViewById(viewId)) == null) {
+			throw new IllegalArgumentException("Missing adapter view with id(" + viewId + ") within adapter fragment layout.");
 		}
 		// Get also empty view if is presented.
-		this.mEmptyView = view.findViewById(android.R.id.empty);
+		this.mEmptyView = view.findViewById(
+				mAdapterViewOptions != null ? mAdapterViewOptions.emptyViewId() : AdapterViewOptions.EMPTY_VIEW_DEFAULT_ID
+		);
 	}
 
 	/**

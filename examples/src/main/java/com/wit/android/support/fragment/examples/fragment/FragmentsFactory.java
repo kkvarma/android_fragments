@@ -23,7 +23,7 @@ package com.wit.android.support.fragment.examples.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.wit.android.support.fragment.annotation.Fragments;
+import com.wit.android.support.fragment.annotation.FactoryFragments;
 import com.wit.android.support.fragment.manage.BaseFragmentFactory;
 import com.wit.android.support.fragment.manage.FragmentController;
 import com.wit.android.support.fragment.manage.ShowDirection;
@@ -35,7 +35,7 @@ import com.wit.android.support.fragment.manage.ShowDirection;
  *
  * @author Martin Albedinsky
  */
-@Fragments({
+@FactoryFragments({
 		FragmentsFactory.FRAGMENT_DIRECTION_NONE,
 		FragmentsFactory.FRAGMENT_DIRECTION_FROM_RIGHT_TO_BACKGROUND,
 		FragmentsFactory.FRAGMENT_DIRECTION_NONE,
