@@ -44,7 +44,7 @@ import com.wit.android.fragment.annotation.AdapterViewOptions;
 public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapter> extends ActionBarFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
 	/**
-	 * Constants =============================
+	 * Constants ===================================================================================
 	 */
 
 	/**
@@ -63,15 +63,15 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	// private static final boolean USER_LOG = true;
 
 	/**
-	 * Enums =================================
+	 * Enums =======================================================================================
 	 */
 
 	/**
-	 * Static members ========================
+	 * Static members ==============================================================================
 	 */
 
 	/**
-	 * Members ===============================
+	 * Members =====================================================================================
 	 */
 
 	/**
@@ -105,19 +105,19 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	private AdapterViewOptions mAdapterViewOptions;
 
 	/**
-	 * Listeners -----------------------------
+	 * Listeners -----------------------------------------------------------------------------------
 	 */
 
 	/**
-	 * Arrays --------------------------------
+	 * Arrays --------------------------------------------------------------------------------------
 	 */
 
 	/**
-	 * Booleans ------------------------------
+	 * Booleans ------------------------------------------------------------------------------------
 	 */
 
 	/**
-	 * Constructors ==========================
+	 * Constructors ================================================================================
 	 */
 
 	/**
@@ -134,11 +134,11 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	}
 
 	/**
-	 * Methods ===============================
+	 * Methods =====================================================================================
 	 */
 
 	/**
-	 * Public --------------------------------
+	 * Public --------------------------------------------------------------------------------------
 	 */
 
 	/**
@@ -200,7 +200,11 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 		if (mEmptyView != null) {
 			adapterView.setEmptyView(mEmptyView);
 			if (mEmptyView instanceof TextView) {
-				((TextView) mEmptyView).setText(mEmptyText);
+				if (mAdapterViewOptions != null && mAdapterViewOptions.emptyText() >= 0) {
+					((TextView) mEmptyView).setText(mAdapterViewOptions.emptyText());
+				} else {
+					((TextView) mEmptyView).setText(mEmptyText);
+				}
 			}
 		}
 		adapterView.setOnItemClickListener(this);
@@ -245,7 +249,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	}
 
 	/**
-	 * Getters + Setters ---------------------
+	 * Getters + Setters ---------------------------------------------------------------------------
 	 */
 
 	/**
@@ -342,7 +346,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	}
 
 	/**
-	 * Protected -----------------------------
+	 * Protected -----------------------------------------------------------------------------------
 	 */
 
 	/**
@@ -408,7 +412,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	}
 
 	/**
-	 * Private -------------------------------
+	 * Private -------------------------------------------------------------------------------------
 	 */
 
 	/**
@@ -427,7 +431,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	}
 
 	/**
-	 * Abstract methods ----------------------
+	 * Abstract methods ----------------------------------------------------------------------------
 	 */
 
 	/**
@@ -442,10 +446,10 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	protected abstract V onCreateAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
 	/**
-	 * Inner classes =========================
+	 * Inner classes ===============================================================================
 	 */
 
 	/**
-	 * Interface =============================
+	 * Interface ===================================================================================
 	 */
 }

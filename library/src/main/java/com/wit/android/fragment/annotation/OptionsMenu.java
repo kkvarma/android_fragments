@@ -38,7 +38,7 @@ import java.lang.annotation.Target;
 public @interface OptionsMenu {
 
 	/**
-	 * Constants =============================
+	 * Constants ===================================================================================
 	 */
 
 	/**
@@ -60,7 +60,7 @@ public @interface OptionsMenu {
 	public static final int BEFORE_SUPER = 0x04;
 
 	/**
-	 * Methods ===============================
+	 * Methods =====================================================================================
 	 */
 
 	/**

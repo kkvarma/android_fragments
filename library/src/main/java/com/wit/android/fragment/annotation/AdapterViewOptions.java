@@ -38,7 +38,7 @@ import java.lang.annotation.Target;
 public @interface AdapterViewOptions {
 
 	/**
-	 * Constants =============================
+	 * Constants ===================================================================================
 	 */
 
 	/**
@@ -54,7 +54,7 @@ public @interface AdapterViewOptions {
 	public static final int EMPTY_VIEW_DEFAULT_ID = android.R.id.empty;
 
 	/**
-	 * Methods ===============================
+	 * Methods =====================================================================================
 	 */
 
 	/**
@@ -69,4 +69,10 @@ public @interface AdapterViewOptions {
 	 * @return
 	 */
 	int emptyViewId() default EMPTY_VIEW_DEFAULT_ID;
+
+	/**
+	 *
+	 * @return
+	 */
+	int emptyText() default -1;
 }

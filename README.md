@@ -2,7 +2,7 @@
 <img align="left" src="http://www.wolf-itechnologies.com/images/wit/android/wit_ic_android_100.png" />
 </a>
 
-Android Fragments (1.0)
+Android Fragments (2.0)
 ===============
 
 <h1 align="right">
@@ -27,6 +27,8 @@ Android Fragments (1.0)
 <a href="https://github.com/Wolf-ITechnologies/android_fragments/wiki" title="Wiki home page">HOME</a>
 |
 <a href="https://github.com/Wolf-ITechnologies/android_fragments/wiki/Library-Structure" title="Structure and design of library">LIBRARY STRUCTURE</a>
+|
+<a href="https://github.com/Wolf-ITechnologies/android_fragments/tree/release/examples" title="Simple project with examples">EXAMPLES</a>
 |
 <a href="https://github.com/Wolf-ITechnologies/android_fragments/wiki/FAQ" title="Frequently asked questions">FAQ</a>
 ]</h6>
