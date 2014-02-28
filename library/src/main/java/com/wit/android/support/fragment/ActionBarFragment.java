@@ -20,6 +20,7 @@
  */
 package com.wit.android.support.fragment;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -30,7 +31,7 @@ import android.view.MenuInflater;
 import android.view.View;
 
 import com.wit.android.support.fragment.annotation.ActionBarOptions;
-import com.wit.android.support.fragment.annotation.OptionsMenu;
+import com.wit.android.support.fragment.annotation.MenuOptions;
 
 /**
  * <h4>Class Overview</h4>
@@ -85,7 +86,12 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 *
 	 */
-	private OptionsMenu mOptionsMenu;
+	private MenuOptions mOptionsMenu;
+
+	/**
+	 *
+	 */
+	protected ActionBar mActionBar;
 
 	/**
 	 * Listeners -----------------------------------------------------------------------------------
@@ -118,7 +124,7 @@ public class ActionBarFragment extends BaseFragment {
 			this.mActionBarOptions = classOfFragment.getAnnotation(ActionBarOptions.class);
 		}
 		// Retrieve options menu.
-		final OptionsMenu optionsMenu = obtainAnnotationFrom(OptionsMenu.class, classOfFragment);
+		final MenuOptions optionsMenu = obtainAnnotationFrom(MenuOptions.class, classOfFragment);
 		if (optionsMenu != null) {
 			this.mOptionsMenu = optionsMenu;
 		}
@@ -148,11 +154,13 @@ public class ActionBarFragment extends BaseFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		// Check if this fragment instance is placed within ActionBarActivity context.
-		if (!(getActivity() instanceof ActionBarActivity)) {
+		final Activity activity = getActivity();
+		if (!(activity instanceof ActionBarActivity)) {
 			throw new AndroidRuntimeException(
 					"ActionBarFragment implementation can be used only within the context of ActionBarActivity."
 			);
 		}
+		this.mActionBar = ((ActionBarActivity) activity).getSupportActionBar();
 	}
 
 	/**
@@ -164,14 +172,14 @@ public class ActionBarFragment extends BaseFragment {
 				menu.clear();
 			}
 			switch (mOptionsMenu.flags()) {
-				case OptionsMenu.IGNORE_SUPER:
+				case MenuOptions.IGNORE_SUPER:
 					inflater.inflate(mOptionsMenu.value(), menu);
 					break;
-				case OptionsMenu.BEFORE_SUPER:
+				case MenuOptions.BEFORE_SUPER:
 					inflater.inflate(mOptionsMenu.value(), menu);
 					super.onCreateOptionsMenu(menu, inflater);
 					break;
-				case OptionsMenu.DEFAULT:
+				case MenuOptions.DEFAULT:
 					super.onCreateOptionsMenu(menu, inflater);
 					inflater.inflate(mOptionsMenu.value(), menu);
 					break;
@@ -217,7 +225,6 @@ public class ActionBarFragment extends BaseFragment {
 	 * Same as {@link android.support.v7.app.ActionBarActivity#supportRequestWindowFeature(int)}.
 	 * </p>
 	 *
-	 * @see #getActionBar()
 	 * @see #isActivityAvailable()
 	 */
 	public boolean requestWindowFeature(int featureId) {
@@ -235,8 +242,8 @@ public class ActionBarFragment extends BaseFragment {
 	 * @param resId
 	 */
 	public void setActionBarTitle(int resId) {
-		if (isActivityAvailable()) {
-			getActionBar().setTitle(resId);
+		if (isActionBarAvailable()) {
+			mActionBar.setTitle(resId);
 		}
 	}
 
@@ -247,8 +254,8 @@ public class ActionBarFragment extends BaseFragment {
 	 * @param title
 	 */
 	public void setActionBarTitle(CharSequence title) {
-		if (isActivityAvailable()) {
-			getActionBar().setTitle(title);
+		if (isActionBarAvailable()) {
+			mActionBar.setTitle(title);
 		}
 	}
 
@@ -259,8 +266,8 @@ public class ActionBarFragment extends BaseFragment {
 	 * @param resId
 	 */
 	public void setActionBarIcon(int resId) {
-		if (isActivityAvailable()) {
-			getActionBar().setIcon(resId);
+		if (isActionBarAvailable()) {
+			mActionBar.setIcon(resId);
 		}
 	}
 
@@ -271,22 +278,9 @@ public class ActionBarFragment extends BaseFragment {
 	 * @param icon
 	 */
 	public void setActionBarIcon(Drawable icon) {
-		if (isActivityAvailable()) {
-			getActionBar().setIcon(icon);
+		if (isActionBarAvailable()) {
+			mActionBar.setIcon(icon);
 		}
-	}
-
-	/**
-	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#getSupportActionBar()}
-	 * </p>
-	 *
-	 * @see #requestWindowFeature(int)
-	 * @see #isActivityAvailable()
-	 * @see #getActionBarActivity()
-	 */
-	public ActionBar getActionBar() {
-		return isActivityAvailable() ? getActionBarActivity().getSupportActionBar() : null;
 	}
 
 	/**
@@ -349,6 +343,16 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 * Protected -----------------------------------------------------------------------------------
 	 */
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	protected boolean isActionBarAvailable() {
+		return mActionBar != null;
+	}
 
 	/**
 	 * <p>
