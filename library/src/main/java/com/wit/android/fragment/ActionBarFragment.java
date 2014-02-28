@@ -80,7 +80,7 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 *
 	 */
-	private MenuOptions mOptionsMenu;
+	private MenuOptions mMenuOptions;
 
 	/**
 	 *
@@ -118,10 +118,7 @@ public class ActionBarFragment extends BaseFragment {
 			this.mActionBarOptions = classOfFragment.getAnnotation(ActionBarOptions.class);
 		}
 		// Retrieve options menu.
-		final MenuOptions optionsMenu = obtainAnnotationFrom(MenuOptions.class, classOfFragment);
-		if (optionsMenu != null) {
-			this.mOptionsMenu = optionsMenu;
-		}
+		this.mMenuOptions = obtainAnnotationFrom(MenuOptions.class, classOfFragment);
 	}
 
 	/**
@@ -137,39 +134,31 @@ public class ActionBarFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(mOptionsMenu != null);
-	}
-
-	/**
-	 */
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		this.mActionBar = getActivity().getActionBar();
+		setHasOptionsMenu(mMenuOptions != null);
 	}
 
 	/**
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		if (mOptionsMenu != null) {
-			if (mOptionsMenu.clear()) {
+		if (mMenuOptions != null) {
+			if (mMenuOptions.clear()) {
 				menu.clear();
 			}
-			switch (mOptionsMenu.flags()) {
+			switch (mMenuOptions.flags()) {
 				case MenuOptions.IGNORE_SUPER:
-					inflater.inflate(mOptionsMenu.value(), menu);
+					inflater.inflate(mMenuOptions.value(), menu);
 					break;
 				case MenuOptions.BEFORE_SUPER:
-					inflater.inflate(mOptionsMenu.value(), menu);
+					inflater.inflate(mMenuOptions.value(), menu);
 					super.onCreateOptionsMenu(menu, inflater);
 					break;
 				case MenuOptions.DEFAULT:
 					super.onCreateOptionsMenu(menu, inflater);
-					inflater.inflate(mOptionsMenu.value(), menu);
+					inflater.inflate(mMenuOptions.value(), menu);
 					break;
 				default:
-					throw new IllegalArgumentException("Unknown options menu flags(" + mOptionsMenu.flags() + ").");
+					throw new IllegalArgumentException("Unknown options menu flags(" + mMenuOptions.flags() + ").");
 			}
 			return;
 		}
@@ -181,6 +170,7 @@ public class ActionBarFragment extends BaseFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		this.mActionBar = getActivity().getActionBar();
 		// Resolve action bar options.
 		if (mActionBarOptions != null) {
 			if (mActionBarOptions.title() >= 0) {
