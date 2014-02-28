@@ -438,7 +438,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	protected boolean startActionMode(ActionMode.Callback callback, int position) {
 		if (!isInActionMode()) {
 			if (isActivityAvailable()) {
-				onActionModeStarted(getActionBarActivity().startSupportActionMode(callback), position);
+				onActionModeStarted(mActionMode = getActionBarActivity().startSupportActionMode(callback), position);
 			}
 			return true;
 		}
