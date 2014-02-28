@@ -35,7 +35,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AdapterViewOptions {
+public @interface MenuOptions {
 
 	/**
 	 * Constants ===================================================================================
@@ -45,13 +45,19 @@ public @interface AdapterViewOptions {
 	 * <p>
 	 * </p>
 	 */
-	public static final int VIEW_DEFAULT_ID = android.R.id.list;
+	public static final int DEFAULT = 0x00;
 
 	/**
 	 * <p>
 	 * </p>
 	 */
-	public static final int EMPTY_VIEW_DEFAULT_ID = android.R.id.empty;
+	public static final int IGNORE_SUPER = 0x01;
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	public static final int BEFORE_SUPER = 0x04;
 
 	/**
 	 * Methods =====================================================================================
@@ -62,19 +68,19 @@ public @interface AdapterViewOptions {
 	 *
 	 * @return
 	 */
-	int viewId() default VIEW_DEFAULT_ID;
+	int value();
 
 	/**
 	 *
-	 * @return
-	 */
-	int emptyViewId() default EMPTY_VIEW_DEFAULT_ID;
-
-	/**
 	 *
 	 * @return
 	 */
-	int emptyText() default -1;
+	boolean clear() default false;
 
-
+	/**
+	 *
+	 *
+	 * @return
+	 */
+	int flags() default DEFAULT;
 }

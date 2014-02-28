@@ -21,6 +21,7 @@
 package com.wit.android.fragment;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,7 +29,7 @@ import android.view.MenuInflater;
 import android.view.View;
 
 import com.wit.android.fragment.annotation.ActionBarOptions;
-import com.wit.android.fragment.annotation.OptionsMenu;
+import com.wit.android.fragment.annotation.MenuOptions;
 
 /**
  * <h4>Class Overview</h4>
@@ -79,7 +80,12 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 *
 	 */
-	private OptionsMenu mOptionsMenu;
+	private MenuOptions mOptionsMenu;
+
+	/**
+	 *
+	 */
+	protected ActionBar mActionBar;
 
 	/**
 	 * Listeners -----------------------------------------------------------------------------------
@@ -112,7 +118,7 @@ public class ActionBarFragment extends BaseFragment {
 			this.mActionBarOptions = classOfFragment.getAnnotation(ActionBarOptions.class);
 		}
 		// Retrieve options menu.
-		final OptionsMenu optionsMenu = obtainAnnotationFrom(OptionsMenu.class, classOfFragment);
+		final MenuOptions optionsMenu = obtainAnnotationFrom(MenuOptions.class, classOfFragment);
 		if (optionsMenu != null) {
 			this.mOptionsMenu = optionsMenu;
 		}
@@ -135,8 +141,14 @@ public class ActionBarFragment extends BaseFragment {
 	}
 
 	/**
-	 * @throws android.util.AndroidRuntimeException If the currently created parent activity isn't
-	 *                                              instance of {@link android.support.v7.app.ActionBarActivity}.
+	 */
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		this.mActionBar = getActivity().getActionBar();
+	}
+
+	/**
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -145,14 +157,14 @@ public class ActionBarFragment extends BaseFragment {
 				menu.clear();
 			}
 			switch (mOptionsMenu.flags()) {
-				case OptionsMenu.IGNORE_SUPER:
+				case MenuOptions.IGNORE_SUPER:
 					inflater.inflate(mOptionsMenu.value(), menu);
 					break;
-				case OptionsMenu.BEFORE_SUPER:
+				case MenuOptions.BEFORE_SUPER:
 					inflater.inflate(mOptionsMenu.value(), menu);
 					super.onCreateOptionsMenu(menu, inflater);
 					break;
-				case OptionsMenu.DEFAULT:
+				case MenuOptions.DEFAULT:
 					super.onCreateOptionsMenu(menu, inflater);
 					inflater.inflate(mOptionsMenu.value(), menu);
 					break;
@@ -198,7 +210,6 @@ public class ActionBarFragment extends BaseFragment {
 	 * Same as {@link android.app.Activity#requestWindowFeature(int)}.
 	 * </p>
 	 *
-	 * @see #getActionBar()
 	 * @see #isActivityAvailable()
 	 */
 	public boolean requestWindowFeature(int featureId) {
@@ -216,8 +227,8 @@ public class ActionBarFragment extends BaseFragment {
 	 * @param resId
 	 */
 	public void setActionBarTitle(int resId) {
-		if (isActivityAvailable()) {
-			getActionBar().setTitle(resId);
+		if (isActionBarAvailable()) {
+			mActionBar.setTitle(resId);
 		}
 	}
 
@@ -228,8 +239,8 @@ public class ActionBarFragment extends BaseFragment {
 	 * @param title
 	 */
 	public void setActionBarTitle(CharSequence title) {
-		if (isActivityAvailable()) {
-			getActionBar().setTitle(title);
+		if (isActionBarAvailable()) {
+			mActionBar.setTitle(title);
 		}
 	}
 
@@ -240,8 +251,8 @@ public class ActionBarFragment extends BaseFragment {
 	 * @param resId
 	 */
 	public void setActionBarIcon(int resId) {
-		if (isActivityAvailable()) {
-			getActionBar().setIcon(resId);
+		if (isActionBarAvailable()) {
+			mActionBar.setIcon(resId);
 		}
 	}
 
@@ -252,21 +263,9 @@ public class ActionBarFragment extends BaseFragment {
 	 * @param icon
 	 */
 	public void setActionBarIcon(Drawable icon) {
-		if (isActivityAvailable()) {
-			getActionBar().setIcon(icon);
+		if (isActionBarAvailable()) {
+			mActionBar.setIcon(icon);
 		}
-	}
-
-	/**
-	 * <p>
-	 * Same as {@link android.app.Activity#getActionBar()}
-	 * </p>
-	 *
-	 * @see #requestWindowFeature(int)
-	 * @see #isActivityAvailable()
-	 */
-	public ActionBar getActionBar() {
-		return isActivityAvailable() ? getActivity().getActionBar() : null;
 	}
 
 	/**
@@ -329,6 +328,16 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 * Protected -----------------------------------------------------------------------------------
 	 */
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	protected boolean isActionBarAvailable() {
+		return mActionBar != null;
+	}
 
 	/**
 	 * Private -------------------------------------------------------------------------------------

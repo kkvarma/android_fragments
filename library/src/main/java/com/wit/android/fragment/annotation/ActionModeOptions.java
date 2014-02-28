@@ -35,29 +35,11 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface OptionsMenu {
+public @interface ActionModeOptions {
 
 	/**
 	 * Constants ===================================================================================
 	 */
-
-	/**
-	 * <p>
-	 * </p>
-	 */
-	public static final int DEFAULT = 0x00;
-
-	/**
-	 * <p>
-	 * </p>
-	 */
-	public static final int IGNORE_SUPER = 0x01;
-
-	/**
-	 * <p>
-	 * </p>
-	 */
-	public static final int BEFORE_SUPER = 0x04;
 
 	/**
 	 * Methods =====================================================================================
@@ -68,19 +50,5 @@ public @interface OptionsMenu {
 	 *
 	 * @return
 	 */
-	int value();
-
-	/**
-	 *
-	 *
-	 * @return
-	 */
-	boolean clear() default true;
-
-	/**
-	 *
-	 *
-	 * @return
-	 */
-	int flags() default DEFAULT;
+	int menu();
 }
