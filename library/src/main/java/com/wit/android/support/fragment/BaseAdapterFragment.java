@@ -21,8 +21,11 @@
 package com.wit.android.support.fragment;
 
 import android.os.Bundle;
+import android.support.v7.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -31,6 +34,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.wit.android.support.fragment.annotation.ActionModeOptions;
 import com.wit.android.support.fragment.annotation.AdapterViewOptions;
 
 /**
@@ -97,12 +101,22 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	/**
 	 *
 	 */
+	ActionMode mActionMode;
+
+	/**
+	 *
+	 */
 	private CharSequence mEmptyText = "";
 
 	/**
 	 *
 	 */
 	private AdapterViewOptions mAdapterViewOptions;
+
+	/**
+	 *
+	 */
+	private ActionModeOptions mActionModeOptions;
 
 	/**
 	 * Listeners -----------------------------------------------------------------------------------
@@ -131,6 +145,8 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 		 */
 		// Retrieve adapter view options.
 		this.mAdapterViewOptions = obtainAnnotationFrom(AdapterViewOptions.class, classOfFragment);
+		// Retrieve action mode options.
+		this.mActionModeOptions = obtainAnnotationFrom(ActionModeOptions.class, classOfFragment);
 	}
 
 	/**
@@ -342,7 +358,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 */
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-		return false;
+		return startActionMode(new ActionModeCallback(this), position);
 	}
 
 	/**
@@ -412,6 +428,61 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	}
 
 	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param callback
+	 * @param position
+	 * @return
+	 */
+	protected boolean startActionMode(ActionMode.Callback callback, int position) {
+		if (!isInActionMode()) {
+			if (isActionBarAvailable()) {
+				onActionModeStarted(getActionBarActivity().startSupportActionMode(callback), position);
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	protected boolean isInActionMode() {
+		return mActionMode != null;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	protected ActionMode getActionMode() {
+		return mActionMode;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param actionMode
+	 * @param position
+	 */
+	protected void onActionModeStarted(ActionMode actionMode, int position) {
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	protected void onActionModeFinished() {
+	}
+
+	/**
 	 * Private -------------------------------------------------------------------------------------
 	 */
 
@@ -448,6 +519,91 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	/**
 	 * Inner classes ===============================================================================
 	 */
+
+	/**
+	 * <h4>Class Overview</h4>
+	 * <p>
+	 * </p>
+	 *
+	 * @author Martin Albedinsky
+	 */
+	public static class ActionModeCallback implements ActionMode.Callback {
+
+		/**
+		 * Members =================================================================================
+		 */
+
+		/**
+		 *
+		 */
+		protected BaseAdapterFragment mAdapterFragment;
+
+		/**
+		 * Constructors ============================================================================
+		 */
+
+		/**
+		 * <p>
+		 * </p>
+		 */
+		public ActionModeCallback() {
+			this(null);
+		}
+
+		/**
+		 * <p>
+		 * </p>
+		 *
+		 * @param adapterFragment
+		 */
+		public ActionModeCallback(BaseAdapterFragment adapterFragment) {
+			this.mAdapterFragment = adapterFragment;
+		}
+
+		/**
+		 * Methods =================================================================================
+		 */
+
+		/**
+		 */
+		@Override
+		public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+			if (mAdapterFragment != null && mAdapterFragment.mActionModeOptions != null) {
+				actionMode.getMenuInflater().inflate(mAdapterFragment.mActionModeOptions.menu(), menu);
+				return true;
+			}
+			return false;
+		}
+
+		/**
+		 */
+		@Override
+		public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+			return false;
+		}
+
+		/**
+		 */
+		@Override
+		public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+			if (mAdapterFragment != null && mAdapterFragment.onOptionsItemSelected(menuItem)) {
+				actionMode.finish();
+				return true;
+			}
+			return false;
+		}
+
+		/**
+		 */
+		@Override
+		public void onDestroyActionMode(ActionMode actionMode) {
+			if (mAdapterFragment != null) {
+				mAdapterFragment.mActionMode = null;
+				mAdapterFragment.onActionModeFinished();
+			}
+		}
+	}
+
 
 	/**
 	 * Interface ===================================================================================
