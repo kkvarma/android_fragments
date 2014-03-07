@@ -37,20 +37,20 @@ import com.wit.android.fragment.R;
  * </ul>
  * <b>Slide:</b>
  * <ul>
- * <li>{@link ShowDirection#FROM_LEFT_TO_RIGHT}</li>
- * <li>{@link ShowDirection#FROM_RIGHT_TO_LEFT}</li>
- * <li>{@link ShowDirection#FROM_TOP_TO_BOTTOM}</li>
- * <li>{@link ShowDirection#FROM_BOTTOM_TO_TOP}</li>
+ * <li>{@link ShowDirection#SLIDE_TO_RIGHT}</li>
+ * <li>{@link ShowDirection#SLIDE_TO_LEFT}</li>
+ * <li>{@link ShowDirection#SLIDE_TO_BOTTOM}</li>
+ * <li>{@link ShowDirection#SLIDE_TO_TOP}</li>
  * </ul>
  * <b>Scale & Slide:</b>
- * <li>{@link ShowDirection#FROM_BACKGROUND_TO_LEFT}</li>
- * <li>{@link ShowDirection#FROM_BACKGROUND_TO_RIGHT}</li>
- * <li>{@link ShowDirection#FROM_BACKGROUND_TO_TOP}</li>
- * <li>{@link ShowDirection#FROM_BACKGROUND_TO_BOTTOM}</li>
- * <li>{@link ShowDirection#FROM_LEFT_TO_BACKGROUND}</li>
- * <li>{@link ShowDirection#FROM_RIGHT_TO_BACKGROUND}</li>
- * <li>{@link ShowDirection#FROM_TOP_TO_BACKGROUND}</li>
- * <li>{@link ShowDirection#FROM_BOTTOM_TO_BACKGROUND}</li>
+ * <li>{@link ShowDirection#SCALE_IN_AND_SLIDE_TO_LEFT}</li>
+ * <li>{@link ShowDirection#SCALE_IN_AND_SLIDE_TO_RIGHT}</li>
+ * <li>{@link ShowDirection#SCALE_IN_AND_SLIDE_TO_TOP}</li>
+ * <li>{@link ShowDirection#SCALE_IN_AND_SLIDE_TO_BOTTOM}</li>
+ * <li>{@link ShowDirection#SLIDE_TO_RIGHT_AND_SCALE_OUT}</li>
+ * <li>{@link ShowDirection#SLIDE_TO_LEFT_AND_SCALE_OUT}</li>
+ * <li>{@link ShowDirection#SLIDE_TO_BOTTOM_AND_SCALE_OUT}</li>
+ * <li>{@link ShowDirection#SLIDE_TO_TOP_AND_SCALE_OUT}</li>
  * <ul>
  * </ul>
  * <b>Flip:</b>
@@ -151,7 +151,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link com.wit.android.fragment.R.animator#fragment_slide_out_left_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection FROM_LEFT_TO_RIGHT = new ShowDirection(
+	public static final ShowDirection SLIDE_TO_RIGHT = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_slide_in_right,
 			// Outgoing animation.
@@ -160,7 +160,7 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_slide_in_left_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_slide_out_left_back,
-			"FROM_LEFT_TO_RIGHT"
+			"SLIDE_TO_RIGHT"
 	);
 
 	/**
@@ -176,7 +176,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_slide_out_right_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection FROM_RIGHT_TO_LEFT = new ShowDirection(
+	public static final ShowDirection SLIDE_TO_LEFT = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_slide_in_left,
 			// Outgoing animation.
@@ -185,7 +185,7 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_slide_in_right_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_slide_out_right_back,
-			"FROM_RIGHT_TO_LEFT"
+			"SLIDE_TO_LEFT"
 	);
 
 	/**
@@ -201,7 +201,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_slide_out_top_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection FROM_TOP_TO_BOTTOM = new ShowDirection(
+	public static final ShowDirection SLIDE_TO_BOTTOM = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_slide_in_bottom,
 			// Outgoing animation.
@@ -210,7 +210,7 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_slide_in_top_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_slide_out_top_back,
-			"FROM_TOP_TO_BOTTOM"
+			"SLIDE_TO_BOTTOM"
 	);
 
 	/**
@@ -226,7 +226,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_slide_out_bottom_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection FROM_BOTTOM_TO_TOP = new ShowDirection(
+	public static final ShowDirection SLIDE_TO_TOP = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_slide_in_top,
 			// Outgoing animation.
@@ -235,7 +235,7 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_slide_in_bottom_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_slide_out_bottom_back,
-			"FROM_BOTTOM_TO_TOP"
+			"SLIDE_TO_TOP"
 	);
 
 	/**
@@ -251,7 +251,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_scale_out_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection FROM_BACKGROUND_TO_LEFT = new ShowDirection(
+	public static final ShowDirection SCALE_IN_AND_SLIDE_TO_LEFT = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_scale_in,
 			// Outgoing animation.
@@ -260,7 +260,7 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_slide_in_right_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_scale_out_back,
-			"FROM_BACKGROUND_TO_LEFT"
+			"SCALE_IN_AND_SLIDE_TO_LEFT"
 	);
 
 	/**
@@ -276,7 +276,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_scale_out_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection FROM_BACKGROUND_TO_RIGHT = new ShowDirection(
+	public static final ShowDirection SCALE_IN_AND_SLIDE_TO_RIGHT = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_scale_in,
 			// Outgoing animation.
@@ -285,7 +285,7 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_slide_in_left_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_scale_out_back,
-			"FROM_BACKGROUND_TO_RIGHT"
+			"SCALE_IN_AND_SLIDE_TO_RIGHT"
 	);
 
 	/**
@@ -301,7 +301,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_scale_out_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection FROM_BACKGROUND_TO_TOP = new ShowDirection(
+	public static final ShowDirection SCALE_IN_AND_SLIDE_TO_TOP = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_scale_in,
 			// Outgoing animation.
@@ -310,7 +310,7 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_slide_in_bottom_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_scale_out_back,
-			"FROM_BACKGROUND_TO_TOP"
+			"SCALE_IN_AND_SLIDE_TO_TOP"
 	);
 
 	/**
@@ -326,7 +326,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_scale_out_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection FROM_BACKGROUND_TO_BOTTOM = new ShowDirection(
+	public static final ShowDirection SCALE_IN_AND_SLIDE_TO_BOTTOM = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_scale_in,
 			// Outgoing animation.
@@ -335,7 +335,7 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_slide_in_top_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_scale_out_back,
-			"FROM_BACKGROUND_TO_BOTTOM"
+			"SCALE_IN_AND_SLIDE_TO_BOTTOM"
 	);
 
 	/**
@@ -351,7 +351,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_slide_out_left_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection FROM_LEFT_TO_BACKGROUND = new ShowDirection(
+	public static final ShowDirection SLIDE_TO_RIGHT_AND_SCALE_OUT = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_slide_in_right,
 			// Outgoing animation.
@@ -360,7 +360,7 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_scale_in_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_slide_out_left_back,
-			"FROM_LEFT_TO_BACKGROUND"
+			"SLIDE_TO_RIGHT_AND_SCALE_OUT"
 	);
 
 	/**
@@ -376,7 +376,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_slide_out_right_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection FROM_RIGHT_TO_BACKGROUND = new ShowDirection(
+	public static final ShowDirection SLIDE_TO_LEFT_AND_SCALE_OUT = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_slide_in_left,
 			// Outgoing animation.
@@ -385,7 +385,7 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_scale_in_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_slide_out_right_back,
-			"FROM_RIGHT_TO_BACKGROUND"
+			"SLIDE_TO_LEFT_AND_SCALE_OUT"
 	);
 
 	/**
@@ -401,7 +401,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_slide_out_top_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection FROM_TOP_TO_BACKGROUND = new ShowDirection(
+	public static final ShowDirection SLIDE_TO_BOTTOM_AND_SCALE_OUT = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_slide_in_bottom,
 			// Outgoing animation.
@@ -410,7 +410,7 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_scale_in_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_slide_out_top_back,
-			"FROM_TOP_TO_BACKGROUND"
+			"SLIDE_TO_BOTTOM_AND_SCALE_OUT"
 	);
 
 	/**
@@ -426,7 +426,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_slide_out_bottom_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection FROM_BOTTOM_TO_BACKGROUND = new ShowDirection(
+	public static final ShowDirection SLIDE_TO_TOP_AND_SCALE_OUT = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_slide_in_top,
 			// Outgoing animation.
@@ -435,7 +435,7 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_scale_in_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_slide_out_bottom_back,
-			"FROM_BOTTOM_TO_BACKGROUND"
+			"SLIDE_TO_TOP_AND_SCALE_OUT"
 	);
 
 	/**
