@@ -164,6 +164,13 @@ public abstract class BaseFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		// Resolve view background.
+		if (mContentView != null) {
+			if (mContentView.backgroundRes() >= 0) {
+				view.setBackgroundResource(mContentView.backgroundRes());
+			}
+		}
+		// Resolve clickable views.
 		if (mClickableViews != null && mClickableViews.value().length > 0) {
 			// Set up clickable views.
 			final ClickListener clickListener = new ClickListener();

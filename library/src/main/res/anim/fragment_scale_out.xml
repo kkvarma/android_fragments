@@ -25,7 +25,7 @@
      android:zAdjustment="bottom">
 
     <alpha
-            android:duration="@integer/Anim.Fragment.Alpha.Out.duration"
+            android:duration="@integer/Anim.Fragment.Scale.Alpha.Out.duration"
             android:fromAlpha="1.0"
             android:toAlpha="0.5"/>
 
