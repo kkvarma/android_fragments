@@ -221,8 +221,11 @@ public class FragmentController {
 	 * @see #hasFactory()
 	 */
 	public boolean showFragment(int fragmentId, Bundle params) {
-		// Check if we have fragment factory.
-		return this.checkFragmentFactory(fragmentId) && this.performShowFragment(fragmentId, params);
+		// Check if we have fragment factory and fragment is provided.
+		if (!this.checkFragmentFactory(fragmentId)) {
+			Log.e(TAG, "Current factory doesn't provides fragment for the the requested id(" + fragmentId + ").");
+		}
+		return this.performShowFragment(fragmentId, params);
 	}
 
 	/**
