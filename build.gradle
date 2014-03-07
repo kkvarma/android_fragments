@@ -26,8 +26,8 @@ allprojects {
  * Library options ===========================================================
  */
 ext.libraryName = "fragments"
-ext.libraryVersionCode = 200
-ext.libraryVersionName = "2.0"
+ext.libraryVersionCode = 300
+ext.libraryVersionName = "3.0"
 
 /**
  * Android SDK options =======================================================
