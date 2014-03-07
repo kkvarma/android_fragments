@@ -30,6 +30,32 @@ import com.wit.android.fragment.R;
  * <p>
  * Description.
  * </p>
+ * <h6>Provided Directions</h6>
+ * <b>Alpha:</b>
+ * <ul>
+ * <li>{@link ShowDirection#FADE_IN}</li>
+ * </ul>
+ * <b>Slide:</b>
+ * <ul>
+ * <li>{@link ShowDirection#FROM_LEFT_TO_RIGHT}</li>
+ * <li>{@link ShowDirection#FROM_RIGHT_TO_LEFT}</li>
+ * <li>{@link ShowDirection#FROM_TOP_TO_BOTTOM}</li>
+ * <li>{@link ShowDirection#FROM_BOTTOM_TO_TOP}</li>
+ * </ul>
+ * <b>Scale & Slide:</b>
+ * <li>{@link ShowDirection#FROM_BACKGROUND_TO_LEFT}</li>
+ * <li>{@link ShowDirection#FROM_BACKGROUND_TO_RIGHT}</li>
+ * <li>{@link ShowDirection#FROM_BACKGROUND_TO_TOP}</li>
+ * <li>{@link ShowDirection#FROM_BACKGROUND_TO_BOTTOM}</li>
+ * <li>{@link ShowDirection#FROM_LEFT_TO_BACKGROUND}</li>
+ * <li>{@link ShowDirection#FROM_RIGHT_TO_BACKGROUND}</li>
+ * <li>{@link ShowDirection#FROM_TOP_TO_BACKGROUND}</li>
+ * <li>{@link ShowDirection#FROM_BOTTOM_TO_BACKGROUND}</li>
+ * <ul>
+ * </ul>
+ * <b>Flip:</b>
+ * <ul>
+ * </ul>
  *
  * @author Martin Albedinsky
  */
@@ -86,6 +112,31 @@ public class ShowDirection implements Parcelable {
 	 * </p>
 	 */
 	public static final ShowDirection NONE = new ShowDirection(0, 0, 0, 0, "NONE");
+
+	/**
+	 * <p>
+	 * Use this direction to fade a new incoming fragment in and outgoing (the current one) will be
+	 * faded out.
+	 * </p>
+	 * <h6>Powered by animations:</h6>
+	 * <ul>
+	 * <li><b>Incoming:</b> {@link com.wit.android.support.fragment.R.anim#fragment_fade_in}</li>
+	 * <li><b>Outgoing:</b> {@link com.wit.android.support.fragment.R.anim#fragment_fade_out}</li>
+	 * <li><b>Incoming (back-stack):</b> {@link com.wit.android.support.fragment.R.anim#fragment_fade_in_back}</li>
+	 * <li><b>Outgoing (back-stack):</b> {@link com.wit.android.support.fragment.R.anim#fragment_fade_out_back}</li>
+	 * </ul>
+	 */
+	public static final ShowDirection FADE_IN = new ShowDirection(
+			// Incoming animation.
+			R.anim.fragment_fade_in,
+			// Outgoing animation.
+			R.anim.fragment_fade_out,
+			// Incoming back-stack animation.
+			R.anim.fragment_fade_in_back,
+			// Outgoing back-stack animation.
+			R.anim.fragment_fade_out_back,
+			"FADE_IN"
+	);
 
 	/**
 	 * <p>

@@ -21,6 +21,7 @@
 package com.wit.android.fragment.manage;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.SparseArray;
 
 import com.wit.android.fragment.annotation.FactoryFragments;
@@ -73,6 +74,11 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 */
 
 	/**
+	 *
+	 */
+	private int mLastCheckedFragmentId = -1;
+
+	/**
 	 * Listeners -----------------------------------------------------------------------------------
 	 */
 
@@ -91,8 +97,19 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	private SparseArray<String> aFragmentTags = null;
 
 	/**
+	 * Array with joined factories. Instances and tags are first obtained from these factories then
+	 * from this one.
+	 */
+	private final List<FragmentController.FragmentFactory> JOINED_FACTORIES = new ArrayList<>();
+
+	/**
 	 * Booleans ------------------------------------------------------------------------------------
 	 */
+
+	/**
+	 *
+	 */
+	private boolean bFragmentProvided = false;
 
 	/**
 	 * Constructors ================================================================================
@@ -165,25 +182,79 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	/**
 	 */
 	@Override
-	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentId, Bundle params) {
-		return isFragmentProvided(fragmentId) ? new FragmentController.ShowOptions().tag(getFragmentTag(fragmentId)) : null;
+	public boolean isFragmentProvided(int fragmentId) {
+		if (fragmentId == mLastCheckedFragmentId) {
+			return bFragmentProvided;
+		}
+		// Store last checked fragment id.
+		this.mLastCheckedFragmentId = fragmentId;
+		// Check joined factories.
+		if (hasJoinedFactories()) {
+			for (FragmentController.FragmentFactory factory : JOINED_FACTORIES) {
+				if (factory.isFragmentProvided(fragmentId)) {
+					return bFragmentProvided = true;
+				}
+			}
+		}
+		return bFragmentProvided = providesFragment(fragmentId);
+	}
+
+	/**
+	 */
+	@Override
+	public Fragment createFragmentInstance(int fragmentId, Bundle params) {
+		if (hasJoinedFactories()) {
+			// Try to obtain dialog fragment from the current joined factories.
+			for (FragmentController.FragmentFactory factory : JOINED_FACTORIES) {
+				if (factory.isFragmentProvided(fragmentId)) {
+					return factory.createFragmentInstance(fragmentId, params);
+				}
+			}
+		}
+		// Create fragment within this factory.
+		return onCreateFragmentInstance(fragmentId, params);
 	}
 
 	/**
 	 */
 	@Override
 	public String getFragmentTag(int fragmentId) {
-		if (isFragmentProvided(fragmentId)) {
-			return (aFragmentTags != null) ? aFragmentTags.get(fragmentId) : createFragmentTag(getClass(), Integer.toString(fragmentId));
+		if (hasJoinedFactories()) {
+			// Try to obtain tag from the joined factories.
+			for (FragmentController.FragmentFactory factory : JOINED_FACTORIES) {
+				if (factory.isFragmentProvided(fragmentId)) {
+					return factory.getFragmentTag(fragmentId);
+				}
+			}
 		}
-		return null;
+		return onGetFragmentTag(fragmentId);
 	}
 
 	/**
 	 */
 	@Override
-	public boolean isFragmentProvided(int fragmentId) {
-		return (aFragmentIds != null) && aFragmentIds.contains(fragmentId);
+	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentId, Bundle params) {
+		if (hasJoinedFactories()) {
+			// Try to obtain show options from the joined factories.
+			for (FragmentController.FragmentFactory factory : JOINED_FACTORIES) {
+				if (factory.isFragmentProvided(fragmentId)) {
+					return factory.getFragmentShowOptions(fragmentId, params);
+				}
+			}
+		}
+		return onGetFragmentShowOptions(fragmentId, params);
+	}
+
+	/**
+	 * <p>
+	 * Checks whether this factory instance has some joined factories or not.
+	 * </p>
+	 *
+	 * @return <code>True</code> if there are some joined factories, <code>false</code> otherwise.
+	 * @see #getJoinedFactories()
+	 */
+	public boolean hasJoinedFactories() {
+		return !JOINED_FACTORIES.isEmpty();
 	}
 
 	/**
@@ -191,8 +262,60 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 */
 
 	/**
+	 * <p>
+	 * Joins the given dialog factory with this one. <b>Note</b>, that dialog fragment instances
+	 * (and their tags) are obtained from the current joined factories in order as they was joined.
+	 * </p>
+	 *
+	 * @param factory Dialog factory to join with this one.
+	 * @see #getJoinedFactories()
+	 */
+	public final void joinFactory(FragmentController.FragmentFactory factory) {
+		if (!JOINED_FACTORIES.contains(factory)) {
+			JOINED_FACTORIES.add(factory);
+		}
+	}
+
+	/**
+	 * <p>
+	 * Returns the currently joined dialog factories with this one.
+	 * </p>
+	 *
+	 * @return Set of dialog factories.
+	 * @see #hasJoinedFactories()
+	 * @see #joinFactory(com.wit.android.support.fragment.manage.FragmentController.FragmentFactory)
+	 */
+	public final List<FragmentController.FragmentFactory> getJoinedFactories() {
+		return JOINED_FACTORIES;
+	}
+
+	/**
 	 * Protected -----------------------------------------------------------------------------------
 	 */
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	protected boolean providesFragment(int fragmentId) {
+		return (aFragmentIds != null) && aFragmentIds.contains(fragmentId);
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	protected String onGetFragmentTag(int fragmentId) {
+		return (aFragmentTags != null) ? aFragmentTags.get(fragmentId) : createFragmentTag(getClass(), Integer.toString(fragmentId));
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 */
+	protected FragmentController.ShowOptions onGetFragmentShowOptions(int fragmentId, Bundle params) {
+		return new FragmentController.ShowOptions().tag(getFragmentTag(fragmentId));
+	}
 
 	/**
 	 * Private -------------------------------------------------------------------------------------
@@ -201,6 +324,14 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	/**
 	 * Abstract methods ----------------------------------------------------------------------------
 	 */
+
+	/**
+	 * <p>
+	 * Invoked whenever {@link #createFragmentInstance(int, android.os.Bundle)} is called and any of
+	 * the current joined factories doesn't provide fragment instance for the specified <var>fragmentId</var>.
+	 * </p>
+	 */
+	protected abstract Fragment onCreateFragmentInstance(int fragmentId, Bundle params);
 
 	/**
 	 * Inner classes ===============================================================================

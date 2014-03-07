@@ -2,7 +2,7 @@
 <img align="left" src="http://www.wolf-itechnologies.com/images/wit/android/wit_ic_android_100.png" />
 </a>
 
-Android Fragments (2.0)
+Android Fragments (3.0)
 ===============
 
 <h1 align="right">
