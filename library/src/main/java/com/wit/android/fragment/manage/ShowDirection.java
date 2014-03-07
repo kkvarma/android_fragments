@@ -128,13 +128,13 @@ public class ShowDirection implements Parcelable {
 	 */
 	public static final ShowDirection FADE_IN = new ShowDirection(
 			// Incoming animation.
-			R.anim.fragment_fade_in,
+			R.animator.fragment_fade_in,
 			// Outgoing animation.
-			R.anim.fragment_fade_out,
+			R.animator.fragment_fade_out,
 			// Incoming back-stack animation.
-			R.anim.fragment_fade_in_back,
+			R.animator.fragment_fade_in_back,
 			// Outgoing back-stack animation.
-			R.anim.fragment_fade_out_back,
+			R.animator.fragment_fade_out_back,
 			"FADE_IN"
 	);
 
