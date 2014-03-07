@@ -102,19 +102,28 @@
     <eat-comment/>
     <!-- Duration for a new incoming fragment's horizontal flip animation -->
     <integer name="Anim.Fragment.Flip.Horizontal.In.duration">@integer/Anim.Fragment.Horizontal.In.duration</integer>
+    <integer name="Anim.Fragment.Flip.Horizontal.In.offset">250</integer>
     <!-- Duration for an old incoming back-stacked fragment's horizontal flip animation -->
     <integer name="Anim.Fragment.Flip.Horizontal.In.Back.duration">@integer/Anim.Fragment.Horizontal.In.Back.duration</integer>
+    <integer name="Anim.Fragment.Flip.Horizontal.In.Back.offset">175</integer>
     <!-- Duration for a current outgoing fragment's (new is incoming) horizontal flip animation -->
     <integer name="Anim.Fragment.Flip.Horizontal.Out.duration">@integer/Anim.Fragment.Horizontal.Out.duration</integer>
+    <integer name="Anim.Fragment.Flip.Horizontal.Out.offset">250</integer>
     <!-- Duration for a current outgoing (back-stacked is incoming) fragment's horizontal flip animation -->
     <integer name="Anim.Fragment.Flip.Horizontal.Out.Back.duration">@integer/Anim.Fragment.Horizontal.Out.Back.duration</integer>
+    <integer name="Anim.Fragment.Flip.Horizontal.Out.Back.offset">175</integer>
     <!-- Duration for a new incoming fragment's vertical flip animation -->
     <integer name="Anim.Fragment.Flip.Vertical.In.duration">@integer/Anim.Fragment.Horizontal.In.duration</integer>
+    <integer name="Anim.Fragment.Flip.Vertical.In.offset">250</integer>
     <!-- Duration for an old incoming back-stacked fragment's vertical flip animation -->
     <integer name="Anim.Fragment.Flip.Vertical.In.Back.duration">@integer/Anim.Fragment.Horizontal.In.Back.duration</integer>
+    <integer name="Anim.Fragment.Flip.Vertical.In.Back.offset">175</integer>
     <!-- Duration for a current outgoing fragment's (new is incoming) vertical flip animation -->
     <integer name="Anim.Fragment.Flip.Vertical.Out.duration">@integer/Anim.Fragment.Horizontal.Out.duration</integer>
+    <integer name="Anim.Fragment.Flip.Vertical.Out.offset">250</integer>
     <!-- Duration for a current outgoing (back-stacked is incoming) fragment's vertical flip animation -->
     <integer name="Anim.Fragment.Flip.Vertical.Out.Back.duration">@integer/Anim.Fragment.Horizontal.Out.Back.duration</integer>
+    <integer name="Anim.Fragment.Flip.Vertical.Out.Back.offset">175</integer>
+
 
 </resources>

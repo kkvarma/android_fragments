@@ -20,8 +20,8 @@
  */
 package com.wit.android.fragment.manage;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.SparseArray;
 
 import com.wit.android.fragment.annotation.FactoryFragments;
@@ -283,7 +283,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 *
 	 * @return Set of dialog factories.
 	 * @see #hasJoinedFactories()
-	 * @see #joinFactory(com.wit.android.support.fragment.manage.FragmentController.FragmentFactory)
+	 * @see #joinFactory(com.wit.android.fragment.manage.FragmentController.FragmentFactory)
 	 */
 	public final List<FragmentController.FragmentFactory> getJoinedFactories() {
 		return JOINED_FACTORIES;
