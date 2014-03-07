@@ -55,10 +55,10 @@ import com.wit.android.fragment.R;
  * </ul>
  * <b>Flip:</b>
  * <ul>
- * <li>{@link ShowDirection#FLIP_TO_LEFT}</li>
- * <li>{@link ShowDirection#FLIP_TO_RIGHT}</li>
- * <li>{@link ShowDirection#FLIP_TO_BOTTOM}</li>
- * <li>{@link ShowDirection#FLIP_TO_TOP}</li>
+ * <li>{@link ShowDirection#FLIP_FROM_RIGHT}</li>
+ * <li>{@link ShowDirection#FLIP_FROM_LEFT}</li>
+ * <li>{@link ShowDirection#FLIP_FROM_TOP}</li>
+ * <li>{@link ShowDirection#FLIP_FROM_BOTTOM}</li>
  * </ul>
  *
  * @author Martin Albedinsky
@@ -443,7 +443,7 @@ public class ShowDirection implements Parcelable {
 	);
 
 	// todo
-	public static final ShowDirection FLIP_TO_LEFT = new ShowDirection(
+	public static final ShowDirection FLIP_FROM_RIGHT = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_flip_in_left,
 			// Outgoing animation.
@@ -452,11 +452,11 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_flip_in_right_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_flip_out_right_back,
-			"FLIP_TO_LEFT"
+			"FLIP_FROM_RIGHT"
 	);
 
 	// todo
-	public static final ShowDirection FLIP_TO_RIGHT = new ShowDirection(
+	public static final ShowDirection FLIP_FROM_LEFT = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_flip_in_right,
 			// Outgoing animation.
@@ -465,11 +465,11 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_flip_in_left_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_flip_out_left_back,
-			"FLIP_TO_RIGHT"
+			"FLIP_FROM_LEFT"
 	);
 
 	// todo
-	public static final ShowDirection FLIP_TO_BOTTOM = new ShowDirection(
+	public static final ShowDirection FLIP_FROM_TOP = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_flip_in_bottom,
 			// Outgoing animation.
@@ -478,11 +478,11 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_flip_in_top_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_flip_out_top_back,
-			"FLIP_TO_BOTTOM"
+			"FLIP_FROM_TOP"
 	);
 
 	// todo
-	public static final ShowDirection FLIP_TO_TOP = new ShowDirection(
+	public static final ShowDirection FLIP_FROM_BOTTOM = new ShowDirection(
 			// Incoming animation.
 			R.animator.fragment_flip_in_top,
 			// Outgoing animation.
@@ -491,7 +491,7 @@ public class ShowDirection implements Parcelable {
 			R.animator.fragment_flip_in_bottom_back,
 			// Outgoing back-stack animation.
 			R.animator.fragment_flip_out_bottom_back,
-			"FLIP_TO_TOP"
+			"FLIP_FROM_BOTTOM"
 	);
 
 	/**
