@@ -57,4 +57,10 @@ public @interface ContentView {
 	 * @return
 	 */
 	boolean attachToRoot() default false;
+
+	/**
+	 *
+	 * @return
+	 */
+	int backgroundRes() default -1;
 }
