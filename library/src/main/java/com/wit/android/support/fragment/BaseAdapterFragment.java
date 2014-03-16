@@ -265,6 +265,16 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	}
 
 	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	public boolean hasAdapter() {
+		return mAdapter != null;
+	}
+
+	/**
 	 * Getters + Setters ---------------------------------------------------------------------------
 	 */
 

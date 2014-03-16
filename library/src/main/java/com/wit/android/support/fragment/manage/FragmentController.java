@@ -669,11 +669,11 @@ public class FragmentController {
 			}
 		}
 
-		final FragmentTransaction transaction = this.beginTransaction();
+		final FragmentTransaction transaction = beginTransaction();
 
-		// Apply animations to the transaction from the ShowDirection parameter.
-		if (options.showDirection != ShowDirection.NONE) {
-			ShowDirection dir = options.showDirection;
+		// Apply animations to the transaction from the FragmentTransition parameter.
+		if (options.transition != FragmentTransition.NONE) {
+			final FragmentTransition trans = options.transition;
 
 			/**
 			 * <pre>
@@ -683,8 +683,10 @@ public class FragmentController {
 			 * currently outgoing fragment.
 			 * </pre>
 			 */
-			transaction.setCustomAnimations(dir.getInAnimResId(), dir.getOutAnimResId(), dir.getInAnimBackResId(),
-					dir.getOutAnimBackResId());
+			transaction.setCustomAnimations(
+					trans.getInAnimResId(), trans.getOutAnimResId(),
+					trans.getInAnimBackResId(), trans.getOutAnimBackResId()
+			);
 		}
 
 		if (DEBUG) {
@@ -835,7 +837,7 @@ public class FragmentController {
 	 * <h4>Default SetUp:</h4>
 	 * <ul>
 	 * <li>tag: {@link com.wit.android.support.fragment.manage.FragmentController#FRAGMENT_TAG}</li>
-	 * <li>show direction: {@link com.wit.android.support.fragment.manage.ShowDirection#NONE}</li>
+	 * <li>show direction: {@link FragmentTransition#NONE}</li>
 	 * <li>container id: <b>-1</b></li>
 	 * <li>back-stacking: <b>false</b></li>
 	 * <li>replacing same: <b>true</b></li>
@@ -849,7 +851,7 @@ public class FragmentController {
 	 */
 	public static class ShowOptions implements Parcelable {
 		/**
-		 * Constants =============================
+		 * Members ================================================================================
 		 */
 
 		/**
@@ -870,10 +872,6 @@ public class FragmentController {
 		};
 
 		/**
-		 * Members ===============================
-		 */
-
-		/**
 		 * Tag of fragment.
 		 */
 		protected String tag = FRAGMENT_TAG;
@@ -881,16 +879,12 @@ public class FragmentController {
 		/**
 		 * Show direction.
 		 */
-		protected ShowDirection showDirection = ShowDirection.NONE;
+		protected FragmentTransition transition = FragmentTransition.NONE;
 
 		/**
 		 * Container layout id.
 		 */
 		protected int containerId = -1;
-
-		/**
-		 * Booleans ------------------------------
-		 */
 
 		/**
 		 * Flag indicating, whether fragment should be added to back stack or not.
@@ -909,7 +903,7 @@ public class FragmentController {
 		protected boolean showImmediately = false;
 
 		/**
-		 * Constructors ==========================
+		 * Constructors ============================================================================
 		 */
 
 		/**
@@ -933,15 +927,11 @@ public class FragmentController {
 			this.addToBackStack = input.readInt() == 1;
 			this.replaceSame = input.readInt() == 1;
 			this.showImmediately = input.readInt() == 1;
-			this.showDirection = ShowDirection.CREATOR.createFromParcel(input);
+			this.transition = FragmentTransition.CREATOR.createFromParcel(input);
 		}
 
 		/**
-		 * Methods ===============================
-		 */
-
-		/**
-		 * Public --------------------------------
+		 * Methods =================================================================================
 		 */
 
 		/**
@@ -953,7 +943,7 @@ public class FragmentController {
 			dest.writeInt(addToBackStack ? 1 : 0);
 			dest.writeInt(replaceSame ? 1 : 0);
 			dest.writeInt(showImmediately ? 1 : 0);
-			showDirection.writeToParcel(dest, flags);
+			transition.writeToParcel(dest, flags);
 		}
 
 		/**
@@ -971,8 +961,8 @@ public class FragmentController {
 			builder.append("[tag(");
 			builder.append(tag);
 			builder.append("), ");
-			builder.append(" showDirection(");
-			builder.append(showDirection.name());
+			builder.append(" transition(");
+			builder.append(transition.name());
 			builder.append("), ");
 			builder.append(" backStacked(");
 			builder.append(addToBackStack);
@@ -985,10 +975,6 @@ public class FragmentController {
 			builder.append(")]");
 			return builder.toString();
 		}
-
-		/**
-		 * Getters + Setters ---------------------
-		 */
 
 		/**
 		 * <p>
@@ -1018,15 +1004,15 @@ public class FragmentController {
 
 		/**
 		 * <p>
-		 * Sets the show direction for fragment.
+		 * Sets the show transition for fragment.
 		 * </p>
 		 *
-		 * @param direction Show direction.
+		 * @param transition Show transition.
 		 * @return This options.
-		 * @see com.wit.android.support.fragment.manage.ShowDirection
+		 * @see com.wit.android.support.fragment.manage.FragmentTransition
 		 */
-		public ShowOptions showDirection(ShowDirection direction) {
-			this.showDirection = direction;
+		public ShowOptions transition(FragmentTransition transition) {
+			this.transition = transition;
 			return this;
 		}
 
