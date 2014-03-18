@@ -1,6 +1,6 @@
 /*
  * =================================================================================================
- *                    Copyright (C) 2014 Martin Albedinsky [Wolf-ITechnologies]
+ *                Copyright (C) 2013 - 2014 Martin Albedinsky [Wolf-ITechnologies]
  * =================================================================================================
  *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
  * -------------------------------------------------------------------------------------------------
@@ -16,49 +16,19 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.support.fragment.annotation;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package com.wit.android.support.fragment;
 
 /**
- * <h4>Annotation Overview</h4>
  * <p>
  * Description.
  * </p>
  *
  * @author Martin Albedinsky
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ContentView {
+public class TestConfig {
 
 	/**
-	 * Constants ===================================================================================
+	 * Log TAG.
 	 */
-
-	/**
-	 * Methods =====================================================================================
-	 */
-
-	/**
-	 *
-	 *
-	 * @return
-	 */
-	int value();
-
-	/**
-	 *
-	 * @return
-	 */
-	boolean attachToRoot() default false;
-
-	/**
-	 *
-	 * @return
-	 */
-	int backgroundRes() default -1;
+	private static final String TAG = TestConfig.class.getSimpleName();
 }
