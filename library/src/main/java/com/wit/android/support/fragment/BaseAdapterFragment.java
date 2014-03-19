@@ -57,12 +57,12 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
 	 */
-	// private static final boolean DEBUG = true;
+	// private static final boolean DEBUG_ENABLED = true;
 
 	/**
-	 * Flag indicating whether the output for user trough log-cat is enabled or not.
+	 * Flag indicating whether the output trough log-cat is enabled or not.
 	 */
-	// private static final boolean USER_LOG = true;
+	// private static final boolean LOG_ENABLED = true;
 
 	/**
 	 * Enums =======================================================================================
@@ -242,7 +242,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 * @param visible
 	 */
 	public void setLoadingViewVisible(boolean visible) {
-		// TODO: animate
+		// todo: animate
 		if (mLoadingView != null) {
 			if (visible && mLoadingView.getVisibility() != View.VISIBLE) {
 				mLoadingView.setVisibility(View.VISIBLE);
@@ -366,7 +366,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 */
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-		return startActionMode(new ActionModeCallback(this), position);
+		return startActionMode(new ActionModeCallback(this), parent, view, position, id);
 	}
 
 	/**
@@ -440,10 +440,13 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 * </p>
 	 *
 	 * @param callback
+	 * @param parent
+	 * @param view
 	 * @param position
+	 * @param id
 	 * @return
 	 */
-	protected boolean startActionMode(ActionMode.Callback callback, int position) {
+	protected boolean startActionMode(ActionMode.Callback callback, AdapterView<?> parent, View view, int position, long id) {
 		if (!isInActionMode()) {
 			if (isActivityAvailable()) {
 				onActionModeStarted(mActionMode = getActionBarActivity().startSupportActionMode(callback), position);
@@ -611,7 +614,6 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 			}
 		}
 	}
-
 
 	/**
 	 * Interface ===================================================================================

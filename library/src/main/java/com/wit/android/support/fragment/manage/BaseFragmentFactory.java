@@ -52,12 +52,12 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
 	 */
-	// private static final boolean DEBUG = true;
+	// private static final boolean DEBUG_ENABLED = true;
 
 	/**
-	 * Flag indicating whether the output for user trough log-cat is enabled or not.
+	 * Flag indicating whether the output trough log-cat is enabled or not.
 	 */
-	// private static final boolean USER_LOG = true;
+	// private static final boolean LOG_ENABLED = true;
 
 	/**
 	 * Enums =======================================================================================
@@ -98,7 +98,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * Array with joined factories. Instances and tags are first obtained from these factories then
 	 * from this one.
 	 */
-	private final List<FragmentController.FragmentFactory> JOINED_FACTORIES = new ArrayList<>();
+	private List<FragmentController.FragmentFactory> aFactories;
 
 	/**
 	 * Booleans ------------------------------------------------------------------------------------
@@ -127,18 +127,20 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 			final FactoryFragments fragments = classOfFactory.getAnnotation(FactoryFragments.class);
 
 			final int[] ids = fragments.value();
-			this.aFragmentIds = new ArrayList<>(ids.length);
-			for (int id : ids) {
-				aFragmentIds.add(id);
-			}
-
-			// Create also tags if requested.
-			if (fragments.createTags()) {
-				final SparseArray<String> tags = new SparseArray<>(ids.length);
+			if (ids.length > 0) {
+				this.aFragmentIds = new ArrayList<>(ids.length);
 				for (int id : ids) {
-					tags.put(id, getFragmentTag(id));
+					aFragmentIds.add(id);
 				}
-				this.aFragmentTags = tags;
+
+				// Create also tags if requested.
+				if (fragments.createTags()) {
+					final SparseArray<String> tags = new SparseArray<>(ids.length);
+					for (int id : ids) {
+						tags.put(id, getFragmentTag(id));
+					}
+					this.aFragmentTags = tags;
+				}
 			}
 		}
 	}
@@ -188,7 +190,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 		this.mLastCheckedFragmentId = fragmentId;
 		// Check joined factories.
 		if (hasJoinedFactories()) {
-			for (FragmentController.FragmentFactory factory : JOINED_FACTORIES) {
+			for (FragmentController.FragmentFactory factory : aFactories) {
 				if (factory.isFragmentProvided(fragmentId)) {
 					return bFragmentProvided = true;
 				}
@@ -203,7 +205,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	public Fragment createFragmentInstance(int fragmentId, Bundle params) {
 		if (hasJoinedFactories()) {
 			// Try to obtain dialog fragment from the current joined factories.
-			for (FragmentController.FragmentFactory factory : JOINED_FACTORIES) {
+			for (FragmentController.FragmentFactory factory : aFactories) {
 				if (factory.isFragmentProvided(fragmentId)) {
 					return factory.createFragmentInstance(fragmentId, params);
 				}
@@ -219,7 +221,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	public String getFragmentTag(int fragmentId) {
 		if (hasJoinedFactories()) {
 			// Try to obtain tag from the joined factories.
-			for (FragmentController.FragmentFactory factory : JOINED_FACTORIES) {
+			for (FragmentController.FragmentFactory factory : aFactories) {
 				if (factory.isFragmentProvided(fragmentId)) {
 					return factory.getFragmentTag(fragmentId);
 				}
@@ -234,7 +236,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentId, Bundle params) {
 		if (hasJoinedFactories()) {
 			// Try to obtain show options from the joined factories.
-			for (FragmentController.FragmentFactory factory : JOINED_FACTORIES) {
+			for (FragmentController.FragmentFactory factory : aFactories) {
 				if (factory.isFragmentProvided(fragmentId)) {
 					return factory.getFragmentShowOptions(fragmentId, params);
 				}
@@ -252,7 +254,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * @see #getJoinedFactories()
 	 */
 	public boolean hasJoinedFactories() {
-		return !JOINED_FACTORIES.isEmpty();
+		return (aFactories != null) && !aFactories.isEmpty();
 	}
 
 	/**
@@ -269,8 +271,9 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * @see #getJoinedFactories()
 	 */
 	public final void joinFactory(FragmentController.FragmentFactory factory) {
-		if (!JOINED_FACTORIES.contains(factory)) {
-			JOINED_FACTORIES.add(factory);
+		final List<FragmentController.FragmentFactory> factories = this.accessFactories();
+		if (!factories.contains(factory)) {
+			factories.add(factory);
 		}
 	}
 
@@ -284,7 +287,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * @see #joinFactory(com.wit.android.support.fragment.manage.FragmentController.FragmentFactory)
 	 */
 	public final List<FragmentController.FragmentFactory> getJoinedFactories() {
-		return JOINED_FACTORIES;
+		return aFactories;
 	}
 
 	/**
@@ -318,6 +321,17 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	/**
 	 * Private -------------------------------------------------------------------------------------
 	 */
+
+	/**
+	 *
+	 * @return
+	 */
+	private List<FragmentController.FragmentFactory> accessFactories() {
+		if (aFactories == null) {
+			aFactories = new ArrayList<>();
+		}
+		return aFactories;
+	}
 
 	/**
 	 * Abstract methods ----------------------------------------------------------------------------

@@ -28,6 +28,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
+import com.wit.android.support.fragment.config.FragmentsConfig;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,12 +63,12 @@ public class FragmentController {
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
 	 */
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG_ENABLED = FragmentsConfig.LIBRARY_DEBUG_LOG_ENABLED;
 
 	/**
-	 * Flag indicating whether the output for user trough log-cat is enabled or not.
+	 * Flag indicating whether the output trough log-cat is enabled or not.
 	 */
-	private static final boolean USER_LOG = true;
+	private static final boolean LOG_ENABLED = FragmentsConfig.LIBRARY_LOG_ENABLED;
 
 	/**
 	 * Enums =======================================================================================
@@ -322,7 +324,7 @@ public class FragmentController {
 				if (fragment != null && (fragment.isVisible() || fragment.isAdded())) {
 					visibleFragments.add(fragment);
 
-					if (DEBUG) {
+					if (DEBUG_ENABLED) {
 						Log.d(TAG, "visible/added fragment(" + fragment.getTag() + ")");
 					}
 				}
@@ -343,7 +345,7 @@ public class FragmentController {
 				// More than one fragment available.
 				fragment = visibleFragments.get(size - 1);
 		}
-		if (DEBUG) {
+		if (DEBUG_ENABLED) {
 			Log.d(TAG, "Resolved visible fragment(" + fragment + ")");
 		}
 		return fragment;
@@ -379,7 +381,7 @@ public class FragmentController {
 				if (fragment != null && (fragment.isVisible() || fragment.isAdded())) {
 					visibleFragments.add(fragment);
 
-					if (DEBUG) {
+					if (DEBUG_ENABLED) {
 						Log.d(TAG, "visible/added fragment(" + fragment.getTag() + ")");
 					}
 				}
@@ -401,7 +403,7 @@ public class FragmentController {
 				// More than two fragments available.
 				secondFragment = visibleFragments.get(size - 2);
 		}
-		if (DEBUG) {
+		if (DEBUG_ENABLED) {
 			Log.d(TAG, "Resolved second visible fragment(" + secondFragment + ")");
 		}
 		return secondFragment;
@@ -649,8 +651,8 @@ public class FragmentController {
 			// Do not replace same fragment.
 			Fragment currentFragment = mFragmentManager.findFragmentByTag(options.tag);
 			if (currentFragment != null) {
-				if (USER_LOG) {
-					Log.i(TAG, "Fragment with tag(" + options.tag + ") is already showing or within the back-stack.");
+				if (LOG_ENABLED) {
+					Log.v(TAG, "Fragment with tag(" + options.tag + ") is already showing or within the back-stack.");
 				}
 				return true;
 			}
@@ -687,7 +689,7 @@ public class FragmentController {
 			);
 		}
 
-		if (DEBUG) {
+		if (DEBUG_ENABLED) {
 			Log.d(TAG, "onShowFragment() options = " + options.toString());
 		}
 
@@ -697,7 +699,7 @@ public class FragmentController {
 		// Add fragment to back stack if requested.
 		if (options.addToBackStack) {
 			transaction.addToBackStack(fragment.getTag());
-			if (DEBUG) {
+			if (DEBUG_ENABLED) {
 				Log.d(TAG, "Fragment(" + fragment + ") added to back stack under the tag(" + fragment.getTag() + ").");
 			}
 		}
