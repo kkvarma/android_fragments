@@ -76,25 +76,27 @@ public class FragmentsFactory extends BaseFragmentFactory {
 	public static final String PARAM_ACTION_BAR_TITLE = "com.wit.android.support.fragment.examples.fragment.FragmentsFactory.Param.ActionBarTitle";
 	public static final String PARAM_ADD_TO_BACK_STACK = "com.wit.android.support.fragment.examples.fragment.FragmentsFactory.Params.AddToBackStack";
 
+	/**
+	 */
 	@Override
-	public Fragment createFragmentInstance(int fragmentID, Bundle params) {
+	protected Fragment onCreateFragmentInstance(int fragmentId, Bundle params) {
 		return ImageFragment.newInstance(params.getString(PARAM_ACTION_BAR_TITLE));
 	}
 
 	/**
 	 */
 	@Override
-	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentID, Bundle params) {
+	protected FragmentController.ShowOptions onGetFragmentShowOptions(int fragmentID, Bundle params) {
 		final FragmentController.ShowOptions options = super.getFragmentShowOptions(fragmentID, params);
 		switch (fragmentID) {
 			case FRAGMENT_DIRECTION_FROM_RIGHT_TO_LEFT:
-				options.transition(FragmentTransition.FROM_RIGHT_TO_LEFT);
+				options.transition(FragmentTransition.SLIDE_TO_LEFT);
 				break;
 			case FRAGMENT_DIRECTION_FROM_LEFT_TO_RIGHT:
-				options.transition(FragmentTransition.FROM_LEFT_TO_RIGHT);
+				options.transition(FragmentTransition.SLIDE_TO_RIGHT);
 				break;
 			case FRAGMENT_DIRECTION_FROM_TOP_TO_BOTTOM:
-				options.transition(FragmentTransition.FROM_TOP_TO_BOTTOM);
+				options.transition(FragmentTransition.SLIDE_TO_BOTTOM);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BOTTOM_TO_TOP:
 				options.transition(FragmentTransition.SLIDE_TO_TOP);
