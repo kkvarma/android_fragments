@@ -1,22 +1,20 @@
 /*
- * =================================================================================
- * Copyright (C) 2014 Martin Albedinsky [Wolf-ITechnologies]
- * =================================================================================
- * Licensed under the Apache License, Version 2.0 or later (further "License" only);
- * ---------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy
- * of this License you may obtain at
- * 
+ * =================================================================================================
+ *                Copyright (C) 2013 - 2014 Martin Albedinsky [Wolf-ITechnologies]
+ * =================================================================================================
+ *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * -------------------------------------------------------------------------------------------------
+ * You may use this file only in compliance with the License. More details and copy of this License
+ * you may obtain at
+ *
  * 		http://www.apache.org/licenses/LICENSE-2.0
- * 
- * You can redistribute, modify or publish any part of the code written in this
- * file but as it is described in the License, the software distributed under the 
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF
- * ANY KIND.
- * 
- * See the License for the specific language governing permissions and limitations
- * under the License.
- * =================================================================================
+ *
+ * You can redistribute, modify or publish any part of the code written within this file but as it
+ * is described in the License, the software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ *
+ * See the License for the specific language governing permissions and limitations under the License.
+ * =================================================================================================
  */
 package com.wit.android.support.fragment.manage;
 
@@ -33,24 +31,24 @@ import com.wit.android.support.fragment.R;
  * <h6>Provided Directions</h6>
  * <b>Alpha:</b>
  * <ul>
- * <li>{@link ShowDirection#FADE_IN}</li>
+ * <li>{@link FragmentTransition#FADE_IN}</li>
  * </ul>
  * <b>Slide:</b>
  * <ul>
- * <li>{@link ShowDirection#SLIDE_TO_RIGHT}</li>
- * <li>{@link ShowDirection#SLIDE_TO_LEFT}</li>
- * <li>{@link ShowDirection#SLIDE_TO_BOTTOM}</li>
- * <li>{@link ShowDirection#SLIDE_TO_TOP}</li>
+ * <li>{@link FragmentTransition#SLIDE_TO_RIGHT}</li>
+ * <li>{@link FragmentTransition#SLIDE_TO_LEFT}</li>
+ * <li>{@link FragmentTransition#SLIDE_TO_BOTTOM}</li>
+ * <li>{@link FragmentTransition#SLIDE_TO_TOP}</li>
  * </ul>
  * <b>Scale & Slide:</b>
- * <li>{@link ShowDirection#SCALE_IN_AND_SLIDE_TO_LEFT}</li>
- * <li>{@link ShowDirection#SCALE_IN_AND_SLIDE_TO_RIGHT}</li>
- * <li>{@link ShowDirection#SCALE_IN_AND_SLIDE_TO_TOP}</li>
- * <li>{@link ShowDirection#SCALE_IN_AND_SLIDE_TO_BOTTOM}</li>
- * <li>{@link ShowDirection#SLIDE_TO_RIGHT_AND_SCALE_OUT}</li>
- * <li>{@link ShowDirection#SLIDE_TO_LEFT_AND_SCALE_OUT}</li>
- * <li>{@link ShowDirection#SLIDE_TO_BOTTOM_AND_SCALE_OUT}</li>
- * <li>{@link ShowDirection#SLIDE_TO_TOP_AND_SCALE_OUT}</li>
+ * <li>{@link FragmentTransition#SCALE_IN_AND_SLIDE_TO_LEFT}</li>
+ * <li>{@link FragmentTransition#SCALE_IN_AND_SLIDE_TO_RIGHT}</li>
+ * <li>{@link FragmentTransition#SCALE_IN_AND_SLIDE_TO_TOP}</li>
+ * <li>{@link FragmentTransition#SCALE_IN_AND_SLIDE_TO_BOTTOM}</li>
+ * <li>{@link FragmentTransition#SLIDE_TO_RIGHT_AND_SCALE_OUT}</li>
+ * <li>{@link FragmentTransition#SLIDE_TO_LEFT_AND_SCALE_OUT}</li>
+ * <li>{@link FragmentTransition#SLIDE_TO_BOTTOM_AND_SCALE_OUT}</li>
+ * <li>{@link FragmentTransition#SLIDE_TO_TOP_AND_SCALE_OUT}</li>
  * <ul>
  * </ul>
  * <b>Flip:</b>
@@ -59,7 +57,7 @@ import com.wit.android.support.fragment.R;
  *
  * @author Martin Albedinsky
  */
-public class ShowDirection implements Parcelable {
+public class FragmentTransition implements Parcelable {
 
 	/**
 	 * Constants ===================================================================================
@@ -68,17 +66,17 @@ public class ShowDirection implements Parcelable {
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = ShowDirection.class.getSimpleName();
+	// private static final String TAG = FragmentTransition.class.getSimpleName();
 
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
 	 */
-	// private static final boolean DEBUG = true;
+	// private static final boolean DEBUG_ENABLED = true;
 
 	/**
-	 * Flag indicating whether the output for user trough log-cat is enabled or not.
+	 * Flag indicating whether the output trough log-cat is enabled or not.
 	 */
-	// private static final boolean USER_LOG = true;
+	// private static final boolean LOG_ENABLED = true;
 
 	/**
 	 * Enums =======================================================================================
@@ -93,15 +91,15 @@ public class ShowDirection implements Parcelable {
 	 * Parcelable creator.
 	 * </p>
 	 */
-	public static final Creator<ShowDirection> CREATOR = new Creator<ShowDirection>() {
+	public static final Creator<FragmentTransition> CREATOR = new Creator<FragmentTransition>() {
 		@Override
-		public ShowDirection createFromParcel(Parcel source) {
-			return new ShowDirection(source);
+		public FragmentTransition createFromParcel(Parcel source) {
+			return new FragmentTransition(source);
 		}
 
 		@Override
-		public ShowDirection[] newArray(int size) {
-			return new ShowDirection[size];
+		public FragmentTransition[] newArray(int size) {
+			return new FragmentTransition[size];
 		}
 	};
 
@@ -111,7 +109,7 @@ public class ShowDirection implements Parcelable {
 	 * animation.
 	 * </p>
 	 */
-	public static final ShowDirection NONE = new ShowDirection(0, 0, 0, 0, "NONE");
+	public static final FragmentTransition NONE = new FragmentTransition(0, 0, 0, 0, "NONE");
 
 	/**
 	 * <p>
@@ -126,7 +124,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link com.wit.android.support.fragment.R.anim#fragment_fade_out_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection FADE_IN = new ShowDirection(
+	public static final FragmentTransition FADE_IN = new FragmentTransition(
 			// Incoming animation.
 			R.anim.fragment_fade_in,
 			// Outgoing animation.
@@ -151,7 +149,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link com.wit.android.support.fragment.R.anim#fragment_slide_out_left_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection SLIDE_TO_RIGHT = new ShowDirection(
+	public static final FragmentTransition SLIDE_TO_RIGHT = new FragmentTransition(
 			// Incoming animation.
 			R.anim.fragment_slide_in_right,
 			// Outgoing animation.
@@ -176,7 +174,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.anim#fragment_slide_out_right_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection SLIDE_TO_LEFT = new ShowDirection(
+	public static final FragmentTransition SLIDE_TO_LEFT = new FragmentTransition(
 			// Incoming animation.
 			R.anim.fragment_slide_in_left,
 			// Outgoing animation.
@@ -201,7 +199,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.anim#fragment_slide_out_top_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection SLIDE_TO_BOTTOM = new ShowDirection(
+	public static final FragmentTransition SLIDE_TO_BOTTOM = new FragmentTransition(
 			// Incoming animation.
 			R.anim.fragment_slide_in_bottom,
 			// Outgoing animation.
@@ -226,7 +224,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.anim#fragment_slide_out_bottom_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection SLIDE_TO_TOP = new ShowDirection(
+	public static final FragmentTransition SLIDE_TO_TOP = new FragmentTransition(
 			// Incoming animation.
 			R.anim.fragment_slide_in_top,
 			// Outgoing animation.
@@ -251,7 +249,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.anim#fragment_scale_out_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection SCALE_IN_AND_SLIDE_TO_LEFT = new ShowDirection(
+	public static final FragmentTransition SCALE_IN_AND_SLIDE_TO_LEFT = new FragmentTransition(
 			// Incoming animation.
 			R.anim.fragment_scale_in,
 			// Outgoing animation.
@@ -276,7 +274,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.anim#fragment_scale_out_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection SCALE_IN_AND_SLIDE_TO_RIGHT = new ShowDirection(
+	public static final FragmentTransition SCALE_IN_AND_SLIDE_TO_RIGHT = new FragmentTransition(
 			// Incoming animation.
 			R.anim.fragment_scale_in,
 			// Outgoing animation.
@@ -301,7 +299,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.anim#fragment_scale_out_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection SCALE_IN_AND_SLIDE_TO_TOP = new ShowDirection(
+	public static final FragmentTransition SCALE_IN_AND_SLIDE_TO_TOP = new FragmentTransition(
 			// Incoming animation.
 			R.anim.fragment_scale_in,
 			// Outgoing animation.
@@ -326,7 +324,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.anim#fragment_scale_out_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection SCALE_IN_AND_SLIDE_TO_BOTTOM = new ShowDirection(
+	public static final FragmentTransition SCALE_IN_AND_SLIDE_TO_BOTTOM = new FragmentTransition(
 			// Incoming animation.
 			R.anim.fragment_scale_in,
 			// Outgoing animation.
@@ -351,7 +349,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.anim#fragment_slide_out_left_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection SLIDE_TO_RIGHT_AND_SCALE_OUT = new ShowDirection(
+	public static final FragmentTransition SLIDE_TO_RIGHT_AND_SCALE_OUT = new FragmentTransition(
 			// Incoming animation.
 			R.anim.fragment_slide_in_right,
 			// Outgoing animation.
@@ -376,7 +374,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.anim#fragment_slide_out_right_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection SLIDE_TO_LEFT_AND_SCALE_OUT = new ShowDirection(
+	public static final FragmentTransition SLIDE_TO_LEFT_AND_SCALE_OUT = new FragmentTransition(
 			// Incoming animation.
 			R.anim.fragment_slide_in_left,
 			// Outgoing animation.
@@ -401,7 +399,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.anim#fragment_slide_out_top_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection SLIDE_TO_BOTTOM_AND_SCALE_OUT = new ShowDirection(
+	public static final FragmentTransition SLIDE_TO_BOTTOM_AND_SCALE_OUT = new FragmentTransition(
 			// Incoming animation.
 			R.anim.fragment_slide_in_bottom,
 			// Outgoing animation.
@@ -426,7 +424,7 @@ public class ShowDirection implements Parcelable {
 	 * <li><b>Outgoing (back-stack):</b> {@link R.anim#fragment_slide_out_bottom_back}</li>
 	 * </ul>
 	 */
-	public static final ShowDirection SLIDE_TO_TOP_AND_SCALE_OUT = new ShowDirection(
+	public static final FragmentTransition SLIDE_TO_TOP_AND_SCALE_OUT = new FragmentTransition(
 			// Incoming animation.
 			R.anim.fragment_slide_in_top,
 			// Outgoing animation.
@@ -468,29 +466,29 @@ public class ShowDirection implements Parcelable {
 	 * Constructors ================================================================================
 	 *//**
 	 * <p>
-	 * Creates a new instance of ShowDirection with the given animations. The back-stack animation
+	 * Creates a new instance of FragmentTransition with the given animations. The back-stack animation
 	 * resource ids will be set to <code>0</code>.
 	 * </p>
 	 *
 	 * @param inAnim  Animation resource id for a new incoming fragment.
 	 * @param outAnim Animation resource id for the current outgoing fragment to the back stack.
 	 */
-	public ShowDirection(int inAnim, int outAnim) {
+	public FragmentTransition(int inAnim, int outAnim) {
 		this(inAnim, outAnim, 0, 0);
 	}
 
 	/**
 	 * <p>
-	 * Same as {@link #ShowDirection(int, int, int, int, String)} with empty name.
+	 * Same as {@link #FragmentTransition(int, int, int, int, String)} with empty name.
 	 * </p>
 	 */
-	public ShowDirection(int inAnim, int outAnim, int inAnimBack, int outAnimBack) {
+	public FragmentTransition(int inAnim, int outAnim, int inAnimBack, int outAnimBack) {
 		this(inAnim, outAnim, inAnimBack, outAnimBack, "");
 	}
 
 	/**
 	 * <p>
-	 * Creates a new instance of ShowDirection with the given animations and name.
+	 * Creates a new instance of FragmentTransition with the given animations and name.
 	 * </p>
 	 *
 	 * @param inAnim      Animation resource id for a new incoming fragment.
@@ -499,7 +497,7 @@ public class ShowDirection implements Parcelable {
 	 * @param outAnimBack Animation resource id for the current outgoing fragment.
 	 * @param name        Name for this show direction. Can be obtained by {@link #name()}.
 	 */
-	public ShowDirection(int inAnim, int outAnim, int inAnimBack, int outAnimBack, String name) {
+	public FragmentTransition(int inAnim, int outAnim, int inAnimBack, int outAnimBack, String name) {
 		this.mInAnimResId = inAnim;
 		this.mOutAnimResId = outAnim;
 		this.mInAnimBackResId = inAnimBack;
@@ -514,7 +512,7 @@ public class ShowDirection implements Parcelable {
 	 *
 	 * @param input Parcelable source with saved data.
 	 */
-	protected ShowDirection(Parcel input) {
+	protected FragmentTransition(Parcel input) {
 		this.mInAnimResId = input.readInt();
 		this.mOutAnimResId = input.readInt();
 		this.mInAnimBackResId = input.readInt();
