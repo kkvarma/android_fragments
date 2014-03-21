@@ -1,22 +1,20 @@
 /*
- * =================================================================================
- * Copyright (C) 2014 Martin Albedinsky [Wolf-ITechnologies]
- * =================================================================================
- * Licensed under the Apache License, Version 2.0 or later (further "License" only);
- * ---------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy
- * of this License you may obtain at
- * 
+ * =================================================================================================
+ *                    Copyright (C) 2014 Martin Albedinsky [Wolf-ITechnologies]
+ * =================================================================================================
+ *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * -------------------------------------------------------------------------------------------------
+ * You may use this file only in compliance with the License. More details and copy of this License
+ * you may obtain at
+ *
  * 		http://www.apache.org/licenses/LICENSE-2.0
- * 
- * You can redistribute, modify or publish any part of the code written in this
- * file but as it is described in the License, the software distributed under the 
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF
- * ANY KIND.
- * 
- * See the License for the specific language governing permissions and limitations
- * under the License.
- * =================================================================================
+ *
+ * You can redistribute, modify or publish any part of the code written within this file but as it
+ * is described in the License, the software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ *
+ * See the License for the specific language governing permissions and limitations under the License.
+ * =================================================================================================
  */
 package com.wit.android.fragment;
 
@@ -59,12 +57,12 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
 	 */
-	// private static final boolean DEBUG = true;
+	// private static final boolean DEBUG_ENABLED = true;
 
 	/**
-	 * Flag indicating whether the output for user trough log-cat is enabled or not.
+	 * Flag indicating whether the output trough log-cat is enabled or not.
 	 */
-	// private static final boolean USER_LOG = true;
+	// private static final boolean LOG_ENABLED = true;
 
 	/**
 	 * Enums =======================================================================================
@@ -244,7 +242,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 * @param visible
 	 */
 	public void setLoadingViewVisible(boolean visible) {
-		// TODO: animate
+		// todo: animate
 		if (mLoadingView != null) {
 			if (visible && mLoadingView.getVisibility() != View.VISIBLE) {
 				mLoadingView.setVisibility(View.VISIBLE);
@@ -262,6 +260,16 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 */
 	public boolean isLoadingViewVisible() {
 		return mLoadingView != null && mLoadingView.getVisibility() == View.VISIBLE;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	public boolean hasAdapter() {
+		return mAdapter != null;
 	}
 
 	/**
@@ -358,7 +366,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 */
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-		return startActionMode(new ActionModeCallback(this), position);
+		return startActionMode(new ActionModeCallback(this), parent, view, position, id);
 	}
 
 	/**
@@ -432,10 +440,13 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 * </p>
 	 *
 	 * @param callback
+	 * @param parent
+	 * @param view
 	 * @param position
+	 * @param id
 	 * @return
 	 */
-	protected boolean startActionMode(ActionMode.Callback callback, int position) {
+	protected boolean startActionMode(ActionMode.Callback callback, AdapterView<?> parent, View view, int position, long id) {
 		if (!isInActionMode()) {
 			if (isActivityAvailable()) {
 				onActionModeStarted(mActionMode = getActivity().startActionMode(callback), position);
@@ -603,7 +614,6 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 			}
 		}
 	}
-
 
 	/**
 	 * Interface ===================================================================================
