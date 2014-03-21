@@ -1,30 +1,28 @@
 /*
- * =================================================================================
- * Copyright (C) 2013 Martin Albedinsky [Wolf-ITechnologies]
- * =================================================================================
- * Licensed under the Apache License, Version 2.0 or later (further "License" only);
- * ---------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy
- * of this License you may obtain at
- * 
+ * =================================================================================================
+ *                Copyright (C) 2013 - 2014 Martin Albedinsky [Wolf-ITechnologies]
+ * =================================================================================================
+ *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * -------------------------------------------------------------------------------------------------
+ * You may use this file only in compliance with the License. More details and copy of this License
+ * you may obtain at
+ *
  * 		http://www.apache.org/licenses/LICENSE-2.0
- * 
- * You can redistribute, modify or publish any part of the code written in this
- * file but as it is described in the License, the software distributed under the 
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF
- * ANY KIND.
- * 
- * See the License for the specific language governing permissions and limitations
- * under the License.
- * =================================================================================
+ *
+ * You can redistribute, modify or publish any part of the code written within this file but as it
+ * is described in the License, the software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ *
+ * See the License for the specific language governing permissions and limitations under the License.
+ * =================================================================================================
  */
-package com.wit.android.fragment;
+package com.wit.android.support.fragment;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
 /**
  * <p>
- * Tests logic of {@link com.wit.android.fragment.WebFragment} in the {@link android.test.AndroidTestCase} environment.
+ * Tests logic of {@link com.wit.android.support.fragment.WebFragment} in the {@link android.test.AndroidTestCase} environment.
  * </p>
  *
  * @author Martin Albedinsky

@@ -1,7 +1,7 @@
 apply plugin: 'android-library'
 
 /**
- * Library dependencies ======================================================
+ * Library dependencies ============================================================================
  */
 dependencies {
     compile rootProject.supportLibrary
@@ -9,7 +9,7 @@ dependencies {
 }
 
 /**
- * Android Library options ===================================================
+ * Android Library options =========================================================================
  */
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -28,7 +28,7 @@ android {
 }
 
 /**
- * Additional gradle tasks ===================================================
+ * Additional gradle tasks =========================================================================
  */
 // Tasks to generate library, javadoc and sources .jar! files into build directory.
 android.libraryVariants.all { variant ->
@@ -82,7 +82,7 @@ task updateArtifacts {
 }
 
 /**
- * Additional gradle methods =================================================
+ * Additional gradle methods =======================================================================
  */
 /**
  * Copies artifact file with the given name into the library artifacts directory

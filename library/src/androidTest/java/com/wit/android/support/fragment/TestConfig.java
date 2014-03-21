@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
 /*
  * =================================================================================================
- *                 Copyright (C) 2012 - 2014 Martin Albedinsky [Wolf-ITechnologies]
+ *                Copyright (C) 2013 - 2014 Martin Albedinsky [Wolf-ITechnologies]
  * =================================================================================================
  *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
- * *************************************************************************************************
+ * -------------------------------------------------------------------------------------------------
  * You may use this file only in compliance with the License. More details and copy of this License
  * you may obtain at
  *
@@ -18,9 +16,19 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
--->
-<translate xmlns:android="http://schemas.android.com/apk/res/android"
-           android:zAdjustment="top"
-           android:duration="@integer/Anim.Fragment.Slide.Vertical.Out.duration"
-           android:fromYDelta="0%p"
-           android:toYDelta="100%p"/>
+package com.wit.android.support.fragment;
+
+/**
+ * <p>
+ * Description.
+ * </p>
+ *
+ * @author Martin Albedinsky
+ */
+public class TestConfig {
+
+	/**
+	 * Log TAG.
+	 */
+	private static final String TAG = TestConfig.class.getSimpleName();
+}

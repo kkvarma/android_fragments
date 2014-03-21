@@ -1,22 +1,20 @@
 /*
- * =================================================================================
- * Copyright (C) 2013 Martin Albedinsky [Wolf-ITechnologies]
- * =================================================================================
- * Licensed under the Apache License, Version 2.0 or later (further "License" only);
- * ---------------------------------------------------------------------------------
- * You may use this file only in compliance with the License. More details and copy
- * of this License you may obtain at
- * 
+ * =================================================================================================
+ *                Copyright (C) 2013 - 2014 Martin Albedinsky [Wolf-ITechnologies]
+ * =================================================================================================
+ *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * -------------------------------------------------------------------------------------------------
+ * You may use this file only in compliance with the License. More details and copy of this License
+ * you may obtain at
+ *
  * 		http://www.apache.org/licenses/LICENSE-2.0
- * 
- * You can redistribute, modify or publish any part of the code written in this
- * file but as it is described in the License, the software distributed under the 
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF
- * ANY KIND.
- * 
- * See the License for the specific language governing permissions and limitations
- * under the License.
- * =================================================================================
+ *
+ * You can redistribute, modify or publish any part of the code written within this file but as it
+ * is described in the License, the software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ *
+ * See the License for the specific language governing permissions and limitations under the License.
+ * =================================================================================================
  */
 package com.wit.android.support.fragment;
 
@@ -30,6 +28,8 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.wit.android.support.fragment.config.FragmentsConfig;
 
 import java.util.regex.Pattern;
 
@@ -55,12 +55,12 @@ public class WebFragment extends BaseFragment {
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
 	 */
-	// private static final boolean DEBUG = false;
+	// private static final boolean DEBUG_ENABLED = false;
 
 	/**
-	 * Flag indicating whether the output for user trough log-cat is enabled or not.
+	 * Flag indicating whether the output trough log-cat is enabled or not.
 	 */
-	private static final boolean USER_LOG = true;
+	private static final boolean LOG_ENABLED = FragmentsConfig.LIBRARY_LOG_ENABLED;
 
 	/**
 	 * Bundle identifiers.
@@ -475,7 +475,7 @@ public class WebFragment extends BaseFragment {
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				super.onPageFinished(view, url);
-				if (USER_LOG) {
+				if (LOG_ENABLED) {
 					Log.i(TAG, "onPageFinished('" + url + "')");
 				}
 				dispatchLoadingFinished(url);
@@ -490,7 +490,7 @@ public class WebFragment extends BaseFragment {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				super.onPageStarted(view, url, favicon);
-				if (USER_LOG) {
+				if (LOG_ENABLED) {
 					Log.i(TAG, "onPageStarted('" + url + "')");
 				}
 				dispatchLoadingStarted(url);
@@ -498,7 +498,7 @@ public class WebFragment extends BaseFragment {
 
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				if (USER_LOG) {
+				if (LOG_ENABLED) {
 					Log.i(TAG, "shouldOverrideUrlLoading('" + url + "')");
 				}
 				return super.shouldOverrideUrlLoading(view, url);
@@ -542,8 +542,8 @@ public class WebFragment extends BaseFragment {
 			mWebView.loadUrl(url);
 			success = true;
 
-			if (USER_LOG) {
-				Log.i(TAG, "Loaded URL('" + url + "') into web view.");
+			if (LOG_ENABLED) {
+				Log.v(TAG, "Loaded URL('" + url + "') into web view.");
 			}
 		} else {
 			Log.e(TAG, "Can't load URL('" + url + "') into web view. URL or web view is invalid.");
@@ -567,8 +567,8 @@ public class WebFragment extends BaseFragment {
 			mWebView.loadDataWithBaseURL("", data, DATA_MIME_TYPE, DATA_ENCODING, "");
 			success = true;
 
-			if (USER_LOG) {
-				Log.i(TAG, "Loaded data('" + data + "') into web view.");
+			if (LOG_ENABLED) {
+				Log.v(TAG, "Loaded data('" + data + "') into web view.");
 			}
 		} else {
 			Log.e(TAG, "Can't load data('" + data + "') into web view. Data or web view is invalid.");
@@ -619,8 +619,8 @@ public class WebFragment extends BaseFragment {
 			} else {
 				this.mContentType = ContentType.HTML;
 			}
-			if (USER_LOG) {
-				Log.i(TAG, "Resolved content for web view as(" + mContentType + ").");
+			if (LOG_ENABLED) {
+				Log.v(TAG, "Resolved content for web view as(" + mContentType + ").");
 			}
 			this.mContent = content;
 		} else {

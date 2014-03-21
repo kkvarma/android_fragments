@@ -26,7 +26,7 @@ import android.support.v4.app.Fragment;
 import com.wit.android.support.fragment.annotation.FactoryFragments;
 import com.wit.android.support.fragment.manage.BaseFragmentFactory;
 import com.wit.android.support.fragment.manage.FragmentController;
-import com.wit.android.support.fragment.manage.ShowDirection;
+import com.wit.android.support.fragment.manage.FragmentTransition;
 
 /**
  * <p>
@@ -76,52 +76,54 @@ public class FragmentsFactory extends BaseFragmentFactory {
 	public static final String PARAM_ACTION_BAR_TITLE = "com.wit.android.support.fragment.examples.fragment.FragmentsFactory.Param.ActionBarTitle";
 	public static final String PARAM_ADD_TO_BACK_STACK = "com.wit.android.support.fragment.examples.fragment.FragmentsFactory.Params.AddToBackStack";
 
+	/**
+	 */
 	@Override
-	public Fragment createFragmentInstance(int fragmentID, Bundle params) {
+	protected Fragment onCreateFragmentInstance(int fragmentId, Bundle params) {
 		return ImageFragment.newInstance(params.getString(PARAM_ACTION_BAR_TITLE));
 	}
 
 	/**
 	 */
 	@Override
-	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentID, Bundle params) {
+	protected FragmentController.ShowOptions onGetFragmentShowOptions(int fragmentID, Bundle params) {
 		final FragmentController.ShowOptions options = super.getFragmentShowOptions(fragmentID, params);
 		switch (fragmentID) {
 			case FRAGMENT_DIRECTION_FROM_RIGHT_TO_LEFT:
-				options.showDirection(ShowDirection.FROM_RIGHT_TO_LEFT);
+				options.transition(FragmentTransition.SLIDE_TO_LEFT);
 				break;
 			case FRAGMENT_DIRECTION_FROM_LEFT_TO_RIGHT:
-				options.showDirection(ShowDirection.FROM_LEFT_TO_RIGHT);
+				options.transition(FragmentTransition.SLIDE_TO_RIGHT);
 				break;
 			case FRAGMENT_DIRECTION_FROM_TOP_TO_BOTTOM:
-				options.showDirection(ShowDirection.FROM_TOP_TO_BOTTOM);
+				options.transition(FragmentTransition.SLIDE_TO_BOTTOM);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BOTTOM_TO_TOP:
-				options.showDirection(ShowDirection.SLIDE_TO_TOP);
+				options.transition(FragmentTransition.SLIDE_TO_TOP);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_LEFT:
-				options.showDirection(ShowDirection.SCALE_IN_AND_SLIDE_TO_LEFT);
+				options.transition(FragmentTransition.SCALE_IN_AND_SLIDE_TO_LEFT);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_RIGHT:
-				options.showDirection(ShowDirection.SCALE_IN_AND_SLIDE_TO_RIGHT);
+				options.transition(FragmentTransition.SCALE_IN_AND_SLIDE_TO_RIGHT);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_TOP:
-				options.showDirection(ShowDirection.SCALE_IN_AND_SLIDE_TO_TOP);
+				options.transition(FragmentTransition.SCALE_IN_AND_SLIDE_TO_TOP);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_BOTTOM:
-				options.showDirection(ShowDirection.SCALE_IN_AND_SLIDE_TO_BOTTOM);
+				options.transition(FragmentTransition.SCALE_IN_AND_SLIDE_TO_BOTTOM);
 				break;
 			case FRAGMENT_DIRECTION_FROM_LEFT_TO_BACKGROUND:
-				options.showDirection(ShowDirection.SLIDE_TO_RIGHT_AND_SCALE_OUT);
+				options.transition(FragmentTransition.SLIDE_TO_RIGHT_AND_SCALE_OUT);
 				break;
 			case FRAGMENT_DIRECTION_FROM_RIGHT_TO_BACKGROUND:
-				options.showDirection(ShowDirection.SLIDE_TO_LEFT_AND_SCALE_OUT);
+				options.transition(FragmentTransition.SLIDE_TO_LEFT_AND_SCALE_OUT);
 				break;
 			case FRAGMENT_DIRECTION_FROM_TOP_TO_BACKGROUND:
-				options.showDirection(ShowDirection.SLIDE_TO_BOTTOM_AND_SCALE_OUT);
+				options.transition(FragmentTransition.SLIDE_TO_BOTTOM_AND_SCALE_OUT);
 				break;
 			case FRAGMENT_DIRECTION_FROM_BOTTOM_TO_BACKGROUND:
-				options.showDirection(ShowDirection.SLIDE_TO_TOP_AND_SCALE_OUT);
+				options.transition(FragmentTransition.SLIDE_TO_TOP_AND_SCALE_OUT);
 				break;
 		}
 		return options.addToBackStack(params.getBoolean(PARAM_ADD_TO_BACK_STACK, false));
