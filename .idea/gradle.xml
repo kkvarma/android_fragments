@@ -8,7 +8,6 @@
         <option name="modules">
           <set>
             <option value="D:\Libraries\Wolf-ITechnologies\workspace\android\commercial\modules\android_fragments" />
-            <option value="D:\Libraries\Wolf-ITechnologies\workspace\android\commercial\modules\android_fragments\examples" />
             <option value="D:\Libraries\Wolf-ITechnologies\workspace\android\commercial\modules\android_fragments\library" />
           </set>
         </option>
