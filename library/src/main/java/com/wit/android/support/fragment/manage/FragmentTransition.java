@@ -118,10 +118,10 @@ public class FragmentTransition implements Parcelable {
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
-	 * <li><b>Incoming:</b> {@link com.wit.android.support.fragment.R.anim#fragment_fade_in}</li>
-	 * <li><b>Outgoing:</b> {@link com.wit.android.support.fragment.R.anim#fragment_fade_out}</li>
-	 * <li><b>Incoming (back-stack):</b> {@link com.wit.android.support.fragment.R.anim#fragment_fade_in_back}</li>
-	 * <li><b>Outgoing (back-stack):</b> {@link com.wit.android.support.fragment.R.anim#fragment_fade_out_back}</li>
+	 * <li><b>Incoming:</b> {@link R.anim#fragment_fade_in}</li>
+	 * <li><b>Outgoing:</b> {@link R.anim#fragment_fade_out}</li>
+	 * <li><b>Incoming (back-stack):</b> {@link R.anim#fragment_fade_in_back}</li>
+	 * <li><b>Outgoing (back-stack):</b> {@link R.anim#fragment_fade_out_back}</li>
 	 * </ul>
 	 */
 	public static final FragmentTransition FADE_IN = new FragmentTransition(
@@ -143,10 +143,10 @@ public class FragmentTransition implements Parcelable {
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
-	 * <li><b>Incoming:</b> {@link com.wit.android.support.fragment.R.anim#fragment_slide_in_right}</li>
-	 * <li><b>Outgoing:</b> {@link com.wit.android.support.fragment.R.anim#fragment_slide_out_right}</li>
-	 * <li><b>Incoming (back-stack):</b> {@link com.wit.android.support.fragment.R.anim#fragment_slide_in_left_back}</li>
-	 * <li><b>Outgoing (back-stack):</b> {@link com.wit.android.support.fragment.R.anim#fragment_slide_out_left_back}</li>
+	 * <li><b>Incoming:</b> {@link R.anim#fragment_slide_in_right}</li>
+	 * <li><b>Outgoing:</b> {@link R.anim#fragment_slide_out_right}</li>
+	 * <li><b>Incoming (back-stack):</b> {@link R.anim#fragment_slide_in_left_back}</li>
+	 * <li><b>Outgoing (back-stack):</b> {@link R.anim#fragment_slide_out_left_back}</li>
 	 * </ul>
 	 */
 	public static final FragmentTransition SLIDE_TO_RIGHT = new FragmentTransition(
