@@ -437,6 +437,98 @@ public class FragmentTransition implements Parcelable {
 	);
 
 	/**
+	 * <p>
+	 * </p>
+	 * <h6>Powered by animations:</h6>
+	 * <ul>
+	 * <li><b>Incoming:</b> {@link R.animator#fragment_flip_in_left}</li>
+	 * <li><b>Outgoing:</b> {@link R.animator#fragment_flip_out_left}</li>
+	 * <li><b>Incoming (back-stack):</b> {@link R.animator#fragment_flip_in_right_back}</li>
+	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_flip_out_right_back}</li>
+	 * </ul>
+	 */
+	public static final FragmentTransition FLIP_TO_LEFT = new FragmentTransition(
+			// Incoming animation.
+			R.animator.fragment_flip_in_left,
+			// Outgoing animation.
+			R.animator.fragment_flip_out_left,
+			// Incoming back-stack animation.
+			R.animator.fragment_flip_in_right_back,
+			// Outgoing back-stack animation.
+			R.animator.fragment_flip_out_right_back,
+			"FLIP_TO_LEFT"
+	);
+
+	/**
+	 * <p>
+	 * </p>
+	 * <h6>Powered by animations:</h6>
+	 * <ul>
+	 * <li><b>Incoming:</b> {@link R.animator#fragment_flip_in_right}</li>
+	 * <li><b>Outgoing:</b> {@link R.animator#fragment_flip_out_right}</li>
+	 * <li><b>Incoming (back-stack):</b> {@link R.animator#fragment_flip_in_left_back}</li>
+	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_flip_out_left_back}</li>
+	 * </ul>
+	 */
+	public static final FragmentTransition FLIP_TO_RIGHT = new FragmentTransition(
+			// Incoming animation.
+			R.animator.fragment_flip_in_right,
+			// Outgoing animation.
+			R.animator.fragment_flip_out_right,
+			// Incoming back-stack animation.
+			R.animator.fragment_flip_in_left_back,
+			// Outgoing back-stack animation.
+			R.animator.fragment_flip_out_left_back,
+			"FLIP_TO_RIGHT"
+	);
+
+	/**
+	 * <p>
+	 * </p>
+	 * <h6>Powered by animations:</h6>
+	 * <ul>
+	 * <li><b>Incoming:</b> {@link R.animator#fragment_flip_in_top}</li>
+	 * <li><b>Outgoing:</b> {@link R.animator#fragment_flip_out_top}</li>
+	 * <li><b>Incoming (back-stack):</b> {@link R.animator#fragment_flip_in_bottom_back}</li>
+	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_flip_out_bottom_back}</li>
+	 * </ul>
+	 */
+	public static final FragmentTransition FLIP_TO_TOP = new FragmentTransition(
+			// Incoming animation.
+			R.animator.fragment_flip_in_top,
+			// Outgoing animation.
+			R.animator.fragment_flip_out_top,
+			// Incoming back-stack animation.
+			R.animator.fragment_flip_in_bottom_back,
+			// Outgoing back-stack animation.
+			R.animator.fragment_flip_out_bottom_back,
+			"FLIP_TO_TOP"
+	);
+
+	/**
+	 * <p>
+	 * </p>
+	 * <h6>Powered by animations:</h6>
+	 * <ul>
+	 * <li><b>Incoming:</b> {@link R.animator#fragment_flip_in_bottom}</li>
+	 * <li><b>Outgoing:</b> {@link R.animator#fragment_flip_out_bottom}</li>
+	 * <li><b>Incoming (back-stack):</b> {@link R.animator#fragment_flip_in_top_back}</li>
+	 * <li><b>Outgoing (back-stack):</b> {@link R.animator#fragment_flip_out_top_back}</li>
+	 * </ul>
+	 */
+	public static final FragmentTransition FLIP_TO_BOTTOM = new FragmentTransition(
+			// Incoming animation.
+			R.animator.fragment_flip_in_bottom,
+			// Outgoing animation.
+			R.animator.fragment_flip_out_bottom,
+			// Incoming back-stack animation.
+			R.animator.fragment_flip_in_top_back,
+			// Outgoing back-stack animation.
+			R.animator.fragment_flip_out_top_back,
+			"FLIP_TO_BOTTOM"
+	);
+
+	/**
 	 * Members =====================================================================================
 	 */
 
