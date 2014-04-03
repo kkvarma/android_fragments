@@ -80,7 +80,8 @@ public class ActionBarFragment extends BaseFragment {
 	private MenuOptions mMenuOptions;
 
 	/**
-	 *
+	 * Action bar obtained from the parent activity of this fragment. Can be accessed immediately from
+	 * {@link #onCreate(android.os.Bundle)}.
 	 */
 	protected ActionBar mActionBar;
 
@@ -131,6 +132,9 @@ public class ActionBarFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// Obtain action bar from the parent activity.
+		this.mActionBar = getActivity().getActionBar();
+		// Enable/disable options menu.
 		setHasOptionsMenu(mMenuOptions != null);
 	}
 
@@ -167,7 +171,6 @@ public class ActionBarFragment extends BaseFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		this.mActionBar = getActivity().getActionBar();
 		// Resolve action bar options.
 		if (mActionBarOptions != null) {
 			if (mActionBarOptions.title() >= 0) {
