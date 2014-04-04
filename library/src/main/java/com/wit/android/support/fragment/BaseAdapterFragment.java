@@ -20,6 +20,7 @@ package com.wit.android.support.fragment;
 
 import android.os.Bundle;
 import android.support.v7.view.ActionMode;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,7 +53,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = BaseAdapterFragment.class.getSimpleName();
+	private static final String TAG = BaseAdapterFragment.class.getSimpleName();
 
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
@@ -171,6 +172,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 		// Resolve empty view.
 		final View emptyView = onCreateEmptyView(inflater, layout, savedInstanceState);
 		if (emptyView != null) {
+			emptyView.setId(mAdapterViewOptions != null ? mAdapterViewOptions.emptyViewId() : AdapterViewOptions.EMPTY_VIEW_DEFAULT_ID);
 			layout.addView(emptyView, createEmptyViewParams());
 		}
 		// Resolve loading view.
@@ -214,9 +216,10 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 		if (mEmptyView != null) {
 			adapterView.setEmptyView(mEmptyView);
 			if (mEmptyView instanceof TextView) {
-				if (mAdapterViewOptions != null && mAdapterViewOptions.emptyText() >= 0) {
+				if (mAdapterViewOptions != null && mAdapterViewOptions.emptyText() > 0) {
 					((TextView) mEmptyView).setText(mAdapterViewOptions.emptyText());
 				} else {
+					Log.d(TAG, "setting empty");
 					((TextView) mEmptyView).setText(mEmptyText);
 				}
 			}
@@ -310,6 +313,16 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 		if (mEmptyView instanceof TextView) {
 			((TextView) mEmptyView).setText(text);
 		}
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	public CharSequence getEmptyText() {
+		return mEmptyText;
 	}
 
 	/**
