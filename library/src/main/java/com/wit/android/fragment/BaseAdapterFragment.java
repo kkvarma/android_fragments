@@ -53,7 +53,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	/**
 	 * Log TAG.
 	 */
-	private static final String TAG = BaseAdapterFragment.class.getSimpleName();
+	// private static final String TAG = BaseAdapterFragment.class.getSimpleName();
 
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
@@ -219,7 +219,6 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 				if (mAdapterViewOptions != null && mAdapterViewOptions.emptyText() > 0) {
 					((TextView) mEmptyView).setText(mAdapterViewOptions.emptyText());
 				} else {
-					Log.d(TAG, "setting empty");
 					((TextView) mEmptyView).setText(mEmptyText);
 				}
 			}
