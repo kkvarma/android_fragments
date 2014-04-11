@@ -83,7 +83,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * Action bar obtained from the parent activity of this fragment. Can be accessed immediately from
 	 * {@link #onCreate(android.os.Bundle)}.
 	 */
-	protected ActionBar mActionBar;
+	private ActionBar mActionBar;
 
 	/**
 	 * Listeners -----------------------------------------------------------------------------------
@@ -327,6 +327,16 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 	protected boolean isActionBarAvailable() {
 		return mActionBar != null;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	protected ActionBar getActionBar() {
+		return mActionBar;
 	}
 
 	/**
