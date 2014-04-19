@@ -97,8 +97,8 @@ public final class FragmentAnnotations {
 	 * @param <A>
 	 * @return
 	 */
-	public static <A extends Annotation> A retrieveAnnotationFrom(Class<?> annotatedClass, Class<A> classOfAnnotation) {
-		return retrieveAnnotationFrom(annotatedClass, classOfAnnotation, true);
+	public static <A extends Annotation> A obtainAnnotationFrom(Class<?> annotatedClass, Class<A> classOfAnnotation) {
+		return obtainAnnotationFrom(annotatedClass, classOfAnnotation, true);
 	}
 
 	/**
@@ -110,13 +110,13 @@ public final class FragmentAnnotations {
 	 * @param checkSuper
 	 * @param <A>
 	 * @return
-	 * @see #retrieveAnnotationFrom(Class, Class)
+	 * @see #obtainAnnotationFrom(Class, Class)
 	 */
-	public static <A extends Annotation> A retrieveAnnotationFrom(Class<?> annotatedClass, Class<A> classOfAnnotation, boolean checkSuper) {
+	public static <A extends Annotation> A obtainAnnotationFrom(Class<?> annotatedClass, Class<A> classOfAnnotation, boolean checkSuper) {
 		if (!annotatedClass.isAnnotationPresent(classOfAnnotation) && checkSuper) {
 			final Class<?> parent = annotatedClass.getSuperclass();
 			if (parent != null) {
-				return retrieveAnnotationFrom(parent, classOfAnnotation, true);
+				return obtainAnnotationFrom(parent, classOfAnnotation, true);
 			}
 		}
 		return annotatedClass.getAnnotation(classOfAnnotation);

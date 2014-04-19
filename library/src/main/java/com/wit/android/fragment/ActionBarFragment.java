@@ -117,7 +117,7 @@ public class ActionBarFragment extends BaseFragment {
 			this.mActionBarOptions = classOfFragment.getAnnotation(ActionBarOptions.class);
 		}
 		// Retrieve options menu.
-		this.mMenuOptions = FragmentAnnotations.retrieveAnnotationFrom(classOfFragment, MenuOptions.class);
+		this.mMenuOptions = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, MenuOptions.class);
 	}
 
 	/**
