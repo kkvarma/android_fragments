@@ -34,6 +34,7 @@ import android.widget.TextView;
 
 import com.wit.android.support.fragment.annotation.ActionModeOptions;
 import com.wit.android.support.fragment.annotation.AdapterViewOptions;
+import com.wit.android.support.fragment.util.FragmentAnnotations;
 
 /**
  * <h4>Class Overview</h4>
@@ -142,9 +143,9 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 		 * Process class annotations.
 		 */
 		// Retrieve adapter view options.
-		this.mAdapterViewOptions = obtainAnnotationFrom(AdapterViewOptions.class, classOfFragment);
+		this.mAdapterViewOptions = FragmentAnnotations.retrieveAnnotationFrom(classOfFragment, AdapterViewOptions.class);
 		// Retrieve action mode options.
-		this.mActionModeOptions = obtainAnnotationFrom(ActionModeOptions.class, classOfFragment);
+		this.mActionModeOptions = FragmentAnnotations.retrieveAnnotationFrom(classOfFragment, ActionModeOptions.class);
 	}
 
 	/**

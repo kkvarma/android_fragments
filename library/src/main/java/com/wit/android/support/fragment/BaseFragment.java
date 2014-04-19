@@ -27,9 +27,11 @@ import android.view.ViewGroup;
 import com.wit.android.support.fragment.annotation.ClickableViews;
 import com.wit.android.support.fragment.annotation.ContentView;
 import com.wit.android.support.fragment.annotation.InjectView;
+import com.wit.android.support.fragment.util.FragmentAnnotations;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <h4>Class Overview</h4>
@@ -41,36 +43,36 @@ import java.lang.reflect.Field;
  */
 public abstract class BaseFragment extends Fragment {
 
-    /**
-     * Constants ===================================================================================
-     */
+	/**
+	 * Constants ===================================================================================
+	 */
 
-    /**
-     * Log TAG.
-     */
-    // private static final String TAG = BaseFragment.class.getSimpleName();
+	/**
+	 * Log TAG.
+	 */
+	// private static final String TAG = BaseFragment.class.getSimpleName();
 
-    /**
-     * Flag indicating whether the debug output trough log-cat is enabled or not.
-     */
-    // private static final boolean DEBUG_ENABLED = true;
+	/**
+	 * Flag indicating whether the debug output trough log-cat is enabled or not.
+	 */
+	// private static final boolean DEBUG_ENABLED = true;
 
-    /**
-     * Flag indicating whether the output trough log-cat is enabled or not.
-     */
-    // private static final boolean LOG_ENABLED = true;
+	/**
+	 * Flag indicating whether the output trough log-cat is enabled or not.
+	 */
+	// private static final boolean LOG_ENABLED = true;
 
-    /**
-     * Enums =======================================================================================
-     */
+	/**
+	 * Enums =======================================================================================
+	 */
 
-    /**
-     * Static members ==============================================================================
-     */
+	/**
+	 * Static members ==============================================================================
+	 */
 
-    /**
-     * Members =====================================================================================
-     */
+	/**
+	 * Members =====================================================================================
+	 */
 
 	/**
 	 *
@@ -82,32 +84,37 @@ public abstract class BaseFragment extends Fragment {
 	 */
 	private ClickableViews mClickableViews = null;
 
-    /**
-     * Listeners -----------------------------------------------------------------------------------
-     */
+	/**
+	 * Listeners -----------------------------------------------------------------------------------
+	 */
 
-    /**
-     * Arrays --------------------------------------------------------------------------------------
-     */
+	/**
+	 * Arrays --------------------------------------------------------------------------------------
+	 */
 
-    /**
-     * Booleans ------------------------------------------------------------------------------------
-     */
+	/**
+	 *
+	 */
+	private List<Integer> aClickableViewIds;
 
-    /**
-     * Flag indicating whether this instance of fragment is restored (like after orientation change)
-     * or not.
-     */
-    private boolean bRestored = false;
+	/**
+	 * Booleans ------------------------------------------------------------------------------------
+	 */
 
-    /**
-     * Flag indicating whether the view of this instance of fragment is restored or not.
-     */
-    private boolean bViewRestored = false;
+	/**
+	 * Flag indicating whether this instance of fragment is restored (like after orientation change)
+	 * or not.
+	 */
+	private boolean bRestored = false;
 
-    /**
-     * Constructors ================================================================================
-     */
+	/**
+	 * Flag indicating whether the view of this instance of fragment is restored or not.
+	 */
+	private boolean bViewRestored = false;
+
+	/**
+	 * Constructors ================================================================================
+	 */
 
 	/**
 	 * <p>
@@ -119,29 +126,31 @@ public abstract class BaseFragment extends Fragment {
 		 * Process class annotations.
 		 */
 		// Retrieve content view.
-		this.mContentView = obtainAnnotationFrom(ContentView.class, classOfFragment);
+		this.mContentView = FragmentAnnotations.retrieveAnnotationFrom(classOfFragment, ContentView.class);
 		// Retrieve clickable view ids.
-		if (classOfFragment.isAnnotationPresent(ClickableViews.class)) {
-			this.mClickableViews = classOfFragment.getAnnotation(ClickableViews.class);
+		// Note, that we will gather ids from all annotated class to this parent.
+		this.aClickableViewIds = this.gatherClickableViewIds(classOfFragment, new ArrayList<Integer>());
+		if (aClickableViewIds.isEmpty()) {
+			this.aClickableViewIds = null;
 		}
 	}
 
-    /**
-     * Methods =====================================================================================
-     */
+	/**
+	 * Methods =====================================================================================
+	 */
 
-    /**
-     * Public --------------------------------------------------------------------------------------
-     */
+	/**
+	 * Public --------------------------------------------------------------------------------------
+	 */
 
-    /**
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.bViewRestored = false;
-        this.bRestored = savedInstanceState != null;
-    }
+	/**
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.bViewRestored = false;
+		this.bRestored = savedInstanceState != null;
+	}
 
 	/**
 	 */
@@ -169,32 +178,36 @@ public abstract class BaseFragment extends Fragment {
 			}
 		}
 		// Resolve clickable views.
-		if (mClickableViews != null && mClickableViews.value().length > 0) {
+		if (aClickableViewIds != null && !aClickableViewIds.isEmpty()) {
 			// Set up clickable views.
 			final ClickListener clickListener = new ClickListener();
-			for (int id : mClickableViews.value()) {
-				view.findViewById(id).setOnClickListener(clickListener);
+			for (int id : aClickableViewIds) {
+				View child = view.findViewById(id);
+				if (child == null) {
+					throw new NullPointerException("Clickable view with id(" + id + ") not found.");
+				}
+				child.setOnClickListener(clickListener);
 			}
 		}
 		// Check views which should be injected.
-		this.checkViewsToInject(((Object) this).getClass(), view);
+		this.injectViews(((Object) this).getClass(), view);
 	}
 
 	/**
-     */
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        this.bViewRestored = true;
-    }
+	 */
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		this.bViewRestored = true;
+	}
 
-    /**
-     */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        this.bViewRestored = false;
-    }
+	/**
+	 */
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		this.bViewRestored = false;
+	}
 
 	/**
 	 * <p>
@@ -275,13 +288,13 @@ public abstract class BaseFragment extends Fragment {
 		return onViewClick(view, view.getId());
 	}
 
-    /**
-     * Getters + Setters ---------------------------------------------------------------------------
-     */
+	/**
+	 * Getters + Setters ---------------------------------------------------------------------------
+	 */
 
-    /**
-     * Protected -----------------------------------------------------------------------------------
-     */
+	/**
+	 * Protected -----------------------------------------------------------------------------------
+	 */
 
 	/**
 	 * <p>
@@ -320,30 +333,14 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	/**
-	 *
-	 * @param annotatedClass
-	 * @return
+	 * Private -------------------------------------------------------------------------------------
 	 */
-	static <A extends Annotation> A obtainAnnotationFrom(Class<A> classOfAnnotation, Class<?> annotatedClass) {
-		if (!annotatedClass.isAnnotationPresent(classOfAnnotation)) {
-			final Class<?> parent = annotatedClass.getSuperclass();
-			if (parent != null) {
-				return obtainAnnotationFrom(classOfAnnotation, parent);
-			}
-		}
-		return annotatedClass.getAnnotation(classOfAnnotation);
-	}
-
-    /**
-     * Private -------------------------------------------------------------------------------------
-     */
 
 	/**
-	 *
 	 * @param classOfFragment
 	 * @param view
 	 */
-	private void checkViewsToInject(Class<?> classOfFragment, View view) {
+	private void injectViews(Class<?> classOfFragment, View view) {
 		// Process annotated fields.
 		final Field[] fields = classOfFragment.getDeclaredFields();
 		if (fields.length > 0) {
@@ -366,20 +363,55 @@ public abstract class BaseFragment extends Fragment {
 			}
 		}
 
-		// Process also super fields if is presented.
+		// Inject also views of supper class, but only to this BaseFragment super.
 		final Class<?> superOfFragment = classOfFragment.getSuperclass();
-		if (superOfFragment != null) {
-			checkViewsToInject(superOfFragment, view);
+		if (superOfFragment != null && !superOfFragment.equals(BaseFragment.class)) {
+			injectViews(superOfFragment, view);
 		}
 	}
 
-    /**
-     * Abstract methods ----------------------------------------------------------------------------
-     */
+	/**
+	 *
+	 * @param classOfFragment
+	 * @param ids
+	 * @return
+	 */
+	private List<Integer> gatherClickableViewIds(Class<?> classOfFragment, List<Integer> ids) {
+		if (classOfFragment.isAnnotationPresent(ClickableViews.class)) {
+			final ClickableViews clickableViews = classOfFragment.getAnnotation(ClickableViews.class);
+			if (clickableViews.value().length > 0) {
+				ids.addAll(idsToList(clickableViews.value()));
+			}
+		}
 
-    /**
-     * Inner classes ===============================================================================
-     */
+		// Retrieve also ids of super class, but only to this BaseFragment super.
+		final Class<?> superOfFragment = classOfFragment.getSuperclass();
+		if (superOfFragment != null && !superOfFragment.equals(BaseFragment.class)) {
+			gatherClickableViewIds(superOfFragment, ids);
+		}
+		return ids;
+	}
+
+	/**
+	 *
+	 * @param ids
+	 * @return
+	 */
+	private List<Integer> idsToList(int[] ids) {
+		final List<Integer> idsList = new ArrayList<>(ids.length);
+		for (int id : ids) {
+			idsList.add(id);
+		}
+		return idsList;
+	}
+
+	/**
+	 * Abstract methods ----------------------------------------------------------------------------
+	 */
+
+	/**
+	 * Inner classes ===============================================================================
+	 */
 
 	/**
 	 *
@@ -388,13 +420,13 @@ public abstract class BaseFragment extends Fragment {
 
 		/**
 		 */
-	    @Override
-	    public void onClick(View view) {
+		@Override
+		public void onClick(View view) {
 			dispatchViewClick(view);
-	    }
-    }
+		}
+	}
 
-    /**
-     * Interface ===================================================================================
-     */
+	/**
+	 * Interface ===================================================================================
+	 */
 }
