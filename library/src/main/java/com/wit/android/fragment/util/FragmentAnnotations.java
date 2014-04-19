@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.support.fragment.util;
+package com.wit.android.fragment.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

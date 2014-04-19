@@ -20,7 +20,6 @@ package com.wit.android.fragment;
 
 import android.os.Bundle;
 import android.view.ActionMode;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,8 +32,9 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.wit.android.fragment.annotation.AdapterViewOptions;
 import com.wit.android.fragment.annotation.ActionModeOptions;
+import com.wit.android.fragment.annotation.AdapterViewOptions;
+import com.wit.android.fragment.util.FragmentAnnotations;
 
 /**
  * <h4>Class Overview</h4>

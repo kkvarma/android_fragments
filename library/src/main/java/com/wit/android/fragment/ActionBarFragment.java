@@ -27,6 +27,7 @@ import android.view.View;
 
 import com.wit.android.fragment.annotation.ActionBarOptions;
 import com.wit.android.fragment.annotation.MenuOptions;
+import com.wit.android.fragment.util.FragmentAnnotations;
 
 /**
  * <h4>Class Overview</h4>
