@@ -126,7 +126,7 @@ public abstract class BaseFragment extends Fragment {
 		 * Process class annotations.
 		 */
 		// Retrieve content view.
-		this.mContentView = FragmentAnnotations.retrieveAnnotationFrom(classOfFragment, ContentView.class);
+		this.mContentView = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, ContentView.class);
 		// Retrieve clickable view ids.
 		// Note, that we will gather ids from all annotated class to this parent.
 		this.aClickableViewIds = this.gatherClickableViewIds(classOfFragment, new ArrayList<Integer>());
