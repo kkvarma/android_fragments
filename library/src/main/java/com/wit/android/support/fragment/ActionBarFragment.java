@@ -30,6 +30,7 @@ import android.view.View;
 
 import com.wit.android.support.fragment.annotation.ActionBarOptions;
 import com.wit.android.support.fragment.annotation.MenuOptions;
+import com.wit.android.support.fragment.util.FragmentAnnotations;
 
 /**
  * <h4>Class Overview</h4>
@@ -87,9 +88,10 @@ public class ActionBarFragment extends BaseFragment {
 	private MenuOptions mMenuOptions;
 
 	/**
-	 *
+	 * Action bar obtained from the parent activity of this fragment. Can be accessed immediately from
+	 * {@link #onCreate(android.os.Bundle)}.
 	 */
-	protected ActionBar mActionBar;
+	private ActionBar mActionBar;
 
 	/**
 	 * Listeners -----------------------------------------------------------------------------------
@@ -122,7 +124,7 @@ public class ActionBarFragment extends BaseFragment {
 			this.mActionBarOptions = classOfFragment.getAnnotation(ActionBarOptions.class);
 		}
 		// Retrieve options menu.
-		this.mMenuOptions = obtainAnnotationFrom(MenuOptions.class, classOfFragment);
+		this.mMenuOptions = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, MenuOptions.class);
 	}
 
 	/**
@@ -138,16 +140,6 @@ public class ActionBarFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(mMenuOptions != null);
-	}
-
-	/**
-	 * @throws android.util.AndroidRuntimeException If the currently created parent activity isn't
-	 *                                              instance of {@link android.support.v7.app.ActionBarActivity}.
-	 */
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
 		// Check if this fragment instance is placed within ActionBarActivity context.
 		final Activity activity = getActivity();
 		if (!(activity instanceof ActionBarActivity)) {
@@ -155,6 +147,10 @@ public class ActionBarFragment extends BaseFragment {
 					"ActionBarFragment implementation can be used only within the context of ActionBarActivity."
 			);
 		}
+		// Obtain action bar from the parent activity.
+		this.mActionBar = getActionBarActivity().getSupportActionBar();
+		// Enable/disable options menu.
+		setHasOptionsMenu(mMenuOptions != null);
 	}
 
 	/**
@@ -190,7 +186,6 @@ public class ActionBarFragment extends BaseFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		this.mActionBar = getActionBarActivity().getSupportActionBar();
 		// Resolve action bar options.
 		if (mActionBarOptions != null) {
 			if (mActionBarOptions.title() >= 0) {
@@ -347,6 +342,16 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 	protected boolean isActionBarAvailable() {
 		return mActionBar != null;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	protected ActionBar getActionBar() {
+		return mActionBar;
 	}
 
 	/**

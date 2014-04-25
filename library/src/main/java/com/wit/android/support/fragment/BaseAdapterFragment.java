@@ -34,6 +34,7 @@ import android.widget.TextView;
 
 import com.wit.android.support.fragment.annotation.ActionModeOptions;
 import com.wit.android.support.fragment.annotation.AdapterViewOptions;
+import com.wit.android.support.fragment.util.FragmentAnnotations;
 
 /**
  * <h4>Class Overview</h4>
@@ -142,9 +143,9 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 		 * Process class annotations.
 		 */
 		// Retrieve adapter view options.
-		this.mAdapterViewOptions = obtainAnnotationFrom(AdapterViewOptions.class, classOfFragment);
+		this.mAdapterViewOptions = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, AdapterViewOptions.class);
 		// Retrieve action mode options.
-		this.mActionModeOptions = obtainAnnotationFrom(ActionModeOptions.class, classOfFragment);
+		this.mActionModeOptions = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, ActionModeOptions.class);
 	}
 
 	/**
@@ -171,6 +172,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 		// Resolve empty view.
 		final View emptyView = onCreateEmptyView(inflater, layout, savedInstanceState);
 		if (emptyView != null) {
+			emptyView.setId(mAdapterViewOptions != null ? mAdapterViewOptions.emptyViewId() : AdapterViewOptions.EMPTY_VIEW_DEFAULT_ID);
 			layout.addView(emptyView, createEmptyViewParams());
 		}
 		// Resolve loading view.
@@ -214,7 +216,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 		if (mEmptyView != null) {
 			adapterView.setEmptyView(mEmptyView);
 			if (mEmptyView instanceof TextView) {
-				if (mAdapterViewOptions != null && mAdapterViewOptions.emptyText() >= 0) {
+				if (mAdapterViewOptions != null && mAdapterViewOptions.emptyText() > 0) {
 					((TextView) mEmptyView).setText(mAdapterViewOptions.emptyText());
 				} else {
 					((TextView) mEmptyView).setText(mEmptyText);
@@ -222,7 +224,9 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 			}
 		}
 		adapterView.setOnItemClickListener(this);
-		adapterView.setOnItemLongClickListener(this);
+		if (mAdapterViewOptions != null && mAdapterViewOptions.longClickable()) {
+			adapterView.setOnItemLongClickListener(this);
+		}
 	}
 
 	/**
@@ -310,6 +314,16 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 		if (mEmptyView instanceof TextView) {
 			((TextView) mEmptyView).setText(text);
 		}
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @return
+	 */
+	public CharSequence getEmptyText() {
+		return mEmptyText;
 	}
 
 	/**
