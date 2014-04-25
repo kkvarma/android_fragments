@@ -74,5 +74,9 @@ public @interface AdapterViewOptions {
 	 */
 	int emptyText() default -1;
 
-
+	/**
+	 *
+	 * @return
+	 */
+	boolean longClickable() default false;
 }
