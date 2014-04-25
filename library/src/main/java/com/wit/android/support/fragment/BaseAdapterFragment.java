@@ -224,7 +224,9 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 			}
 		}
 		adapterView.setOnItemClickListener(this);
-		adapterView.setOnItemLongClickListener(this);
+		if (mAdapterViewOptions != null && mAdapterViewOptions.longClickable()) {
+			adapterView.setOnItemLongClickListener(this);
+		}
 	}
 
 	/**
