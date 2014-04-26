@@ -203,36 +203,6 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 * <p>
 	 * </p>
 	 *
-	 * @param view
-	 * @param adapterView
-	 * @param savedInstanceState
-	 */
-	@SuppressWarnings("unchecked")
-	protected void onViewCreated(View view, V adapterView, Bundle savedInstanceState) {
-		// Base set up.
-		if (mAdapter != null) {
-			adapterView.setAdapter(mAdapter);
-		}
-		if (mEmptyView != null) {
-			adapterView.setEmptyView(mEmptyView);
-			if (mEmptyView instanceof TextView) {
-				if (mAdapterViewOptions != null && mAdapterViewOptions.emptyText() > 0) {
-					((TextView) mEmptyView).setText(mAdapterViewOptions.emptyText());
-				} else {
-					((TextView) mEmptyView).setText(mEmptyText);
-				}
-			}
-		}
-		adapterView.setOnItemClickListener(this);
-		if (mAdapterViewOptions != null && mAdapterViewOptions.longClickable()) {
-			adapterView.setOnItemLongClickListener(this);
-		}
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
 	 * @return
 	 */
 	public boolean isEmpty() {
@@ -380,7 +350,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 */
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-		return startActionMode(new ActionModeCallback(this), parent, view, position, id);
+		return (mActionModeOptions != null) && startActionMode(new ActionModeCallback(this), parent, view, position, id);
 	}
 
 	/**
@@ -447,6 +417,36 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 		final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 		params.gravity = Gravity.CENTER;
 		return params;
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param view
+	 * @param adapterView
+	 * @param savedInstanceState
+	 */
+	@SuppressWarnings("unchecked")
+	protected void onViewCreated(View view, V adapterView, Bundle savedInstanceState) {
+		// Base set up.
+		if (mAdapter != null) {
+			adapterView.setAdapter(mAdapter);
+		}
+		if (mEmptyView != null) {
+			adapterView.setEmptyView(mEmptyView);
+			if (mEmptyView instanceof TextView) {
+				if (mAdapterViewOptions != null && mAdapterViewOptions.emptyText() > 0) {
+					((TextView) mEmptyView).setText(mAdapterViewOptions.emptyText());
+				} else {
+					((TextView) mEmptyView).setText(mEmptyText);
+				}
+			}
+		}
+		adapterView.setOnItemClickListener(this);
+		if (mAdapterViewOptions != null && mAdapterViewOptions.longClickable()) {
+			adapterView.setOnItemLongClickListener(this);
+		}
 	}
 
 	/**
