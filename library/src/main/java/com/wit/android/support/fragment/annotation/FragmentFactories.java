@@ -18,6 +18,8 @@
  */
 package com.wit.android.support.fragment.annotation;
 
+import com.wit.android.support.fragment.manage.FragmentController;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -30,30 +32,18 @@ import java.lang.annotation.Target;
  * </p>
  * <h6>Usage</h6>
  * <ul>
- * <li>{@link com.wit.android.support.fragment.AdapterFragment AdapterFragment}</li>
+ * <li>{@link com.wit.android.support.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>
  * </ul>
  *
  * @author Martin Albedinsky
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AdapterViewOptions {
+public @interface FragmentFactories {
 
 	/**
 	 * Constants ===================================================================================
 	 */
-
-	/**
-	 * <p>
-	 * </p>
-	 */
-	public static final int VIEW_DEFAULT_ID = android.R.id.list;
-
-	/**
-	 * <p>
-	 * </p>
-	 */
-	public static final int EMPTY_VIEW_DEFAULT_ID = android.R.id.empty;
 
 	/**
 	 * Methods =====================================================================================
@@ -61,26 +51,7 @@ public @interface AdapterViewOptions {
 
 	/**
 	 *
-	 *
 	 * @return
 	 */
-	int viewId() default VIEW_DEFAULT_ID;
-
-	/**
-	 *
-	 * @return
-	 */
-	int emptyViewId() default EMPTY_VIEW_DEFAULT_ID;
-
-	/**
-	 *
-	 * @return
-	 */
-	int emptyText() default -1;
-
-	/**
-	 *
-	 * @return
-	 */
-	boolean longClickable() default false;
+	Class<? extends FragmentController.FragmentFactory>[] value();
 }

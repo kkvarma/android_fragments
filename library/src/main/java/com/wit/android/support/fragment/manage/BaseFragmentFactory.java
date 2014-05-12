@@ -23,18 +23,25 @@ import android.support.v4.app.Fragment;
 import android.util.SparseArray;
 
 import com.wit.android.support.fragment.annotation.FactoryFragments;
+import com.wit.android.support.fragment.annotation.FragmentFactories;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * <h4>Class Overview</h4>
  * <p>
- * This is only helper implementation of {@link com.wit.android.support.fragment.manage.FragmentController.FragmentFactory}.
+ * Base implementation of {@link com.wit.android.support.fragment.manage.FragmentController.FragmentFactory}.
  * </p>
  * <p>
  * Provides some methods useful when using custom fragment factory.
  * </p>
+ * <h6>Allowed annotations</h6>
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.annotation.FactoryFragments} [<b>class</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.FragmentFactories} [<b>class</b>]</li>
+ * </ul>
  *
  * @author Martin Albedinsky
  */
@@ -72,30 +79,26 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 */
 
 	/**
-	 *
+	 * The id of the fragment which was last checked by {@link #isFragmentProvided(int)}.
 	 */
 	private int mLastCheckedFragmentId = -1;
-
-	/**
-	 * Listeners -----------------------------------------------------------------------------------
-	 */
 
 	/**
 	 * Arrays --------------------------------------------------------------------------------------
 	 */
 
 	/**
-	 *
+	 * List of tags for all fragments provided by this factory.
 	 */
 	private List<Integer> aFragmentIds = null;
 
 	/**
-	 *
+	 * Array of tags for all fragments provided by this factory.
 	 */
 	private SparseArray<String> aFragmentTags = null;
 
 	/**
-	 * Array with joined factories. Instances and tags are first obtained from these factories then
+	 * List with joined factories. Instances and tags are first obtained from these factories then
 	 * from this one.
 	 */
 	private List<FragmentController.FragmentFactory> aFactories;
@@ -105,7 +108,8 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 */
 
 	/**
-	 *
+	 * Flag indicating whether an instance of fragment for {@link #mLastCheckedFragmentId} can be
+	 * provided by this factory or not.
 	 */
 	private boolean bFragmentProvided = false;
 
@@ -115,6 +119,9 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
+	 * Creates a new instance of BaseFragmentFactory. If {@link com.wit.android.support.fragment.annotation.FactoryFragments @FactoryFragments}
+	 * or {@link com.wit.android.support.fragment.annotation.FragmentFactories @FragmentFactories}
+	 * annotations are presented, they will be processed here.
 	 * </p>
 	 */
 	public BaseFragmentFactory() {
@@ -122,7 +129,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 		/**
 		 * Process class annotations.
 		 */
-		// Retrieve fragment ids.
+		// Obtain fragment ids.
 		if (classOfFactory.isAnnotationPresent(FactoryFragments.class)) {
 			final FactoryFragments fragments = classOfFactory.getAnnotation(FactoryFragments.class);
 
@@ -140,6 +147,23 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 						tags.put(id, getFragmentTag(id));
 					}
 					this.aFragmentTags = tags;
+				}
+			}
+		}
+		// Obtain joined factories.
+		final List<Class<? extends FragmentController.FragmentFactory>> factories = this.gatherJoinedFactories(
+				classOfFactory, new ArrayList<Class<? extends FragmentController.FragmentFactory>>()
+		);
+		if (!factories.isEmpty()) {
+			for (Class<? extends FragmentController.FragmentFactory> factory : factories) {
+				FragmentController.FragmentFactory fragmentFactory = null;
+				try {
+					fragmentFactory = factory.newInstance();
+				} catch (InstantiationException | IllegalAccessException e) {
+					e.printStackTrace();
+				}
+				if (fragmentFactory != null) {
+					joinFactory(fragmentFactory);
 				}
 			}
 		}
@@ -323,14 +347,42 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 */
 
 	/**
+	 * Returns the list of joined factories. If the list isn't initialized yet, the new instance will
+	 * be created.
 	 *
-	 * @return
+	 * @return List of the joined factories. Always not <code>null</code> list.
 	 */
 	private List<FragmentController.FragmentFactory> accessFactories() {
 		if (aFactories == null) {
 			aFactories = new ArrayList<>();
 		}
 		return aFactories;
+	}
+
+	/**
+	 * Gathers all classes of fragment factories presented within FragmentFactories annotation. Note,
+	 * that this is recursive method, which will gather all classes from
+	 * {@link com.wit.android.support.fragment.annotation.FragmentFactories} annotation presented above
+	 * the given <var>classOfFragment</var>.
+	 *
+	 * @param classOfFactory Class of fragment where to check FragmentFactories annotation.
+	 * @param factories      List of already gathered factories.
+	 * @return List of all gathered classes of fragment factories.
+	 */
+	private List<Class<? extends FragmentController.FragmentFactory>> gatherJoinedFactories(Class<?> classOfFactory, List<Class<? extends FragmentController.FragmentFactory>> factories) {
+		if (classOfFactory.isAnnotationPresent(FragmentFactories.class)) {
+			final FragmentFactories fragmentFactories = classOfFactory.getAnnotation(FragmentFactories.class);
+			if (fragmentFactories.value().length > 0) {
+				factories.addAll(Arrays.asList(fragmentFactories.value()));
+			}
+		}
+
+		// Retrieve also factories of super class, but only to this BaseFragmentFactory super.
+		final Class<?> superOfFactory = classOfFactory.getSuperclass();
+		if (superOfFactory != null && !classOfFactory.equals(BaseFragmentFactory.class)) {
+			gatherJoinedFactories(superOfFactory, factories);
+		}
+		return factories;
 	}
 
 	/**

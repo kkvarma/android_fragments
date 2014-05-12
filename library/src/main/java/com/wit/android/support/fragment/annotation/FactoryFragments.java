@@ -28,6 +28,10 @@ import java.lang.annotation.Target;
  * <p>
  * Description.
  * </p>
+ * <h6>Usage</h6>
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>
+ * </ul>
  *
  * @author Martin Albedinsky
  */

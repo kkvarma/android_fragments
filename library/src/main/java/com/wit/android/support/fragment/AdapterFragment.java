@@ -18,6 +18,7 @@
  */
 package com.wit.android.support.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.view.ActionMode;
 import android.view.Gravity;
@@ -41,10 +42,15 @@ import com.wit.android.support.fragment.util.FragmentAnnotations;
  * <p>
  * Description.
  * </p>
+ * <h6>Allowed annotations</h6>
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.annotation.AdapterViewOptions} [<b>class</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.ActionModeOptions} [<b>class</b>]</li>
+ * </ul>
  *
  * @author Martin Albedinsky
  */
-public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapter> extends ActionBarFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> extends ActionBarFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
 	/**
 	 * Constants ===================================================================================
@@ -78,48 +84,50 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 */
 
 	/**
-	 *
+	 * Adapter view of this fragment instance.
 	 */
 	V mAdapterView;
 
 	/**
-	 *
+	 * Empty view of this fragment's adapter view.
 	 */
 	View mEmptyView;
 
 	/**
-	 *
+	 * Loading view presented behind this fragment's adapter view.
 	 */
 	View mLoadingView;
 
 	/**
-	 *
+	 * Current adapter.
 	 */
 	A mAdapter;
 
 	/**
-	 *
+	 * Current action mode.
 	 */
 	ActionMode mActionMode;
 
 	/**
 	 *
 	 */
+	private int mEmptyViewRes;
+
+	/**
+	 * Text presented within the empty view (if instance of TextView) of this fragment's adapter
+	 * view.
+	 */
 	private CharSequence mEmptyText = "";
 
 	/**
-	 *
+	 * Annotation holding an options for this fragment's adapter view.
 	 */
 	private AdapterViewOptions mAdapterViewOptions;
 
 	/**
-	 *
+	 * Annotation holding an options for this fragment's action mode.
 	 */
 	private ActionModeOptions mActionModeOptions;
-
-	/**
-	 * Listeners -----------------------------------------------------------------------------------
-	 */
 
 	/**
 	 * Arrays --------------------------------------------------------------------------------------
@@ -135,17 +143,24 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Creates a new instance of AdapterFragment. If {@link com.wit.android.support.fragment.annotation.AdapterViewOptions}
+	 * or {@link com.wit.android.support.fragment.annotation.ActionModeOptions} annotations are presented,
+	 * they will be processed here.
 	 * </p>
 	 */
-	public BaseAdapterFragment() {
+	public AdapterFragment() {
 		final Class<?> classOfFragment = ((Object) this).getClass();
 		/**
 		 * Process class annotations.
 		 */
 		// Retrieve adapter view options.
-		this.mAdapterViewOptions = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, AdapterViewOptions.class);
+		this.mAdapterViewOptions = FragmentAnnotations.obtainAnnotationFrom(
+				classOfFragment, AdapterViewOptions.class, true, AdapterFragment.class
+		);
 		// Retrieve action mode options.
-		this.mActionModeOptions = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, ActionModeOptions.class);
+		this.mActionModeOptions = FragmentAnnotations.obtainAnnotationFrom(
+				classOfFragment, ActionModeOptions.class, true, AdapterFragment.class
+		);
 	}
 
 	/**
@@ -201,9 +216,8 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Same as {@link android.widget.Adapter#isEmpty()}.
 	 * </p>
-	 *
-	 * @return
 	 */
 	public boolean isEmpty() {
 		return mAdapter == null || mAdapter.isEmpty();
@@ -211,9 +225,10 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Shows/hides the loading view of this adapter fragment.
 	 * </p>
 	 *
-	 * @param visible
+	 * @param visible <code>True</code> to show loading view, <code>false</code> to hide it.
 	 */
 	public void setLoadingViewVisible(boolean visible) {
 		// todo: animate
@@ -228,9 +243,10 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Returns flag indicating whether the loading view of this fragment is visible or not.
 	 * </p>
 	 *
-	 * @return
+	 * @return <code>True</code> if it is visible, <code>false</code> otherwise.
 	 */
 	public boolean isLoadingViewVisible() {
 		return mLoadingView != null && mLoadingView.getVisibility() == View.VISIBLE;
@@ -238,9 +254,10 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Returns flag indicating whether this adapter fragment holds some adapter or not.
 	 * </p>
 	 *
-	 * @return
+	 * @return <code>True</code> if adapter is presented, <code>false</code> otherwise.
 	 */
 	public boolean hasAdapter() {
 		return mAdapter != null;
@@ -252,12 +269,27 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Same as {@link #setEmptyView(android.view.View)}.
 	 * </p>
 	 *
-	 * @param emptyView
+	 * @param resource The resource id of the layout with an empty view.
 	 */
-	public void setEmptyView(View emptyView) {
-		this.mEmptyView = emptyView;
+	public void setEmptyView(int resource) {
+		if (mEmptyViewRes != resource) {
+			setEmptyView(inflateView(mEmptyViewRes = resource));
+		}
+	}
+
+	/**
+	 * <p>
+	 * Sets the given <var>view</var> as empty view for this fragment's adapter view.
+	 * </p>
+	 *
+	 * @param view The view to set as empty view.
+	 * @see #setEmptyView(int)
+	 */
+	public void setEmptyView(View view) {
+		this.mEmptyView = view;
 		if (mAdapterView != null) {
 			mAdapterView.setEmptyView(mEmptyView);
 		}
@@ -265,21 +297,36 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Returns the current empty view.
 	 * </p>
 	 *
-	 * @param resId
+	 * @return The view which was set as empty view for this fragment's adapter view.
 	 */
-	public void setEmptyViewText(int resId) {
-		setEmptyViewText(obtainString(resId));
+	public View getEmptyView() {
+		return mEmptyView;
 	}
 
 	/**
 	 * <p>
+	 * Same as {@link #setEmptyText(CharSequence)}.
 	 * </p>
 	 *
-	 * @param text
+	 * @param resId The desired resource id of empty text.
 	 */
-	public void setEmptyViewText(CharSequence text) {
+	public void setEmptyText(int resId) {
+		setEmptyText(obtainString(resId));
+	}
+
+	/**
+	 * <p>
+	 * Sets the given text to the current empty view. <b>Note</b>, that the given text will be set
+	 * only in case that the current empty view is instance of {@link android.widget.TextView}.
+	 * </p>
+	 *
+	 * @param text The text to to the current empty view.
+	 * @see #setEmptyText(int)
+	 */
+	public void setEmptyText(CharSequence text) {
 		this.mEmptyText = text;
 		if (mEmptyView instanceof TextView) {
 			((TextView) mEmptyView).setText(text);
@@ -288,9 +335,10 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Returns the text which was set as text for the current empty view.
 	 * </p>
 	 *
-	 * @return
+	 * @return The text presented in the current empty view.
 	 */
 	public CharSequence getEmptyText() {
 		return mEmptyText;
@@ -298,19 +346,10 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Returns the instance of adapter view of this fragment.
 	 * </p>
 	 *
-	 * @return
-	 */
-	public View getEmptyView() {
-		return mEmptyView;
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @return
+	 * @return Instance of the adapter view presented in the root view of this fragment.
 	 */
 	public V getAdapterView() {
 		return mAdapterView;
@@ -318,9 +357,10 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Sets the given <var>adapter</var> for this fragment.
 	 * </p>
 	 *
-	 * @param adapter
+	 * @param adapter The adapter which should be used to populate the adapter view of this fragment.
 	 */
 	@SuppressWarnings("unchecked")
 	public void setAdapter(A adapter) {
@@ -332,9 +372,10 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Returns the current adapter of this fragment.
 	 * </p>
 	 *
-	 * @return
+	 * @return An instance of the current adapter.
 	 */
 	public A getAdapter() {
 		return mAdapter;
@@ -349,8 +390,9 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	/**
 	 */
 	@Override
+	@SuppressWarnings("unchecked")
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-		return (mActionModeOptions != null) && startActionMode(new ActionModeCallback(this), parent, view, position, id);
+		return (mActionModeOptions != null) && startActionMode(new ActionModeCallback(this), (V) parent, view, position, id);
 	}
 
 	/**
@@ -359,9 +401,10 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Called to create a new instance of layout parameters for this fragment's adapter view.
 	 * </p>
 	 *
-	 * @return
+	 * @return An instance of layout params, depends on the root view of this fragment.
 	 */
 	protected FrameLayout.LayoutParams createAdapterViewParams() {
 		return new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
@@ -369,12 +412,15 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Invoked to create a new instance of view which will be set as empty view to this fragment's
+	 * adapter view
 	 * </p>
 	 *
-	 * @param inflater
-	 * @param container
-	 * @param savedInstanceState
-	 * @return
+	 * @param inflater           Valid layout inflater.
+	 * @param container          The root view into which will be created empty view placed.
+	 * @param savedInstanceState Bundle with saved state or <code>null</code> if this fragment's view
+	 *                           is just first time created.
+	 * @return An instance of empty view.
 	 */
 	protected View onCreateEmptyView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return new TextView(inflater.getContext(), null, android.R.attr.textViewStyle);
@@ -382,9 +428,10 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Called to create a new instance of layout parameters for this fragment's empty view.
 	 * </p>
 	 *
-	 * @return
+	 * @return An instance of layout params, depends on the root view of this fragment.
 	 */
 	protected FrameLayout.LayoutParams createEmptyViewParams() {
 		final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -394,12 +441,15 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Invoked to create a new instance of view which will be used as loading view of this adapter
+	 * fragment.
 	 * </p>
 	 *
-	 * @param inflater
-	 * @param container
-	 * @param savedInstanceState
-	 * @return
+	 * @param inflater           Valid layout inflater.
+	 * @param container          The root view into which will be created loading view placed.
+	 * @param savedInstanceState Bundle with saved state or <code>null</code> if this fragment's view
+	 *                           is just first time created.
+	 * @return An instance of loading view.
 	 */
 	protected View onCreateLoadingView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View loadingView = new ProgressBar(inflater.getContext(), null, android.R.attr.progressBarStyleLarge);
@@ -409,9 +459,10 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Called to create a new instance of layout parameters for this fragment's loading view.
 	 * </p>
 	 *
-	 * @return
+	 * @return An instance of layout params, depends on the root view of this fragment.
 	 */
 	protected FrameLayout.LayoutParams createLoadingViewParams() {
 		final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -421,17 +472,23 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Invoked from {@link #onViewCreated(android.view.View, android.os.Bundle)} after the root <var>view</var>
+	 * is checked for valid adapter view.
 	 * </p>
 	 *
-	 * @param view
-	 * @param adapterView
-	 * @param savedInstanceState
+	 * @param view               The root view of this fragment.
+	 * @param adapterView        The adapter view presented in the root view of this fragment.
+	 * @param savedInstanceState Bundle with saved state or <code>null</code> if this fragment's view
+	 *                           is just first time created.
 	 */
 	@SuppressWarnings("unchecked")
 	protected void onViewCreated(View view, V adapterView, Bundle savedInstanceState) {
 		// Base set up.
 		if (mAdapter != null) {
 			adapterView.setAdapter(mAdapter);
+		}
+		if (mEmptyView == null && mEmptyViewRes > 0) {
+			setEmptyView(inflateView(mEmptyViewRes));
 		}
 		if (mEmptyView != null) {
 			adapterView.setEmptyView(mEmptyView);
@@ -451,19 +508,31 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Starts the action mode for this adapter fragment. <b>Note</b>, that by default is this called
+	 * from {@link #onItemLongClick(android.widget.AdapterView, android.view.View, int, long)} if
+	 * there is {@link com.wit.android.support.fragment.annotation.ActionModeOptions} annotation
+	 * presented.
 	 * </p>
 	 *
-	 * @param callback
-	 * @param parent
-	 * @param view
-	 * @param position
-	 * @param id
-	 * @return
+	 * @param callback    The callback used to manage action mode.
+	 * @param adapterView The current adapter view.
+	 * @param view        The view of an item for which is this action mode started.
+	 * @param position    The position of an item from the current adapter's data set for which is this
+	 *                    action mode started.
+	 * @param id          The id of an item from the current adapter's data set for which is this
+	 *                    action mode started.
+	 * @return <code>True</code> if action mode started, <code>false</code> if this fragment is already
+	 * in the action mode or the parent activity of this fragment isn't available.
+	 * @see #isInActionMode()
+	 * @see #isActivityAvailable()
 	 */
-	protected boolean startActionMode(ActionMode.Callback callback, AdapterView<?> parent, View view, int position, long id) {
+	protected boolean startActionMode(ActionMode.Callback callback, V adapterView, View view, int position, long id) {
 		if (!isInActionMode()) {
 			if (isActivityAvailable()) {
-				onActionModeStarted(mActionMode = getActionBarActivity().startSupportActionMode(callback), position);
+				onActionModeStarted(
+						mActionMode = getActionBarActivity().startSupportActionMode(callback),
+						adapterView, view, position, id
+				);
 			}
 			return true;
 		}
@@ -472,9 +541,11 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Returns flag indicating whether this fragment is in the action mode or not.
 	 * </p>
 	 *
-	 * @return
+	 * @return <code>True</code> if this fragment is in the action mode, <code>false</code> otherwise.
+	 * @see #getActionMode()
 	 */
 	protected boolean isInActionMode() {
 		return mActionMode != null;
@@ -482,9 +553,11 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Returns the current action mode.
 	 * </p>
 	 *
-	 * @return
+	 * @return The current action mode, or <code>null</code> if this fragment is not in action mode.
+	 * @see #isInActionMode()
 	 */
 	protected ActionMode getActionMode() {
 		return mActionMode;
@@ -492,16 +565,25 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 	/**
 	 * <p>
+	 * Invoked immediately after {@link #startActionMode(android.support.v7.view.ActionMode.Callback, V, android.view.View, int, long)}
+	 * was called an this fragment isn't in action mode yet.
 	 * </p>
 	 *
-	 * @param actionMode
-	 * @param position
+	 * @param actionMode  Currently started action mode.
+	 * @param adapterView The current adapter view.
+	 * @param view        The view of an item for which is this action mode started.
+	 * @param position    The position of an item from the current adapter's data set for which is this
+	 *                    action mode started.
+	 * @param id          The id of an item from the current adapter's data set for which is this
+	 *                    action mode started.
 	 */
-	protected void onActionModeStarted(ActionMode actionMode, int position) {
+	protected void onActionModeStarted(ActionMode actionMode, V adapterView, View view, int position, long id) {
 	}
 
 	/**
 	 * <p>
+	 * Invoked whenever {@link com.wit.android.support.fragment.AdapterFragment.ActionModeCallback#onDestroyActionMode(android.support.v7.view.ActionMode)}
+	 * is called on the current action mode callback (if instance of {@link com.wit.android.support.fragment.AdapterFragment.ActionModeCallback}).
 	 * </p>
 	 */
 	protected void onActionModeFinished() {
@@ -512,13 +594,16 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	 */
 
 	/**
-	 * @param view
+	 * Checks whether the given root <var>view</var> contains adapter view or not.
+	 *
+	 * @param view The root view of this fragment.
+	 * @throws IllegalStateException If there is no adapter view presented with this fragment's layout.
 	 */
 	@SuppressWarnings("unchecked")
 	private void ensureAdapterView(View view) {
 		final int viewId = (mAdapterViewOptions != null) ? mAdapterViewOptions.viewId() : AdapterViewOptions.VIEW_DEFAULT_ID;
 		if ((mAdapterView = (V) view.findViewById(viewId)) == null) {
-			throw new IllegalArgumentException("Missing adapter view with id(" + viewId + ") within adapter fragment layout.");
+			throw new IllegalStateException("Missing an adapter view with the id(" + viewId + ") within this adapter fragment's layout.");
 		}
 		// Get also empty view if is presented.
 		this.mEmptyView = view.findViewById(
@@ -527,17 +612,33 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 	}
 
 	/**
+	 * Inflates a new instance of view for the specified <var>resource</var>.
+	 *
+	 * @param resource The resource id of the view to inflate.
+	 * @return A new instance of inflated view.
+	 */
+	private View inflateView(int resource) {
+		if (isActivityAvailable()) {
+			final LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			return inflater.inflate(resource, (ViewGroup) getView(), false);
+		}
+		return null;
+	}
+
+	/**
 	 * Abstract methods ----------------------------------------------------------------------------
 	 */
 
 	/**
 	 * <p>
+	 * Invoked to create a new instance of adapter view specific for this instance of adapter fragment.
 	 * </p>
 	 *
-	 * @param inflater
-	 * @param container
-	 * @param savedInstanceState
-	 * @return
+	 * @param inflater           Valid layout inflater.
+	 * @param container          The root view into which will be created adapter view placed.
+	 * @param savedInstanceState Bundle with saved state or <code>null</code> if this fragment's view
+	 *                           is just first time created.
+	 * @return A new instance of adapter view.
 	 */
 	protected abstract V onCreateAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
@@ -559,9 +660,9 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 		 */
 
 		/**
-		 *
+		 * Instance of adapter fragment within which context was this action mode started.
 		 */
-		protected BaseAdapterFragment mAdapterFragment;
+		protected final AdapterFragment mAdapterFragment;
 
 		/**
 		 * Constructors ============================================================================
@@ -569,6 +670,7 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 		/**
 		 * <p>
+		 * Creates a new instance of ActionModeCallback.
 		 * </p>
 		 */
 		public ActionModeCallback() {
@@ -577,11 +679,12 @@ public abstract class BaseAdapterFragment<V extends AdapterView, A extends Adapt
 
 		/**
 		 * <p>
+		 * Creates a new instance of ActionModeCallback for the context of the given <var>adapterFragment</var>.
 		 * </p>
 		 *
-		 * @param adapterFragment
+		 * @param adapterFragment The instance of adapter fragment in which was this action mode started.
 		 */
-		public ActionModeCallback(BaseAdapterFragment adapterFragment) {
+		public ActionModeCallback(AdapterFragment adapterFragment) {
 			this.mAdapterFragment = adapterFragment;
 		}
 

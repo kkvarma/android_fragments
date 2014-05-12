@@ -31,8 +31,9 @@ import android.widget.GridView;
  * </p>
  *
  * @author Martin Albedinsky
+ * @see com.wit.android.support.fragment.ListFragment
  */
-public class GridFragment<A extends Adapter> extends BaseAdapterFragment<GridView, A> {
+public class GridFragment<A extends Adapter> extends AdapterFragment<GridView, A> {
 
 	/**
 	 * Constants ===================================================================================
@@ -63,10 +64,6 @@ public class GridFragment<A extends Adapter> extends BaseAdapterFragment<GridVie
 
 	/**
 	 * Members =====================================================================================
-	 */
-
-	/**
-	 * Listeners -----------------------------------------------------------------------------------
 	 */
 
 	/**

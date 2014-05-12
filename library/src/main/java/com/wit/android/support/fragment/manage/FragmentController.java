@@ -99,23 +99,19 @@ public class FragmentController {
 	private int mFragmentContainerId = -1;
 
 	/**
-	 *
+	 * The entry at the top of the fragments back stack.
 	 */
 	private FragmentManager.BackStackEntry mTopBackStackEntry = null;
 
 	/**
-	 * Listeners -----------------------------------------------------------------------------------
+	 * Listener callback for back stack changes.
 	 */
+	private OnBackStackChangeListener mBackStackListener;
 
 	/**
-	 *
+	 * Listener callback for fragment changes.
 	 */
-	private OnBackStackChangeListener lBackStackListener;
-
-	/**
-	 *
-	 */
-	private OnFragmentChangeListener lFragmentListener;
+	private OnFragmentChangeListener mFragmentListener;
 
 	/**
 	 * Arrays --------------------------------------------------------------------------------------
@@ -488,9 +484,13 @@ public class FragmentController {
 
 	/**
 	 * <p>
+	 * Returns flag indicating whether there are some fragments within the fragment manager's back
+	 * stack.
 	 * </p>
 	 *
-	 * @return
+	 * @return <code>True</code> if fragment manager's back stack holds some entries, <code>false</code>
+	 * otherwise.
+	 * @see android.support.v4.app.FragmentManager#getBackStackEntryCount()
 	 */
 	public boolean hasBackStackEntries() {
 		return mFragmentManager.getBackStackEntryCount() > 0;
@@ -502,22 +502,24 @@ public class FragmentController {
 
 	/**
 	 * <p>
+	 * Registers a callback to be invoked when some change occur in the fragments back stack.
 	 * </p>
 	 *
-	 * @param listener
+	 * @param listener Listener callback.
 	 */
 	public void setOnBackStackChangeListener(OnBackStackChangeListener listener) {
-		this.lBackStackListener = listener;
+		this.mBackStackListener = listener;
 	}
 
 	/**
 	 * <p>
+	 * Registers a callback to be invoked when fragments are being changed.
 	 * </p>
 	 *
-	 * @param listener
+	 * @param listener Listener callback.
 	 */
 	public void setOnFragmentChangeListener(OnFragmentChangeListener listener) {
-		this.lFragmentListener = listener;
+		this.mFragmentListener = listener;
 	}
 
 	/**
@@ -525,7 +527,7 @@ public class FragmentController {
 	 * </p>
 	 */
 	public void removeOnFragmentChangeListener() {
-		this.lBackStackListener = null;
+		this.mBackStackListener = null;
 	}
 
 	/**
@@ -533,8 +535,9 @@ public class FragmentController {
 	 * Returns the tag of the currently visible fragment.
 	 * </p>
 	 *
-	 * @return Fragment tag, or <code>null</code> if there is not currently visible any fragment.
+	 * @return Fragment tag or <code>null</code> if there is not currently visible any fragment.
 	 * @see #getVisibleFragment()
+	 * @see #getVisibleSecondFragmentTag()
 	 */
 	public String getVisibleFragmentTag() {
 		final Fragment visibleFragment = getVisibleFragment();
@@ -543,9 +546,12 @@ public class FragmentController {
 
 	/**
 	 * <p>
+	 * Returns the tag of the second currently visible fragment.
 	 * </p>
 	 *
-	 * @return
+	 * @return Fragment tag or <code>null</code> if there is only one or none currently visible fragment.
+	 * @see #getVisibleSecondFragment()
+	 * @see #getVisibleFragmentTag()
 	 */
 	public String getVisibleSecondFragmentTag() {
 		final Fragment visibleFragment = getVisibleSecondFragment();
@@ -618,9 +624,10 @@ public class FragmentController {
 
 	/**
 	 * <p>
+	 * Returns the top entry of the fragments back stack.
 	 * </p>
 	 *
-	 * @return
+	 * @return The top back stack entry or <code>null</code> if there are no back stack entries.
 	 */
 	public FragmentManager.BackStackEntry getTopBackStackEntry() {
 		return mTopBackStackEntry;
@@ -768,10 +775,12 @@ public class FragmentController {
 	}
 
 	/**
-	 * Checks if the current fragment factory is available or not.
+	 * Checks whether there is factory available and if so, if a fragment for the specified <var>fragmentId</var>
+	 * is provided by that factory.
 	 *
-	 * @param fragmentId
-	 * @return
+	 * @param fragmentId The id of requested fragment.
+	 * @return <code>True</code> if the current fragment factory provides such a fragment, <code>false</code>
+	 * otherwise.
 	 * @throws java.lang.IllegalStateException If the current factory isn't available.
 	 */
 	private boolean checkFragmentFactory(int fragmentId) {
@@ -782,8 +791,10 @@ public class FragmentController {
 	}
 
 	/**
-	 * @param entriesCount
-	 * @param action
+	 * Called to dispatch back stack change.
+	 *
+	 * @param entriesCount The count of the fragment back stack entries.
+	 * @param action       The back stack change action identifier.
 	 */
 	private void dispatchBackStackChanged(int entriesCount, int action) {
 		final boolean added = action == BackStackListener.ADDED;
@@ -799,24 +810,30 @@ public class FragmentController {
 	}
 
 	/**
-	 * @param changedEntry
-	 * @param added
+	 * Called to dispatch back stack entry change.
+	 *
+	 * @param changedEntry The back stack entry which was changed.
+	 * @param added        <code>True</code> if the specified entry was added to the back stack,
+	 *                     <code>false</code> if was removed.
 	 */
 	private void dispatchBackStackEntryChange(FragmentManager.BackStackEntry changedEntry, boolean added) {
-		if (lBackStackListener != null) {
+		if (mBackStackListener != null) {
 			// Dispatch to listener.
-			lBackStackListener.onBackStackChanged(added, changedEntry.getId(), changedEntry.getName());
+			mBackStackListener.onBackStackChanged(added, changedEntry.getId(), changedEntry.getName());
 		}
 	}
 
 	/**
-	 * @param id
-	 * @param tag
-	 * @param factory
+	 * Called to dispatch fragment change.
+	 *
+	 * @param id      The id of the currently changed (showed) fragment.
+	 * @param tag     The tag of the currently changed (showed) fragment.
+	 * @param factory <code>True</code> if the changed fragment was obtained from a factory,
+	 *                <code>false</code> otherwise.
 	 */
 	private boolean dispatchFragmentChanged(int id, String tag, boolean factory) {
-		if (lFragmentListener != null) {
-			lFragmentListener.onFragmentChanged(id, tag, factory);
+		if (mFragmentListener != null) {
+			mFragmentListener.onFragmentChanged(id, tag, factory);
 		}
 		return true;
 	}
@@ -1132,6 +1149,7 @@ public class FragmentController {
 		 * @param params     Bundle with parameters for requested fragment.
 		 * @return The instance of fragment associated with the specified <var>fragmentId</var> or
 		 * <code>null</code> if this fragment factory doesn't provides requested fragment.
+		 * @see #isFragmentProvided(int)
 		 */
 		public Fragment createFragmentInstance(int fragmentId, Bundle params);
 
@@ -1169,10 +1187,13 @@ public class FragmentController {
 
 		/**
 		 * <p>
+		 * Returns flag indicating whether there is provided a fragment for the specified <var>fragmentId</var>
+		 * by this factory or not.
 		 * </p>
 		 *
-		 * @param fragmentId
-		 * @return
+		 * @param fragmentId The id of desired fragment.
+		 * @return <code>True</code> if the fragment is provided ({@link #createFragmentInstance(int, android.os.Bundle)}
+		 * will return an instance of such a fragment), <code>false</code> otherwise.
 		 */
 		public boolean isFragmentProvided(int fragmentId);
 	}
@@ -1188,11 +1209,14 @@ public class FragmentController {
 
 		/**
 		 * <p>
+		 * Invoked whenever an old fragment is replaced by a new one or simply a new fragment is first
+		 * time showed by an instance of FragmentController.
 		 * </p>
 		 *
-		 * @param id
-		 * @param tag
-		 * @param factory
+		 * @param id      The id of the currently changed (showed) fragment.
+		 * @param tag     The tag of the currently changed (showed) fragment.
+		 * @param factory <code>True</code> if the changed fragment was obtained from a factory,
+		 *                <code>false</code> otherwise.
 		 */
 		public void onFragmentChanged(int id, String tag, boolean factory);
 	}
@@ -1208,11 +1232,13 @@ public class FragmentController {
 
 		/**
 		 * <p>
+		 * Invoked whenever fragments back stack change occur.
 		 * </p>
 		 *
-		 * @param added
-		 * @param id
-		 * @param tag
+		 * @param added <code>True</code> if there was added new back stack entry, <code>false</code>
+		 *              if old one was removed.
+		 * @param id    The id of a back stack entry which status was changed.
+		 * @param tag   The tag of a back stack entry which status was changed.
 		 */
 		public void onBackStackChanged(boolean added, int id, String tag);
 	}

@@ -31,8 +31,9 @@ import android.widget.ListView;
  * </p>
  *
  * @author Martin Albedinsky
+ * @see com.wit.android.support.fragment.GridFragment
  */
-public class ListFragment<A extends Adapter> extends BaseAdapterFragment<ListView, A> {
+public class ListFragment<A extends Adapter> extends AdapterFragment<ListView, A> {
 
 	/**
 	 * Constants ===================================================================================
@@ -63,10 +64,6 @@ public class ListFragment<A extends Adapter> extends BaseAdapterFragment<ListVie
 
 	/**
 	 * Members =====================================================================================
-	 */
-
-	/**
-	 * Listeners -----------------------------------------------------------------------------------
 	 */
 
 	/**

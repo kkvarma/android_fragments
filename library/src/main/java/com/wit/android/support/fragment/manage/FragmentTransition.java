@@ -88,7 +88,7 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Parcelable creator.
+	 * Parcelable creator for android internal purpose.
 	 * </p>
 	 */
 	public static final Creator<FragmentTransition> CREATOR = new Creator<FragmentTransition>() {
@@ -113,8 +113,7 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this direction to fade a new incoming fragment in and outgoing (the current one) will be
-	 * faded out.
+	 * Transition to fade a new incoming fragment in and outgoing (the current one) will be faded out.
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
@@ -138,8 +137,8 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this direction to slide a new incoming fragment from the left and outgoing (the current
-	 * one) will be slided to the right.
+	 * Transition to slide a new incoming fragment from the left and outgoing (the current one) will
+	 * be slided to the right.
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
@@ -163,8 +162,8 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this direction to slide a new incoming fragment from the right and outgoing (the current
-	 * one) will be slided to the left.
+	 * Transition to slide a new incoming fragment from the right and outgoing (the current one) will
+	 * be slided to the left.
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
@@ -188,8 +187,8 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this direction to slide a new incoming fragment from the top and outgoing (the current
-	 * one) will be slided to the bottom.
+	 * Transition to slide a new incoming fragment from the top and outgoing (the current one) will
+	 * be slided to the bottom.
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
@@ -213,8 +212,8 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this direction to slide a new incoming fragment from the bottom and outgoing (the current
-	 * one) will be slided to the top.
+	 * Transition to slide a new incoming fragment from the bottom and outgoing (the current one) will
+	 * be slided to the top.
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
@@ -238,8 +237,8 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this direction to scale (with fade) a new incoming fragment from the background and
-	 * outgoing (the current one) will be slided to the left.
+	 * Transition to scale (with fade) a new incoming fragment from the background and outgoing
+	 * (the current one) will be slided to the left.
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
@@ -263,8 +262,8 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this direction to scale (with fade) a new incoming fragment from the background and
-	 * outgoing (the current one) will be slided to the right.
+	 * Transition to scale (with fade) a new incoming fragment from the background and outgoing (the
+	 * current one) will be slided to the right.
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
@@ -288,8 +287,8 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this direction to scale (with fade) a new incoming fragment from the background and
-	 * outgoing (the current one) will be slided to the top.
+	 * Transition to scale (with fade) a new incoming fragment from the background and outgoing (the
+	 * current one) will be slided to the top.
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
@@ -313,8 +312,8 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this direction to scale (with fade) a new incoming fragment from the background and
-	 * outgoing (the current one) will be slided to the bottom.
+	 * Transition to scale (with fade) a new incoming fragment from the background and outgoing (the
+	 * current one) will be slided to the bottom.
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
@@ -338,8 +337,8 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this direction to slide a new incoming fragment from the left and outgoing (the current
-	 * one) will be scaled (with fade) to the background.
+	 * Transition to slide a new incoming fragment from the left and outgoing (the current one) will
+	 * be scaled (with fade) to the background.
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
@@ -363,8 +362,8 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this direction to slide a new incoming fragment from the right and outgoing (the current
-	 * one) will be scaled (with fade) to the background.
+	 * Transition to slide a new incoming fragment from the right and outgoing (the current one) will
+	 * be scaled (with fade) to the background.
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
@@ -388,8 +387,8 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this direction to slide a new incoming fragment from the top and outgoing (the current
-	 * one) will be scaled (with fade) to the background.
+	 * Transition to slide a new incoming fragment from the top and outgoing (the current one) will
+	 * be scaled (with fade) to the background.
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
@@ -413,8 +412,8 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this direction to slide a new incoming fragment from the bottom and outgoing (the current
-	 * one) will be scaled (with fade) to the background.
+	 * Transition to slide a new incoming fragment from the bottom and outgoing (the current one) will
+	 * be scaled (with fade) to the background.
 	 * </p>
 	 * <h6>Powered by animations:</h6>
 	 * <ul>
@@ -446,13 +445,9 @@ public class FragmentTransition implements Parcelable {
 	private int mInAnimResId, mOutAnimResId, mInAnimBackResId, mOutAnimBackResId;
 
 	/**
-	 * Name of this show direction.
+	 * Name of this transition.
 	 */
 	private String mName = "";
-
-	/**
-	 * Listeners -----------------------------------------------------------------------------------
-	 */
 
 	/**
 	 * Arrays --------------------------------------------------------------------------------------
@@ -464,14 +459,17 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * Constructors ================================================================================
-	 *//**
+	 */
+
+	/**
 	 * <p>
 	 * Creates a new instance of FragmentTransition with the given animations. The back-stack animation
 	 * resource ids will be set to <code>0</code>.
 	 * </p>
 	 *
-	 * @param inAnim  Animation resource id for a new incoming fragment.
-	 * @param outAnim Animation resource id for the current outgoing fragment to the back stack.
+	 * @param inAnim  The resource id of the animation for an incoming fragment.
+	 * @param outAnim The resource id of the animation for an outgoing fragment to the back stack
+	 *                or which is to be destroyed.
 	 */
 	public FragmentTransition(int inAnim, int outAnim) {
 		this(inAnim, outAnim, 0, 0);
@@ -491,11 +489,13 @@ public class FragmentTransition implements Parcelable {
 	 * Creates a new instance of FragmentTransition with the given animations and name.
 	 * </p>
 	 *
-	 * @param inAnim      Animation resource id for a new incoming fragment.
-	 * @param outAnim     Animation resource id for the current outgoing fragment to the back stack.
-	 * @param inAnimBack  Animation resource id for the incoming fragment from the back stack.
-	 * @param outAnimBack Animation resource id for the current outgoing fragment.
-	 * @param name        Name for this show direction. Can be obtained by {@link #name()}.
+	 * @param inAnim      The resource id of the animation for an incoming fragment.
+	 * @param outAnim     The resource id of the animation for an outgoing fragment to the back stack
+	 *                    or which is to be destroyed.
+	 * @param inAnimBack  The resource id of the animation for an incoming fragment from the back stack.
+	 * @param outAnimBack The resource id of the animation for an outgoing fragment which is to be
+	 *                    destroyed.
+	 * @param name        The name of this transition.
 	 */
 	public FragmentTransition(int inAnim, int outAnim, int inAnimBack, int outAnimBack, String name) {
 		this.mInAnimResId = inAnim;
@@ -552,10 +552,10 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Returns the name of this show direction.
+	 * Returns the name of this transition.
 	 * </p>
 	 *
-	 * @return Direction name.
+	 * @return Transition name.
 	 */
 	public String name() {
 		return mName;

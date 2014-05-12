@@ -200,13 +200,9 @@ public class WebFragment extends BaseFragment {
 	private ContentType mContentType = ContentType.UNKNOWN;
 
 	/**
-	 * Listeners -----------------------------
-	 */
-
-	/**
 	 * Content loading listener.
 	 */
-	private OnWebContentLoadingListener iWebContentLoadingListener;
+	private OnWebContentLoadingListener mWebContentLoadingListener;
 
 	/**
 	 * Arrays --------------------------------------------------------------------------------------
@@ -422,7 +418,7 @@ public class WebFragment extends BaseFragment {
 	 * @param listener Listener callback.
 	 */
 	public void setOnWebContentLoadingListener(OnWebContentLoadingListener listener) {
-		this.iWebContentLoadingListener = listener;
+		this.mWebContentLoadingListener = listener;
 	}
 
 	/**
@@ -431,7 +427,7 @@ public class WebFragment extends BaseFragment {
 	 * </p>
 	 */
 	public void removeOnWebContentLoadingListener() {
-		this.iWebContentLoadingListener = null;
+		this.mWebContentLoadingListener = null;
 	}
 
 	/**
@@ -584,8 +580,8 @@ public class WebFragment extends BaseFragment {
 	 * @param webUrl Web url which is currently being loaded into the current web view.
 	 */
 	protected final void dispatchLoadingStarted(String webUrl) {
-		if (iWebContentLoadingListener != null) {
-			iWebContentLoadingListener.onLoadingStarted(webUrl);
+		if (mWebContentLoadingListener != null) {
+			mWebContentLoadingListener.onLoadingStarted(webUrl);
 		}
 	}
 
@@ -597,8 +593,8 @@ public class WebFragment extends BaseFragment {
 	 * @param webUrl Web url which was currently loaded into the current web view.
 	 */
 	protected final void dispatchLoadingFinished(String webUrl) {
-		if (iWebContentLoadingListener != null) {
-			iWebContentLoadingListener.onLoadingFinished(webUrl);
+		if (mWebContentLoadingListener != null) {
+			mWebContentLoadingListener.onLoadingFinished(webUrl);
 		}
 	}
 

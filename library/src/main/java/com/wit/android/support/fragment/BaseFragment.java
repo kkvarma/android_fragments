@@ -37,6 +37,12 @@ import java.util.List;
  * <h4>Class Overview</h4>
  * <p>
  * </p>
+ * <h6>Allowed annotations</h6>
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.annotation.ContentView} [<b>class</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.ClickableViews} [<b>class</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.InjectView} [<b>member</b>]</li>
+ * </ul>
  *
  * @author Martin Albedinsky
  * @see com.wit.android.support.fragment.ActionBarFragment
@@ -80,15 +86,6 @@ public abstract class BaseFragment extends Fragment {
 	private ContentView mContentView = null;
 
 	/**
-	 *
-	 */
-	private ClickableViews mClickableViews = null;
-
-	/**
-	 * Listeners -----------------------------------------------------------------------------------
-	 */
-
-	/**
 	 * Arrays --------------------------------------------------------------------------------------
 	 */
 
@@ -118,6 +115,9 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
+	 * Creates a new instance of BaseFragment. If {@link com.wit.android.support.fragment.annotation.ContentView}
+	 * or {@link com.wit.android.support.fragment.annotation.ClickableViews} annotations are presented,
+	 * they will be processed here.
 	 * </p>
 	 */
 	public BaseFragment() {
@@ -126,7 +126,7 @@ public abstract class BaseFragment extends Fragment {
 		 * Process class annotations.
 		 */
 		// Retrieve content view.
-		this.mContentView = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, ContentView.class);
+		this.mContentView = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, ContentView.class, true, BaseFragment.class);
 		// Retrieve clickable view ids.
 		// Note, that we will gather ids from all annotated class to this parent.
 		this.aClickableViewIds = this.gatherClickableViewIds(classOfFragment, new ArrayList<Integer>());
@@ -223,6 +223,19 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
+	 * Called to dispatch view click event to this fragment instance.
+	 * </p>
+	 *
+	 * @param view The view which was clicked.
+	 * @return <code>True</code> if this fragment handles dispatched click event for the given
+	 * <var>view</var>, <code>false</code> otherwise.
+	 */
+	public boolean dispatchViewClick(View view) {
+		return onViewClick(view, view.getId());
+	}
+
+	/**
+	 * <p>
 	 * Returns flag indicating whether this fragment instance was restored or not.
 	 * </p>
 	 *
@@ -235,7 +248,7 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
-	 * Returns flag indicating whether the view of this fragment instance was restored or not.
+	 * Returns flag indicating whether the view was restored or not.
 	 * </p>
 	 *
 	 * @return <code>True</code> if the view of this fragment was restored (<i>like, when the fragment
@@ -247,9 +260,11 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
+	 * Returns flag indicating whether the view is already created or not.
 	 * </p>
 	 *
-	 * @return
+	 * @return <code>True</code> if the view of this fragment is already created, <code>false</code>
+	 * otherwise.
 	 */
 	public boolean isViewCreated() {
 		return getView() != null;
@@ -257,7 +272,7 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
-	 * Same as  {@link #getString(int)}, but first is performed check if the parent activity of this
+	 * Same as {@link #getString(int)}, but first is performed check if the parent activity of this
 	 * fragment instance is available to prevent illegal state exceptions.
 	 * </p>
 	 */
@@ -278,17 +293,6 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @param view
-	 * @return
-	 */
-	public boolean dispatchViewClick(View view) {
-		return onViewClick(view, view.getId());
-	}
-
-	/**
 	 * Getters + Setters ---------------------------------------------------------------------------
 	 */
 
@@ -298,7 +302,7 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
-	 * Invoked to process back press action dispatched to this fragment instance.
+	 * Invoked to process back press action.
 	 * </p>
 	 *
 	 * @return <code>True</code> if this instance of fragment processes dispatched back press action,
@@ -311,11 +315,13 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
+	 * Invoked to process on the given <var>view</var> click action.
 	 * </p>
 	 *
-	 * @param view
-	 * @param id
-	 * @return
+	 * @param view The view which was clicked.
+	 * @param id   The id of the clicked view.
+	 * @return <code>True</code> if this fragment handles dispatched click event for the given
+	 * <var>view</var>, <code>false</code> otherwise.
 	 */
 	protected boolean onViewClick(View view, int id) {
 		return false;
@@ -337,10 +343,14 @@ public abstract class BaseFragment extends Fragment {
 	 */
 
 	/**
-	 * @param classOfFragment
-	 * @param view
+	 * Injects all annotated member views. Note, that this is recursive function, which will check
+	 * all members for {@link com.wit.android.support.fragment.annotation.InjectView}
+	 * annotation presented above each of members of the given <var>classOfFragment</var>.
+	 *
+	 * @param classOfFragment Class of fragment where to check InjectView annotations.
+	 * @param root            The root view of this fragment used to find views to inject.
 	 */
-	private void injectViews(Class<?> classOfFragment, View view) {
+	private void injectViews(Class<?> classOfFragment, View root) {
 		// Process annotated fields.
 		final Field[] fields = classOfFragment.getDeclaredFields();
 		if (fields.length > 0) {
@@ -353,7 +363,7 @@ public abstract class BaseFragment extends Fragment {
 						try {
 							field.set(
 									this,
-									view.findViewById(field.getAnnotation(InjectView.class).value())
+									root.findViewById(field.getAnnotation(InjectView.class).value())
 							);
 						} catch (IllegalAccessException e) {
 							e.printStackTrace();
@@ -366,15 +376,18 @@ public abstract class BaseFragment extends Fragment {
 		// Inject also views of supper class, but only to this BaseFragment super.
 		final Class<?> superOfFragment = classOfFragment.getSuperclass();
 		if (superOfFragment != null && !superOfFragment.equals(BaseFragment.class)) {
-			injectViews(superOfFragment, view);
+			injectViews(superOfFragment, root);
 		}
 	}
 
 	/**
+	 * Gathers all ids presented within ClickableViews annotation. Note, that this is recursive method,
+	 * which will gather all ids from {@link com.wit.android.support.fragment.annotation.ClickableViews}
+	 * annotation presented above the given <var>classOfFragment</var>.
 	 *
-	 * @param classOfFragment
-	 * @param ids
-	 * @return
+	 * @param classOfFragment Class of fragment where to check ClickableViews annotation.
+	 * @param ids             List of already gathered ids.
+	 * @return List of all gathered clickable view's ids.
 	 */
 	private List<Integer> gatherClickableViewIds(Class<?> classOfFragment, List<Integer> ids) {
 		if (classOfFragment.isAnnotationPresent(ClickableViews.class)) {
@@ -393,9 +406,10 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	/**
+	 * Converts the given <var>ids</var> array to list.
 	 *
-	 * @param ids
-	 * @return
+	 * @param ids The array of ids to convert.
+	 * @return Converted list of ids.
 	 */
 	private List<Integer> idsToList(int[] ids) {
 		final List<Integer> idsList = new ArrayList<>(ids.length);
@@ -414,7 +428,7 @@ public abstract class BaseFragment extends Fragment {
 	 */
 
 	/**
-	 *
+	 * Simple on view click listener to attach to clickable views of this fragment's class.
 	 */
 	private final class ClickListener implements View.OnClickListener {
 
