@@ -27,13 +27,35 @@ import android.view.ViewGroup;
 import com.wit.android.support.fragment.annotation.ClickableViews;
 import com.wit.android.support.fragment.annotation.ContentView;
 import com.wit.android.support.fragment.annotation.InjectView;
+import com.wit.android.support.fragment.util.FragmentAnnotations;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <h4>Class Overview</h4>
  * <p>
+ * todo: description
+ * </p>
+ * <h6>Used annotations</h6>
+ * {@link com.wit.android.support.fragment.annotation.ContentView @ContentView} [<b>class</b>]
+ * <p>
+ * If this annotation is presented, the layout id presented within this annotation will be used to
+ * inflate the root view for an instance of this fragment class in
+ * {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}.
+ * </p>
+ * {@link com.wit.android.support.fragment.annotation.ClickableViews @ClickableViews} [<b>class</b>]
+ * <p>
+ * If this annotation is presented, all views found by ids presented within this annotation will be
+ * found and an inner {@link android.view.View.OnClickListener} will be attached to them. If any of
+ * these views is clicked, {@link #onViewClick(android.view.View, int)} will be invoked with that
+ * specific view and its id.
+ * </p>
+ * {@link com.wit.android.support.fragment.annotation.InjectView @InjectView} [<b>member</b>]
+ * <p>
+ * All members marked with this annotation will be automatically injected (by {@link android.view.View#findViewById(int)})
+ * using the root view passed to {@link #onViewCreated(android.view.View, android.os.Bundle)}.
  * </p>
  *
  * @author Martin Albedinsky
@@ -41,36 +63,36 @@ import java.lang.reflect.Field;
  */
 public abstract class BaseFragment extends Fragment {
 
-    /**
-     * Constants ===================================================================================
-     */
+	/**
+	 * Constants ===================================================================================
+	 */
 
-    /**
-     * Log TAG.
-     */
-    // private static final String TAG = BaseFragment.class.getSimpleName();
+	/**
+	 * Log TAG.
+	 */
+	// private static final String TAG = BaseFragment.class.getSimpleName();
 
-    /**
-     * Flag indicating whether the debug output trough log-cat is enabled or not.
-     */
-    // private static final boolean DEBUG_ENABLED = true;
+	/**
+	 * Flag indicating whether the debug output trough log-cat is enabled or not.
+	 */
+	// private static final boolean DEBUG_ENABLED = true;
 
-    /**
-     * Flag indicating whether the output trough log-cat is enabled or not.
-     */
-    // private static final boolean LOG_ENABLED = true;
+	/**
+	 * Flag indicating whether the output trough log-cat is enabled or not.
+	 */
+	// private static final boolean LOG_ENABLED = true;
 
-    /**
-     * Enums =======================================================================================
-     */
+	/**
+	 * Enums =======================================================================================
+	 */
 
-    /**
-     * Static members ==============================================================================
-     */
+	/**
+	 * Static members ==============================================================================
+	 */
 
-    /**
-     * Members =====================================================================================
-     */
+	/**
+	 * Members =====================================================================================
+	 */
 
 	/**
 	 *
@@ -78,39 +100,38 @@ public abstract class BaseFragment extends Fragment {
 	private ContentView mContentView = null;
 
 	/**
+	 * Arrays --------------------------------------------------------------------------------------
+	 */
+
+	/**
 	 *
 	 */
-	private ClickableViews mClickableViews = null;
+	private List<Integer> aClickableViewIds;
 
-    /**
-     * Listeners -----------------------------------------------------------------------------------
-     */
+	/**
+	 * Booleans ------------------------------------------------------------------------------------
+	 */
 
-    /**
-     * Arrays --------------------------------------------------------------------------------------
-     */
+	/**
+	 * Flag indicating whether this instance of fragment is restored (like after orientation change)
+	 * or not.
+	 */
+	private boolean bRestored = false;
 
-    /**
-     * Booleans ------------------------------------------------------------------------------------
-     */
+	/**
+	 * Flag indicating whether the view of this instance of fragment is restored or not.
+	 */
+	private boolean bViewRestored = false;
 
-    /**
-     * Flag indicating whether this instance of fragment is restored (like after orientation change)
-     * or not.
-     */
-    private boolean bRestored = false;
-
-    /**
-     * Flag indicating whether the view of this instance of fragment is restored or not.
-     */
-    private boolean bViewRestored = false;
-
-    /**
-     * Constructors ================================================================================
-     */
+	/**
+	 * Constructors ================================================================================
+	 */
 
 	/**
 	 * <p>
+	 * Creates a new instance of BaseFragment. If {@link com.wit.android.support.fragment.annotation.ContentView}
+	 * or {@link com.wit.android.support.fragment.annotation.ClickableViews} annotations are presented,
+	 * they will be processed here.
 	 * </p>
 	 */
 	public BaseFragment() {
@@ -119,29 +140,31 @@ public abstract class BaseFragment extends Fragment {
 		 * Process class annotations.
 		 */
 		// Retrieve content view.
-		this.mContentView = obtainAnnotationFrom(ContentView.class, classOfFragment);
+		this.mContentView = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, ContentView.class, true, BaseFragment.class);
 		// Retrieve clickable view ids.
-		if (classOfFragment.isAnnotationPresent(ClickableViews.class)) {
-			this.mClickableViews = classOfFragment.getAnnotation(ClickableViews.class);
+		// Note, that we will gather ids from all annotated class to this parent.
+		this.aClickableViewIds = this.gatherClickableViewIds(classOfFragment, new ArrayList<Integer>());
+		if (aClickableViewIds.isEmpty()) {
+			this.aClickableViewIds = null;
 		}
 	}
 
-    /**
-     * Methods =====================================================================================
-     */
+	/**
+	 * Methods =====================================================================================
+	 */
 
-    /**
-     * Public --------------------------------------------------------------------------------------
-     */
+	/**
+	 * Public --------------------------------------------------------------------------------------
+	 */
 
-    /**
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.bViewRestored = false;
-        this.bRestored = savedInstanceState != null;
-    }
+	/**
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.bViewRestored = false;
+		this.bRestored = savedInstanceState != null;
+	}
 
 	/**
 	 */
@@ -169,32 +192,36 @@ public abstract class BaseFragment extends Fragment {
 			}
 		}
 		// Resolve clickable views.
-		if (mClickableViews != null && mClickableViews.value().length > 0) {
+		if (aClickableViewIds != null && !aClickableViewIds.isEmpty()) {
 			// Set up clickable views.
 			final ClickListener clickListener = new ClickListener();
-			for (int id : mClickableViews.value()) {
-				view.findViewById(id).setOnClickListener(clickListener);
+			for (int id : aClickableViewIds) {
+				View child = view.findViewById(id);
+				if (child == null) {
+					throw new NullPointerException("Clickable view with id(" + id + ") not found.");
+				}
+				child.setOnClickListener(clickListener);
 			}
 		}
 		// Check views which should be injected.
-		this.checkViewsToInject(((Object) this).getClass(), view);
+		this.injectViews(((Object) this).getClass(), view);
 	}
 
 	/**
-     */
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        this.bViewRestored = true;
-    }
+	 */
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		this.bViewRestored = true;
+	}
 
-    /**
-     */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        this.bViewRestored = false;
-    }
+	/**
+	 */
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		this.bViewRestored = false;
+	}
 
 	/**
 	 * <p>
@@ -206,6 +233,19 @@ public abstract class BaseFragment extends Fragment {
 	 */
 	public boolean dispatchBackPressed() {
 		return onBackPressed();
+	}
+
+	/**
+	 * <p>
+	 * Called to dispatch view click event to this fragment instance.
+	 * </p>
+	 *
+	 * @param view The view which was clicked.
+	 * @return <code>True</code> if this fragment handles dispatched click event for the given
+	 * <var>view</var>, <code>false</code> otherwise.
+	 */
+	public boolean dispatchViewClick(View view) {
+		return onViewClick(view, view.getId());
 	}
 
 	/**
@@ -222,7 +262,7 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
-	 * Returns flag indicating whether the view of this fragment instance was restored or not.
+	 * Returns flag indicating whether the view was restored or not.
 	 * </p>
 	 *
 	 * @return <code>True</code> if the view of this fragment was restored (<i>like, when the fragment
@@ -234,9 +274,11 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
+	 * Returns flag indicating whether the view is already created or not.
 	 * </p>
 	 *
-	 * @return
+	 * @return <code>True</code> if the view of this fragment is already created, <code>false</code>
+	 * otherwise.
 	 */
 	public boolean isViewCreated() {
 		return getView() != null;
@@ -244,7 +286,7 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
-	 * Same as  {@link #getString(int)}, but first is performed check if the parent activity of this
+	 * Same as {@link #getString(int)}, but first is performed check if the parent activity of this
 	 * fragment instance is available to prevent illegal state exceptions.
 	 * </p>
 	 */
@@ -265,27 +307,16 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @param view
-	 * @return
+	 * Getters + Setters ---------------------------------------------------------------------------
 	 */
-	public boolean dispatchViewClick(View view) {
-		return onViewClick(view, view.getId());
-	}
 
-    /**
-     * Getters + Setters ---------------------------------------------------------------------------
-     */
-
-    /**
-     * Protected -----------------------------------------------------------------------------------
-     */
+	/**
+	 * Protected -----------------------------------------------------------------------------------
+	 */
 
 	/**
 	 * <p>
-	 * Invoked to process back press action dispatched to this fragment instance.
+	 * Invoked to process back press action.
 	 * </p>
 	 *
 	 * @return <code>True</code> if this instance of fragment processes dispatched back press action,
@@ -298,11 +329,13 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
+	 * Invoked to process on the given <var>view</var> click action.
 	 * </p>
 	 *
-	 * @param view
-	 * @param id
-	 * @return
+	 * @param view The view which was clicked.
+	 * @param id   The id of the clicked view.
+	 * @return <code>True</code> if this fragment handles dispatched click event for the given
+	 * <var>view</var>, <code>false</code> otherwise.
 	 */
 	protected boolean onViewClick(View view, int id) {
 		return false;
@@ -320,30 +353,18 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	/**
-	 *
-	 * @param annotatedClass
-	 * @return
+	 * Private -------------------------------------------------------------------------------------
 	 */
-	static <A extends Annotation> A obtainAnnotationFrom(Class<A> classOfAnnotation, Class<?> annotatedClass) {
-		if (!annotatedClass.isAnnotationPresent(classOfAnnotation)) {
-			final Class<?> parent = annotatedClass.getSuperclass();
-			if (parent != null) {
-				return obtainAnnotationFrom(classOfAnnotation, parent);
-			}
-		}
-		return annotatedClass.getAnnotation(classOfAnnotation);
-	}
-
-    /**
-     * Private -------------------------------------------------------------------------------------
-     */
 
 	/**
+	 * Injects all annotated member views. Note, that this is recursive function, which will check
+	 * all members for {@link com.wit.android.support.fragment.annotation.InjectView}
+	 * annotation presented above each of members of the given <var>classOfFragment</var>.
 	 *
-	 * @param classOfFragment
-	 * @param view
+	 * @param classOfFragment Class of fragment where to check InjectView annotations.
+	 * @param root            The root view of this fragment used to find views to inject.
 	 */
-	private void checkViewsToInject(Class<?> classOfFragment, View view) {
+	private void injectViews(Class<?> classOfFragment, View root) {
 		// Process annotated fields.
 		final Field[] fields = classOfFragment.getDeclaredFields();
 		if (fields.length > 0) {
@@ -356,7 +377,7 @@ public abstract class BaseFragment extends Fragment {
 						try {
 							field.set(
 									this,
-									view.findViewById(field.getAnnotation(InjectView.class).value())
+									root.findViewById(field.getAnnotation(InjectView.class).value())
 							);
 						} catch (IllegalAccessException e) {
 							e.printStackTrace();
@@ -366,35 +387,74 @@ public abstract class BaseFragment extends Fragment {
 			}
 		}
 
-		// Process also super fields if is presented.
+		// Inject also views of supper class, but only to this BaseFragment super.
 		final Class<?> superOfFragment = classOfFragment.getSuperclass();
-		if (superOfFragment != null) {
-			checkViewsToInject(superOfFragment, view);
+		if (superOfFragment != null && !superOfFragment.equals(BaseFragment.class)) {
+			injectViews(superOfFragment, root);
 		}
 	}
 
-    /**
-     * Abstract methods ----------------------------------------------------------------------------
-     */
+	/**
+	 * Gathers all ids presented within ClickableViews annotation. Note, that this is recursive method,
+	 * which will gather all ids from {@link com.wit.android.support.fragment.annotation.ClickableViews}
+	 * annotation presented above the given <var>classOfFragment</var>.
+	 *
+	 * @param classOfFragment Class of fragment where to check ClickableViews annotation.
+	 * @param ids             List of already gathered ids.
+	 * @return List of all gathered clickable view's ids.
+	 */
+	private List<Integer> gatherClickableViewIds(Class<?> classOfFragment, List<Integer> ids) {
+		if (classOfFragment.isAnnotationPresent(ClickableViews.class)) {
+			final ClickableViews clickableViews = classOfFragment.getAnnotation(ClickableViews.class);
+			if (clickableViews.value().length > 0) {
+				ids.addAll(idsToList(clickableViews.value()));
+			}
+		}
 
-    /**
-     * Inner classes ===============================================================================
-     */
+		// Retrieve also ids of super class, but only to this BaseFragment super.
+		final Class<?> superOfFragment = classOfFragment.getSuperclass();
+		if (superOfFragment != null && !superOfFragment.equals(BaseFragment.class)) {
+			gatherClickableViewIds(superOfFragment, ids);
+		}
+		return ids;
+	}
 
 	/**
+	 * Converts the given <var>ids</var> array to list.
 	 *
+	 * @param ids The array of ids to convert.
+	 * @return Converted list of ids.
+	 */
+	private List<Integer> idsToList(int[] ids) {
+		final List<Integer> idsList = new ArrayList<>(ids.length);
+		for (int id : ids) {
+			idsList.add(id);
+		}
+		return idsList;
+	}
+
+	/**
+	 * Abstract methods ----------------------------------------------------------------------------
+	 */
+
+	/**
+	 * Inner classes ===============================================================================
+	 */
+
+	/**
+	 * Simple on view click listener to attach to clickable views of this fragment's class.
 	 */
 	private final class ClickListener implements View.OnClickListener {
 
 		/**
 		 */
-	    @Override
-	    public void onClick(View view) {
+		@Override
+		public void onClick(View view) {
 			dispatchViewClick(view);
-	    }
-    }
+		}
+	}
 
-    /**
-     * Interface ===================================================================================
-     */
+	/**
+	 * Interface ===================================================================================
+	 */
 }

@@ -18,6 +18,8 @@
  */
 package com.wit.android.support.fragment.annotation;
 
+import com.wit.android.support.fragment.manage.FragmentController;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -26,60 +28,30 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Defines an annotation for determining how an {@link android.view.Menu} should be set.
+ * Defines an annotation for determining which {@link com.wit.android.support.fragment.manage.FragmentController.FragmentFactory}s
+ * should be joined to an instance of the class to which is this annotation attached.
  * </p>
  * <h6>Usage</h6>
  * <ul>
- * <li>{@link com.wit.android.support.fragment.ActionBarFragment ActionBarFragment}</li>
+ * <li>{@link com.wit.android.support.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>
  * </ul>
  *
  * @author Martin Albedinsky
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MenuOptions {
+public @interface FragmentFactories {
 
 	/**
 	 * Constants ===================================================================================
 	 */
 
 	/**
-	 * <p>
-	 * The flat determining the default menu set up.
-	 * </p>
-	 */
-	public static final int DEFAULT = 0x00;
-
-	/**
-	 * <p>
-	 * The flag which determines that the creation of the super's menu should be ignored.
-	 * </p>
-	 */
-	public static final int IGNORE_SUPER = 0x01;
-
-	/**
-	 * <p>
-	 * The flag which determines that a menu should be created before the super ones.
-	 * </p>
-	 */
-	public static final int BEFORE_SUPER = 0x04;
-
-	/**
 	 * Methods =====================================================================================
 	 */
 
 	/**
-	 * The resource id of the desired xml menu.
+	 * The array with classes of fragment factories which will be joined to an instance of this class.
 	 */
-	int value();
-
-	/**
-	 * Flag indicating whether to clear an already created menu or not.
-	 */
-	boolean clear() default false;
-
-	/**
-	 * The flags for determining a menu set up.
-	 */
-	int flags() default DEFAULT;
+	Class<? extends FragmentController.FragmentFactory>[] value();
 }

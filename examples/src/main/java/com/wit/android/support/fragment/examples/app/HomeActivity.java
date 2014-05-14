@@ -32,8 +32,8 @@ import com.wit.android.examples.model.navigation.INavigationItem;
 import com.wit.android.examples.model.navigation.NavigationHeader;
 import com.wit.android.examples.model.navigation.NavigationItem;
 import com.wit.android.support.fragment.examples.R;
+import com.wit.android.support.fragment.examples.fragment.ExampleListFragment;
 import com.wit.android.support.fragment.examples.fragment.FragmentsFactory;
-import com.wit.android.support.fragment.examples.fragment.ImageFragment;
 import com.wit.android.support.fragment.manage.FragmentController;
 
 import java.util.ArrayList;
@@ -213,8 +213,10 @@ public class HomeActivity extends ExHomeActivity implements FragmentController.O
 	 */
 	@Override
 	protected int onShowInitialFragment() {
-		final int initialItemPos = 3;
+		FRAGMENT_CONTROLLER.showFragment(ExampleListFragment.newInstance());
+		return 0;
+		/*final int initialItemPos = 3;
 		FRAGMENT_CONTROLLER.showFragment(ImageFragment.newInstance(getNavigationItem(initialItemPos).getText()));
-		return 1;
+		return 1;*/
 	}
 }
