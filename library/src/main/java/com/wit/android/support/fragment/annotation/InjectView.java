@@ -26,7 +26,8 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Description.
+ * Annotation type used to mark a member (instance of {@link android.view.View}) which should be
+ * injected into the context which contains the root view from which this view should be injected.
  * </p>
  * <h6>Usage</h6>
  * <ul>
@@ -48,9 +49,7 @@ public @interface InjectView {
 	 */
 
 	/**
-	 *
-	 *
-	 * @return
+	 * The id of this view presented within the root view of this context.
 	 */
 	int value();
 }

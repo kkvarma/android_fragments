@@ -36,13 +36,27 @@ import java.util.List;
 /**
  * <h4>Class Overview</h4>
  * <p>
+ * todo: description
  * </p>
- * <h6>Allowed annotations</h6>
- * <ul>
- * <li>{@link com.wit.android.support.fragment.annotation.ContentView} [<b>class</b>]</li>
- * <li>{@link com.wit.android.support.fragment.annotation.ClickableViews} [<b>class</b>]</li>
- * <li>{@link com.wit.android.support.fragment.annotation.InjectView} [<b>member</b>]</li>
- * </ul>
+ * <h6>Used annotations</h6>
+ * {@link com.wit.android.support.fragment.annotation.ContentView @ContentView} [<b>class</b>]
+ * <p>
+ * If this annotation is presented, the layout id presented within this annotation will be used to
+ * inflate the root view for an instance of this fragment class in
+ * {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}.
+ * </p>
+ * {@link com.wit.android.support.fragment.annotation.ClickableViews @ClickableViews} [<b>class</b>]
+ * <p>
+ * If this annotation is presented, all views found by ids presented within this annotation will be
+ * found and an inner {@link android.view.View.OnClickListener} will be attached to them. If any of
+ * these views is clicked, {@link #onViewClick(android.view.View, int)} will be invoked with that
+ * specific view and its id.
+ * </p>
+ * {@link com.wit.android.support.fragment.annotation.InjectView @InjectView} [<b>member</b>]
+ * <p>
+ * All members marked with this annotation will be automatically injected (by {@link android.view.View#findViewById(int)})
+ * using the root view passed to {@link #onViewCreated(android.view.View, android.os.Bundle)}.
+ * </p>
  *
  * @author Martin Albedinsky
  * @see com.wit.android.support.fragment.ActionBarFragment

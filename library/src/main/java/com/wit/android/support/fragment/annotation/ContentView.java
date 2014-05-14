@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Description.
+ * Defines an annotation for determining which layout should be inflated as the root view.
  * </p>
  * <h6>Usage</h6>
  * <ul>
@@ -48,21 +48,18 @@ public @interface ContentView {
 	 */
 
 	/**
-	 *
-	 *
-	 * @return
+	 * The resource id of the desired layout to inflate as content view.
 	 */
 	int value();
 
 	/**
-	 *
-	 * @return
+	 * Flag indicating whether to attach inflated content view to its parent or not.
 	 */
 	boolean attachToRoot() default false;
 
 	/**
-	 *
-	 * @return
+	 * The resource id for the background of the inflated content view. May be a resource to either
+	 * color or drawable.
 	 */
 	int backgroundRes() default -1;
 }

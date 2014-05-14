@@ -35,16 +35,25 @@ import com.wit.android.support.fragment.util.FragmentAnnotations;
 /**
  * <h4>Class Overview</h4>
  * <p>
+ * todo: description
  * </p>
  * <p>
- * <b>Note, that implementation of this fragment can be used only within the context of
+ * <b>Note, that implementation of this fragment can be used only within the context of an
  * {@link android.support.v7.app.ActionBarActivity}</b>.
  * </p>
- * <h6>Allowed annotations</h6>
- * <ul>
- * <li>{@link com.wit.android.support.fragment.annotation.ActionBarOptions} [<b>class</b>]</li>
- * <li>{@link com.wit.android.support.fragment.annotation.MenuOptions} [<b>class</b>]</li>
- * </ul>
+ * <h6>Used annotations</h6>
+ * {@link com.wit.android.support.fragment.annotation.ActionBarOptions @ActionBarOptions} [<b>class</b>]
+ * <p>
+ * If this annotation is presented, all options presented within this annotation will be applied to
+ * the instance of ActionBar presented within the context of an instance of this ActionBarFragment class
+ * implementation. Such a set up is accomplished in {@link #onViewCreated(android.view.View, android.os.Bundle)}.
+ * </p>
+ * {@link com.wit.android.support.fragment.annotation.MenuOptions @MenuOptions} [<b>class</b>]
+ * <p>
+ * If this annotation is presented, options menu will be requested in {@link #onCreate(android.os.Bundle)}
+ * by {@link #setHasOptionsMenu(boolean)} and menu will be created in {@link #onCreateOptionsMenu(android.view.Menu, android.view.MenuInflater)}
+ * according to the options presented within this annotation.
+ * </p>
  *
  * @author Martin Albedinsky
  */

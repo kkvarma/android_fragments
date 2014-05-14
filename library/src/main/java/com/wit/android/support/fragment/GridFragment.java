@@ -21,19 +21,21 @@ package com.wit.android.support.fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.GridView;
+import android.widget.ListAdapter;
 
 /**
  * <h4>Class Overview</h4>
  * <p>
- * Description.
+ * todo: description
  * </p>
  *
+ * @param <A> The type of an adapter used within the context of an instance of this AdapterFragment
+ *            class implementation.
  * @author Martin Albedinsky
  * @see com.wit.android.support.fragment.ListFragment
  */
-public class GridFragment<A extends Adapter> extends AdapterFragment<GridView, A> {
+public class GridFragment<A extends ListAdapter> extends AdapterFragment<GridView, A> {
 
 	/**
 	 * Constants ===================================================================================

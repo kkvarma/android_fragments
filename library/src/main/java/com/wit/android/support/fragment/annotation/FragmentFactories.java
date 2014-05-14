@@ -28,7 +28,8 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Description.
+ * Defines an annotation for determining which {@link com.wit.android.support.fragment.manage.FragmentController.FragmentFactory}s
+ * should be joined to an instance of the class to which is this annotation attached.
  * </p>
  * <h6>Usage</h6>
  * <ul>
@@ -50,8 +51,7 @@ public @interface FragmentFactories {
 	 */
 
 	/**
-	 *
-	 * @return
+	 * The array with classes of fragment factories which will be joined to an instance of this class.
 	 */
 	Class<? extends FragmentController.FragmentFactory>[] value();
 }

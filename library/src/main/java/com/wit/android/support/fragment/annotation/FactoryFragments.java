@@ -26,7 +26,8 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Description.
+ * Defines an annotation for determining which fragments with specified ids are provided by an instance
+ * of the class to which is this annotation attached.
  * </p>
  * <h6>Usage</h6>
  * <ul>
@@ -48,15 +49,16 @@ public @interface FactoryFragments {
 	 */
 
 	/**
+	 * The array with ids of fragments which are provided by an instance of this FragmentFactory class.
 	 *
-	 *
-	 * @return
+	 * @see com.wit.android.support.fragment.manage.FragmentController.FragmentFactory#isFragmentProvided(int)
 	 */
 	int[] value();
 
 	/**
+	 * Flag indicating whether to pre-create tags for the provided fragments.
 	 *
-	 * @return
+	 * @see com.wit.android.support.fragment.manage.FragmentController.FragmentFactory#getFragmentTag(int)
 	 */
 	boolean createTags() default true;
 }

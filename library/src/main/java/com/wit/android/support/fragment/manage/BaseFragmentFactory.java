@@ -20,6 +20,7 @@ package com.wit.android.support.fragment.manage;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.wit.android.support.fragment.annotation.FactoryFragments;
@@ -32,16 +33,22 @@ import java.util.List;
 /**
  * <h4>Class Overview</h4>
  * <p>
- * Base implementation of {@link com.wit.android.support.fragment.manage.FragmentController.FragmentFactory}.
- * </p>
- * <p>
- * Provides some methods useful when using custom fragment factory.
+ * Fragment factory which provides base simple implementation of required {@link com.wit.android.support.fragment.manage.FragmentController.FragmentFactory}
+ * interface for {@link com.wit.android.support.fragment.manage.FragmentController}.
  * </p>
  * <h6>Allowed annotations</h6>
- * <ul>
- * <li>{@link com.wit.android.support.fragment.annotation.FactoryFragments} [<b>class</b>]</li>
- * <li>{@link com.wit.android.support.fragment.annotation.FragmentFactories} [<b>class</b>]</li>
- * </ul>
+ * {@link com.wit.android.support.fragment.annotation.FactoryFragments @FactoryFragments} [<b>class</b>]
+ * <p>
+ * If this annotation is presented, an instance of this factory class will behave as it provides fragments
+ * for all ids presented within this annotation. Also if {@link com.wit.android.support.fragment.annotation.FactoryFragments#createTags()}
+ * is set to <code>true</code>, there will be automatically created (cached) tags for all such ids so
+ * which can be obtained by calling {@link #getFragmentTag(int)} with the specific fragment id.
+ * </p>
+ * {@link com.wit.android.support.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class</b>]
+ * <p>
+ * If this annotation is presented, all fragment factories presented by theirs classes within this
+ * annotation will be instantiated and joined to an instance of this factory class.
+ * </p>
  *
  * @author Martin Albedinsky
  */
@@ -54,7 +61,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = BaseFragmentFactory.class.getSimpleName();
+	private static final String TAG = BaseFragmentFactory.class.getSimpleName();
 
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
@@ -160,7 +167,12 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 				try {
 					fragmentFactory = factory.newInstance();
 				} catch (InstantiationException | IllegalAccessException e) {
-					e.printStackTrace();
+					Log.e(
+							TAG,
+							"Failed to instantiate the fragment factory class of(" + factory.getSimpleName() + ")." +
+									"Make sure this fragment factory has public empty constructor.",
+							e
+					);
 				}
 				if (fragmentFactory != null) {
 					joinFactory(fragmentFactory);
