@@ -16,11 +16,11 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.support.fragment;
+package com.wit.android.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.view.ActionMode;
+import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,9 +33,9 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.wit.android.support.fragment.annotation.ActionModeOptions;
-import com.wit.android.support.fragment.annotation.AdapterViewOptions;
-import com.wit.android.support.fragment.util.FragmentAnnotations;
+import com.wit.android.fragment.annotation.ActionModeOptions;
+import com.wit.android.fragment.annotation.AdapterViewOptions;
+import com.wit.android.fragment.util.FragmentAnnotations;
 
 /**
  * <h4>Class Overview</h4>
@@ -43,19 +43,19 @@ import com.wit.android.support.fragment.util.FragmentAnnotations;
  * todo: description
  * </p>
  * <h6>Used annotations</h6>
- * {@link com.wit.android.support.fragment.annotation.AdapterViewOptions @AdapterViewOptions} [<b>class</b>]
+ * {@link com.wit.android.fragment.annotation.AdapterViewOptions @AdapterViewOptions} [<b>class</b>]
  * <p>
  * If this annotation is presented, all necessary stuffs around AdapterView like empty view, empty text
- * will be managed. This annotation with {@link com.wit.android.support.fragment.annotation.ContentView @ContentView}
- * annotation allows to set up custom AdapterFragment layout with custom ids without implementing 
+ * will be managed. This annotation with {@link com.wit.android.fragment.annotation.ContentView @ContentView}
+ * annotation allows to set up custom AdapterFragment layout with custom ids without implementing
  * any Java code.
  * </p>
- * {@link com.wit.android.support.fragment.annotation.ActionModeOptions @ActionModeOptions} [<b>class</b>]
+ * {@link com.wit.android.fragment.annotation.ActionModeOptions @ActionModeOptions} [<b>class</b>]
  * <p>
- * If this annotation is presented, the {@link android.support.v7.view.ActionMode} will be started
- * with a new instance of {@link com.wit.android.support.fragment.AdapterFragment.ActionModeCallback}
- * from {@link #onItemLongClick(android.widget.AdapterView, android.view.View, int, long)}. See 
- * {@link #startActionMode(android.support.v7.view.ActionMode.Callback, android.widget.AdapterView, android.view.View, int, long)}
+ * If this annotation is presented, the {@link android.view.ActionMode} will be started
+ * with a new instance of {@link AdapterFragment.ActionModeCallback}
+ * from {@link #onItemLongClick(android.widget.AdapterView, android.view.View, int, long)}. See
+ * {@link #startActionMode(android.view.ActionMode.Callback, android.widget.AdapterView, android.view.View, int, long)}
  * for more information.
  * </p>
  *
@@ -156,8 +156,8 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 
 	/**
 	 * <p>
-	 * Creates a new instance of AdapterFragment. If {@link com.wit.android.support.fragment.annotation.AdapterViewOptions}
-	 * or {@link com.wit.android.support.fragment.annotation.ActionModeOptions} annotations are presented,
+	 * Creates a new instance of AdapterFragment. If {@link com.wit.android.fragment.annotation.AdapterViewOptions}
+	 * or {@link com.wit.android.fragment.annotation.ActionModeOptions} annotations are presented,
 	 * they will be processed here.
 	 * </p>
 	 */
@@ -231,9 +231,22 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * <p>
 	 * Same as {@link android.widget.Adapter#isEmpty()}.
 	 * </p>
+	 *
+	 * @see #getItemsCount()
 	 */
-	public boolean isEmpty() {
+	public boolean isAdapterEmpty() {
 		return mAdapter == null || mAdapter.isEmpty();
+	}
+
+	/**
+	 * <p>
+	 * Same as {@link android.widget.Adapter#getCount()}.
+	 * </p>
+	 *
+	 * @see #isAdapterEmpty()
+	 */
+	public int getItemsCount() {
+		return mAdapter != null ? mAdapter.getCount() : 0;
 	}
 
 	/**
@@ -426,7 +439,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * <p>
 	 * Returns the current loading view of this AdapterFragment.
 	 * </p>
-	 * 
+	 *
 	 * @return An instance of the current loading view.
 	 * @see #setLoadingView(android.view.View)
 	 */
@@ -549,8 +562,8 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * <p>
 	 * Starts the action mode for this adapter fragment. <b>Note</b>, that by default is this called
 	 * from {@link #onItemLongClick(android.widget.AdapterView, android.view.View, int, long)} if
-	 * there is {@link com.wit.android.support.fragment.annotation.ActionModeOptions} annotation
-	 * presented. The started ActionMode will be populated by a menu inflated form the resource id 
+	 * there is {@link com.wit.android.fragment.annotation.ActionModeOptions} annotation
+	 * presented. The started ActionMode will be populated by a menu inflated form the resource id
 	 * presented within this annotation.
 	 * </p>
 	 *
@@ -570,7 +583,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 		if (!isInActionMode()) {
 			if (isActivityAvailable()) {
 				onActionModeStarted(
-						mActionMode = getActionBarActivity().startSupportActionMode(callback),
+						this.mActionMode = getActivity().startActionMode(callback),
 						adapterView, view, position, id
 				);
 			}
@@ -605,7 +618,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 
 	/**
 	 * <p>
-	 * Invoked immediately after {@link #startActionMode(android.support.v7.view.ActionMode.Callback, V, android.view.View, int, long)}
+	 * Invoked immediately after {@link #startActionMode(android.view.ActionMode.Callback, V, android.view.View, int, long)}
 	 * was called an this fragment isn't in action mode yet.
 	 * </p>
 	 *
@@ -622,8 +635,8 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 
 	/**
 	 * <p>
-	 * Invoked whenever {@link com.wit.android.support.fragment.AdapterFragment.ActionModeCallback#onDestroyActionMode(android.support.v7.view.ActionMode)}
-	 * is called on the current action mode callback (if instance of {@link com.wit.android.support.fragment.AdapterFragment.ActionModeCallback}).
+	 * Invoked whenever {@link AdapterFragment.ActionModeCallback#onDestroyActionMode(android.view.ActionMode)}
+	 * is called on the current action mode callback (if instance of {@link AdapterFragment.ActionModeCallback}).
 	 * </p>
 	 */
 	protected void onActionModeFinished() {

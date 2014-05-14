@@ -16,9 +16,9 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.support.fragment.annotation;
+package com.wit.android.fragment.annotation;
 
-import com.wit.android.support.fragment.manage.FragmentController;
+import com.wit.android.fragment.manage.FragmentController;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

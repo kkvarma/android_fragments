@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
  * </p>
  * <h6>Usage</h6>
  * <ul>
- * <li>{@link com.wit.android.support.fragment.AdapterFragment AdapterFragment}</li>
+ * <li>{@link com.wit.android.fragment.AdapterFragment AdapterFragment}</li>
  * </ul>
  *
  * @author Martin Albedinsky

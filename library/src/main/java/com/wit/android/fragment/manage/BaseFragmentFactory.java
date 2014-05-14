@@ -33,17 +33,17 @@ import java.util.List;
 /**
  * <h4>Class Overview</h4>
  * <p>
- * This is only helper implementation of {@link com.wit.android.support.fragment.manage.FragmentController.FragmentFactory}.
+ * This is only helper implementation of {@link com.wit.android.fragment.manage.FragmentController.FragmentFactory}.
  * </p>
  * <h6>Allowed annotations</h6>
  * {@link com.wit.android.fragment.annotation.FactoryFragments @FactoryFragments} [<b>class</b>]
  * <p>
  * If this annotation is presented, an instance of this factory class will behave as it provides fragments
- * for all ids presented within this annotation. Also if {@link com.wit.android.support.fragment.annotation.FactoryFragments#createTags()}
+ * for all ids presented within this annotation. Also if {@link com.wit.android.fragment.annotation.FactoryFragments#createTags()}
  * is set to <code>true</code>, there will be automatically created (cached) tags for all such ids so
  * which can be obtained by calling {@link #getFragmentTag(int)} with the specific fragment id.
  * </p>
- * {@link com.wit.android.support.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class</b>]
+ * {@link com.wit.android.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class</b>]
  * <p>
  * If this annotation is presented, all fragment factories presented by theirs classes within this
  * annotation will be instantiated and joined to an instance of this factory class.
@@ -126,7 +126,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	/**
 	 * <p>
 	 * Creates a new instance of BaseFragmentFactory. If {@link com.wit.android.support.fragment.annotation.FactoryFragments @FactoryFragments}
-	 * or {@link com.wit.android.support.fragment.annotation.FragmentFactories @FragmentFactories}
+	 * or {@link com.wit.android.fragment.annotation.FragmentFactories @FragmentFactories}
 	 * annotations are presented, they will be processed here.
 	 * </p>
 	 */
@@ -373,7 +373,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	/**
 	 * Gathers all classes of fragment factories presented within FragmentFactories annotation. Note,
 	 * that this is recursive method, which will gather all classes from
-	 * {@link com.wit.android.support.fragment.annotation.FragmentFactories} annotation presented above
+	 * {@link com.wit.android.fragment.annotation.FragmentFactories} annotation presented above
 	 * the given <var>classOfFragment</var>.
 	 *
 	 * @param classOfFactory Class of fragment where to check FragmentFactories annotation.
