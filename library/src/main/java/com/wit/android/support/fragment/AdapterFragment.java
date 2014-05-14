@@ -231,9 +231,22 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * <p>
 	 * Same as {@link android.widget.Adapter#isEmpty()}.
 	 * </p>
+	 *
+	 * @see #getItemsCount()
 	 */
-	public boolean isEmpty() {
+	public boolean isAdapterEmpty() {
 		return mAdapter == null || mAdapter.isEmpty();
+	}
+
+	/**
+	 * <p>
+	 * Same as {@link android.widget.Adapter#getCount()}.
+	 * </p>
+	 *
+	 * @see #isAdapterEmpty()
+	 */
+	public int getItemsCount() {
+		return mAdapter != null ? mAdapter.getCount() : 0;
 	}
 
 	/**
