@@ -26,8 +26,12 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Description.
+ * Defines an annotation for determining how an {@link android.support.v7.app.ActionBar} should be set.
  * </p>
+ * <h6>Usage</h6>
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.ActionBarFragment ActionBarFragment}</li>
+ * </ul>
  *
  * @author Martin Albedinsky
  */
@@ -44,21 +48,23 @@ public @interface ActionBarOptions {
 	 */
 
 	/**
+	 * The resource id of the text which should be set as title for an ActionBar.
 	 *
-	 *
-	 * @return
+	 * @see android.support.v7.app.ActionBar#setTitle(int)
 	 */
 	int title();
 
 	/**
+	 * The resource id of the image which should be set as icon for an ActionBar.
 	 *
-	 * @return
+	 * @see android.support.v7.app.ActionBar#setIcon(int)
 	 */
 	int icon() default -1;
 
 	/**
+	 * Flag indicating whether to enable/disable an ActionBar's home as up icon.
 	 *
-	 * @return
+	 * @see android.support.v7.app.ActionBar#setDisplayHomeAsUpEnabled(boolean)
 	 */
 	boolean homeAsUp() default false;
 }

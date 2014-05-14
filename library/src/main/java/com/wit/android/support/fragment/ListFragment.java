@@ -21,7 +21,7 @@ package com.wit.android.support.fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Adapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 /**
@@ -30,9 +30,12 @@ import android.widget.ListView;
  * Description.
  * </p>
  *
+ * @param <A> The type of an adapter used within the context of an instance of this AdapterFragment
+ *            class implementation.
  * @author Martin Albedinsky
+ * @see com.wit.android.support.fragment.GridFragment
  */
-public class ListFragment<A extends Adapter> extends BaseAdapterFragment<ListView, A> {
+public class ListFragment<A extends ListAdapter> extends AdapterFragment<ListView, A> {
 
 	/**
 	 * Constants ===================================================================================
@@ -63,10 +66,6 @@ public class ListFragment<A extends Adapter> extends BaseAdapterFragment<ListVie
 
 	/**
 	 * Members =====================================================================================
-	 */
-
-	/**
-	 * Listeners -----------------------------------------------------------------------------------
 	 */
 
 	/**

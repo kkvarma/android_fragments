@@ -26,8 +26,13 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Description.
+ * Defines an annotation for determining how an {@link android.widget.AdapterView} and all necessary
+ * stuffs around it should be set.
  * </p>
+ * <h6>Usage</h6>
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.AdapterFragment AdapterFragment}</li>
+ * </ul>
  *
  * @author Martin Albedinsky
  */
@@ -41,12 +46,14 @@ public @interface AdapterViewOptions {
 
 	/**
 	 * <p>
+	 * The default id for an AdapterView.
 	 * </p>
 	 */
 	public static final int VIEW_DEFAULT_ID = android.R.id.list;
 
 	/**
 	 * <p>
+	 * The default id for an empty view of AdapterView.
 	 * </p>
 	 */
 	public static final int EMPTY_VIEW_DEFAULT_ID = android.R.id.empty;
@@ -56,27 +63,22 @@ public @interface AdapterViewOptions {
 	 */
 
 	/**
-	 *
-	 *
-	 * @return
+	 * The id for an AdapterView.
 	 */
 	int viewId() default VIEW_DEFAULT_ID;
 
 	/**
-	 *
-	 * @return
+	 * The id for an empty view.
 	 */
 	int emptyViewId() default EMPTY_VIEW_DEFAULT_ID;
 
 	/**
-	 *
-	 * @return
+	 * The resource id of the text for an empty view (if instance of {@link android.widget.TextView}).
 	 */
 	int emptyText() default -1;
 
 	/**
-	 *
-	 * @return
+	 * Flag indicating whether items presented within an AdapterView are long-clickable or not.
 	 */
 	boolean longClickable() default false;
 }

@@ -21,6 +21,6 @@ public class ExampleListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setEmptyViewText("Empty");
+		setEmptyText("Empty");
 	}
 }
