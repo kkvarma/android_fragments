@@ -16,7 +16,9 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.fragment.annotation;
+package com.wit.android.support.fragment.annotation;
+
+import com.wit.android.support.fragment.manage.FragmentController;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -26,18 +28,19 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Defines an annotation for determining how an {@link android.support.v7.app.ActionBar} should be set.
+ * Defines an annotation for determining which {@link com.wit.android.support.fragment.manage.FragmentController.FragmentFactory}s
+ * should be joined to an instance of the class to which is this annotation attached.
  * </p>
  * <h6>Usage</h6>
  * <ul>
- * <li>{@link com.wit.android.support.fragment.ActionBarFragment ActionBarFragment}</li>
+ * <li>{@link com.wit.android.support.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>
  * </ul>
  *
  * @author Martin Albedinsky
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ActionBarOptions {
+public @interface FragmentFactories {
 
 	/**
 	 * Constants ===================================================================================
@@ -48,23 +51,7 @@ public @interface ActionBarOptions {
 	 */
 
 	/**
-	 * The resource id of the text which should be set as title for an ActionBar.
-	 *
-	 * @see android.support.v7.app.ActionBar#setTitle(int)
+	 * The array with classes of fragment factories which will be joined to an instance of this class.
 	 */
-	int title();
-
-	/**
-	 * The resource id of the image which should be set as icon for an ActionBar.
-	 *
-	 * @see android.support.v7.app.ActionBar#setIcon(int)
-	 */
-	int icon() default -1;
-
-	/**
-	 * Flag indicating whether to enable/disable an ActionBar's home as up icon.
-	 *
-	 * @see android.support.v7.app.ActionBar#setDisplayHomeAsUpEnabled(boolean)
-	 */
-	boolean homeAsUp() default false;
+	Class<? extends FragmentController.FragmentFactory>[] value();
 }

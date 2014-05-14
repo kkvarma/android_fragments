@@ -26,8 +26,12 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Description.
+ * Defines an annotation for determining how an {@link android.view.Menu} should be set.
  * </p>
+ * <h6>Usage</h6>
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.ActionBarFragment ActionBarFragment}</li>
+ * </ul>
  *
  * @author Martin Albedinsky
  */
@@ -41,18 +45,21 @@ public @interface MenuOptions {
 
 	/**
 	 * <p>
+	 * The flat determining the default menu set up.
 	 * </p>
 	 */
 	public static final int DEFAULT = 0x00;
 
 	/**
 	 * <p>
+	 * The flag which determines that the creation of the super's menu should be ignored.
 	 * </p>
 	 */
 	public static final int IGNORE_SUPER = 0x01;
 
 	/**
 	 * <p>
+	 * The flag which determines that a menu should be created before the super ones.
 	 * </p>
 	 */
 	public static final int BEFORE_SUPER = 0x04;
@@ -62,23 +69,17 @@ public @interface MenuOptions {
 	 */
 
 	/**
-	 *
-	 *
-	 * @return
+	 * The resource id of the desired xml menu.
 	 */
 	int value();
 
 	/**
-	 *
-	 *
-	 * @return
+	 * Flag indicating whether to clear an already created menu or not.
 	 */
 	boolean clear() default false;
 
 	/**
-	 *
-	 *
-	 * @return
+	 * The flags for determining a menu set up.
 	 */
 	int flags() default DEFAULT;
 }

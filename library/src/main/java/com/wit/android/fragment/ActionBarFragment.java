@@ -32,7 +32,21 @@ import com.wit.android.fragment.util.FragmentAnnotations;
 /**
  * <h4>Class Overview</h4>
  * <p>
- * Description.
+ * todo: description
+ * </p>
+ * <p>
+ * <h6>Used annotations</h6>
+ * {@link com.wit.android.fragment.annotation.ActionBarOptions @ActionBarOptions} [<b>class</b>]
+ * <p>
+ * If this annotation is presented, all options presented within this annotation will be applied to
+ * the instance of ActionBar presented within the context of an instance of this ActionBarFragment class
+ * implementation. Such a set up is accomplished in {@link #onViewCreated(android.view.View, android.os.Bundle)}.
+ * </p>
+ * {@link com.wit.android.fragment.annotation.MenuOptions @MenuOptions} [<b>class</b>]
+ * <p>
+ * If this annotation is presented, options menu will be requested in {@link #onCreate(android.os.Bundle)}
+ * by {@link #setHasOptionsMenu(boolean)} and menu will be created in {@link #onCreateOptionsMenu(android.view.Menu, android.view.MenuInflater)}
+ * according to the options presented within this annotation.
  * </p>
  *
  * @author Martin Albedinsky
@@ -87,16 +101,17 @@ public class ActionBarFragment extends BaseFragment {
 	private ActionBar mActionBar;
 
 	/**
-	 * Listeners -----------------------------------------------------------------------------------
-	 */
-
-	/**
 	 * Arrays --------------------------------------------------------------------------------------
 	 */
 
 	/**
 	 * Booleans ------------------------------------------------------------------------------------
 	 */
+
+	/**
+	 * Flag indicating whether this fragment is already created or not.
+	 */
+	private boolean bCreated = false;
 
 	/**
 	 * Constructors ================================================================================
@@ -113,11 +128,13 @@ public class ActionBarFragment extends BaseFragment {
 		 * Process class annotations.
 		 */
 		// Retrieve action bar options.
-		if (classOfFragment.isAnnotationPresent(ActionBarOptions.class)) {
-			this.mActionBarOptions = classOfFragment.getAnnotation(ActionBarOptions.class);
-		}
+		this.mActionBarOptions = FragmentAnnotations.obtainAnnotationFrom(
+				classOfFragment, ActionBarOptions.class
+		);
 		// Retrieve options menu.
-		this.mMenuOptions = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, MenuOptions.class);
+		this.mMenuOptions = FragmentAnnotations.obtainAnnotationFrom(
+				classOfFragment, MenuOptions.class, true, ActionBarFragment.class
+		);
 	}
 
 	/**
@@ -137,6 +154,7 @@ public class ActionBarFragment extends BaseFragment {
 		this.mActionBar = getActivity().getActionBar();
 		// Enable/disable options menu.
 		setHasOptionsMenu(mMenuOptions != null);
+		this.bCreated = true;
 	}
 
 	/**
@@ -160,7 +178,7 @@ public class ActionBarFragment extends BaseFragment {
 					inflater.inflate(mMenuOptions.value(), menu);
 					break;
 				default:
-					throw new IllegalArgumentException("Unknown options menu flags(" + mMenuOptions.flags() + ").");
+					throw new IllegalStateException("Unknown options menu flags(" + mMenuOptions.flags() + ").");
 			}
 			return;
 		}
@@ -208,14 +226,24 @@ public class ActionBarFragment extends BaseFragment {
 	}
 
 	/**
+	 */
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		this.bCreated = false;
+	}
+
+	/**
 	 * Getters + Setters ---------------------------------------------------------------------------
 	 */
 
 	/**
 	 * <p>
+	 * Same as {@link android.app.ActionBar#setTitle(int)}.
 	 * </p>
 	 *
-	 * @param resId
+	 * @see #setActionBarTitle(CharSequence)
+	 * @see #isActionBarAvailable()
 	 */
 	public void setActionBarTitle(int resId) {
 		if (isActionBarAvailable()) {
@@ -225,9 +253,11 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
+	 * Same as {@link android.app.ActionBar#setTitle(CharSequence)}.
 	 * </p>
 	 *
-	 * @param title
+	 * @see #setActionBarTitle(int)
+	 * @see #isActionBarAvailable()
 	 */
 	public void setActionBarTitle(CharSequence title) {
 		if (isActionBarAvailable()) {
@@ -237,9 +267,11 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
+	 * Same as {@link android.app.ActionBar#setIcon(int)}.
 	 * </p>
 	 *
-	 * @param resId
+	 * @see #setActionBarIcon(android.graphics.drawable.Drawable)
+	 * @see #isActionBarAvailable()
 	 */
 	public void setActionBarIcon(int resId) {
 		if (isActionBarAvailable()) {
@@ -249,9 +281,11 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
+	 * Same as {@link android.app.ActionBar#setIcon(Drawable)}.
 	 * </p>
 	 *
-	 * @param icon
+	 * @see #setActionBarIcon(int)
+	 * @see #isActionBarAvailable()
 	 */
 	public void setActionBarIcon(Drawable icon) {
 		if (isActionBarAvailable()) {
@@ -322,9 +356,11 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
+	 * Returns flag indicating whether the action bar is available or not.
 	 * </p>
 	 *
-	 * @return
+	 * @return <code>True</code> if action bar obtained from the parent activity is available,
+	 * <code>false</code> otherwise.
 	 */
 	protected boolean isActionBarAvailable() {
 		return mActionBar != null;
@@ -332,11 +368,21 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
+	 * Returns action bar which can be accessed by this fragment. <b>Note</b>, that action bar can be
+	 * accessed only between {@link #onCreate(android.os.Bundle)} and {@link #onDestroy()}, otherwise
+	 * exception will be thrown.
 	 * </p>
 	 *
-	 * @return
+	 * @return The instance of ActionBar obtained from the parent activity.
+	 * @throws java.lang.IllegalStateException If this fragment isn't created yet or is already destroyed.
 	 */
 	protected ActionBar getActionBar() {
+		if (!bCreated) {
+			throw new IllegalStateException(
+					"Action bar can be accessed only when fragment is created." +
+							((Object) this).getClass().getSimpleName() + " isn't created yet or is already destroyed."
+			);
+		}
 		return mActionBar;
 	}
 

@@ -26,8 +26,13 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Description.
+ * Defines an annotation for determining how an {@link android.support.v7.view.ActionMode} should be
+ * set.
  * </p>
+ * <h6>Usage</h6>
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.ActionBarFragment ActionBarFragment}</li>
+ * </ul>
  *
  * @author Martin Albedinsky
  */
@@ -44,9 +49,9 @@ public @interface ActionModeOptions {
 	 */
 
 	/**
+	 * The resource id of the desired xml menu for an ActionMode.
 	 *
-	 *
-	 * @return
+	 * @see android.support.v7.view.ActionMode.Callback#onCreateActionMode(android.support.v7.view.ActionMode, android.view.Menu)
 	 */
 	int menu();
 }

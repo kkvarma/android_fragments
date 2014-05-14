@@ -6,7 +6,7 @@ Android Fragments (3.0)
 ===============
 
 <h1 align="right">
-	From the <a href="" title="">Android Daily Development</a>
+	From the <a href="" title="">Android Libraries</a>
 	<br/>
 	series by
 	<br/>
