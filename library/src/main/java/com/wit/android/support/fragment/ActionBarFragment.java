@@ -125,6 +125,9 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
+	 * Creates a new instance of ActionBarFragment. If {@link com.wit.android.support.fragment.annotation.ActionBarOptions}
+	 * or {@link com.wit.android.support.fragment.annotation.MenuOptions} annotations are presented,
+	 * they will be processed here.
 	 * </p>
 	 */
 	public ActionBarFragment() {
