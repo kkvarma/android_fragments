@@ -83,6 +83,17 @@ public abstract class BaseFragment extends Fragment {
 	// private static final boolean LOG_ENABLED = true;
 
 	/**
+	 * Flag indicating whether this instance of fragment is restored (like after orientation change)
+	 * or not.
+	 */
+	private static final int PFLAG_RESTORED = 0x01;
+
+	/**
+	 * Flag indicating whether the view of this instance of fragment is restored or not.
+	 */
+	private static final int PFLAG_VIEW_RESTORED = 0x02;
+
+	/**
 	 * Enums =======================================================================================
 	 */
 
@@ -100,6 +111,11 @@ public abstract class BaseFragment extends Fragment {
 	private ContentView mContentView = null;
 
 	/**
+	 * Stores all private flags for this object.
+	 */
+	private int mPrivateFlags;
+
+	/**
 	 * Arrays --------------------------------------------------------------------------------------
 	 */
 
@@ -111,17 +127,6 @@ public abstract class BaseFragment extends Fragment {
 	/**
 	 * Booleans ------------------------------------------------------------------------------------
 	 */
-
-	/**
-	 * Flag indicating whether this instance of fragment is restored (like after orientation change)
-	 * or not.
-	 */
-	private boolean bRestored = false;
-
-	/**
-	 * Flag indicating whether the view of this instance of fragment is restored or not.
-	 */
-	private boolean bViewRestored = false;
 
 	/**
 	 * Constructors ================================================================================
@@ -162,8 +167,8 @@ public abstract class BaseFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.bViewRestored = false;
-		this.bRestored = savedInstanceState != null;
+		this.updatePrivateFlags(PFLAG_VIEW_RESTORED, false);
+		this.updatePrivateFlags(PFLAG_RESTORED, savedInstanceState != null);
 	}
 
 	/**
@@ -212,7 +217,7 @@ public abstract class BaseFragment extends Fragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		this.bViewRestored = true;
+		this.updatePrivateFlags(PFLAG_VIEW_RESTORED, true);
 	}
 
 	/**
@@ -220,7 +225,7 @@ public abstract class BaseFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		this.bViewRestored = false;
+		this.updatePrivateFlags(PFLAG_VIEW_RESTORED, false);
 	}
 
 	/**
@@ -257,7 +262,7 @@ public abstract class BaseFragment extends Fragment {
 	 * <code>false</code> otherwise.
 	 */
 	public boolean isRestored() {
-		return bRestored;
+		return hasPrivateFlag(PFLAG_RESTORED);
 	}
 
 	/**
@@ -269,7 +274,7 @@ public abstract class BaseFragment extends Fragment {
 	 * was showed from the back stack</i>), <code>false</code> otherwise.
 	 */
 	public boolean isViewRestored() {
-		return bViewRestored;
+		return hasPrivateFlag(PFLAG_VIEW_RESTORED);
 	}
 
 	/**
@@ -431,6 +436,31 @@ public abstract class BaseFragment extends Fragment {
 			idsList.add(id);
 		}
 		return idsList;
+	}
+
+	/**
+	 * Updates current private flags.
+	 *
+	 * @param flag The value of the flag to add/remove from current private flags.
+	 * @param add Boolean flag indicating whether to add or remove the specified <var>flag</var>.
+	 */
+	private void updatePrivateFlags(int flag, boolean add) {
+		if (add) {
+			this.mPrivateFlags |= flag;
+		} else if (hasPrivateFlag(flag)) {
+			this.mPrivateFlags &= ~flag;
+		}
+	}
+
+	/**
+	 * Returns boolean flag indicating whether the specified <var>flag</var> is contained within
+	 * current private flags.
+	 *
+	 * @param flag The value of the flag to check.
+	 * @return <code>True</code> if the requested flag is contained, <code>false</code> otherwise.
+	 */
+	private boolean hasPrivateFlag(int flag) {
+		return (mPrivateFlags & flag) != 0;
 	}
 
 	/**
