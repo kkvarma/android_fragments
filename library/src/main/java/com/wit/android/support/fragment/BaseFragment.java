@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import com.wit.android.support.fragment.annotation.ClickableViews;
 import com.wit.android.support.fragment.annotation.ContentView;
 import com.wit.android.support.fragment.annotation.InjectView;
+import com.wit.android.support.fragment.annotation.InjectViews;
 import com.wit.android.support.fragment.util.FragmentAnnotations;
 
 import java.lang.reflect.Field;
@@ -370,22 +371,26 @@ public abstract class BaseFragment extends Fragment {
 	 * @param root            The root view of this fragment used to find views to inject.
 	 */
 	private void injectViews(Class<?> classOfFragment, View root) {
-		// Process annotated fields.
-		final Field[] fields = classOfFragment.getDeclaredFields();
-		if (fields.length > 0) {
-			for (Field field : fields) {
-				if (field.isAnnotationPresent(InjectView.class)) {
-					// Check correct type of the field.
-					final Class<?> classOfField = field.getType();
-					if (View.class.isAssignableFrom(classOfField)) {
-						field.setAccessible(true);
-						try {
-							field.set(
-									this,
-									root.findViewById(field.getAnnotation(InjectView.class).value())
-							);
-						} catch (IllegalAccessException e) {
-							e.printStackTrace();
+		// Class of fragment must have InjectViews annotation present to really iterate and inject
+		// annotated views.
+		if (classOfFragment.isAnnotationPresent(InjectViews.class)) {
+			// Process annotated fields.
+			final Field[] fields = classOfFragment.getDeclaredFields();
+			if (fields.length > 0) {
+				for (Field field : fields) {
+					if (field.isAnnotationPresent(InjectView.class)) {
+						// Check correct type of the field.
+						final Class<?> classOfField = field.getType();
+						if (View.class.isAssignableFrom(classOfField)) {
+							field.setAccessible(true);
+							try {
+								field.set(
+										this,
+										root.findViewById(field.getAnnotation(InjectView.class).value())
+								);
+							} catch (IllegalAccessException e) {
+								e.printStackTrace();
+							}
 						}
 					}
 				}
@@ -447,7 +452,7 @@ public abstract class BaseFragment extends Fragment {
 	private void updatePrivateFlags(int flag, boolean add) {
 		if (add) {
 			this.mPrivateFlags |= flag;
-		} else if (hasPrivateFlag(flag)) {
+		} else {
 			this.mPrivateFlags &= ~flag;
 		}
 	}
