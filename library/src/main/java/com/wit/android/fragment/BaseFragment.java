@@ -39,20 +39,20 @@ import java.util.List;
  * todo: description
  * </p>
  * <h6>Used annotations</h6>
- * {@link com.wit.android.support.fragment.annotation.ContentView @ContentView} [<b>class</b>]
+ * {@link com.wit.android.fragment.annotation.ContentView @ContentView} [<b>class</b>]
  * <p>
  * If this annotation is presented, the layout id presented within this annotation will be used to
  * inflate the root view for an instance of this fragment class in
  * {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}.
  * </p>
- * {@link com.wit.android.support.fragment.annotation.ClickableViews @ClickableViews} [<b>class</b>]
+ * {@link com.wit.android.fragment.annotation.ClickableViews @ClickableViews} [<b>class</b>]
  * <p>
  * If this annotation is presented, all views found by ids presented within this annotation will be
  * found and an inner {@link android.view.View.OnClickListener} will be attached to them. If any of
  * these views is clicked, {@link #onViewClick(android.view.View, int)} will be invoked with that
  * specific view and its id.
  * </p>
- * {@link com.wit.android.support.fragment.annotation.InjectView @InjectView} [<b>member</b>]
+ * {@link com.wit.android.fragment.annotation.InjectView @InjectView} [<b>member</b>]
  * <p>
  * All members marked with this annotation will be automatically injected (by {@link android.view.View#findViewById(int)})
  * using the root view passed to {@link #onViewCreated(android.view.View, android.os.Bundle)}.
@@ -83,6 +83,17 @@ public abstract class BaseFragment extends Fragment {
 	// private static final boolean LOG_ENABLED = true;
 
 	/**
+	 * Flag indicating whether this instance of fragment is restored (like after orientation change)
+	 * or not.
+	 */
+	private static final int PFLAG_RESTORED = 0x01;
+
+	/**
+	 * Flag indicating whether the view of this instance of fragment is restored or not.
+	 */
+	private static final int PFLAG_VIEW_RESTORED = 0x02;
+
+	/**
 	 * Enums =======================================================================================
 	 */
 
@@ -100,6 +111,11 @@ public abstract class BaseFragment extends Fragment {
 	private ContentView mContentView = null;
 
 	/**
+	 * Stores all private flags for this object.
+	 */
+	private int mPrivateFlags;
+
+	/**
 	 * Arrays --------------------------------------------------------------------------------------
 	 */
 
@@ -111,17 +127,6 @@ public abstract class BaseFragment extends Fragment {
 	/**
 	 * Booleans ------------------------------------------------------------------------------------
 	 */
-
-	/**
-	 * Flag indicating whether this instance of fragment is restored (like after orientation change)
-	 * or not.
-	 */
-	private boolean bRestored = false;
-
-	/**
-	 * Flag indicating whether the view of this instance of fragment is restored or not.
-	 */
-	private boolean bViewRestored = false;
 
 	/**
 	 * Constructors ================================================================================
@@ -162,8 +167,8 @@ public abstract class BaseFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.bViewRestored = false;
-		this.bRestored = savedInstanceState != null;
+		this.updatePrivateFlags(PFLAG_VIEW_RESTORED, false);
+		this.updatePrivateFlags(PFLAG_RESTORED, savedInstanceState != null);
 	}
 
 	/**
@@ -212,7 +217,7 @@ public abstract class BaseFragment extends Fragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		this.bViewRestored = true;
+		this.updatePrivateFlags(PFLAG_VIEW_RESTORED, true);
 	}
 
 	/**
@@ -220,7 +225,7 @@ public abstract class BaseFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		this.bViewRestored = false;
+		this.updatePrivateFlags(PFLAG_VIEW_RESTORED, false);
 	}
 
 	/**
@@ -257,7 +262,7 @@ public abstract class BaseFragment extends Fragment {
 	 * <code>false</code> otherwise.
 	 */
 	public boolean isRestored() {
-		return bRestored;
+		return hasPrivateFlag(PFLAG_RESTORED);
 	}
 
 	/**
@@ -269,7 +274,7 @@ public abstract class BaseFragment extends Fragment {
 	 * was showed from the back stack</i>), <code>false</code> otherwise.
 	 */
 	public boolean isViewRestored() {
-		return bViewRestored;
+		return hasPrivateFlag(PFLAG_VIEW_RESTORED);
 	}
 
 	/**
@@ -365,22 +370,26 @@ public abstract class BaseFragment extends Fragment {
 	 * @param root            The root view of this fragment used to find views to inject.
 	 */
 	private void injectViews(Class<?> classOfFragment, View root) {
-		// Process annotated fields.
-		final Field[] fields = classOfFragment.getDeclaredFields();
-		if (fields.length > 0) {
-			for (Field field : fields) {
-				if (field.isAnnotationPresent(InjectView.class)) {
-					// Check correct type of the field.
-					final Class<?> classOfField = field.getType();
-					if (View.class.isAssignableFrom(classOfField)) {
-						field.setAccessible(true);
-						try {
-							field.set(
-									this,
-									root.findViewById(field.getAnnotation(InjectView.class).value())
-							);
-						} catch (IllegalAccessException e) {
-							e.printStackTrace();
+		// Class of fragment must have InjectViews annotation present to really iterate and inject
+		// annotated views.
+		if (classOfFragment.isAnnotationPresent(InjectViews.class)) {
+			// Process annotated fields.
+			final Field[] fields = classOfFragment.getDeclaredFields();
+			if (fields.length > 0) {
+				for (Field field : fields) {
+					if (field.isAnnotationPresent(InjectView.class)) {
+						// Check correct type of the field.
+						final Class<?> classOfField = field.getType();
+						if (View.class.isAssignableFrom(classOfField)) {
+							field.setAccessible(true);
+							try {
+								field.set(
+										this,
+										root.findViewById(field.getAnnotation(InjectView.class).value())
+								);
+							} catch (IllegalAccessException e) {
+								e.printStackTrace();
+							}
 						}
 					}
 				}
@@ -431,6 +440,31 @@ public abstract class BaseFragment extends Fragment {
 			idsList.add(id);
 		}
 		return idsList;
+	}
+
+	/**
+	 * Updates current private flags.
+	 *
+	 * @param flag The value of the flag to add/remove from current private flags.
+	 * @param add Boolean flag indicating whether to add or remove the specified <var>flag</var>.
+	 */
+	private void updatePrivateFlags(int flag, boolean add) {
+		if (add) {
+			this.mPrivateFlags |= flag;
+		} else {
+			this.mPrivateFlags &= ~flag;
+		}
+	}
+
+	/**
+	 * Returns boolean flag indicating whether the specified <var>flag</var> is contained within
+	 * current private flags.
+	 *
+	 * @param flag The value of the flag to check.
+	 * @return <code>True</code> if the requested flag is contained, <code>false</code> otherwise.
+	 */
+	private boolean hasPrivateFlag(int flag) {
+		return (mPrivateFlags & flag) != 0;
 	}
 
 	/**

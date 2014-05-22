@@ -30,7 +30,6 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wit.android.fragment.annotation.ActionModeOptions;
@@ -105,11 +104,6 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * Empty view of this AdapterFragment.'s adapter view.
 	 */
 	View mEmptyView;
-
-	/**
-	 * Loading view presented behind this fragment's adapter view.
-	 */
-	View mLoadingView;
 
 	/**
 	 * Current adapter.
@@ -210,11 +204,6 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 			adapterView.setId(mAdapterViewOptions != null ? mAdapterViewOptions.viewId() : AdapterViewOptions.VIEW_DEFAULT_ID);
 			layout.addView(adapterView, createAdapterViewParams());
 		}
-		// Resolve loading view.
-		final View loadingView = onCreateLoadingView(inflater, layout, savedInstanceState);
-		if (loadingView != null) {
-			layout.addView(mLoadingView = loadingView, createLoadingViewParams());
-		}
 		return layout;
 	}
 
@@ -247,35 +236,6 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 */
 	public int getItemsCount() {
 		return mAdapter != null ? mAdapter.getCount() : 0;
-	}
-
-	/**
-	 * <p>
-	 * Shows/hides the loading view of this adapter fragment.
-	 * </p>
-	 *
-	 * @param visible <code>True</code> to show loading view, <code>false</code> to hide it.
-	 */
-	public void setLoadingViewVisible(boolean visible) {
-		// todo: animate
-		if (mLoadingView != null) {
-			if (visible && mLoadingView.getVisibility() != View.VISIBLE) {
-				mLoadingView.setVisibility(View.VISIBLE);
-			} else if (!visible && mLoadingView.getVisibility() == View.VISIBLE) {
-				mLoadingView.setVisibility(View.GONE);
-			}
-		}
-	}
-
-	/**
-	 * <p>
-	 * Returns flag indicating whether the loading view of this AdapterFragment. is visible or not.
-	 * </p>
-	 *
-	 * @return <code>True</code> if it is visible, <code>false</code> otherwise.
-	 */
-	public boolean isLoadingViewVisible() {
-		return mLoadingView != null && mLoadingView.getVisibility() == View.VISIBLE;
 	}
 
 	/**
@@ -424,30 +384,6 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	}
 
 	/**
-	 * <p>
-	 * Sets loading view for this AdapterFragment.
-	 * </p>
-	 *
-	 * @param loadingView The loading view.
-	 * @see #getLoadingView()
-	 */
-	public void setLoadingView(View loadingView) {
-		this.mLoadingView = loadingView;
-	}
-
-	/**
-	 * <p>
-	 * Returns the current loading view of this AdapterFragment.
-	 * </p>
-	 *
-	 * @return An instance of the current loading view.
-	 * @see #setLoadingView(android.view.View)
-	 */
-	public View getLoadingView() {
-		return mLoadingView;
-	}
-
-	/**
 	 * Protected -----------------------------------------------------------------------------------
 	 */
 
@@ -486,37 +422,6 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @return An instance of layout params, depends on the root view of this AdapterFragment.
 	 */
 	protected FrameLayout.LayoutParams createEmptyViewParams() {
-		final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-		params.gravity = Gravity.CENTER;
-		return params;
-	}
-
-	/**
-	 * <p>
-	 * Invoked to create a new instance of view which will be used as loading view of this adapter
-	 * fragment.
-	 * </p>
-	 *
-	 * @param inflater           Valid layout inflater.
-	 * @param container          The root view into which will be created loading view placed.
-	 * @param savedInstanceState Bundle with saved state or <code>null</code> if this fragment's view
-	 *                           is just first time created.
-	 * @return An instance of loading view.
-	 */
-	protected View onCreateLoadingView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		final View loadingView = new ProgressBar(inflater.getContext(), null, android.R.attr.progressBarStyleLarge);
-		loadingView.setVisibility(View.GONE);
-		return loadingView;
-	}
-
-	/**
-	 * <p>
-	 * Called to create a new instance of layout parameters for this fragment's loading view.
-	 * </p>
-	 *
-	 * @return An instance of layout params, depends on the root view of this AdapterFragment.
-	 */
-	protected FrameLayout.LayoutParams createLoadingViewParams() {
 		final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 		params.gravity = Gravity.CENTER;
 		return params;

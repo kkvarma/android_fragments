@@ -21,9 +21,6 @@
 -->
 <resources>
     
-    <!-- ###### FRAGMENT NUMBERS [landscape] ###### -->
-    <eat-comment />
-
     <!-- ### GLOBAL ANIMATION DURATIONS ======================================================== -->
     <eat-comment/>
     <!-- Duration for a new incoming fragment's horizontal animation -->
