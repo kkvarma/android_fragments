@@ -57,6 +57,9 @@ import java.util.List;
  * <p>
  * All members marked with this annotation will be automatically injected (by {@link android.view.View#findViewById(int)})
  * using the root view passed to {@link #onViewCreated(android.view.View, android.os.Bundle)}.
+ * <b>Note that {@link com.wit.android.support.fragment.annotation.InjectViews @InjectViews} annotation
+ * is required above this class implementation to run injecting process, otherwise all marked fields/views
+ * will be ignored.</b>
  * </p>
  *
  * @author Martin Albedinsky
@@ -371,7 +374,7 @@ public abstract class BaseFragment extends Fragment {
 	 * @param root            The root view of this fragment used to find views to inject.
 	 */
 	private void injectViews(Class<?> classOfFragment, View root) {
-		// Class of fragment must have InjectViews annotation present to really iterate and inject
+		// Class of fragment must have @InjectViews annotation present to really iterate and inject
 		// annotated views.
 		if (classOfFragment.isAnnotationPresent(InjectViews.class)) {
 			// Process annotated fields.

@@ -26,8 +26,8 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Annotation type used to mark a member (instance of {@link android.view.View}) which should be
- * injected into the context which contains the root view from which this view should be injected.
+ * Annotation type used to mark a field (instance of {@link android.view.View}) which should be
+ * injected into the context associated with the root view from which this view field should be injected.
  * </p>
  * <h6>Usage</h6>
  * <ul>
