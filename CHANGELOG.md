@@ -9,3 +9,4 @@ Change-Log
 
 ### **3.0** (<i>14.05.2014</i>) ###
 - @InjectViews annotations is required to run inject views process.
+- removed support for loading view from AdapterFragment implementation
