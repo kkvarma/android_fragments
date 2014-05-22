@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import com.wit.android.fragment.annotation.ClickableViews;
 import com.wit.android.fragment.annotation.ContentView;
 import com.wit.android.fragment.annotation.InjectView;
+import com.wit.android.fragment.annotation.InjectViews;
 import com.wit.android.fragment.util.FragmentAnnotations;
 
 import java.lang.reflect.Field;
@@ -134,8 +135,8 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
-	 * Creates a new instance of BaseFragment. If {@link com.wit.android.support.fragment.annotation.ContentView}
-	 * or {@link com.wit.android.support.fragment.annotation.ClickableViews} annotations are presented,
+	 * Creates a new instance of BaseFragment. If {@link com.wit.android.fragment.annotation.ContentView}
+	 * or {@link com.wit.android.fragment.annotation.ClickableViews} annotations are presented,
 	 * they will be processed here.
 	 * </p>
 	 */
@@ -363,7 +364,7 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * Injects all annotated member views. Note, that this is recursive function, which will check
-	 * all members for {@link com.wit.android.support.fragment.annotation.InjectView}
+	 * all members for {@link com.wit.android.fragment.annotation.InjectView}
 	 * annotation presented above each of members of the given <var>classOfFragment</var>.
 	 *
 	 * @param classOfFragment Class of fragment where to check InjectView annotations.
@@ -405,7 +406,7 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * Gathers all ids presented within ClickableViews annotation. Note, that this is recursive method,
-	 * which will gather all ids from {@link com.wit.android.support.fragment.annotation.ClickableViews}
+	 * which will gather all ids from {@link com.wit.android.fragment.annotation.ClickableViews}
 	 * annotation presented above the given <var>classOfFragment</var>.
 	 *
 	 * @param classOfFragment Class of fragment where to check ClickableViews annotation.

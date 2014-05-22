@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
  * </p>
  * <h6>Usage</h6>
  * <ul>
- * <li>{@link com.wit.android.support.fragment.BaseFragment BaseFragment}</li>
+ * <li>{@link com.wit.android.fragment.BaseFragment BaseFragment}</li>
  * </ul>
  *
  * @author Martin Albedinsky

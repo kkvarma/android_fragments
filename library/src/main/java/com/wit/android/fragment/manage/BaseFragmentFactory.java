@@ -125,7 +125,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
-	 * Creates a new instance of BaseFragmentFactory. If {@link com.wit.android.support.fragment.annotation.FactoryFragments @FactoryFragments}
+	 * Creates a new instance of BaseFragmentFactory. If {@link com.wit.android.fragment.annotation.FactoryFragments @FactoryFragments}
 	 * or {@link com.wit.android.fragment.annotation.FragmentFactories @FragmentFactories}
 	 * annotations are presented, they will be processed here.
 	 * </p>

@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
  * </p>
  * <h6>Usage</h6>
  * <ul>
- * <li>{@link com.wit.android.support.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>
+ * <li>{@link com.wit.android.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>
  * </ul>
  *
  * @author Martin Albedinsky
@@ -51,14 +51,14 @@ public @interface FactoryFragments {
 	/**
 	 * The array with ids of fragments which are provided by an instance of this FragmentFactory class.
 	 *
-	 * @see com.wit.android.support.fragment.manage.FragmentController.FragmentFactory#isFragmentProvided(int)
+	 * @see com.wit.android.fragment.manage.FragmentController.FragmentFactory#isFragmentProvided(int)
 	 */
 	int[] value();
 
 	/**
 	 * Flag indicating whether to pre-create tags for the provided fragments.
 	 *
-	 * @see com.wit.android.support.fragment.manage.FragmentController.FragmentFactory#getFragmentTag(int)
+	 * @see com.wit.android.fragment.manage.FragmentController.FragmentFactory#getFragmentTag(int)
 	 */
 	boolean createTags() default true;
 }

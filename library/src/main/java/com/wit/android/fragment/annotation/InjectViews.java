@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.support.fragment.annotation;
+package com.wit.android.fragment.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -27,12 +27,12 @@ import java.lang.annotation.Target;
  * <h4>Annotation Overview</h4>
  * <p>
  * Annotation type used to mark a class in which are presented fields marked with
- * {@link com.wit.android.support.fragment.annotation.InjectView} annotation. This annotation type
+ * {@link com.wit.android.fragment.annotation.InjectView} annotation. This annotation type
  * determines whether to iterate such fields to inject or not.
  * </p>
  * <h6>Usage</h6>
  * <ul>
- * <li>{@link com.wit.android.support.fragment.BaseFragment BaseFragment}</li>
+ * <li>{@link com.wit.android.fragment.BaseFragment BaseFragment}</li>
  * </ul>
  *
  * @author Martin Albedinsky

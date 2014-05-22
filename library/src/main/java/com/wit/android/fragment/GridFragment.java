@@ -33,7 +33,7 @@ import android.widget.ListAdapter;
  * @param <A> The type of an adapter used within the context of an instance of this AdapterFragment
  *            class implementation.
  * @author Martin Albedinsky
- * @see com.wit.android.support.fragment.ListFragment
+ * @see com.wit.android.fragment.ListFragment
  */
 public class GridFragment<A extends ListAdapter> extends AdapterFragment<GridView, A> {
 

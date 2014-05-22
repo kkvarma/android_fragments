@@ -123,7 +123,7 @@ public final class FragmentAnnotations {
 
 	/**
 	 * <p>
-	 * Same as {@link #iterateFields(Class, com.wit.android.support.fragment.util.FragmentAnnotations.FieldProcessor, boolean, Class)}
+	 * Same as {@link #iterateFields(Class, com.wit.android.fragment.util.FragmentAnnotations.FieldProcessor, boolean, Class)}
 	 * with <var>checkSuper</var> set to <code>false</code>.
 	 * </p>
 	 */
@@ -188,8 +188,8 @@ public final class FragmentAnnotations {
 	 * <h4>Interface Overview</h4>
 	 * <p>
 	 * Simple callback which allows processing of all declared members of a desired class using one of
-	 * {@link #iterateFields(Class, com.wit.android.support.fragment.util.FragmentAnnotations.FieldProcessor)},
-	 * {@link #iterateFields(Class, com.wit.android.support.fragment.util.FragmentAnnotations.FieldProcessor, boolean, Class)}
+	 * {@link #iterateFields(Class, com.wit.android.fragment.util.FragmentAnnotations.FieldProcessor)},
+	 * {@link #iterateFields(Class, com.wit.android.fragment.util.FragmentAnnotations.FieldProcessor, boolean, Class)}
 	 * methods.
 	 * </p>
 	 *

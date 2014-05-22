@@ -28,12 +28,12 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Defines an annotation for determining which {@link com.wit.android.support.fragment.manage.FragmentController.FragmentFactory}s
+ * Defines an annotation for determining which {@link com.wit.android.fragment.manage.FragmentController.FragmentFactory}s
  * should be joined to an instance of the class to which is this annotation attached.
  * </p>
  * <h6>Usage</h6>
  * <ul>
- * <li>{@link com.wit.android.support.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>
+ * <li>{@link com.wit.android.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>
  * </ul>
  *
  * @author Martin Albedinsky
