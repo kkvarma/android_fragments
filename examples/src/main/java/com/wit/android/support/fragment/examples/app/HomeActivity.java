@@ -23,20 +23,20 @@ package com.wit.android.support.fragment.examples.app;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 
-import com.wit.android.examples.app.ExHomeActivity;
-import com.wit.android.examples.model.navigation.INavigationItem;
-import com.wit.android.examples.model.navigation.NavigationHeader;
-import com.wit.android.examples.model.navigation.NavigationItem;
+import com.wit.android.support.examples.app.ExBaseHomeActivity;
+import com.wit.android.support.examples.model.NavigationItem;
 import com.wit.android.support.fragment.examples.R;
-import com.wit.android.support.fragment.examples.fragment.ExampleListFragment;
-import com.wit.android.support.fragment.examples.fragment.FragmentsFactory;
+import com.wit.android.support.fragment.examples.adapter.TransitionsAdapter;
+import com.wit.android.support.fragment.examples.fragment.factory.FragmentsFactory;
 import com.wit.android.support.fragment.manage.FragmentController;
+import com.wit.android.support.fragment.manage.FragmentTransition;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,21 +46,32 @@ import java.util.List;
  *
  * @author Martin Albedinsky
  */
-public class HomeActivity extends ExHomeActivity implements FragmentController.OnFragmentChangeListener, FragmentController.OnBackStackChangeListener {
+public class HomeActivity extends ExBaseHomeActivity implements FragmentController.OnFragmentChangeListener, FragmentController.OnBackStackChangeListener, ActionBar.OnNavigationListener {
 
 	/**
 	 * Log TAG.
 	 */
 	private static final String TAG = HomeActivity.class.getSimpleName();
 
-	private final FragmentController FRAGMENT_CONTROLLER = new FragmentController(this);
+	/**
+	 *
+	 */
+	private FragmentController mController;
 
-	{
-		// Set up fragment container id.
-		FRAGMENT_CONTROLLER.setFragmentContainerId(R.id.Ex_App_Content_Container);
-	}
+	/**
+	 *
+	 */
+	private TransitionsAdapter mTransitionsAdapter;
 
+	/**
+	 *
+	 */
 	private boolean bAddFragmentToBackStack = true;
+
+	/**
+	 *
+	 */
+	private ActionBar mActionBar;
 
 	/**
 	 * @param view
@@ -86,123 +97,121 @@ public class HomeActivity extends ExHomeActivity implements FragmentController.O
 	/**
 	 */
 	@Override
+	public boolean onNavigationItemSelected(int position, long id) {
+		final FragmentTransition transition = mTransitionsAdapter.getItem(position);
+		if (transition != null) {
+			mTransitionsAdapter.dispatchItemSelected(position);
+			mController.showFragment(
+					FragmentsFactory.TRANSITIONS,
+					FragmentsFactory.createParams(transition, bAddFragmentToBackStack)
+			);
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				if (getNavigationAdapter().getSelectedItemPosition() == 0) {
+					return false;
+				}
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 */
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		// Set up fragment factory.
-		FRAGMENT_CONTROLLER.setFragmentFactory(new FragmentsFactory());
+
+		// Set up fragment controller.
+		this.mController = new FragmentController(this);
+		mController.setFragmentContainerId(R.id.Ex_App_Content_Container);
+		mController.setFragmentFactory(new FragmentsFactory());
+
+		// Set up action bar.
+		mActionBar = getSupportActionBar();
+		this.mTransitionsAdapter = new TransitionsAdapter(this);
+		mActionBar.setListNavigationCallbacks(mTransitionsAdapter, this);
+		onNavigationChange(FragmentsFactory.TRANSITIONS);
+
+		if (savedInstanceState == null) {
+			final int selectedPosition = 0;
+			setNavigationItemSelected(selectedPosition);
+		}
 	}
 
 	/**
 	 */
 	@Override
-	protected List<INavigationItem> onCreateNavigationItems(Resources res) {
-		final List<INavigationItem> items = new ArrayList<INavigationItem>();
-
-		/**
-		 * Fragment implementations.
-		 */
-		items.add(NavigationHeader.create(R.string.Navigation_Header_Implementations, res));
-		items.add(NavigationItem.create(
-				WebActivity.NAVIGATION_ID,
-				R.string.Navigation_Label_WebFragment,
-				res
-		).setSelectable(false));
-
-		/**
-		 * Show directions.
-		 */
-		items.add(NavigationHeader.create(R.string.Navigation_Header_ShowDirections, res));
-		items.add(NavigationItem.create(
-				FragmentsFactory.FRAGMENT_DIRECTION_NONE,
-				R.string.Navigation_Label_None,
-				res
+	protected List<NavigationItem> onCreateNavigationItems(List<NavigationItem> list, Resources resources) {
+		final NavigationItem.Builder builder = new NavigationItem.Builder(resources);
+		list.add(createItem(
+				FragmentsFactory.TRANSITIONS,
+				R.string.Navigation_Label_Transitions,
+				builder
 		));
-		items.add(NavigationItem.create(
-				FragmentsFactory.FRAGMENT_DIRECTION_FROM_RIGHT_TO_LEFT,
-				R.string.Navigation_Label_FromRightToLeft,
-				res
+		list.add(createItem(
+				FragmentsFactory.LIST,
+				R.string.Navigation_Label_ListFragment,
+				builder
 		));
-		items.add(NavigationItem.create(
-				FragmentsFactory.FRAGMENT_DIRECTION_FROM_LEFT_TO_RIGHT,
-				R.string.Navigation_Label_FromLeftToRight,
-				res
+		list.add(createItem(
+				FragmentsFactory.GRID,
+				R.string.Navigation_Label_GridFragment,
+				builder
 		));
-		items.add(NavigationItem.create(
-				FragmentsFactory.FRAGMENT_DIRECTION_FROM_TOP_TO_BOTTOM,
-				R.string.Navigation_Label_FromTopToBottom,
-				res
+		list.add(builder
+						.id(WebActivity.NAVIGATION_ID)
+						.title(R.string.Navigation_Label_WebFragment)
+						.selectable(false)
+						.build()
+		);
+		list.add(createItem(
+				FragmentsFactory.ACTION_BAR,
+				R.string.Navigation_Label_ActionBarFragment,
+				builder
 		));
-		items.add(NavigationItem.create(
-				FragmentsFactory.FRAGMENT_DIRECTION_FROM_BOTTOM_TO_TOP,
-				R.string.Navigation_Label_FromBottomToTop,
-				res
-		));
-		items.add(NavigationItem.create(
-				FragmentsFactory.FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_LEFT,
-				R.string.Navigation_Label_FromBackgroundToLeft,
-				res
-		));
-		items.add(NavigationItem.create(
-				FragmentsFactory.FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_RIGHT,
-				R.string.Navigation_Label_FromBackgroundToRight,
-				res
-		));
-		items.add(NavigationItem.create(
-				FragmentsFactory.FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_TOP,
-				R.string.Navigation_Label_FromBackgroundToTop,
-				res
-		));
-		items.add(NavigationItem.create(
-				FragmentsFactory.FRAGMENT_DIRECTION_FROM_BACKGROUND_TO_BOTTOM,
-				R.string.Navigation_Label_FromBackgroundToBottom,
-				res
-		));
-		items.add(NavigationItem.create(
-				FragmentsFactory.FRAGMENT_DIRECTION_FROM_LEFT_TO_BACKGROUND,
-				R.string.Navigation_Label_FromLeftToBackground,
-				res
-		));
-		items.add(NavigationItem.create(
-				FragmentsFactory.FRAGMENT_DIRECTION_FROM_RIGHT_TO_BACKGROUND,
-				R.string.Navigation_Label_FromRightToBackground,
-				res
-		));
-		items.add(NavigationItem.create(
-				FragmentsFactory.FRAGMENT_DIRECTION_FROM_TOP_TO_BACKGROUND,
-				R.string.Navigation_Label_FromTopToBackground,
-				res
-		));
-		items.add(NavigationItem.create(
-				FragmentsFactory.FRAGMENT_DIRECTION_FROM_BOTTOM_TO_BACKGROUND,
-				R.string.Navigation_Label_FromBottomToBackground,
-				res
-		));
-
-		return items;
+		return list;
 	}
 
 	/**
 	 */
 	@Override
-	protected boolean onNavigationItemClick(int position, long id) {
-		final int itemID = (int) id;
-		switch (itemID) {
+	protected boolean onNavigationItemClick(int position, final int id) {
+		onNavigationChange(id);
+		switch (id) {
 			case WebActivity.NAVIGATION_ID:
 				startActivity(new Intent(this, WebActivity.class));
 				break;
-			default:
-				// Create parameters for fragment factory.
-				final Bundle params = new Bundle();
-				params.putBoolean(FragmentsFactory.PARAM_ADD_TO_BACK_STACK, bAddFragmentToBackStack);
-				params.putString(FragmentsFactory.PARAM_ACTION_BAR_TITLE, getNavigationItem(position).getText());
+			case FragmentsFactory.TRANSITIONS:
+				registerNavigationAction(new Runnable() {
 
-				// Register action which will be executed, after the
-				// navigation closes.
-				registerAction(new Runnable() {
+					/**
+					 */
 					@Override
 					public void run() {
-						FRAGMENT_CONTROLLER.showFragment(itemID, params);
+						mController.showFragment(
+								id,
+								FragmentsFactory.createParams(null, bAddFragmentToBackStack)
+						);
+					}
+				});
+				break;
+			default:
+				registerNavigationAction(new Runnable() {
+
+					/**
+					 */
+					@Override
+					public void run() {
+						mController.showFragment(id);
 					}
 				});
 		}
@@ -212,11 +221,46 @@ public class HomeActivity extends ExHomeActivity implements FragmentController.O
 	/**
 	 */
 	@Override
-	protected int onShowInitialFragment() {
-		FRAGMENT_CONTROLLER.showFragment(ExampleListFragment.newInstance());
-		return 0;
-		/*final int initialItemPos = 3;
-		FRAGMENT_CONTROLLER.showFragment(ImageFragment.newInstance(getNavigationItem(initialItemPos).getText()));
-		return 1;*/
+	protected void onNavigationOpened() {
+		super.onNavigationOpened();
+		if (getNavigationAdapter().getSelectedItemPosition() == 0) {
+			mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		}
+	}
+
+	/**
+	 */
+	@Override
+	protected void onNavigationClosed() {
+		super.onNavigationClosed();
+		if (getNavigationAdapter().getSelectedItemPosition() == 0) {
+			mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+			mActionBar.setTitle("");
+		} else {
+			mActionBar.setTitle(R.string.App_Name);
+		}
+	}
+
+	/**
+	 *
+	 * @param itemId
+	 */
+	private void onNavigationChange(int itemId) {
+		switch(itemId) {
+			case FragmentsFactory.TRANSITIONS:
+				mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+				mActionBar.setSelectedNavigationItem(0);
+				mActionBar.setDisplayHomeAsUpEnabled(false);
+				mActionBar.setHomeButtonEnabled(false);
+				mActionBar.setTitle("");
+				break;
+			default:
+				if (mController != null) {
+					mController.clearBackStack();
+				}
+				mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+				mActionBar.setDisplayHomeAsUpEnabled(true);
+				mActionBar.setHomeButtonEnabled(true);
+		}
 	}
 }

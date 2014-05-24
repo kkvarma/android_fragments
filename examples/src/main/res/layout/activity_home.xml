@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
- * =================================================================================
- * Copyright (C) 2013 Martin Albedinsky [Wolf-ITechnologies]
- * =================================================================================
- * Licensed under the Apache License, Version 2.0 or later (further "License" only);
- * *********************************************************************************
- * You may use this file only in compliance with the License. More details and copy
- * of this License you may obtain at
+ * =================================================================================================
+ *                    Copyright (C) 2014 Martin Albedinsky [Wolf-ITechnologies]
+ * =================================================================================================
+ *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ * You may use this file only in compliance with the License. More details and copy of this License
+ * you may obtain at
  *
  * 		http://www.apache.org/licenses/LICENSE-2.0
  *
- * You can redistribute, modify or publish any part of the code written in this
- * file but as it is described in the License, the software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF
- * ANY KIND.
+ * You can redistribute, modify or publish any part of the code written within this file but as it
+ * is described in the License, the software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
  *
- * See the License for the specific language governing permissions and limitations
- * under the License.
- * =================================================================================
+ * See the License for the specific language governing permissions and limitations under the License.
+ * =================================================================================================
  */
 -->
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -61,8 +59,8 @@
 
     </LinearLayout>
 
-    <com.wit.android.examples.internal.widget.WITNavigationListView
-            android:id="@+id/Ex.Activity.Home.ListView.Navigation"
+    <com.wit.android.support.examples.widget.ExNavigationListView
+            android:id="@+id/Ex.Activity.Home.ExNavigationListView"
             style="@style/Ex.Navigation.Widget.ListView"
             android:layout_width="@dimen/Ex.Navigation.width"
             android:layout_height="match_parent"
