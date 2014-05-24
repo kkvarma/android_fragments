@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * =================================================================================================
+ *                 Copyright (C) 2013 - 2014 Martin Albedinsky [Wolf-ITechnologies]
+ * =================================================================================================
+ *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
+ * *************************************************************************************************
+ * You may use this file only in compliance with the License. More details and copy of this License
+ * you may obtain at
+ *
+ * 		http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * You can redistribute, modify or publish any part of the code written within this file but as it
+ * is described in the License, the software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES or CONDITIONS OF ANY KIND.
+ *
+ * See the License for the specific language governing permissions and limitations under the License.
+ * =================================================================================================
+ */
+-->
+<resources>
+
+    <!-- ### APPLICATION ======================================================================= -->
+
+    <string name="App.Name">Fragments</string>
+
+    <!-- ### NAVIGATION ======================================================================== -->
+
+    <string name="Navigation.Label.Transitions">Transitions</string>
+    <string name="Navigation.Label.ListFragment">List Fragment</string>
+    <string name="Navigation.Label.GridFragment">Grid Fragment</string>
+    <string name="Navigation.Label.WebFragment">Web Fragment</string>
+    <string name="Navigation.Label.ActionBarFragment">ActionBar Fragment</string>
+
+    <!-- ### HOME ACTIVITY ===================================================================== -->
+
+    <string name="Activity.Home.Check.AddFragmentToBackStack">Add fragment to back stack</string>
+
+    <!-- ### WEB ACTIVITY ====================================================================== -->
+
+    <string name="Activity.Web.Toast.OnlyUrlIsAllowed">Only valid web URL is allowed here</string>
+
+    <!-- ### ADAPTER FRAGMENT ================================================================== -->
+
+    <string name="AdapterFragment.Text.Empty">No items available</string>
+
+</resources>
