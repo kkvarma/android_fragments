@@ -20,7 +20,7 @@
  */
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.wit.android.support.fragment.examples">
+          package="com.wit.android.fragment.examples">
 
     <uses-sdk android:maxSdkVersion="19"/>
 

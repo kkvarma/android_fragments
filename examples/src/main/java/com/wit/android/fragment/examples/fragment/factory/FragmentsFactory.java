@@ -18,19 +18,19 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.support.fragment.examples.fragment.factory;
+package com.wit.android.fragment.examples.fragment.factory;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
-import com.wit.android.support.fragment.annotation.FactoryFragments;
-import com.wit.android.support.fragment.examples.fragment.ActionBarFragmentImpl;
-import com.wit.android.support.fragment.examples.fragment.GridFragmentImpl;
-import com.wit.android.support.fragment.examples.fragment.ImageFragment;
-import com.wit.android.support.fragment.examples.fragment.ListFragmentImpl;
-import com.wit.android.support.fragment.manage.BaseFragmentFactory;
-import com.wit.android.support.fragment.manage.FragmentController;
-import com.wit.android.support.fragment.manage.FragmentTransition;
+import com.wit.android.fragment.annotation.FactoryFragments;
+import com.wit.android.fragment.examples.fragment.ActionBarFragmentImpl;
+import com.wit.android.fragment.examples.fragment.GridFragmentImpl;
+import com.wit.android.fragment.examples.fragment.ImageFragment;
+import com.wit.android.fragment.examples.fragment.ListFragmentImpl;
+import com.wit.android.fragment.manage.BaseFragmentFactory;
+import com.wit.android.fragment.manage.FragmentController;
+import com.wit.android.fragment.manage.FragmentTransition;
 
 /**
  * <p>
@@ -75,12 +75,12 @@ public class FragmentsFactory extends BaseFragmentFactory {
 	/**
 	 *
 	 */
-	private static final String PARAMS_TRANSITION = "com.wit.android.support.fragment.examples.fragment.factory.FragmentsFactory.PARAMS.Transition";
+	private static final String PARAMS_TRANSITION = "com.wit.android.fragment.examples.fragment.factory.FragmentsFactory.PARAMS.Transition";
 
 	/**
 	 *
 	 */
-	private static final String PARAMS_ADD_TO_BACK_STACK = "com.wit.android.support.fragment.examples.fragment.factory.FragmentsFactory.PARAMS.AddToBackStack";
+	private static final String PARAMS_ADD_TO_BACK_STACK = "com.wit.android.fragment.examples.fragment.factory.FragmentsFactory.PARAMS.AddToBackStack";
 
 	/**
 	 *

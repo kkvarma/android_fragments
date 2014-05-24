@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.support.fragment.annotation;
+package com.wit.android.fragment.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
  * </p>
  * <h6>Usage</h6>
  * <ul>
- * <li>{@link com.wit.android.support.fragment.WebFragment WebFragment}</li>
+ * <li>{@link com.wit.android.fragment.WebFragment WebFragment}</li>
  * </ul>
  *
  * @author Martin Albedinsky

@@ -18,24 +18,24 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.support.fragment.examples.app;
+package com.wit.android.fragment.examples.app;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 
-import com.wit.android.support.examples.app.ExBaseHomeActivity;
-import com.wit.android.support.examples.model.NavigationItem;
-import com.wit.android.support.fragment.examples.R;
-import com.wit.android.support.fragment.examples.adapter.TransitionsAdapter;
-import com.wit.android.support.fragment.examples.fragment.factory.FragmentsFactory;
-import com.wit.android.support.fragment.manage.FragmentController;
-import com.wit.android.support.fragment.manage.FragmentTransition;
+import com.wit.android.examples.app.ExBaseHomeActivity;
+import com.wit.android.examples.model.NavigationItem;
+import com.wit.android.fragment.examples.R;
+import com.wit.android.fragment.examples.adapter.TransitionsAdapter;
+import com.wit.android.fragment.examples.fragment.factory.FragmentsFactory;
+import com.wit.android.fragment.manage.FragmentController;
+import com.wit.android.fragment.manage.FragmentTransition;
 
 import java.util.List;
 
@@ -136,7 +136,7 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 		mController.setFragmentFactory(new FragmentsFactory());
 
 		// Set up action bar.
-		mActionBar = getSupportActionBar();
+		mActionBar = getActionBar();
 		this.mTransitionsAdapter = new TransitionsAdapter(this);
 		mActionBar.setListNavigationCallbacks(mTransitionsAdapter, this);
 		onNavigationChange(FragmentsFactory.TRANSITIONS);

@@ -16,14 +16,14 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.support.fragment.examples.content;
+package com.wit.android.fragment.examples.content;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 
-import com.wit.android.support.fragment.examples.adapter.AppsAdapter;
+import com.wit.android.fragment.examples.adapter.AppsAdapter;
 
 import java.util.List;
 

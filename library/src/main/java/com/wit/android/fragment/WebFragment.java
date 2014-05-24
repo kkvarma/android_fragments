@@ -30,6 +30,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.wit.android.fragment.annotation.WebContent;
 import com.wit.android.fragment.config.FragmentsConfig;
 
 import java.util.regex.Matcher;
@@ -250,7 +251,7 @@ public class WebFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Creates a new instance of WebFragment. If {@link com.wit.android.support.fragment.annotation.WebContent}
+	 * Creates a new instance of WebFragment. If {@link com.wit.android.fragment.annotation.WebContent}
 	 * annotation is presented, it will be processed here.
 	 * </p>
 	 */

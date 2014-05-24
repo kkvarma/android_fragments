@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.support.fragment.examples.adapter;
+package com.wit.android.fragment.examples.adapter;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -28,9 +28,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wit.android.support.examples.libs.adapter.ExSimpleAdapter;
-import com.wit.android.support.examples.libs.adapter.annotation.ExItemHolder;
-import com.wit.android.support.fragment.examples.R;
+import com.wit.android.examples.libs.adapter.ExSimpleAdapter;
+import com.wit.android.examples.libs.adapter.annotation.ExItemHolder;
+import com.wit.android.fragment.examples.R;
 
 /**
  * <p>

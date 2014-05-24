@@ -19,13 +19,12 @@
  * =================================================================================================
  */
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:compat="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
             android:id="@id/Ex.App.Menu.Edit"
             android:icon="@drawable/ex_app_ic_action_edit"
             android:title="@string/Ex.App.Menu.Edit"
-            compat:showAsAction="ifRoom|withText"/>
+            android:showAsAction="ifRoom|withText"/>
 
 </menu>

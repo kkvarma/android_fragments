@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.support.fragment.examples.fragment;
+package com.wit.android.fragment.examples.fragment;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -26,11 +26,11 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.wit.android.support.fragment.GridFragment;
-import com.wit.android.support.fragment.annotation.AdapterViewOptions;
-import com.wit.android.support.fragment.examples.R;
-import com.wit.android.support.fragment.examples.adapter.AppsAdapter;
-import com.wit.android.support.fragment.examples.content.AppsAsyncTask;
+import com.wit.android.fragment.GridFragment;
+import com.wit.android.fragment.annotation.AdapterViewOptions;
+import com.wit.android.fragment.examples.R;
+import com.wit.android.fragment.examples.adapter.AppsAdapter;
+import com.wit.android.fragment.examples.content.AppsAsyncTask;
 
 /**
  * <p>

@@ -16,9 +16,9 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.support.fragment.examples.fragment;
+package com.wit.android.fragment.examples.fragment;
 
-import com.wit.android.support.fragment.ActionBarFragment;
+import com.wit.android.fragment.ActionBarFragment;
 
 /**
  * <p>

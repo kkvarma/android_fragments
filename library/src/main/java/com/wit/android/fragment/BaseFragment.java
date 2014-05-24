@@ -57,7 +57,7 @@ import java.util.List;
  * <p>
  * All members marked with this annotation will be automatically injected (by {@link android.view.View#findViewById(int)})
  * using the root view passed to {@link #onViewCreated(android.view.View, android.os.Bundle)}.
- * <b>Note that {@link com.wit.android.support.fragment.annotation.InjectViews @InjectViews} annotation
+ * <b>Note that {@link com.wit.android.fragment.annotation.InjectViews @InjectViews} annotation
  * is required above this class implementation to run injecting process, otherwise all marked fields/views
  * will be ignored.</b>
  * </p>

@@ -12,7 +12,8 @@ repositories {
  */
 dependencies {
     compile project(':library')
-    compile 'com.wit.android.support:examples:+@aar'
+    compile 'com.android.support:support-v4:+'
+    compile 'com.wit.android:examples:+@aar'
 }
 
 /**

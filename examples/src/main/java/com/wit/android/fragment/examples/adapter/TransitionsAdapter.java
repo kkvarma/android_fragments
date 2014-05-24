@@ -16,18 +16,18 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.support.fragment.examples.adapter;
+package com.wit.android.fragment.examples.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.wit.android.support.examples.libs.adapter.ExSimpleSpinnerAdapter;
-import com.wit.android.support.examples.libs.adapter.annotation.ExItemHolder;
-import com.wit.android.support.examples.libs.adapter.annotation.ExItemView;
-import com.wit.android.support.fragment.examples.R;
-import com.wit.android.support.fragment.manage.FragmentTransition;
+import com.wit.android.examples.libs.adapter.ExSimpleSpinnerAdapter;
+import com.wit.android.examples.libs.adapter.annotation.ExItemHolder;
+import com.wit.android.examples.libs.adapter.annotation.ExItemView;
+import com.wit.android.fragment.examples.R;
+import com.wit.android.fragment.manage.FragmentTransition;
 
 import java.util.ArrayList;
 import java.util.List;
