@@ -29,7 +29,7 @@ If You decide to **download** source code of this repository to run this example
 	 */
 	dependencies {
 	    compile project(':library')
-	    compile 'com.wit.android:examples:+@aar'
+        compile 'com.wit.android.support:examples:+@aar'
 	}
 
 You need to **have downloaded/installed** the latest version of [**com.wit.android.support.examples**](https://github.com/Wolf-ITechnologies/maven_android_repository/tree/master/support/examples "Go to download page") library within Your **Maven local repository**.
@@ -38,5 +38,5 @@ You can install above downloaded examples dependency into _Your Maven local repo
 
 * <b>Windows</b> (<i>in single line</i>):
 
-	``mvn install:install-file -DgroupId=com.wit.android -DartifactId=LIBRARYNAME -Dversion=VERSION``
-	``-Dfile=LIBRARYNAME-VERSION.[jar|aar] -Dpackaging=[jar|aar] -DgeneratePom=true``
+	``mvn install:install-file -DgroupId=com.wit.android.support -DartifactId=examples -Dversion=VERSION``
+	``-Dfile=examples-VERSION.aar -Dpackaging=aar -DgeneratePom=true``
