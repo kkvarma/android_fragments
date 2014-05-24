@@ -70,6 +70,10 @@ public class TransitionsAdapter extends ExSimpleSpinnerAdapter<FragmentTransitio
 		items.add(FragmentTransition.SCALE_IN_AND_SLIDE_TO_RIGHT);
 		items.add(FragmentTransition.SCALE_IN_AND_SLIDE_TO_BOTTOM);
 		items.add(FragmentTransition.SCALE_IN_AND_SLIDE_TO_TOP);
+		items.add(FragmentTransition.FLIP_TO_LEFT);
+		items.add(FragmentTransition.FLIP_TO_RIGHT);
+		items.add(FragmentTransition.FLIP_TO_BOTTOM);
+		items.add(FragmentTransition.FLIP_TO_TOP);
 		changeItems(items);
 	}
 
