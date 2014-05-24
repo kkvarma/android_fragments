@@ -32,7 +32,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.wit.android.examples.internal.app.ExBaseActionBarActivity;
+import com.wit.android.support.examples.app.ExBaseActivity;
+import com.wit.android.support.examples.libs.fragment.manage.ExFragmentController;
 import com.wit.android.support.fragment.WebFragment;
 import com.wit.android.support.fragment.examples.R;
 
@@ -46,7 +47,7 @@ import java.util.regex.Pattern;
  *
  * @author Martin Albedinsky
  */
-public class WebActivity extends ExBaseActionBarActivity {
+public class WebActivity extends ExBaseActivity {
 
 	/**
 	 *
@@ -56,7 +57,9 @@ public class WebActivity extends ExBaseActionBarActivity {
 	/**
 	 * Log TAG.
 	 */
-	private static final String TAG = WebActivity.class.getSimpleName();
+	// private static final String TAG = WebActivity.class.getSimpleName();
+
+	private static final String WEB_FRAGMENT_TAG = "com.wit.android.support.fragment.examples.app.WebActivity.TAG.WebFragment";
 
 	/**
 	 *
@@ -121,7 +124,6 @@ public class WebActivity extends ExBaseActionBarActivity {
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		getFragmentController().setFragmentContainerID(R.id.Ex_App_Content_Container);
 		if (savedInstanceState == null) {
 			final String googleUrl = "http://www.google.com";
 
@@ -130,7 +132,7 @@ public class WebActivity extends ExBaseActionBarActivity {
 			);
 			webFragment.setOnWebContentLoadingListener(new LoadingListener());
 
-			getFragmentController().showFragment(webFragment);
+			getFragmentController().showFragment(webFragment, new ExFragmentController.ShowOptions().tag(WEB_FRAGMENT_TAG));
 			mUrlEdit.setText(googleUrl);
 		}
 	}
@@ -140,7 +142,7 @@ public class WebActivity extends ExBaseActionBarActivity {
 	 * @param url
 	 */
 	private void loadUrl(String url) {
-		final WebFragment fragment = (WebFragment) getFragmentController().getVisibleFragment();
+		final WebFragment fragment = getWebFragment();
 		if (fragment != null) {
 			fragment.loadContent(url);
 			mUrlEdit.setText(url);
@@ -152,8 +154,16 @@ public class WebActivity extends ExBaseActionBarActivity {
 	 * @return
 	 */
 	private boolean dispatchBackPressed() {
-		final WebFragment webFragment = (WebFragment) getFragmentController().getVisibleFragment();
+		final WebFragment webFragment = getWebFragment();
 		return (webFragment != null && webFragment.dispatchBackPressed());
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	private WebFragment getWebFragment() {
+		return (WebFragment) getFragmentController().findFragmentByTag(WEB_FRAGMENT_TAG);
 	}
 
 	/**

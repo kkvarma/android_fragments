@@ -1,22 +1,22 @@
 apply plugin: 'android'
 
 /**
- * Used repositories =========================================================
+ * Used repositories ===============================================================================
  */
 repositories {
     mavenLocal()
 }
 
 /**
- * Examples dependencies =====================================================
+ * Examples dependencies ===========================================================================
  */
 dependencies {
     compile project(':library')
-    compile 'com.wit.android:examples:+@aar'
+    compile 'com.wit.android.support:examples:+@aar'
 }
 
 /**
- * Android Project options ===================================================
+ * Android Project options =========================================================================
  */
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -27,6 +27,11 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.libraryVersionCode
         versionName rootProject.libraryVersionName
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 
     // Release.

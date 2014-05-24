@@ -26,7 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.wit.android.examples.app.fragment.ExActionBarFragment;
+import com.wit.android.support.examples.libs.fragment.ExActionBarFragment;
 import com.wit.android.support.fragment.examples.R;
 
 import java.util.Random;
@@ -43,12 +43,12 @@ public class ImageFragment extends ExActionBarFragment {
 	/**
 	 * Log TAG.
 	 */
-	private static final String TAG = ImageFragment.class.getSimpleName();
+	// private static final String TAG = ImageFragment.class.getSimpleName();
 
 	/**
 	 *
 	 */
-	private static final String BUNDLE_IMAGE = "com.wit.android.support.fragment.examples.fragment.ImageFragment.Bundle.Image";
+	private static final String BUNDLE_IMAGE = "com.wit.android.support.fragment.examples.fragment.ImageFragment.BUNDLE.Image";
 
 	/**
 	 *
@@ -89,15 +89,10 @@ public class ImageFragment extends ExActionBarFragment {
 	private Image mImage;
 
 	/**
-	 * @param title
 	 * @return
 	 */
-	public static ImageFragment newInstance(String title) {
-		final ImageFragment fragment = new ImageFragment();
-		final Bundle args = new Bundle();
-		args.putString(ARGS_ACTION_BAR_TITLE, title);
-		fragment.setArguments(args);
-		return fragment;
+	public static ImageFragment newInstance() {
+		return new ImageFragment();
 	}
 
 	/**
@@ -124,7 +119,7 @@ public class ImageFragment extends ExActionBarFragment {
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_image, null);
+		return inflater.inflate(R.layout.fragment_image, container, false);
 	}
 
 	/**

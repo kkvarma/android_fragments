@@ -19,33 +19,27 @@
  * =================================================================================================
  */
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.wit.android.support.fragment.examples">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-sdk android:maxSdkVersion="19"/>
+    <item>
+        <shape android:shape="rectangle">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+            <corners android:radius="2dip" />
 
-    <application
-            android:allowBackup="true"
-            android:icon="@drawable/ex_ic_launcher"
-            android:label="@string/App.Name"
-            android:theme="@style/Ex.App.Theme">
+            <solid android:color="#444444"/>
 
-        <activity android:name=".app.HomeActivity">
+        </shape>
+    </item>
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+    <item>
+        <shape android:shape="rectangle">
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            <corners android:radius="2dip" />
 
-        </activity>
+            <solid android:color="@android:color/transparent"/>
 
-        <activity
-                android:name=".app.WebActivity"
-                android:label="@string/Navigation.Label.WebFragment"/>
+            <stroke android:width="1px" android:color="#666666" />
 
-    </application>
-
-</manifest>
+        </shape>
+    </item>
+</layer-list>

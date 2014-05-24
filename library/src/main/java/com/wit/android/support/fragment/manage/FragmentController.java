@@ -497,6 +497,53 @@ public class FragmentController {
 	}
 
 	/**
+	 * <p>
+	 * Clears fragments back stack by calling {@link android.support.v4.app.FragmentManager#popBackStack()}
+	 * in loop of size obtained by {@link android.support.v4.app.FragmentManager#getBackStackEntryCount()}.
+	 * </p>
+	 * <p>
+	 * <b>Note</b>, that {@link android.support.v4.app.FragmentManager#popBackStack()} is an asynchronous
+	 * call, so the fragments back stack can be cleared in the feature not immediately.
+	 * </p>
+	 *
+	 * @see #clearBackStackImmediate()
+	 */
+	public void clearBackStack() {
+		final int n = mFragmentManager.getBackStackEntryCount();
+		if (n > 0) {
+			for (int i = 0; i < n; i++) {
+				mFragmentManager.popBackStack();
+			}
+		}
+	}
+
+	/**
+	 * <p>
+	 * Like {@link #clearBackStack()}, but this will call {@link android.support.v4.app.FragmentManager#popBackStackImmediate()}.
+	 * </p>
+	 * <p>
+	 * <b>Note</b>, that {@link android.support.v4.app.FragmentManager#popBackStackImmediate()} is a
+	 * synchronous call, so the fragments back stack will be popped immediately within this call. If
+	 * there is too many fragments, this can take some time.
+	 * </p>
+	 *
+	 * @return <code>True</code> if there was at least one fragment popped, <code>false</code> otherwise.
+	 */
+	public boolean clearBackStackImmediate() {
+		final int n = mFragmentManager.getBackStackEntryCount();
+		if (n > 0) {
+			boolean popped = false;
+			for (int i = 0; i < n; i++) {
+				if (!popped) {
+					popped = mFragmentManager.popBackStackImmediate();
+				}
+			}
+			return popped;
+		}
+		return false;
+	}
+
+	/**
 	 * Getters + Setters ---------------------------------------------------------------------------
 	 */
 
@@ -679,7 +726,7 @@ public class FragmentController {
 		final FragmentTransaction transaction = beginTransaction();
 
 		// Apply animations to the transaction from the FragmentTransition parameter.
-		if (options.transition != FragmentTransition.NONE) {
+		if (options.transition != null && options.transition != FragmentTransition.NONE) {
 			final FragmentTransition trans = options.transition;
 
 			/**
