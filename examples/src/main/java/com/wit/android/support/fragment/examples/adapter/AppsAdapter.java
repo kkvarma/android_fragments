@@ -71,7 +71,7 @@ public class AppsAdapter extends ExSimpleAdapter<ApplicationInfo> {
 	 */
 	@Override
 	public View onCreateView(int position, LayoutInflater inflater, ViewGroup parent) {
-		return bAsGrid ? inflate(R.layout.grid_item_app) : inflate(R.layout.list_item_app);
+		return bAsGrid ? inflate(R.layout.grid_item_app, parent) : inflate(R.layout.list_item_app, parent);
 	}
 
 	/**

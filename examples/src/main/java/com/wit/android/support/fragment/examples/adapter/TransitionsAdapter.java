@@ -19,6 +19,7 @@
 package com.wit.android.support.fragment.examples.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -101,7 +102,11 @@ public class TransitionsAdapter extends ExSimpleSpinnerAdapter<FragmentTransitio
 		 * @param text
 		 */
 		void setText(CharSequence text) {
-			label.setText(text.toString().replace("_", " "));
+			if (!TextUtils.isEmpty(text)) {
+				label.setText(text.toString().replace("_", " "));
+			} else {
+				label.setText(text);
+			}
 		}
 	}
 }
