@@ -1,7 +1,7 @@
 /**
  * Gradle project settings =========================================================================
  */
-// Release version:
-include ':library'
 // Examples version:
-//include ':examples', ':library'
+include ':examples', ':library'
+// Release version:
+//include ':library'
