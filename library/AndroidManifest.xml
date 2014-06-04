@@ -2,7 +2,7 @@
 <!--
 /*
  * =================================================================================================
- *                    Copyright (C) 2014 Martin Albedinsky [Wolf-ITechnologies]
+ *                Copyright (C) 2013 - 2014 Martin Albedinsky [Wolf-ITechnologies]
  * =================================================================================================
  *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
  * *************************************************************************************************
@@ -18,7 +18,10 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
--->
-<set xmlns:android="http://schemas.android.com/apk/res/android"
-     android:zAdjustment="top">
-</set>
+--><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="310" android:versionName="3.1" package="com.wit.android.support.fragment">
+
+    <uses-sdk android:minSdkVersion="7"/>
+
+    <application/>
+
+</manifest>
