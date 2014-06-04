@@ -13,8 +13,8 @@ android {
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
-        versionCode rootProject.libraryVersionCode
-        versionName rootProject.libraryVersionName
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
     }
 
     compileOptions {
@@ -37,7 +37,7 @@ android.libraryVariants.all { variant ->
 
     task("${variant.name}Aar") {
         // Delete the old artifact file.
-        delete '../artifacts/' + rootProject.libraryName + '-' + rootProject.libraryVersionName + '.aar'
+        delete '../artifacts/' + rootProject.artifactName + '-' + rootProject.versionName + '.aar'
         // Copy the updated artifact from the build/libs directory to the library artifacts directory.
         copy {
             from 'build/libs/library.aar'
@@ -47,7 +47,7 @@ android.libraryVariants.all { variant ->
             rename { String fileName ->
                 fileName.replace(
                         'library',
-                        rootProject.libraryName + '-' + rootProject.libraryVersionName)
+                        rootProject.artifactName + '-' + rootProject.versionName)
             }
         }
     }
@@ -64,8 +64,7 @@ android.libraryVariants.all { variant ->
         from 'src/main/java'
     }
 
-    task("${variant.name}Library", dependsOn: [assembleRelease, "${variant.name}Aar", "${variant.name}Javadoc", "${variant.name}Sources"]) {
-    }
+    task("${variant.name}Library", dependsOn: [assembleRelease, "${variant.name}Aar", "${variant.name}Javadoc", "${variant.name}Sources"]) {}
 }
 
 /**
@@ -90,9 +89,9 @@ task updateArtifacts {
 def updateArtifact(artifactName, classifier) {
     // Delete the old artifact file.
     if (classifier.isEmpty()) {
-        delete '../artifacts/' + rootProject.libraryName + '-' + rootProject.libraryVersionName + '.jar'
+        delete '../artifacts/' + rootProject.artifactName + '-' + rootProject.versionName + '.jar'
     } else {
-        delete '../artifacts/' + rootProject.libraryName + "-" + rootProject.libraryVersionName + '-' + classifier + '.jar'
+        delete '../artifacts/' + rootProject.artifactName + "-" + rootProject.versionName + '-' + classifier + '.jar'
     }
 
     // Copy the updated artifact from the build/libs directory to the library artifacts directory.
@@ -104,7 +103,7 @@ def updateArtifact(artifactName, classifier) {
         rename { String fileName ->
             fileName.replace(
                     'library',
-                    rootProject.libraryName + '-' + rootProject.libraryVersionName)
+                    rootProject.artifactName + '-' + rootProject.versionName)
         }
     }
 }

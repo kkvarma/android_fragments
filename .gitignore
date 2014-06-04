@@ -1,19 +1,12 @@
-# =============== GLOBAL =====================
-# Local configuration file (sdk path, etc)
+### GLOBAL =========================================================================================
 local.properties
 
-# Modules build directories
-library/build/
-examples/build/
-
-# Gradle files
+### GRADLE FILES ===================================================================================
 .gradle
 
-# Intellij files
+### INTELLIJ FILES =================================================================================
 .idea/libraries
-.idea/dictionaries
 .idea/workspace.xml
 
-# =============== RELEASE ====================
-# exclude instrument tests
-library/src/instrumentTest/
+### BUILD DIRECTORY ================================================================================
+build/
