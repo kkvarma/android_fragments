@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.support.fragment.examples.activity;
+package com.wit.android.support.fragment.examples.app;
 
 import android.content.Intent;
 import android.content.res.Resources;
