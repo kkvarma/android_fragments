@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.support.fragment.examples.app;
+package com.wit.android.support.fragment.examples.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;

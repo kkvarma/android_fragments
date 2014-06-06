@@ -76,6 +76,14 @@ public class TransitionsAdapter extends ExSimpleSpinnerAdapter<FragmentTransitio
 	/**
 	 */
 	@Override
+	public void onBindView(int position, Object viewHolder) {
+		super.onBindView(position, viewHolder);
+		((ViewHolder) viewHolder).label.setPadding(0, 0, 0, 0);
+	}
+
+	/**
+	 */
+	@Override
 	protected void onUpdateView(FragmentTransition fragmentTransition, Object holder) {
 		((ViewHolder) holder).setText(fragmentTransition.name());
 	}
