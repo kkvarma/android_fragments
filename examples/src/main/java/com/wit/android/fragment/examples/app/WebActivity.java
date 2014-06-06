@@ -18,12 +18,12 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.support.fragment.examples.app;
+package com.wit.android.fragment.examples.app;
 
+import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.view.ActionMode;
 import android.text.Editable;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,10 +32,10 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.wit.android.support.examples.app.ExBaseActivity;
-import com.wit.android.support.examples.libs.fragment.manage.ExFragmentController;
-import com.wit.android.support.fragment.WebFragment;
-import com.wit.android.support.fragment.examples.R;
+import com.wit.android.examples.app.ExBaseActivity;
+import com.wit.android.examples.libs.fragment.manage.ExFragmentController;
+import com.wit.android.fragment.WebFragment;
+import com.wit.android.fragment.examples.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -93,7 +93,7 @@ public class WebActivity extends ExBaseActivity {
 		boolean processed = false;
 		switch (item.getItemId()) {
 			case R.id.Ex_App_Menu_Edit:
-				startSupportActionMode(new ActionModeCallback());
+				startActionMode(new ActionModeCallback());
 				processed = true;
 				break;
 			case android.R.id.home:
@@ -109,7 +109,7 @@ public class WebActivity extends ExBaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		final FrameLayout contentLayout = new FrameLayout(this);
 		contentLayout.setId(R.id.Ex_App_Content_Container);
@@ -121,7 +121,7 @@ public class WebActivity extends ExBaseActivity {
 		}
 
 		// Set up action bar.
-		final ActionBar actionBar = getSupportActionBar();
+		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		if (savedInstanceState == null) {
@@ -211,12 +211,12 @@ public class WebActivity extends ExBaseActivity {
 
 		@Override
 		public void onLoadingStarted(String webUrl) {
-			setSupportProgressBarIndeterminateVisibility(true);
+			setProgressBarIndeterminateVisibility(true);
 		}
 
 		@Override
 		public void onLoadingFinished(String webUrl) {
-			setSupportProgressBarIndeterminateVisibility(false);
+			setProgressBarIndeterminateVisibility(false);
 		}
 	}
 

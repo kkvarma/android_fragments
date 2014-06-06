@@ -19,8 +19,7 @@
  * =================================================================================================
  */
 -->
-<set xmlns:android="http://schemas.android.com/apk/res/android"
-     android:zAdjustment="bottom">
+<set xmlns:android="http://schemas.android.com/apk/res/android">
 
     <objectAnimator
             android:propertyName="alpha"
