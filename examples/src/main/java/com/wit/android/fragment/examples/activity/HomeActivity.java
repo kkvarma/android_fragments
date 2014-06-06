@@ -18,24 +18,24 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment.examples.app;
+package com.wit.android.support.fragment.examples.activity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 
-import com.wit.android.examples.app.ExBaseHomeActivity;
-import com.wit.android.examples.model.NavigationItem;
-import com.wit.android.fragment.examples.R;
-import com.wit.android.fragment.examples.adapter.TransitionsAdapter;
-import com.wit.android.fragment.examples.fragment.factory.FragmentsFactory;
-import com.wit.android.fragment.manage.FragmentController;
-import com.wit.android.fragment.manage.FragmentTransition;
+import com.wit.android.support.examples.app.ExBaseHomeActivity;
+import com.wit.android.support.examples.model.ExNavigationItem;
+import com.wit.android.support.fragment.examples.R;
+import com.wit.android.support.fragment.examples.adapter.TransitionsAdapter;
+import com.wit.android.support.fragment.examples.fragment.factory.FragmentsFactory;
+import com.wit.android.support.fragment.manage.FragmentController;
+import com.wit.android.support.fragment.manage.FragmentTransition;
 
 import java.util.List;
 
@@ -74,6 +74,11 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 	private ActionBar mActionBar;
 
 	/**
+	 *
+	 */
+	private boolean bRestored;
+
+	/**
 	 * @param view
 	 */
 	public void onAddToBackStackClick(View view) {
@@ -95,18 +100,23 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 	}
 
 	/**
+	 * Invoked when an item at the specific <var>position</var> was selected in the transitions
+	 * navigation drop down menu.
 	 */
 	@Override
 	public boolean onNavigationItemSelected(int position, long id) {
-		final FragmentTransition transition = mTransitionsAdapter.getItem(position);
-		if (transition != null) {
-			mTransitionsAdapter.dispatchItemSelected(position);
-			mController.showFragment(
-					FragmentsFactory.TRANSITIONS,
-					FragmentsFactory.createParams(transition, bAddFragmentToBackStack)
-			);
-			return true;
+		mTransitionsAdapter.dispatchItemSelected(position);
+		if (!bRestored) {
+			final FragmentTransition transition = mTransitionsAdapter.getItem(position);
+			if (transition != null) {
+				mController.showFragment(
+						FragmentsFactory.TRANSITIONS,
+						FragmentsFactory.createParams(transition, bAddFragmentToBackStack)
+				);
+				return true;
+			}
 		}
+		bRestored = false;
 		return false;
 	}
 
@@ -136,22 +146,23 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 		mController.setFragmentFactory(new FragmentsFactory());
 
 		// Set up action bar.
-		mActionBar = getActionBar();
+		mActionBar = getSupportActionBar();
 		this.mTransitionsAdapter = new TransitionsAdapter(this);
 		mActionBar.setListNavigationCallbacks(mTransitionsAdapter, this);
-		onNavigationChange(FragmentsFactory.TRANSITIONS);
 
-		if (savedInstanceState == null) {
+		if (!(bRestored = savedInstanceState != null)) {
 			final int selectedPosition = 0;
 			setNavigationItemSelected(selectedPosition);
+
+			onNavigationChange(FragmentsFactory.TRANSITIONS);
 		}
 	}
 
 	/**
 	 */
 	@Override
-	protected List<NavigationItem> onCreateNavigationItems(List<NavigationItem> list, Resources resources) {
-		final NavigationItem.Builder builder = new NavigationItem.Builder(resources);
+	protected List<ExNavigationItem> onCreateNavigationItems(List<ExNavigationItem> list, Resources resources) {
+		final ExNavigationItem.Builder builder = new ExNavigationItem.Builder(resources);
 		list.add(createItem(
 				FragmentsFactory.TRANSITIONS,
 				R.string.Navigation_Label_Transitions,
