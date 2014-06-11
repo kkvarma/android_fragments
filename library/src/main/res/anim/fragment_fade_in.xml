@@ -20,7 +20,7 @@
  */
 -->
 <alpha xmlns:android="http://schemas.android.com/apk/res/android"
-       android:duration="@integer/Anim.Fragment.Alpha.In.duration"
+       android:duration="@integer/Config.Anim.Fragment.Alpha.In.duration"
        android:fromAlpha="0.0"
        android:toAlpha="1.0"
        android:zAdjustment="top"/>
