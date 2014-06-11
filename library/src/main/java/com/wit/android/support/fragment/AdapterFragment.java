@@ -162,11 +162,11 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 		 */
 		// Retrieve adapter view options.
 		this.mAdapterViewOptions = FragmentAnnotations.obtainAnnotationFrom(
-				classOfFragment, AdapterViewOptions.class, true, AdapterFragment.class
+				classOfFragment, AdapterViewOptions.class, AdapterFragment.class
 		);
 		// Retrieve action mode options.
 		this.mActionModeOptions = FragmentAnnotations.obtainAnnotationFrom(
-				classOfFragment, ActionModeOptions.class, true, AdapterFragment.class
+				classOfFragment, ActionModeOptions.class, AdapterFragment.class
 		);
 	}
 
