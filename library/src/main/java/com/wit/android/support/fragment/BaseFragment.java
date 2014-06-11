@@ -26,11 +26,8 @@ import android.view.ViewGroup;
 
 import com.wit.android.support.fragment.annotation.ClickableViews;
 import com.wit.android.support.fragment.annotation.ContentView;
-import com.wit.android.support.fragment.annotation.InjectView;
-import com.wit.android.support.fragment.annotation.InjectViews;
 import com.wit.android.support.fragment.util.FragmentAnnotations;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,7 +146,7 @@ public abstract class BaseFragment extends Fragment {
 		 * Process class annotations.
 		 */
 		// Retrieve content view.
-		this.mContentView = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, ContentView.class, true, BaseFragment.class);
+		this.mContentView = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, ContentView.class, BaseFragment.class);
 		// Retrieve clickable view ids.
 		// Note, that we will gather ids from all annotated class to this parent.
 		this.aClickableViewIds = this.gatherClickableViewIds(classOfFragment, new ArrayList<Integer>());
@@ -212,8 +209,7 @@ public abstract class BaseFragment extends Fragment {
 				child.setOnClickListener(clickListener);
 			}
 		}
-		// Check views which should be injected.
-		this.injectViews(((Object) this).getClass(), view);
+		FragmentAnnotations.injectFragmentViews(this, BaseFragment.class);
 	}
 
 	/**
@@ -364,48 +360,6 @@ public abstract class BaseFragment extends Fragment {
 	/**
 	 * Private -------------------------------------------------------------------------------------
 	 */
-
-	/**
-	 * Injects all annotated member views. Note, that this is recursive function, which will check
-	 * all members for {@link com.wit.android.support.fragment.annotation.InjectView}
-	 * annotation presented above each of members of the given <var>classOfFragment</var>.
-	 *
-	 * @param classOfFragment Class of fragment where to check InjectView annotations.
-	 * @param root            The root view of this fragment used to find views to inject.
-	 */
-	private void injectViews(Class<?> classOfFragment, View root) {
-		// Class of fragment must have @InjectViews annotation present to really iterate and inject
-		// annotated views.
-		if (classOfFragment.isAnnotationPresent(InjectViews.class)) {
-			// Process annotated fields.
-			final Field[] fields = classOfFragment.getDeclaredFields();
-			if (fields.length > 0) {
-				for (Field field : fields) {
-					if (field.isAnnotationPresent(InjectView.class)) {
-						// Check correct type of the field.
-						final Class<?> classOfField = field.getType();
-						if (View.class.isAssignableFrom(classOfField)) {
-							field.setAccessible(true);
-							try {
-								field.set(
-										this,
-										root.findViewById(field.getAnnotation(InjectView.class).value())
-								);
-							} catch (IllegalAccessException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				}
-			}
-		}
-
-		// Inject also views of supper class, but only to this BaseFragment super.
-		final Class<?> superOfFragment = classOfFragment.getSuperclass();
-		if (superOfFragment != null && !superOfFragment.equals(BaseFragment.class)) {
-			injectViews(superOfFragment, root);
-		}
-	}
 
 	/**
 	 * Gathers all ids presented within ClickableViews annotation. Note, that this is recursive method,

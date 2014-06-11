@@ -18,6 +18,13 @@
  */
 package com.wit.android.support.fragment.util;
 
+import android.app.Activity;
+import android.support.v4.app.Fragment;
+import android.view.View;
+
+import com.wit.android.support.fragment.annotation.InjectView;
+import com.wit.android.support.fragment.annotation.InjectViews;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
@@ -84,12 +91,12 @@ public final class FragmentAnnotations {
 
 	/**
 	 * <p>
-	 * Same as {@link #obtainAnnotationFrom(Class, Class, boolean, Class)} with <var>checkSuper</var>
-	 * set to <code>false</code>.
+	 * Same as {@link #obtainAnnotationFrom(Class, Class, Class)} with no <var>maxSuperClass</var>
+	 * specified.
 	 * </p>
 	 */
 	public static <A extends Annotation> A obtainAnnotationFrom(Class<?> fromClass, Class<A> classOfAnnotation) {
-		return obtainAnnotationFrom(fromClass, classOfAnnotation, false, null);
+		return obtainAnnotationFrom(fromClass, classOfAnnotation, null);
 	}
 
 	/**
@@ -100,22 +107,21 @@ public final class FragmentAnnotations {
 	 *
 	 * @param fromClass         The class from which should be the requested annotation obtained.
 	 * @param classOfAnnotation The class of the requested annotation.
-	 * @param checkSuper        If set to <code>true</code>, this method will be called recursively
-	 *                          for all super classes of the given annotated class until the requested
-	 *                          annotation is presented and obtained, otherwise annotation will be
-	 *                          obtained only from the given annotated class.
-	 * @param maxSuperClass     The class to which should be recursion running if <var>checkSuper</var>
-	 *                          is set to <code>true</code>.
+	 * @param maxSuperClass     If <code>not null</code>, this method will be also called (recursively)
+	 *                          for all super classes of the given annotated class (max to the specified
+	 *                          <var>maxSuperClass</var>) until the requested annotation is presented
+	 *                          and obtained, otherwise annotation will be obtained only from the given
+	 *                          annotated class.
 	 * @param <A>               The type of the requested annotation.
 	 * @return Obtained annotation or <code>null</code> if the requested annotation is not presented
 	 * for the given class.
 	 * @see #obtainAnnotationFrom(Class, Class)
 	 */
-	public static <A extends Annotation> A obtainAnnotationFrom(Class<?> fromClass, Class<A> classOfAnnotation, boolean checkSuper, Class<?> maxSuperClass) {
-		if (!fromClass.isAnnotationPresent(classOfAnnotation) && checkSuper) {
+	public static <A extends Annotation> A obtainAnnotationFrom(Class<?> fromClass, Class<A> classOfAnnotation, Class<?> maxSuperClass) {
+		if (!fromClass.isAnnotationPresent(classOfAnnotation) && maxSuperClass != null) {
 			final Class<?> parent = fromClass.getSuperclass();
 			if (parent != null && !parent.equals(maxSuperClass)) {
-				return obtainAnnotationFrom(parent, classOfAnnotation, true, maxSuperClass);
+				return obtainAnnotationFrom(parent, classOfAnnotation, maxSuperClass);
 			}
 		}
 		return fromClass.getAnnotation(classOfAnnotation);
@@ -123,12 +129,12 @@ public final class FragmentAnnotations {
 
 	/**
 	 * <p>
-	 * Same as {@link #iterateFields(Class, com.wit.android.support.fragment.util.FragmentAnnotations.FieldProcessor, boolean, Class)}
-	 * with <var>checkSuper</var> set to <code>false</code>.
+	 * Same as {@link #iterateFields(Class, FieldProcessor, Class)}
+	 * with no <var>maxSuperClass</var> specified.
 	 * </p>
 	 */
 	public static void iterateFields(Class<?> fieldsClass, FieldProcessor processor) {
-		iterateFields(fieldsClass, processor, false, null);
+		iterateFields(fieldsClass, processor, null);
 	}
 
 	/**
@@ -138,25 +144,88 @@ public final class FragmentAnnotations {
 	 *
 	 * @param ofClass       The class of which fields to iterate.
 	 * @param processor     The field processor callback to be invoked for each of iterated fields.
-	 * @param checkSuper    If set to <code>true</code>, this method will be called recursively for all
-	 *                      super classes of the given annotated class.
-	 * @param maxSuperClass The class to which should be recursion running if <var>checkSuper</var>
-	 *                      is set to <code>true</code>.
-	 * @see #iterateFields(Class, FragmentAnnotations.FieldProcessor)
+	 * @param maxSuperClass If <code>not null</code>, this method will be also called (recursively)
+	 *                      for all super classes of the given class (max to the specified
+	 *                      <var>maxSuperClass</var>), otherwise only fields of the given class will
+	 *                      be iterated.
+	 * @see #iterateFields(Class, FieldProcessor)
 	 */
-	public static void iterateFields(Class<?> ofClass, FieldProcessor processor, boolean checkSuper, Class<?> maxSuperClass) {
+	public static void iterateFields(Class<?> ofClass, FieldProcessor processor, Class<?> maxSuperClass) {
 		final Field[] fields = ofClass.getDeclaredFields();
 		if (fields.length > 0) {
 			for (Field field : fields) {
 				processor.onProcessField(field, field.getName());
 			}
 		}
-		// If check also super iterate trough super fields too.
-		if (checkSuper) {
+		if (maxSuperClass != null) {
 			final Class<?> parent = ofClass.getSuperclass();
 			if (parent != null && !parent.equals(maxSuperClass)) {
-				iterateFields(parent, processor, true, maxSuperClass);
+				iterateFields(parent, processor, maxSuperClass);
 			}
+		}
+	}
+
+	/**
+	 * <p>
+	 * Injects all annotated field views into the given <var>fragment</var> context. Each view to inject
+	 * must be marked with {@link com.wit.android.support.fragment.annotation.InjectView @InjectView}
+	 * annotation and the class of <var>fragment</var> (also its super classes) must be marked with
+	 * {@link com.wit.android.support.fragment.annotation.InjectViews @InjectViews}, otherwise views
+	 * of such a class will be not injected. This is due to optimization, because not all super classes
+	 * can have @InjectView annotated fields but still all their fields will be without optimization
+	 * iterated.
+	 * </p>
+	 * <p>
+	 * <b>Note</b>, that views to inject will be obtained from the current root view of the given
+	 * fragment ({@link android.support.v4.app.Fragment#getView()}).
+	 * </p>
+	 * <p>
+	 * <b>If the context of which views you want to inject has like really a lot of fields, consider to
+	 * not use this approach, because it can really decrease performance (increase time of displaying
+	 * new screen, etc.).</b>
+	 * </p>
+	 *
+	 * @param fragment      The instance of fragment into which context should be views injected.
+	 * @param maxSuperClass If <code>not null</code>, this method will be also called (recursively)
+	 *                      for all super classes of the given fragment (max to the specified
+	 *                      <var>maxSuperClass</var>), otherwise only fields of the given fragment's
+	 *                      class will be iterated.
+	 * @throws java.lang.IllegalStateException If the given fragment does not have created root view yet.
+	 * @see #injectActivityViews(android.app.Activity, Class)
+	 */
+	public static void injectFragmentViews(Fragment fragment, Class<?> maxSuperClass) {
+		final View root = fragment.getView();
+		if (root != null) {
+			injectViews(fragment, fragment.getView(), maxSuperClass);
+		} else {
+			throw new IllegalStateException("Can not to inject views. Fragment does not have root view created yet.");
+		}
+	}
+
+	/**
+	 * <p>
+	 * Same as {@link #injectFragmentViews(android.support.v4.app.Fragment, Class)}, where the given
+	 * <var>activity</var> will be used as context in which will be views injected.
+	 * </p>
+	 * <p>
+	 * <b>Note</b>, that views to inject will be obtained from the current root content view of the given
+	 * activity (<code>activity.getWindow().getDecorView().findViewById(android.R.id.content)</code>).
+	 * </p>
+	 *
+	 * @param activity      The instance of activity into which context should be views injected.
+	 * @param maxSuperClass If <code>not null</code>, this method will be also called (recursively)
+	 *                      for all super classes of the given activity (max to the specified
+	 *                      <var>maxSuperClass</var>), otherwise only fields of the given activity's
+	 *                      class will be iterated.
+	 * @throws java.lang.IllegalStateException If the given activity does not contain a view with the
+	 *                                         {@link android.R.id#content} id.
+	 */
+	public static void injectActivityViews(Activity activity, Class<?> maxSuperClass) {
+		final View content = activity.getWindow().getDecorView().findViewById(android.R.id.content);
+		if (content != null) {
+			injectViews(activity, content, maxSuperClass);
+		} else {
+			throw new IllegalStateException("");
 		}
 	}
 
@@ -171,6 +240,54 @@ public final class FragmentAnnotations {
 	/**
 	 * Private -------------------------------------------------------------------------------------
 	 */
+
+	/**
+	 * Injects all annotated field views. Note, that this can run recursively, so it will check
+	 * all members for {@link com.wit.android.support.fragment.annotation.InjectView}
+	 * annotation presented above each of members of the given <var>classOfViewContext</var>.
+	 *
+	 * @param rootContext   The context in which is the passed <var>root</var> view presented and into
+	 *                      which should be views injected.
+	 * @param root          The root view of the given context.
+	 * @param maxSuperClass If <code>not null</code>, this method will be also called (recursively)
+	 *                      for all super classes of the given class (max to the specified
+	 *                      <var>maxSuperClass</var>), otherwise only fields of the given class will
+	 *                      be iterated.
+	 */
+	private static void injectViews(Object rootContext, View root, Class<?> maxSuperClass) {
+		// Class of fragment must have @InjectViews annotation present to really iterate and inject
+		// annotated views.
+		final Class<?> classOfRootContext = rootContext.getClass();
+		if (classOfRootContext.isAnnotationPresent(InjectViews.class)) {
+			// Process annotated fields.
+			final Field[] fields = classOfRootContext.getDeclaredFields();
+			if (fields.length > 0) {
+				for (Field field : fields) {
+					if (field.isAnnotationPresent(InjectView.class)) {
+						// Check correct type of the field.
+						final Class<?> classOfField = field.getType();
+						if (View.class.isAssignableFrom(classOfField)) {
+							field.setAccessible(true);
+							try {
+								field.set(
+										rootContext,
+										root.findViewById(field.getAnnotation(InjectView.class).value())
+								);
+							} catch (IllegalAccessException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// Inject also views of supper class, but only to this BaseFragment super.
+		final Class<?> superOfFragment = classOfRootContext.getSuperclass();
+		if (superOfFragment != null && !superOfFragment.equals(maxSuperClass)) {
+			injectViews(rootContext, root, maxSuperClass);
+		}
+	}
 
 	/**
 	 * Abstract methods ----------------------------------------------------------------------------
@@ -188,9 +305,8 @@ public final class FragmentAnnotations {
 	 * <h4>Interface Overview</h4>
 	 * <p>
 	 * Simple callback which allows processing of all declared members of a desired class using one of
-	 * {@link #iterateFields(Class, com.wit.android.support.fragment.util.FragmentAnnotations.FieldProcessor)},
-	 * {@link #iterateFields(Class, com.wit.android.support.fragment.util.FragmentAnnotations.FieldProcessor, boolean, Class)}
-	 * methods.
+	 * {@link #iterateFields(Class, FieldProcessor)},
+	 * {@link #iterateFields(Class, FieldProcessor, Class)} methods.
 	 * </p>
 	 *
 	 * @author Martin Albedinsky
@@ -199,11 +315,11 @@ public final class FragmentAnnotations {
 
 		/**
 		 * <p>
-		 * Invoked for each of iterated fields.
+		 * Invoked for each of the iterated fields.
 		 * </p>
 		 *
 		 * @param field The currently iterated field.
-		 * @param name The name of the currently iterated field.
+		 * @param name  The name of the currently iterated field.
 		 */
 		public void onProcessField(Field field, String name);
 	}

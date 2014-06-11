@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 
 import com.wit.android.support.fragment.annotation.FactoryFragments;
 import com.wit.android.support.fragment.examples.fragment.ActionBarFragmentImpl;
+import com.wit.android.support.fragment.examples.fragment.AnnotatedFragment;
 import com.wit.android.support.fragment.examples.fragment.GridFragmentImpl;
 import com.wit.android.support.fragment.examples.fragment.ImageFragment;
 import com.wit.android.support.fragment.examples.fragment.ListFragmentImpl;
@@ -43,7 +44,8 @@ import com.wit.android.support.fragment.manage.FragmentTransition;
 		FragmentsFactory.TRANSITIONS,
 		FragmentsFactory.LIST,
 		FragmentsFactory.GRID,
-		FragmentsFactory.ACTION_BAR
+		FragmentsFactory.ACTION_BAR,
+		FragmentsFactory.ANNOTATIONS
 })
 public class FragmentsFactory extends BaseFragmentFactory {
 
@@ -71,6 +73,11 @@ public class FragmentsFactory extends BaseFragmentFactory {
 	 *
 	 */
 	public static final int ACTION_BAR = 0x04;
+
+	/**
+	 *
+	 */
+	public static final int ANNOTATIONS = 0x05;
 
 	/**
 	 *
@@ -107,6 +114,8 @@ public class FragmentsFactory extends BaseFragmentFactory {
 				return GridFragmentImpl.newInstance();
 			case ACTION_BAR:
 				return ActionBarFragmentImpl.newInstance();
+			case ANNOTATIONS:
+				return AnnotatedFragment.newInstance();
 		}
 		return null;
 	}
@@ -124,9 +133,7 @@ public class FragmentsFactory extends BaseFragmentFactory {
 					options.addToBackStack(params.getBoolean(PARAMS_ADD_TO_BACK_STACK, false));
 				}
 				break;
-			case LIST:
-			case GRID:
-			case ACTION_BAR:
+			default:
 				options.transition(FragmentTransition.FADE_IN);
 				break;
 		}

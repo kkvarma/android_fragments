@@ -32,6 +32,7 @@
     <string name="Navigation.Label.GridFragment">Grid Fragment</string>
     <string name="Navigation.Label.WebFragment">Web Fragment</string>
     <string name="Navigation.Label.ActionBarFragment">ActionBar Fragment</string>
+    <string name="Navigation.Label.AnnotatedFragment">Annotated Fragment</string>
 
     <!-- ### HOME ACTIVITY ===================================================================== -->
 
