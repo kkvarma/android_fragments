@@ -16,17 +16,17 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.support.fragment.examples.fragment;
+package com.wit.android.fragment.examples.fragment;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.wit.android.support.fragment.BaseFragment;
-import com.wit.android.support.fragment.annotation.ContentView;
-import com.wit.android.support.fragment.annotation.InjectView;
-import com.wit.android.support.fragment.annotation.InjectViews;
-import com.wit.android.support.fragment.examples.R;
+import com.wit.android.fragment.BaseFragment;
+import com.wit.android.fragment.annotation.ContentView;
+import com.wit.android.fragment.annotation.InjectView;
+import com.wit.android.fragment.annotation.InjectViews;
+import com.wit.android.fragment.examples.R;
 
 /**
  * <p>
@@ -42,7 +42,7 @@ public class AnnotatedFragment extends BaseFragment {
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = ExampleListFragment.class.getSimpleName();
+	// private static final String TAG = AnnotatedFragment.class.getSimpleName();
 
 	@InjectView(R.id.Fragment_Annotations_TextView_Title)
 	private TextView mTitleTextView;
@@ -62,7 +62,7 @@ public class AnnotatedFragment extends BaseFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		mTitleTextView.setText("Title section");
+		mTitleTextView.setText("Lorem ipsum");
 		mContentTextView.setText(
 				"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut " +
 						"labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco " +

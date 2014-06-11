@@ -25,6 +25,7 @@ import android.os.Bundle;
 
 import com.wit.android.fragment.annotation.FactoryFragments;
 import com.wit.android.fragment.examples.fragment.ActionBarFragmentImpl;
+import com.wit.android.fragment.examples.fragment.AnnotatedFragment;
 import com.wit.android.fragment.examples.fragment.GridFragmentImpl;
 import com.wit.android.fragment.examples.fragment.ImageFragment;
 import com.wit.android.fragment.examples.fragment.ListFragmentImpl;
