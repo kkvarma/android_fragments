@@ -34,14 +34,14 @@
             android:valueTo="0"
             android:propertyName="rotationY"
             android:interpolator="@android:interpolator/accelerate_decelerate"
-            android:duration="@integer/Anim.Fragment.Flip.Horizontal.In.duration" />
+            android:duration="@integer/Config.Anim.Fragment.Flip.Horizontal.In.duration" />
 
     <!-- Show an animated object for the second half of animation. -->
     <objectAnimator
             android:valueFrom="0.0"
             android:valueTo="1.0"
             android:propertyName="alpha"
-            android:startOffset="@integer/Anim.Fragment.Flip.Horizontal.In.offset"
+            android:startOffset="@integer/Config.Anim.Fragment.Flip.Horizontal.In.offset"
             android:duration="1" />
 
 </set>

@@ -25,11 +25,11 @@
             android:propertyName="alpha"
             android:valueFrom="0.5"
             android:valueTo="1.0"
-            android:duration="@integer/Anim.Fragment.Scale.Alpha.In.duration"/>
+            android:duration="@integer/Config.Anim.Fragment.Scale.Alpha.In.duration"/>
 
     <set
-            android:duration="@integer/Anim.Fragment.Scale.In.duration"
-            android:startOffset="@integer/Anim.Fragment.Scale.In.offset">
+            android:duration="@integer/Config.Anim.Fragment.Scale.In.duration"
+            android:startOffset="@integer/Config.Anim.Fragment.Scale.In.offset">
 
         <objectAnimator
                 android:propertyName="scaleX"
