@@ -189,6 +189,11 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 				R.string.Navigation_Label_ActionBarFragment,
 				builder
 		));
+		list.add(createItem(
+				FragmentsFactory.ANNOTATIONS,
+				R.string.Navigation_Label_AnnotatedFragment,
+				builder
+		));
 		return list;
 	}
 
