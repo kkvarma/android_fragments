@@ -3,7 +3,11 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
-### **3.1** (<i>TODO</i>) ###
+### **3.2** (<i>11.06.2014</i>) ###
+- Correctly named animation durations (renamed, started from  <b>Anim</b> to <b>Config.Anim</b>)
+- Added support to inject views into fragment/activity using FragmentAnnotations utils.
+
+### **3.1** (<i>24.05.2014</i>) ###
 - Refactored and optimized WebFragment
 - added support to clear fragments back stack by FragmentController.clearBackStack() or FragmentController.clearBackStackImmediate()
 
