@@ -196,7 +196,7 @@ public final class FragmentAnnotations {
 	public static void injectFragmentViews(Fragment fragment, Class<?> maxSuperClass) {
 		final View root = fragment.getView();
 		if (root != null) {
-			injectViews(fragment, fragment.getView(), maxSuperClass);
+			injectViews(fragment, ((Object) fragment).getClass(), root, maxSuperClass);
 		} else {
 			throw new IllegalStateException("Can not to inject views. Fragment does not have root view created yet.");
 		}
@@ -223,7 +223,7 @@ public final class FragmentAnnotations {
 	public static void injectActivityViews(Activity activity, Class<?> maxSuperClass) {
 		final View content = activity.getWindow().getDecorView().findViewById(android.R.id.content);
 		if (content != null) {
-			injectViews(activity, content, maxSuperClass);
+			injectViews(activity, ((Object) activity).getClass(), content, maxSuperClass);
 		} else {
 			throw new IllegalStateException("");
 		}
@@ -248,19 +248,19 @@ public final class FragmentAnnotations {
 	 *
 	 * @param rootContext   The context in which is the passed <var>root</var> view presented and into
 	 *                      which should be views injected.
+	 * @param contextClass  The class of a context for the current recursive iteration.
 	 * @param root          The root view of the given context.
 	 * @param maxSuperClass If <code>not null</code>, this method will be also called (recursively)
 	 *                      for all super classes of the given class (max to the specified
 	 *                      <var>maxSuperClass</var>), otherwise only fields of the given class will
 	 *                      be iterated.
 	 */
-	private static void injectViews(Object rootContext, View root, Class<?> maxSuperClass) {
+	private static void injectViews(Object rootContext, Class<?> contextClass, View root, Class<?> maxSuperClass) {
 		// Class of fragment must have @InjectViews annotation present to really iterate and inject
 		// annotated views.
-		final Class<?> classOfRootContext = rootContext.getClass();
-		if (classOfRootContext.isAnnotationPresent(InjectViews.class)) {
+		if (contextClass.isAnnotationPresent(InjectViews.class)) {
 			// Process annotated fields.
-			final Field[] fields = classOfRootContext.getDeclaredFields();
+			final Field[] fields = contextClass.getDeclaredFields();
 			if (fields.length > 0) {
 				for (Field field : fields) {
 					if (field.isAnnotationPresent(InjectView.class)) {
@@ -283,9 +283,9 @@ public final class FragmentAnnotations {
 		}
 
 		// Inject also views of supper class, but only to this BaseFragment super.
-		final Class<?> superOfFragment = classOfRootContext.getSuperclass();
-		if (superOfFragment != null && !superOfFragment.equals(maxSuperClass)) {
-			injectViews(rootContext, root, maxSuperClass);
+		final Class<?> superOfRootContext = contextClass.getSuperclass();
+		if (superOfRootContext != null && !superOfRootContext.equals(maxSuperClass)) {
+			injectViews(rootContext, superOfRootContext, root, maxSuperClass);
 		}
 	}
 
