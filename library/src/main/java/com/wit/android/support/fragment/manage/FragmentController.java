@@ -220,6 +220,7 @@ public class FragmentController {
 		// Check if we have fragment factory and fragment is provided.
 		if (!this.checkFragmentFactory(fragmentId)) {
 			Log.e(TAG, "Current factory does not provides fragment for the requested id(" + fragmentId + ").");
+			return false;
 		}
 		return this.performShowFragment(fragmentId, params);
 	}
