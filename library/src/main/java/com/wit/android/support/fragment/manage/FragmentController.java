@@ -1057,7 +1057,7 @@ public class FragmentController {
 		/**
 		 * <p>
 		 * Sets the flag indicating, whether to add or replace fragment to <code>true</code> so fragment
-		 * will be showed by {@link android.support.v4.app.FragmentTransaction#add(int, android.support.v4.app.Fragment, String)}.
+		 * will be showed by {@link android.app.FragmentTransaction#add(int, android.app.Fragment, String)}.
 		 * </p>
 		 *
 		 * @return This options.
@@ -1070,7 +1070,7 @@ public class FragmentController {
 		/**
 		 * <p>
 		 * Sets the flag indicating, whether to add or replace fragment to <code>false</code> so fragment
-		 * will be showed by {@link android.support.v4.app.FragmentTransaction#replace(int, android.support.v4.app.Fragment, String)}.
+		 * will be showed by {@link android.app.FragmentTransaction#replace(int, android.app.Fragment, String)}.
 		 * </p>
 		 *
 		 * @return This options.
