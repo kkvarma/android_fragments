@@ -466,6 +466,38 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 
 	/**
 	 * <p>
+	 * Starts loader with the specified <var>id</var>. If there was already started loader with the
+	 * same id before, such a loader will be <b>re-started</b>, otherwise new loader will be <b>initialized</b>.
+	 * </p>
+	 * <p>
+	 * See {@link LoaderManager#restartLoader(int, Bundle, LoaderManager.LoaderCallbacks)} and
+	 * {@link LoaderManager#initLoader(int, Bundle, LoaderManager.LoaderCallbacks)} for more info.
+	 * </p>
+	 *
+	 * @param id        Id of the desired loader to start.
+	 * @param params    Params for loader.
+	 * @param callbacks Callbacks for loader.
+	 * @return <code>True</code> if a loader with the specified id was <b>initialized</b> or <b>re-started</b>,
+	 * <code>false</code> if the current activity is already invalid or {@link LoaderManager} is not
+	 * available.
+	 */
+	protected boolean startLoader(int id, Bundle params, LoaderManager.LoaderCallbacks callbacks) {
+		if (isActivityAvailable()) {
+			final LoaderManager loaderManager = getActivity().getLoaderManager();
+			if (loaderManager != null) {
+				if (loaderManager.getLoader(id) != null) {
+					loaderManager.restartLoader(id, params, callbacks);
+				} else {
+					loaderManager.initLoader(id, params, callbacks);
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * <p>
 	 * Starts the action mode for this adapter fragment. <b>Note</b>, that by default is this called
 	 * from {@link #onItemLongClick(android.widget.AdapterView, android.view.View, int, long)} if
 	 * there is {@link com.wit.android.fragment.annotation.ActionModeOptions} annotation
@@ -546,29 +578,6 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * </p>
 	 */
 	protected void onActionModeFinished() {
-	}
-
-	/**
-	 * <p>
-	 * </p>
-	 *
-	 * @param id
-	 * @param params
-	 * @param callbacks
-	 * @return
-	 */
-	protected boolean startLoader(int id, Bundle params, LoaderManager.LoaderCallbacks callbacks) {
-		if (isActivityAvailable()) {
-			final LoaderManager loaderManager = getActivity().getLoaderManager();
-			if (loaderManager != null) {
-				if (loaderManager.getLoader(id) != null) {
-					loaderManager.restartLoader(id, params, callbacks);
-				} else {
-					loaderManager.initLoader(id, params, callbacks);
-				}
-			}
-		}
-		return false;
 	}
 
 	/**
