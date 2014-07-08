@@ -1,11 +1,11 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 /**
  * Library dependencies ============================================================================
  */
 dependencies {
-    compile 'com.android.support:support-v4:+'
-    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:support-v4:20.+'
+    compile 'com.android.support:appcompat-v7:20.+'
 }
 
 /**
@@ -19,6 +19,7 @@ android {
         minSdkVersion rootProject.minSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
+        applicationId 'com.wit.android.support.fragment'
     }
 
     compileOptions {

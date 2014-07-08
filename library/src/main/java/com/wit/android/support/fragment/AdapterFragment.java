@@ -20,6 +20,7 @@ package com.wit.android.support.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
 import android.support.v7.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -545,6 +546,29 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * </p>
 	 */
 	protected void onActionModeFinished() {
+	}
+
+	/**
+	 * <p>
+	 * </p>
+	 *
+	 * @param id
+	 * @param params
+	 * @param callbacks
+	 * @return
+	 */
+	protected boolean startLoader(int id, Bundle params, LoaderManager.LoaderCallbacks callbacks) {
+		if (isActivityAvailable()) {
+			final LoaderManager loaderManager = getActivity().getSupportLoaderManager();
+			if (loaderManager != null) {
+				if (loaderManager.getLoader(id) != null) {
+					loaderManager.restartLoader(id, params, callbacks);
+				} else {
+					loaderManager.initLoader(id, params, callbacks);
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
