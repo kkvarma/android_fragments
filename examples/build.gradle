@@ -1,4 +1,4 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 /**
  * Used repositories ===============================================================================
@@ -27,6 +27,7 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
+        applicationId 'com.wit.android.support.fragment.examples'
     }
 
     compileOptions {
