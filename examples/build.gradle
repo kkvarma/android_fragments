@@ -1,4 +1,4 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 /**
  * Used repositories ===============================================================================
@@ -28,6 +28,7 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
+        applicationId 'com.wit.android.support.fragment.examples'
     }
 
     compileOptions {
@@ -54,6 +55,8 @@ android {
         buildTypes {
             release {
                 signingConfig signingConfigs.release
+                runProguard true
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             }
         }
     }
