@@ -35,7 +35,7 @@ import com.wit.android.fragment.util.FragmentAnnotations;
  * todo: description
  * </p>
  * <p>
- * <h6>Used annotations</h6>
+ * <h6>Accepted annotations</h6>
  * {@link com.wit.android.fragment.annotation.ActionBarOptions @ActionBarOptions} [<b>class</b>]
  * <p>
  * If this annotation is presented, all options presented within this annotation will be applied to

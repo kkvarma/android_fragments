@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
  * <p>
  * todo: description
  * </p>
- * <h6>Used annotations</h6>
+ * <h6>Accepted annotations</h6>
  * {@link com.wit.android.fragment.annotation.WebContent @WebContent} [<b>class</b>]
  * <p>
  * If this annotation is presented, the content provided by this annotation will be loaded into
