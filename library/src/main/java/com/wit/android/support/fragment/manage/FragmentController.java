@@ -535,8 +535,8 @@ public class FragmentController {
 		if (n > 0) {
 			boolean popped = false;
 			for (int i = 0; i < n; i++) {
-				if (!popped) {
-					popped = mFragmentManager.popBackStackImmediate();
+				if (mFragmentManager.popBackStackImmediate() && !popped) {
+					popped = true;
 				}
 			}
 			return popped;
@@ -748,8 +748,11 @@ public class FragmentController {
 			Log.d(TAG, "onShowFragment() options = " + options.toString());
 		}
 
-		// Fragment's view replaces the view of the current fragment container layout.
-		transaction.replace(options.containerId, fragment, options.tag);
+		if (options.add) {
+			transaction.add(options.containerId, fragment, options.tag);
+		} else {
+			transaction.replace(options.containerId, fragment, options.tag);
+		}
 
 		// Add fragment to back stack if requested.
 		if (options.addToBackStack) {
@@ -968,6 +971,11 @@ public class FragmentController {
 		protected boolean showImmediately = false;
 
 		/**
+		 * Flag indicating, whether to add or replace fragment.
+		 */
+		protected boolean add;
+
+		/**
 		 * Constructors ============================================================================
 		 */
 
@@ -992,6 +1000,7 @@ public class FragmentController {
 			this.addToBackStack = input.readInt() == 1;
 			this.replaceSame = input.readInt() == 1;
 			this.showImmediately = input.readInt() == 1;
+			this.add = input.readInt() == 1;
 			this.transition = FragmentTransition.CREATOR.createFromParcel(input);
 		}
 
@@ -1008,6 +1017,7 @@ public class FragmentController {
 			dest.writeInt(addToBackStack ? 1 : 0);
 			dest.writeInt(replaceSame ? 1 : 0);
 			dest.writeInt(showImmediately ? 1 : 0);
+			dest.writeInt(add ? 1 : 0);
 			transition.writeToParcel(dest, flags);
 		}
 
@@ -1037,8 +1047,37 @@ public class FragmentController {
 			builder.append("), ");
 			builder.append(" container(");
 			builder.append(containerId);
+			builder.append("), ");
+			builder.append(" add(");
+			builder.append(add);
 			builder.append(")]");
 			return builder.toString();
+		}
+
+		/**
+		 * <p>
+		 * Sets the flag indicating, whether to add or replace fragment to <code>true</code> so fragment
+		 * will be showed by {@link android.support.v4.app.FragmentTransaction#add(int, android.support.v4.app.Fragment, String)}.
+		 * </p>
+		 *
+		 * @return This options.
+		 */
+		public ShowOptions add() {
+			this.add = true;
+			return this;
+		}
+
+		/**
+		 * <p>
+		 * Sets the flag indicating, whether to add or replace fragment to <code>false</code> so fragment
+		 * will be showed by {@link android.support.v4.app.FragmentTransaction#replace(int, android.support.v4.app.Fragment, String)}.
+		 * </p>
+		 *
+		 * @return This options.
+		 */
+		public ShowOptions replace() {
+			this.add = false;
+			return this;
 		}
 
 		/**
