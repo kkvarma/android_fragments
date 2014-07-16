@@ -36,7 +36,7 @@ import java.util.List;
  * <p>
  * todo: description
  * </p>
- * <h6>Used annotations</h6>
+ * <h6>Accepted annotations</h6>
  * {@link com.wit.android.support.fragment.annotation.ContentView @ContentView} [<b>class</b>]
  * <p>
  * If this annotation is presented, the layout id presented within this annotation will be used to

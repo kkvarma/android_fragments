@@ -42,7 +42,7 @@ import com.wit.android.support.fragment.util.FragmentAnnotations;
  * <p>
  * todo: description
  * </p>
- * <h6>Used annotations</h6>
+ * <h6>Accepted annotations</h6>
  * {@link com.wit.android.support.fragment.annotation.AdapterViewOptions @AdapterViewOptions} [<b>class</b>]
  * <p>
  * If this annotation is presented, all necessary stuffs around AdapterView like empty view, empty text
