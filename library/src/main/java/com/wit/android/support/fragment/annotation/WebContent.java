@@ -48,8 +48,8 @@ public @interface WebContent {
 	 */
 
 	/**
-	 * The content to load into {@link android.webkit.WebView}. Can be raw <b>HTML</b>, web <b>URL</b>
-	 * or path to <b>FILE</b> with html content.
+	 * The desired content to be loaded into {@link android.webkit.WebView}. Can be a raw <b>HTML</b>,
+	 * web <b>URL</b> or path to a <b>FILE</b> with the desired HTML content.
 	 */
 	String value();
 }

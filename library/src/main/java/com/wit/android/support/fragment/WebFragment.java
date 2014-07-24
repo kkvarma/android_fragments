@@ -42,11 +42,13 @@ import java.util.regex.Pattern;
  * todo: description
  * </p>
  * <h6>Accepted annotations</h6>
- * {@link com.wit.android.support.fragment.annotation.WebContent @WebContent} [<b>class</b>]
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.annotation.WebContent @WebContent} [<b>class</b>]</li>
  * <p>
  * If this annotation is presented, the content provided by this annotation will be loaded into
- * {@link android.webkit.WebView} of an instance of this WebFragment implementation.
+ * {@link android.webkit.WebView} of an instance of annotated WebFragment sub-class.
  * </p>
+ * </ul>
  *
  * @author Martin Albedinsky
  * @see com.wit.android.support.fragment.WebFragment.OnWebContentLoadingListener
@@ -164,7 +166,6 @@ public class WebFragment extends BaseFragment {
 	 */
 	protected static final int CONTENT_FILE = 0x03;
 
-
 	/**
 	 * Content data encoding.
 	 */
@@ -252,7 +253,7 @@ public class WebFragment extends BaseFragment {
 	/**
 	 * <p>
 	 * Creates a new instance of WebFragment. If {@link com.wit.android.support.fragment.annotation.WebContent}
-	 * annotation is presented, it will be processed here.
+	 * annotation is presented above a subclass of WebFragment, it will be processed here.
 	 * </p>
 	 */
 	public WebFragment() {
@@ -261,7 +262,7 @@ public class WebFragment extends BaseFragment {
 		/**
 		 * Process class annotations.
 		 */
-		// Retrieve web content.
+		// Obtain web content.
 		if (classOfFragment.isAnnotationPresent(WebContent.class)) {
 			this.mContent = classOfFragment.getAnnotation(WebContent.class).value();
 			this.updatePrivateFlags(PFLAG_CONTENT_CHANGED, true);
@@ -290,7 +291,7 @@ public class WebFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Creates a new instance of WebFragment with no content to load.
+	 * Creates a new instance of WebFragment with no initial content to load.
 	 * </p>
 	 *
 	 * @return New instance of WebFragment.
@@ -402,8 +403,8 @@ public class WebFragment extends BaseFragment {
 	 * Loads the given content into the WebView of this web fragment instance.
 	 * </p>
 	 *
-	 * @param content Content to load. Can be raw <b>HTML</b>, web <b>URL</b> or path to <b>FILE</b>
-	 *                with html content.
+	 * @param content Content to load. Can be a raw <b>HTML</b>, web <b>URL</b> or path to a <b>FILE</b>
+	 *                with HTML content.
 	 * @return <code>True</code> if content was loaded, <code>false</code> if it was prepared to load
 	 * and will be loaded in the feature when WebView is ready.
 	 * @see #getContent()
@@ -424,7 +425,7 @@ public class WebFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Returns an instance of web view.
+	 * Returns an instance of WebView
 	 * </p>
 	 *
 	 * @return The WebView of this web fragment instance.
@@ -436,10 +437,10 @@ public class WebFragment extends BaseFragment {
 	/**
 	 * <p>
 	 * Returns the current content, which is loaded or prepared to load into the web view of this
-	 * fragment instance.
+	 * web fragment instance.
 	 * </p>
 	 *
-	 * @return Current content. This can be raw HTML or URL or FILE path.
+	 * @return Current content. This can be a raw HTML or web URL or a FILE path.
 	 * @see #loadContent(String)
 	 */
 	public String getContent() {
@@ -562,11 +563,12 @@ public class WebFragment extends BaseFragment {
 	 * <p>
 	 * Invoked whenever {@link #loadContent(String)} is called and this fragment is ready (READY means
 	 * after {@link #onActivityCreated(android.os.Bundle)} was called) to load that specific content
-	 * or from {@link #onActivityCreated(android.os.Bundle)} when this fragment is first time created.
+	 * or from {@link #onActivityCreated(android.os.Bundle)} when this fragment is being first time
+	 * created.
 	 * </p>
 	 *
-	 * @param content Content to load. This can be raw HTML, URL or path to FILE.
-	 * @param type    The type of the specified <var>content</var>. One of the flags {@link #CONTENT_EMPTY},
+	 * @param content Content to load. This can be a raw HTML, web URL or a path to FILE.
+	 * @param type    A type of the specified <var>content</var>. One of flags {@link #CONTENT_EMPTY},
 	 *                {@link #CONTENT_HTML}, {@link #CONTENT_URL} or {@link #CONTENT_FILE}.
 	 */
 	protected void onLoadContent(String content, int type) {
@@ -595,12 +597,16 @@ public class WebFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Called to dispatch message, that loading process of the specified <var>webUrl</var> was started.
+	 * Called to dispatch message, that loading process of the specified <var>webUrl</var> just started.
+	 * </p>
+	 * <p>
+	 * By default this will dispatch {@link OnWebContentLoadingListener#onLoadingStarted(String)}
+	 * callback to the current OnWebContentLoadingListener listener.
 	 * </p>
 	 *
 	 * @param webUrl Web url which is currently being loaded into the current web view.
 	 */
-	protected final void dispatchLoadingStarted(String webUrl) {
+	protected void dispatchLoadingStarted(String webUrl) {
 		if (mContentLoadingListener != null) {
 			mContentLoadingListener.onLoadingStarted(webUrl);
 		}
@@ -610,10 +616,14 @@ public class WebFragment extends BaseFragment {
 	 * <p>
 	 * Called to dispatch message, that loading process of the specified <var>webUrl</var> was finished.
 	 * </p>
+	 * <p>
+	 * By default, this will dispatch {@link OnWebContentLoadingListener#onLoadingFinished(String)}
+	 * callback to the current OnWebContentLoadingListener listener.
+	 * </p>
 	 *
 	 * @param webUrl Web url which was currently loaded into the current web view.
 	 */
-	protected final void dispatchLoadingFinished(String webUrl) {
+	protected void dispatchLoadingFinished(String webUrl) {
 		if (mContentLoadingListener != null) {
 			mContentLoadingListener.onLoadingFinished(webUrl);
 		}
@@ -710,8 +720,9 @@ public class WebFragment extends BaseFragment {
 		 * Sets the content to load into web view.
 		 * </p>
 		 *
-		 * @param content Content to load. This can be raw HTML or URL.
-		 * @return This options.
+		 * @param content Content to load. This can be a raw <b>HTML</b>, web <b>URL</b> or path to
+		 *                a <b>FILE</b> with HTML content.
+		 * @return This options instance.
 		 */
 		public WebOptions content(String content) {
 			this.content = content;
@@ -724,7 +735,7 @@ public class WebFragment extends BaseFragment {
 		 * </p>
 		 *
 		 * @param enabled <code>True</code> to enable, <code>false</code> otherwise.
-		 * @return This options.
+		 * @return This options instance.
 		 */
 		public WebOptions javaScriptEnabled(boolean enabled) {
 			this.javascriptEnabled = enabled;
@@ -740,7 +751,7 @@ public class WebFragment extends BaseFragment {
 	 * <h4>Interface Overview</h4>
 	 * <p>
 	 * Simple listener for {@link com.wit.android.support.fragment.WebFragment} with callbacks fired
-	 * whenever loading process of the specific <b>web url</b> was started/finished.
+	 * whenever loading process of a specific <b>web url</b> was started/finished.
 	 * </p>
 	 *
 	 * @author Martin Albedinsky
@@ -749,9 +760,9 @@ public class WebFragment extends BaseFragment {
 
 		/**
 		 * <p>
-		 * Fired whenever loading process of the specified <var>webUrl</var> within an instance of
+		 * Invoked whenever loading process of the specified <var>webUrl</var> within an instance of
 		 * {@link com.wit.android.support.fragment.WebFragment} for which is this callback registered
-		 * was started.
+		 * just started.
 		 * </p>
 		 *
 		 * @param webUrl The web url which is currently being loaded into web view.
@@ -760,9 +771,9 @@ public class WebFragment extends BaseFragment {
 
 		/**
 		 * <p>
-		 * Fired whenever loading process of the specified <var>webUrl</var> within an instance of
+		 * Invoked whenever loading process of the specified <var>webUrl</var> within an instance of
 		 * {@link com.wit.android.support.fragment.WebFragment} for which is this callback registered
-		 * was finished.
+		 * just finished.
 		 * </p>
 		 *
 		 * @param webUrl The web url which was currently loaded into web view.

@@ -195,7 +195,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * <var>fragmentName</var>.
 	 * </p>
 	 * <p>
-	 * Example format: <u>com.android.app.fragment.factories.ProfileActivityFactory.EditProfile.TAG</u><br/><br/>
+	 * Example format: <u>com.android.app.fragment.factories.ProfileActivityFactory.TAG.EditProfile</u><br/><br/>
 	 * - where <b>com.android.app.fragment.factories</b> is name of package where specified <var>classOfFactory</var>
 	 * is situated, <b>ProfileActivityFactory</b> is name of factory class, <b>EditProfile</b> is
 	 * <var>fragmentName</var> and <b>TAG</b> is tag identifier.
@@ -212,7 +212,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 		if (fragmentName == null || fragmentName.length() == 0) {
 			return null;
 		}
-		return classOfFactory.getPackage().getName() + "." + classOfFactory.getSimpleName() + "." + fragmentName + ".TAG";
+		return classOfFactory.getPackage().getName() + "." + classOfFactory.getSimpleName() + ".TAG." + fragmentName;
 	}
 
 	/**
@@ -389,7 +389,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 			}
 		}
 
-		// Retrieve also factories of super class, but only to this BaseFragmentFactory super.
+		// Obtain also factories of super class, but only to this BaseFragmentFactory super.
 		final Class<?> superOfFactory = classOfFactory.getSuperclass();
 		if (superOfFactory != null && !classOfFactory.equals(BaseFragmentFactory.class)) {
 			gatherJoinedFactories(superOfFactory, factories);

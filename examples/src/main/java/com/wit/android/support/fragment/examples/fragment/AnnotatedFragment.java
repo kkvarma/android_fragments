@@ -44,11 +44,11 @@ public class AnnotatedFragment extends BaseFragment {
 	 */
 	// private static final String TAG = ExampleListFragment.class.getSimpleName();
 
-	@InjectView(R.id.Fragment_Annotations_TextView_Title)
-	private TextView mTitleTextView;
-
 	@InjectView(R.id.Fragment_Annotations_TextView_Content)
 	private TextView mContentTextView;
+
+	@InjectView.Last(R.id.Fragment_Annotations_TextView_Title)
+	private TextView mTitleTextView;
 
 	/**
 	 * @return

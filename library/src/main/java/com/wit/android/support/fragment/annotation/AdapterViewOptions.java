@@ -18,6 +18,8 @@
  */
 package com.wit.android.support.fragment.annotation;
 
+import android.widget.AdapterView;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -63,22 +65,42 @@ public @interface AdapterViewOptions {
 	 */
 
 	/**
-	 * The id for an AdapterView.
+	 * A class of the desired AdapterView to be instantiated.
+	 */
+	Class<? extends AdapterView> viewType() default AdapterView.class;
+
+	/**
+	 * The desired id for an AdapterView.
+	 * <p/>
+	 * Default value: <b>{@link #VIEW_DEFAULT_ID}</b>
 	 */
 	int viewId() default VIEW_DEFAULT_ID;
 
 	/**
-	 * The id for an empty view.
+	 * The desired id for an empty view.
+	 * <p/>
+	 * Default value: <b>{@link #EMPTY_VIEW_DEFAULT_ID}</b>
 	 */
 	int emptyViewId() default EMPTY_VIEW_DEFAULT_ID;
 
 	/**
-	 * The resource id of the text for an empty view (if instance of {@link android.widget.TextView}).
+	 * A resource id of the desired text for an empty view (if instance of {@link android.widget.TextView}).
+	 * <p/>
+	 * Default value: <b>-1</b>
 	 */
 	int emptyText() default -1;
 
 	/**
-	 * Flag indicating whether items presented within an AdapterView are long-clickable or not.
+	 * Flag indicating whether items presented within an AdapterView are <b>clickable</b> or not.
+	 * <p/>
+	 * Default value: <b>false</b>
+	 */
+	boolean clickable() default false;
+
+	/**
+	 * Flag indicating whether items presented within an AdapterView are <b>long-clickable</b> or not.
+	 * <p/>
+	 * Default value: <b>false</b>
 	 */
 	boolean longClickable() default false;
 }

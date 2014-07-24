@@ -3,6 +3,10 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
+### **3.4** (<i>24.07.2014</i>) ###
+- todo:
+- Some bug fixes.
+
 ### **3.3** (<i>08.07.2014</i>) ###
 - Add support to start loader from within the context of AdapterFragment.
 

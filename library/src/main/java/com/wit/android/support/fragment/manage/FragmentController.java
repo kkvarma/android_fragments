@@ -114,6 +114,11 @@ public class FragmentController {
 	private OnFragmentChangeListener mFragmentListener;
 
 	/**
+	 *
+	 */
+	private String mCurrentFragmentTag;
+
+	/**
 	 * Arrays --------------------------------------------------------------------------------------
 	 */
 
@@ -580,6 +585,17 @@ public class FragmentController {
 
 	/**
 	 * <p>
+	 * todo:
+	 * </p>
+	 *
+	 * @return
+	 */
+	public String getCurrentFragmentTag() {
+		return mCurrentFragmentTag;
+	}
+
+	/**
+	 * <p>
 	 * Returns the tag of the currently visible fragment.
 	 * </p>
 	 *
@@ -868,9 +884,10 @@ public class FragmentController {
 	 *                     <code>false</code> if was removed.
 	 */
 	private void dispatchBackStackEntryChange(FragmentManager.BackStackEntry changedEntry, boolean added) {
+		this.mCurrentFragmentTag = changedEntry.getName();
 		if (mBackStackListener != null) {
 			// Dispatch to listener.
-			mBackStackListener.onBackStackChanged(added, changedEntry.getId(), changedEntry.getName());
+			mBackStackListener.onBackStackChanged(added, changedEntry.getId(), mCurrentFragmentTag);
 		}
 	}
 
@@ -883,8 +900,9 @@ public class FragmentController {
 	 *                <code>false</code> otherwise.
 	 */
 	private boolean dispatchFragmentChanged(int id, String tag, boolean factory) {
+		this.mCurrentFragmentTag = tag;
 		if (mFragmentListener != null) {
-			mFragmentListener.onFragmentChanged(id, tag, factory);
+			mFragmentListener.onFragmentChanged(id, mCurrentFragmentTag, factory);
 		}
 		return true;
 	}
@@ -1324,7 +1342,7 @@ public class FragmentController {
 		 *
 		 * @param added <code>True</code> if there was added new back stack entry, <code>false</code>
 		 *              if old one was removed.
-		 * @param id    The id of a back stack entry which status was changed.
+		 * @param id    The id of a back stack entry which status was changed. position of entry
 		 * @param tag   The tag of a back stack entry which status was changed.
 		 */
 		public void onBackStackChanged(boolean added, int id, String tag);
