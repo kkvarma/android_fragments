@@ -101,9 +101,9 @@ public @interface AdapterViewOptions {
 	/**
 	 * Flag indicating whether items presented within an AdapterView are <b>clickable</b> or not.
 	 * <p/>
-	 * Default value: <b>false</b>
+	 * Default value: <b>true</b>
 	 */
-	boolean clickable() default false;
+	boolean clickable() default true;
 
 	/**
 	 * Flag indicating whether items presented within an AdapterView are <b>long-clickable</b> or not.
