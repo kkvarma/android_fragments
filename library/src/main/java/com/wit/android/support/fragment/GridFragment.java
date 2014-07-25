@@ -35,86 +35,10 @@ import android.widget.ListAdapter;
  * @see com.wit.android.support.fragment.ListFragment
  */
 public class GridFragment<A extends ListAdapter> extends AdapterFragment<GridView, A> {
-
-	/**
-	 * Constants ===================================================================================
-	 */
-
-	/**
-	 * Log TAG.
-	 */
-	// private static final String TAG = ListFragment.class.getSimpleName();
-
-	/**
-	 * Flag indicating whether the debug output trough log-cat is enabled or not.
-	 */
-	// private static final boolean DEBUG_ENABLED = true;
-
-	/**
-	 * Flag indicating whether the output trough log-cat is enabled or not.
-	 */
-	// private static final boolean LOG_ENABLED = true;
-
-	/**
-	 * Enums =======================================================================================
-	 */
-
-	/**
-	 * Static members ==============================================================================
-	 */
-
-	/**
-	 * Members =====================================================================================
-	 */
-
-	/**
-	 * Arrays --------------------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Booleans ------------------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Constructors ================================================================================
-	 */
-
-	/**
-	 * Methods =====================================================================================
-	 */
-
-	/**
-	 * Public --------------------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Getters + Setters ---------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Protected -----------------------------------------------------------------------------------
-	 */
-
 	/**
 	 */
 	@Override
 	protected GridView onCreateAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return new GridView(inflater.getContext(), null, android.R.attr.gridViewStyle);
 	}
-
-	/**
-	 * Private -------------------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Abstract methods ----------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Inner classes ===============================================================================
-	 */
-
-	/**
-	 * Interface ===================================================================================
-	 */
 }
