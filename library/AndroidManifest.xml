@@ -18,7 +18,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
---><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="310" android:versionName="3.1" package="com.wit.android.support.fragment">
+--><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="340" android:versionName="3.4" package="com.wit.android.support.fragment">
 
     <uses-sdk android:minSdkVersion="7"/>
 

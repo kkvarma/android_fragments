@@ -46,7 +46,7 @@ import java.util.List;
  *
  * @author Martin Albedinsky
  */
-public class HomeActivity extends ExBaseHomeActivity implements FragmentController.OnFragmentChangeListener, FragmentController.OnBackStackChangeListener, ActionBar.OnNavigationListener {
+public class HomeActivity extends ExBaseHomeActivity implements FragmentController.OnChangeListener, FragmentController.OnBackStackChangeListener, ActionBar.OnNavigationListener {
 
 	/**
 	 * Log TAG.
