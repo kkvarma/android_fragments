@@ -20,13 +20,13 @@
  */
 package com.wit.android.fragment.examples.fragment;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
-import com.wit.android.support.fragment.annotation.FactoryFragments;
-import com.wit.android.support.fragment.manage.BaseFragmentFactory;
-import com.wit.android.support.fragment.manage.FragmentController;
-import com.wit.android.support.fragment.manage.FragmentTransition;
+import com.wit.android.fragment.annotation.FactoryFragments;
+import com.wit.android.fragment.manage.BaseFragmentFactory;
+import com.wit.android.fragment.manage.FragmentController;
+import com.wit.android.fragment.manage.FragmentTransition;
 
 /**
  * <p>
