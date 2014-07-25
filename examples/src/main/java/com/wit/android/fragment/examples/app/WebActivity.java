@@ -132,7 +132,7 @@ public class WebActivity extends ExBaseActivity {
 			);
 			webFragment.setOnWebContentLoadingListener(new LoadingListener());
 
-			getFragmentController().showFragment(webFragment, new ExFragmentController.ShowOptions().tag(WEB_FRAGMENT_TAG));
+			getFragmentController().showFragment(webFragment, new ExFragmentController.ExShowOptions().tag(WEB_FRAGMENT_TAG));
 			mUrlEdit.setText(googleUrl);
 		}
 	}

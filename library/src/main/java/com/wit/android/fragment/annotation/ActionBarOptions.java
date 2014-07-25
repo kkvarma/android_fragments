@@ -48,21 +48,25 @@ public @interface ActionBarOptions {
 	 */
 
 	/**
-	 * The resource id of the text which should be set as title for an ActionBar.
+	 * A resource id of the desired text which should be set as title for an ActionBar.
 	 *
 	 * @see android.app.ActionBar#setTitle(int)
 	 */
 	int title();
 
 	/**
-	 * The resource id of the image which should be set as icon for an ActionBar.
+	 * A resource id of the desired image which should be set as icon for an ActionBar.
+	 * <p/>
+	 * Default value: <b>-1</b>
 	 *
 	 * @see android.app.ActionBar#setIcon(int)
 	 */
 	int icon() default -1;
 
 	/**
-	 * Flag indicating whether to enable/disable an ActionBar's home as up icon.
+	 * Flag indicating whether to display/hide an ActionBar's home as up icon.
+	 * <p/>
+	 * Default value: <b>false</b>
 	 *
 	 * @see android.app.ActionBar#setDisplayHomeAsUpEnabled(boolean)
 	 */

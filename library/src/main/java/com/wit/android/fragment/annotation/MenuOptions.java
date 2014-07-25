@@ -45,21 +45,21 @@ public @interface MenuOptions {
 
 	/**
 	 * <p>
-	 * The flat determining the default menu set up.
+	 * The flag indicating the default menu set up.
 	 * </p>
 	 */
 	public static final int DEFAULT = 0x00;
 
 	/**
 	 * <p>
-	 * The flag which determines that the creation of the super's menu should be ignored.
+	 * The flag indicating that the creation of the super's menu should be ignored.
 	 * </p>
 	 */
 	public static final int IGNORE_SUPER = 0x01;
 
 	/**
 	 * <p>
-	 * The flag which determines that a menu should be created before the super ones.
+	 * The flag indicating that a menu should be created before the super ones.
 	 * </p>
 	 */
 	public static final int BEFORE_SUPER = 0x04;
@@ -69,17 +69,17 @@ public @interface MenuOptions {
 	 */
 
 	/**
-	 * The resource id of the desired xml menu.
+	 * A resource id of the desired xml menu.
 	 */
 	int value();
 
 	/**
-	 * Flag indicating whether to clear an already created menu or not.
+	 * Flag indicating whether to clear the already created menu or not.
 	 */
 	boolean clear() default false;
 
 	/**
-	 * The flags for determining a menu set up.
+	 * Flags for determining a menu set up.
 	 */
 	int flags() default DEFAULT;
 }

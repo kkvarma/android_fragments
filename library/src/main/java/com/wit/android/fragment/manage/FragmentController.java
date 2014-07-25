@@ -111,6 +111,11 @@ public class FragmentController {
 	private OnFragmentChangeListener mFragmentListener;
 
 	/**
+	 *
+	 */
+	private String mCurrentFragmentTag;
+
+	/**
 	 * Arrays --------------------------------------------------------------------------------------
 	 */
 
@@ -488,7 +493,7 @@ public class FragmentController {
 	 *
 	 * @return <code>True</code> if fragment manager's back stack holds some entries, <code>false</code>
 	 * otherwise.
-	 * @see android.support.v4.app.FragmentManager#getBackStackEntryCount()
+	 * @see android.app.FragmentManager#getBackStackEntryCount()
 	 */
 	public boolean hasBackStackEntries() {
 		return mFragmentManager.getBackStackEntryCount() > 0;
@@ -496,11 +501,11 @@ public class FragmentController {
 
 	/**
 	 * <p>
-	 * Clears fragments back stack by calling {@link android.support.v4.app.FragmentManager#popBackStack()}
-	 * in loop of size obtained by {@link android.support.v4.app.FragmentManager#getBackStackEntryCount()}.
+	 * Clears fragments back stack by calling {@link android.app.FragmentManager#popBackStack()}
+	 * in loop of size obtained by {@link android.app.FragmentManager#getBackStackEntryCount()}.
 	 * </p>
 	 * <p>
-	 * <b>Note</b>, that {@link android.support.v4.app.FragmentManager#popBackStack()} is an asynchronous
+	 * <b>Note</b>, that {@link android.app.FragmentManager#popBackStack()} is an asynchronous
 	 * call, so the fragments back stack can be cleared in the feature not immediately.
 	 * </p>
 	 *
@@ -517,10 +522,10 @@ public class FragmentController {
 
 	/**
 	 * <p>
-	 * Like {@link #clearBackStack()}, but this will call {@link android.support.v4.app.FragmentManager#popBackStackImmediate()}.
+	 * Like {@link #clearBackStack()}, but this will call {@link android.app.FragmentManager#popBackStackImmediate()}.
 	 * </p>
 	 * <p>
-	 * <b>Note</b>, that {@link android.support.v4.app.FragmentManager#popBackStackImmediate()} is a
+	 * <b>Note</b>, that {@link android.app.FragmentManager#popBackStackImmediate()} is a
 	 * synchronous call, so the fragments back stack will be popped immediately within this call. If
 	 * there is too many fragments, this can take some time.
 	 * </p>
@@ -573,6 +578,17 @@ public class FragmentController {
 	 */
 	public void removeOnFragmentChangeListener() {
 		this.mBackStackListener = null;
+	}
+
+	/**
+	 * <p>
+	 * todo:
+	 * </p>
+	 *
+	 * @return
+	 */
+	public String getCurrentFragmentTag() {
+		return mCurrentFragmentTag;
 	}
 
 	/**
@@ -867,9 +883,10 @@ public class FragmentController {
 	 *                     <code>false</code> if was removed.
 	 */
 	private void dispatchBackStackEntryChange(FragmentManager.BackStackEntry changedEntry, boolean added) {
+		this.mCurrentFragmentTag = changedEntry.getName();
 		if (mBackStackListener != null) {
 			// Dispatch to listener.
-			mBackStackListener.onBackStackChanged(added, changedEntry.getId(), changedEntry.getName());
+			mBackStackListener.onBackStackChanged(added, changedEntry.getId(), mCurrentFragmentTag);
 		}
 	}
 
@@ -882,8 +899,9 @@ public class FragmentController {
 	 *                <code>false</code> otherwise.
 	 */
 	private boolean dispatchFragmentChanged(int id, String tag, boolean factory) {
+		this.mCurrentFragmentTag = tag;
 		if (mFragmentListener != null) {
-			mFragmentListener.onFragmentChanged(id, tag, factory);
+			mFragmentListener.onFragmentChanged(id, mCurrentFragmentTag, factory);
 		}
 		return true;
 	}
@@ -1323,7 +1341,7 @@ public class FragmentController {
 		 *
 		 * @param added <code>True</code> if there was added new back stack entry, <code>false</code>
 		 *              if old one was removed.
-		 * @param id    The id of a back stack entry which status was changed.
+		 * @param id    The id of a back stack entry which status was changed. position of entry
 		 * @param tag   The tag of a back stack entry which status was changed.
 		 */
 		public void onBackStackChanged(boolean added, int id, String tag);

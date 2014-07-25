@@ -27,11 +27,10 @@ import android.widget.ListView;
 /**
  * <h4>Class Overview</h4>
  * <p>
- * Description.
+ * todo: description
  * </p>
  *
- * @param <A> The type of an adapter used within the context of an instance of this AdapterFragment
- *            class implementation.
+ * @param <A> A type of the adapter used within the context of an instance of this ListFragment implementation.
  * @author Martin Albedinsky
  * @see com.wit.android.fragment.GridFragment
  */

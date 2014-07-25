@@ -26,9 +26,10 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Annotation type used to mark a class in which are presented fields marked with
- * {@link com.wit.android.fragment.annotation.InjectView} annotation. This annotation type
- * determines whether to iterate such fields to inject or not.
+ * Defines an annotation for determining whether to search for fields marked with
+ * {@link com.wit.android.fragment.annotation.InjectView @InjectView} or
+ * {@link com.wit.android.fragment.annotation.InjectView.Last @InjectView.Last}
+ * annotation to be injected as views or not.
  * </p>
  * <h6>Usage</h6>
  * <ul>

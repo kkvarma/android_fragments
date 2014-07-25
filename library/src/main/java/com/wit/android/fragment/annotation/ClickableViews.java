@@ -26,8 +26,8 @@ import java.lang.annotation.Target;
 /**
  * <h4>Annotation Overview</h4>
  * <p>
- * Annotation type used to mark a class, that views with ids presented within this annotation are
- * clickable, so an instance of {@link android.view.View.OnClickListener} should be attached to them.
+ * Defines an annotation for determining set of {@link android.view.View} ids which represents clickable
+ * views in the root context's view hierarchy.
  * </p>
  * <h6>Usage</h6>
  * <ul>
@@ -49,7 +49,8 @@ public @interface ClickableViews {
 	 */
 
 	/**
-	 * The array with ids of views which are clickable.
+	 * An array with ids of views which are clickable, so an instance of {@link android.view.View.OnClickListener}
+	 * should be attached to them to listen for click events.
 	 */
 	int[] value();
 }
