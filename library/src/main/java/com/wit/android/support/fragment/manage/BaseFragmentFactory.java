@@ -48,7 +48,7 @@ import java.util.List;
  * is set to <code>true</code>, there will be automatically created (cached) tags for all such ids,
  * so they can be obtained by calling {@link #getFragmentTag(int)} with the specific fragment id.
  * </p>
- * <li>{@link com.wit.android.support.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class, recursively</b>]</li>
  * <p>
  * If this annotation is presented, all classes of FragmentFactory provided by this annotation will
  * be instantiated and joined to an instance of annotated BaseFragmentFactory sub-class.

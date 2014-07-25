@@ -3,7 +3,7 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
-### **3.4** (<i>24.07.2014</i>) ###
+### **3.4** (<i>25.07.2014</i>) ###
 - Added @InjectView.Last annotation to improve views injecting process.
 - Added support to set custom class of AdapterView in AdapterFragment implementation.
 - Improved documentation.
