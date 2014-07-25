@@ -3,6 +3,10 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
+### **3.5** (<i>25.07.2014</i>) ###
+- Renamed FragmentController.ShowOptions to FragmentController.TransactionOptions to be more accurate.
+- Improved documentation.
+
 ### **3.4** (<i>25.07.2014</i>) ###
 - Added @InjectView.Last annotation to improve views injecting process.
 - Added support to set custom class of AdapterView in AdapterFragment implementation.
