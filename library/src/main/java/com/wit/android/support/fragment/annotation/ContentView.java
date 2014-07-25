@@ -48,18 +48,22 @@ public @interface ContentView {
 	 */
 
 	/**
-	 * The resource id of the desired layout to inflate as content view.
+	 * A resource id of the desired layout to inflate as root view.
 	 */
 	int value();
 
 	/**
 	 * Flag indicating whether to attach inflated content view to its parent or not.
+	 * <p/>
+	 * Default value: <b>false</b>
 	 */
 	boolean attachToRoot() default false;
 
 	/**
-	 * The resource id for the background of the inflated content view. May be a resource to either
-	 * color or drawable.
+	 * A resource id for the background to be set to the inflated root view. May be a resource id to
+	 * either color or drawable.
+	 * <p/>
+	 * Default value: <b>-1</b>
 	 */
 	int backgroundRes() default -1;
 }

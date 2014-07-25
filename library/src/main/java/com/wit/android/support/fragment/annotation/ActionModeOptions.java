@@ -49,7 +49,7 @@ public @interface ActionModeOptions {
 	 */
 
 	/**
-	 * The resource id of the desired xml menu for an ActionMode.
+	 * A resource id of the desired xml menu for an ActionMode.
 	 *
 	 * @see android.support.v7.view.ActionMode.Callback#onCreateActionMode(android.support.v7.view.ActionMode, android.view.Menu)
 	 */
