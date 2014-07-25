@@ -118,8 +118,8 @@ public class FragmentsFactory extends BaseFragmentFactory {
 	/**
 	 */
 	@Override
-	protected FragmentController.ShowOptions onGetFragmentShowOptions(int fragmentId, Bundle params) {
-		final FragmentController.ShowOptions options = super.onGetFragmentShowOptions(fragmentId, params);
+	protected FragmentController.TransactionOptions onGetFragmentTransactionOptions(int fragmentId, Bundle params) {
+		final FragmentController.TransactionOptions options = super.onGetFragmentTransactionOptions(fragmentId, params);
 		switch (fragmentId) {
 			case TRANSITIONS:
 				if (params != null) {
