@@ -37,7 +37,7 @@ import com.wit.android.fragment.config.FragmentsConfig;
  *
  * @author Martin Albedinsky
  * @see com.wit.android.fragment.manage.FragmentController.FragmentFactory
- * @see com.wit.android.fragment.manage.FragmentController.ShowOptions
+ * @see com.wit.android.fragment.manage.FragmentController.TransactionOptions
  */
 public class FragmentController {
 
@@ -249,12 +249,12 @@ public class FragmentController {
 
 	/**
 	 * <p>
-	 * Same as {@link #showFragment(android.app.Fragment, com.wit.android.fragment.manage.FragmentController.ShowOptions)}
-	 * with default {@link com.wit.android.fragment.manage.FragmentController.ShowOptions}.
+	 * Same as {@link #showFragment(android.app.Fragment, com.wit.android.fragment.manage.FragmentController.TransactionOptions)}
+	 * with default {@link com.wit.android.fragment.manage.FragmentController.TransactionOptions}.
 	 * </p>
 	 */
 	public boolean showFragment(Fragment fragment) {
-		return showFragment(fragment, new ShowOptions());
+		return showFragment(fragment, new TransactionOptions());
 	}
 
 	/**
@@ -268,7 +268,7 @@ public class FragmentController {
 	 * and committed or if fragment is currently being shown and should not be replaced by the new one,
 	 * <code>false</code> otherwise.
 	 */
-	public boolean showFragment(Fragment fragment, ShowOptions options) {
+	public boolean showFragment(Fragment fragment, TransactionOptions options) {
 		return this.performShowFragment(fragment, options);
 	}
 
@@ -693,7 +693,7 @@ public class FragmentController {
 	 * instances of fragments requested by this controller by specific <b>fragmentId</b>.
 	 * </p>
 	 *
-	 * @param factory Fragment factory to provide fragment instances, show options and fragment tags.
+	 * @param factory Fragment factory to provide fragment instances, transaction options and fragment tags.
 	 * @see #getFragmentFactory()
 	 * @see #hasFactory()
 	 */
@@ -741,9 +741,9 @@ public class FragmentController {
 	 * This implementation always returns <code>true</code> or throws exception.
 	 * @throws java.lang.IllegalStateException If the current id for fragment layout container is invalid.
 	 */
-	protected boolean onShowFragment(Fragment fragment, ShowOptions options) {
+	protected boolean onShowFragment(Fragment fragment, TransactionOptions options) {
 		if (options == null) {
-			options = new ShowOptions();
+			options = new TransactionOptions();
 		}
 
 		if (!options.replaceSame) {
@@ -811,20 +811,20 @@ public class FragmentController {
 	/**
 	 * <p>
 	 * Invoked to finally commit created fragment transaction. Here passed transaction is already set
-	 * upped according to the show options.
+	 * upped according to the TransactionOptions.
 	 * </p>
 	 * <p>
 	 * This implementation commits the passed <var>transaction</var> and in case that the <var>options</var>
-	 * has set flag {@link com.wit.android.fragment.manage.FragmentController.ShowOptions#showImmediately}
+	 * has set flag {@link com.wit.android.fragment.manage.FragmentController.TransactionOptions#showImmediately}
 	 * to <code>true</code>, {@link android.app.FragmentManager#executePendingTransactions()}
 	 * will be invoked too on the attached FragmentManager.
 	 * </p>
 	 *
 	 * @param transaction Final fragment transaction to commit.
-	 * @param options     Already processed show options.
+	 * @param options     Already processed transaction.
 	 * @return This implementation always returns <code>true</code>.
 	 */
-	protected boolean onCommitTransaction(FragmentTransaction transaction, ShowOptions options) {
+	protected boolean onCommitTransaction(FragmentTransaction transaction, TransactionOptions options) {
 		// Commit transaction.
 		transaction.commit();
 		if (options.showImmediately) {
@@ -853,7 +853,7 @@ public class FragmentController {
 			Log.e(TAG, "No such fragment instance for the requested fragment id(" + fragmentId + "). Please check your fragment factory.");
 			return false;
 		}
-		final boolean success = onShowFragment(fragment, mFragmentFactory.getFragmentShowOptions(fragmentId, params));
+		final boolean success = onShowFragment(fragment, mFragmentFactory.getFragmentTransactionOptions(fragmentId, params));
 		return success && dispatchFragmentChanged(fragmentId, fragment.getTag(), true);
 	}
 
@@ -864,7 +864,7 @@ public class FragmentController {
 	 * @param options  Show options for the given fragment.
 	 * @return <code>True</code> if showing was successful, <code>false</code> otherwise.
 	 */
-	private boolean performShowFragment(Fragment fragment, ShowOptions options) {
+	private boolean performShowFragment(Fragment fragment, TransactionOptions options) {
 		final boolean success = onShowFragment(fragment, options);
 		return success && dispatchFragmentChanged(fragment.getId(), fragment.getTag(), false);
 	}
@@ -946,12 +946,12 @@ public class FragmentController {
 	/**
 	 * <h4>Class Overview</h4>
 	 * <p>
-	 * Description.
+	 * todo: description
 	 * </p>
 	 * <h4>Default SetUp:</h4>
 	 * <ul>
 	 * <li>tag: {@link com.wit.android.fragment.manage.FragmentController#FRAGMENT_TAG}</li>
-	 * <li>show direction: {@link FragmentTransition#NONE}</li>
+	 * <li>transition: {@link FragmentTransition#NONE}</li>
 	 * <li>container id: <b>-1</b></li>
 	 * <li>back-stacking: <b>false</b></li>
 	 * <li>replacing same: <b>true</b></li>
@@ -963,30 +963,36 @@ public class FragmentController {
 	 * @see com.wit.android.fragment.manage.FragmentController
 	 * @see com.wit.android.fragment.manage.FragmentController.FragmentFactory
 	 */
-	public static class ShowOptions implements Parcelable {
+	public static class TransactionOptions implements Parcelable {
 		/**
-		 * Members ================================================================================
+		 * Members =================================================================================
 		 */
 
 		/**
 		 * <p>
-		 * Parcelable creator.
+		 * Creator used to create an instance or array of instances of TransactionOptions from {@link android.os.Parcel}.
 		 * </p>
 		 */
-		public static final Creator<ShowOptions> CREATOR = new Creator<ShowOptions>() {
+		public static final Creator<TransactionOptions> CREATOR = new Creator<TransactionOptions>() {
+			/**
+			 */
 			@Override
-			public ShowOptions createFromParcel(Parcel source) {
-				return new ShowOptions(source);
+			public TransactionOptions createFromParcel(Parcel source) {
+				return new TransactionOptions(source);
 			}
 
+			/**
+			 */
 			@Override
-			public ShowOptions[] newArray(int size) {
-				return new ShowOptions[size];
+			public TransactionOptions[] newArray(int size) {
+				return new TransactionOptions[size];
 			}
 		};
 
 		/**
-		 * Tag of fragment.
+		 * Tag for fragment.
+		 * <p/>
+		 * Default value: <b>{@link #FRAGMENT_TAG}</b>
 		 */
 		protected String tag = FRAGMENT_TAG;
 
@@ -996,7 +1002,7 @@ public class FragmentController {
 		protected FragmentTransition transition = FragmentTransition.NONE;
 
 		/**
-		 * Container layout id.
+		 * Fragment container layout id.
 		 */
 		protected int containerId = -1;
 
@@ -1006,18 +1012,18 @@ public class FragmentController {
 		protected boolean addToBackStack = false;
 
 		/**
-		 * Flag indicating, whether same fragment (currently showing) can be replaced by the new one
+		 * Flag indicating, whether a same fragment (currently showing) can be replaced by a new one
 		 * with this options containing same tag or not.
 		 */
 		protected boolean replaceSame = true;
 
 		/**
-		 * Flag indicating, whether fragment should be showed immediately or not.
+		 * Flag indicating, whether a new fragment should be showed immediately or not.
 		 */
 		protected boolean showImmediately = false;
 
 		/**
-		 * Flag indicating, whether to add or replace fragment.
+		 * Flag indicating, whether to add a new fragment or replace old one.
 		 */
 		protected boolean add;
 
@@ -1027,27 +1033,28 @@ public class FragmentController {
 
 		/**
 		 * <p>
-		 * Creates a new instance of default ShowOptions.
+		 * Creates a new instance of default TransactionOptions.
 		 * </p>
 		 */
-		public ShowOptions() {
+		public TransactionOptions() {
 		}
 
 		/**
 		 * <p>
-		 * Called by {@link #CREATOR}.
+		 * Called form {@link #CREATOR} to create an instance of TransactionOptions form the given
+		 * parcel <var>source</var>.
 		 * </p>
 		 *
-		 * @param input Parcelable source with saved data.
+		 * @param source Parcel with data for a new instance.
 		 */
-		protected ShowOptions(Parcel input) {
-			this.containerId = input.readInt();
-			this.tag = input.readString();
-			this.addToBackStack = input.readInt() == 1;
-			this.replaceSame = input.readInt() == 1;
-			this.showImmediately = input.readInt() == 1;
-			this.add = input.readInt() == 1;
-			this.transition = FragmentTransition.CREATOR.createFromParcel(input);
+		protected TransactionOptions(Parcel source) {
+			this.containerId = source.readInt();
+			this.tag = source.readString();
+			this.addToBackStack = source.readInt() == 1;
+			this.replaceSame = source.readInt() == 1;
+			this.showImmediately = source.readInt() == 1;
+			this.add = source.readInt() == 1;
+			this.transition = source.readParcelable(FragmentTransition.class.getClassLoader());
 		}
 
 		/**
@@ -1102,110 +1109,112 @@ public class FragmentController {
 
 		/**
 		 * <p>
-		 * Sets the flag indicating, whether to add or replace fragment to <code>true</code> so fragment
-		 * will be showed by {@link android.app.FragmentTransaction#add(int, android.app.Fragment, String)}.
+		 * Sets a flag indicating, whether to add or replace fragment to <code>true</code> so a new
+		 * fragment will be showed using {@link android.app.FragmentTransaction#add(int, android.app.Fragment, String)}.
 		 * </p>
 		 *
-		 * @return This options.
+		 * @return This options instance.
 		 */
-		public ShowOptions add() {
+		public TransactionOptions add() {
 			this.add = true;
 			return this;
 		}
 
 		/**
 		 * <p>
-		 * Sets the flag indicating, whether to add or replace fragment to <code>false</code> so fragment
-		 * will be showed by {@link android.app.FragmentTransaction#replace(int, android.app.Fragment, String)}.
+		 * Sets a flag indicating, whether to add or replace fragment to <code>false</code> so an old
+		 * fragment will be replaced by a new one using {@link android.app.FragmentTransaction#replace(int, android.app.Fragment, String)}.
 		 * </p>
 		 *
-		 * @return This options.
+		 * @return This options instance.
 		 */
-		public ShowOptions replace() {
+		public TransactionOptions replace() {
 			this.add = false;
 			return this;
 		}
 
 		/**
 		 * <p>
-		 * Sets the tag for fragment.
+		 * Sets a tag for the fragment to be showed.
 		 * </p>
 		 *
-		 * @param fragmentTag Fragment tag.
-		 * @return This options.
+		 * @param fragmentTag The desired fragment tag.
+		 * @return This options instance.
 		 */
-		public ShowOptions tag(String fragmentTag) {
+		public TransactionOptions tag(String fragmentTag) {
 			this.tag = fragmentTag;
 			return this;
 		}
 
 		/**
 		 * <p>
-		 * Sets flag indicating, whether fragment should be added to back stack or not.
+		 * Sets a flag indicating, whether fragment should be added to the fragments back stack or not.
 		 * </p>
 		 *
-		 * @param add <code>True</code> to add fragment to back stack, <code>false</code> otherwise.
-		 * @return This options.
+		 * @param add <code>True</code> to add fragment to the back stack, <code>false</code> otherwise.
+		 * @return This options instance.
 		 */
-		public ShowOptions addToBackStack(boolean add) {
+		public TransactionOptions addToBackStack(boolean add) {
 			this.addToBackStack = add;
 			return this;
 		}
 
 		/**
 		 * <p>
-		 * Sets the show transition for fragment.
+		 * Sets a transition used to animate fragment views change.
 		 * </p>
 		 *
-		 * @param transition Show transition.
-		 * @return This options.
+		 * @param transition Transition with animations.
+		 * @return This options instance.
 		 * @see com.wit.android.fragment.manage.FragmentTransition
 		 */
-		public ShowOptions transition(FragmentTransition transition) {
+		public TransactionOptions transition(FragmentTransition transition) {
 			this.transition = transition;
 			return this;
 		}
 
 		/**
 		 * <p>
-		 * Sets the id of a layout container into which should be the fragment's view placed.
+		 * Sets an id of the layout container into which should be a new fragment's view placed.
 		 * </p>
 		 * <p>
-		 * <b>Note</b>, that this container id will be used only for this options.
+		 * <b>Note</b>, that this id will be used only for this options.
 		 * </p>
 		 *
-		 * @param layoutId The id of layout container.
-		 * @return This options.
+		 * @param layoutId An id of the desired layout container to be used as container for fragment's
+		 *                 view.
+		 * @return This options instance.
 		 * @see com.wit.android.fragment.manage.FragmentController#setFragmentContainerId(int)
 		 */
-		public ShowOptions containerId(int layoutId) {
+		public TransactionOptions containerId(int layoutId) {
 			this.containerId = layoutId;
 			return this;
 		}
 
 		/**
 		 * <p>
-		 * Sets flag indicating, whether the currently showing fragment with same tag can be replaced
-		 * by the new one (using this options) or not.
+		 * Sets a flag indicating, whether the currently showing fragment with the same TAG can be
+		 * replaced by a new one (using this options) or not.
 		 * </p>
 		 *
-		 * @param replace <code>True</code> to replace same fragment with the new one, <code>false</code> otherwise.
-		 * @return This options.
+		 * @param replace <code>True</code> to replace a fragment with the same TAG as specified here,
+		 *                with a new one, <code>false</code> otherwise.
+		 * @return This options instance.
 		 */
-		public ShowOptions replaceSame(boolean replace) {
+		public TransactionOptions replaceSame(boolean replace) {
 			this.replaceSame = replace;
 			return this;
 		}
 
 		/**
 		 * <p>
-		 * Sets flag indicating, whether fragment should be showed immediately or not.
+		 * Sets a flag indicating, whether a new fragment should be showed immediately or not.
 		 * </p>
 		 *
 		 * @param immediately <code>True</code> to show immediately, <code>false</code> otherwise.
-		 * @return This options.
+		 * @return This options instance.
 		 */
-		public ShowOptions showImmediately(boolean immediately) {
+		public TransactionOptions showImmediately(boolean immediately) {
 			this.showImmediately = immediately;
 			return this;
 		}
@@ -1217,27 +1226,30 @@ public class FragmentController {
 	private final class BackStackListener implements FragmentManager.OnBackStackChangedListener {
 
 		/**
-		 * Constants =============================
+		 * Constants ===============================================================================
 		 */
 
 		/**
-		 *
+		 * Flag to indicate, that fragment was added to the back stack.
 		 */
 		static final int ADDED = 0x00;
 
 		/**
-		 *
+		 * Flag to indicate, that fragment was removed from the back stack.
 		 */
 		static final int REMOVED = 0x01;
 
 		/**
-		 * Members ===============================
+		 * Members =================================================================================
 		 */
 
+		/**
+		 * Current size of the fragments back stack.
+		 */
 		int currentCount = 0;
 
 		/**
-		 * Methods ===============================
+		 * Methods =================================================================================
 		 */
 
 		/**
@@ -1295,16 +1307,16 @@ public class FragmentController {
 		 * This is in most cases invoked form an instance of {@link com.wit.android.fragment.manage.FragmentController},
 		 * when that instance of FragmentController was requested to show fragment with the specified
 		 * <var>fragmentId</var>. In such a case, if this fragment factory will not provide valid
-		 * ShowOptions, FragmentController will use default ones.
+		 * TransactionOptions, FragmentController will use default ones.
 		 * </p>
 		 *
 		 * @param fragmentId An id of the fragment for which are options requested.
 		 * @param params     Same params as for {@link #createFragmentInstance(int, android.os.Bundle)}.
-		 * @return ShowOptions object for fragment associated with the specified <var>fragmentId</var>
-		 * or <code>null</code> if this fragment factory doesn't provides ShowOptions for fragment
+		 * @return TransactionOptions object for fragment associated with the specified <var>fragmentId</var>
+		 * or <code>null</code> if this fragment factory doesn't provides TransactionOptions for fragment
 		 * with the specified <var>fragmentId</var>.
 		 */
-		public ShowOptions getFragmentShowOptions(int fragmentId, Bundle params);
+		public TransactionOptions getFragmentTransactionOptions(int fragmentId, Bundle params);
 
 		/**
 		 * <p>

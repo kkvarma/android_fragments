@@ -273,16 +273,16 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	/**
 	 */
 	@Override
-	public FragmentController.ShowOptions getFragmentShowOptions(int fragmentId, Bundle params) {
+	public FragmentController.TransactionOptions getFragmentTransactionOptions(int fragmentId, Bundle params) {
 		if (hasJoinedFactories()) {
-			// Try to obtain show options from the joined factories.
+			// Try to obtain TransactionOptions from the joined factories.
 			for (FragmentController.FragmentFactory factory : aFactories) {
 				if (factory.isFragmentProvided(fragmentId)) {
-					return factory.getFragmentShowOptions(fragmentId, params);
+					return factory.getFragmentTransactionOptions(fragmentId, params);
 				}
 			}
 		}
-		return onGetFragmentShowOptions(fragmentId, params);
+		return onGetFragmentTransactionOptions(fragmentId, params);
 	}
 
 	/**
@@ -356,12 +356,12 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
-	 * Invoked form {@link #getFragmentShowOptions(int, android.os.Bundle)} if none of the current
+	 * Invoked form {@link #getFragmentTransactionOptions(int, android.os.Bundle)} if none of the current
 	 * joined factories provide an options for fragment with the specified <var>fragmentId</var>.
 	 * </p>
 	 */
-	protected FragmentController.ShowOptions onGetFragmentShowOptions(int fragmentId, Bundle params) {
-		return new FragmentController.ShowOptions().tag(getFragmentTag(fragmentId));
+	protected FragmentController.TransactionOptions onGetFragmentTransactionOptions(int fragmentId, Bundle params) {
+		return new FragmentController.TransactionOptions().tag(getFragmentTag(fragmentId));
 	}
 
 	/**
