@@ -36,19 +36,21 @@ import java.util.List;
  * Fragment factory which provides base simple implementation of required {@link com.wit.android.support.fragment.manage.FragmentController.FragmentFactory}
  * interface for {@link com.wit.android.support.fragment.manage.FragmentController}.
  * </p>
- * <h6>Allowed annotations</h6>
- * {@link com.wit.android.support.fragment.annotation.FactoryFragments @FactoryFragments} [<b>class</b>]
+ * <h6>Accepted annotations</h6>
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.annotation.FactoryFragments @FactoryFragments} [<b>class</b>]</li>
  * <p>
- * If this annotation is presented, an instance of this factory class will behave as it provides fragments
- * for all ids presented within this annotation. Also if {@link com.wit.android.support.fragment.annotation.FactoryFragments#createTags()}
- * is set to <code>true</code>, there will be automatically created (cached) tags for all such ids so
- * which can be obtained by calling {@link #getFragmentTag(int)} with the specific fragment id.
+ * If this annotation is presented, todo
+ * Also if {@link com.wit.android.support.fragment.annotation.FactoryFragments#createTags()}
+ * is set to <code>true</code>, there will be automatically created (cached) tags for all such ids,
+ * so they can be obtained by calling {@link #getFragmentTag(int)} with the specific fragment id.
  * </p>
- * {@link com.wit.android.support.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class</b>]
+ * <li>{@link com.wit.android.support.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class</b>]</li>
  * <p>
- * If this annotation is presented, all fragment factories presented by theirs classes within this
- * annotation will be instantiated and joined to an instance of this factory class.
+ * If this annotation is presented, all classes of FragmentFactory provided by this annotation will
+ * be instantiated and joined to an instance of annotated BaseFragmentFactory sub-class.
  * </p>
+ * </ul>
  *
  * @author Martin Albedinsky
  */
@@ -86,7 +88,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 */
 
 	/**
-	 * The id of the fragment which was last checked by {@link #isFragmentProvided(int)}.
+	 * Id of the fragment which was last checked by {@link #isFragmentProvided(int)}.
 	 */
 	private int mLastCheckedFragmentId = -1;
 
@@ -128,7 +130,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * <p>
 	 * Creates a new instance of BaseFragmentFactory. If {@link com.wit.android.support.fragment.annotation.FactoryFragments @FactoryFragments}
 	 * or {@link com.wit.android.support.fragment.annotation.FragmentFactories @FragmentFactories}
-	 * annotations are presented, they will be processed here.
+	 * annotations are presented above a sub-class of BaseFragmentFactory, they will be processed here.
 	 * </p>
 	 */
 	public BaseFragmentFactory() {
@@ -191,21 +193,20 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
-	 * Creates a tag for fragment in the required format for the specified class of factory and
-	 * <var>fragmentName</var>.
+	 * Creates a tag for fragment in the required format for the specified class of factory and <var>fragmentName</var>.
 	 * </p>
 	 * <p>
 	 * Example format: <u>com.android.app.fragment.factories.ProfileActivityFactory.TAG.EditProfile</u><br/><br/>
-	 * - where <b>com.android.app.fragment.factories</b> is name of package where specified <var>classOfFactory</var>
-	 * is situated, <b>ProfileActivityFactory</b> is name of factory class, <b>EditProfile</b> is
-	 * <var>fragmentName</var> and <b>TAG</b> is tag identifier.
+	 * - where <b>com.android.app.fragment.factories</b> is a name of the package where the specified
+	 * <var>classOfFactory</var> is situated, <b>ProfileActivityFactory</b> is a name of the <var>classOfFactory</var>
+	 * class, <b>TAG</b> is tag identifier an <b>EditProfile</b> is <var>fragmentName</var>.
 	 * </p>
 	 *
-	 * @param classOfFactory Class of factory for which should be requested tag created.
-	 * @param fragmentName   Fragment name (can be fragment class name) for which should be requested
+	 * @param classOfFactory A class of the factory for which should be requested tag created.
+	 * @param fragmentName   A fragment name (can be fragment's class name) for which should be requested
 	 *                       tag created.
-	 * @return Fragment tag in required format, or <code>null</code> if the <var>fragmentName</var> is
-	 * <code>null</code> or empty.
+	 * @return Fragment tag in required format, or <code>null</code> if the <var>fragmentName</var>
+	 * is <code>null</code> or empty.
 	 */
 	public static String createFragmentTag(Class<? extends FragmentController.FragmentFactory> classOfFactory, String fragmentName) {
 		// Only valid fragment name is allowed.
@@ -299,11 +300,11 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
-	 * Joins the given dialog factory with this one. <b>Note</b>, that dialog fragment instances
-	 * (and their tags) are obtained from the current joined factories in order as they was joined.
+	 * Joins the given factory with this one. <b>Note</b>, that fragment instances (and their tags)
+	 * are obtained from the current joined factories in order as they was joined.
 	 * </p>
 	 *
-	 * @param factory Dialog factory to join with this one.
+	 * @param factory Fragment factory to join with this one.
 	 * @see #getJoinedFactories()
 	 */
 	public final void joinFactory(FragmentController.FragmentFactory factory) {
@@ -315,10 +316,10 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
-	 * Returns the currently joined dialog factories with this one.
+	 * Returns all currently joined factories with this one.
 	 * </p>
 	 *
-	 * @return Set of dialog factories.
+	 * @return Set of fragment factories.
 	 * @see #hasJoinedFactories()
 	 * @see #joinFactory(com.wit.android.support.fragment.manage.FragmentController.FragmentFactory)
 	 */
@@ -332,6 +333,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
+	 * todo:
 	 * </p>
 	 */
 	protected boolean providesFragment(int fragmentId) {
@@ -340,6 +342,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
+	 * todo:
 	 * </p>
 	 */
 	protected String onGetFragmentTag(int fragmentId) {
@@ -348,6 +351,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
+	 * todo:
 	 * </p>
 	 */
 	protected FragmentController.ShowOptions onGetFragmentShowOptions(int fragmentId, Bundle params) {
@@ -359,10 +363,10 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 */
 
 	/**
-	 * Returns the list of joined factories. If the list isn't initialized yet, the new instance will
+	 * Returns the list of joined factories. If the list isn't initialized yet, a new instance will
 	 * be created.
 	 *
-	 * @return List of the joined factories. Always not <code>null</code> list.
+	 * @return List of the joined factories. Always <code>valid</code> list.
 	 */
 	private List<FragmentController.FragmentFactory> accessFactories() {
 		if (aFactories == null) {
@@ -374,8 +378,8 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	/**
 	 * Gathers all classes of fragment factories presented within FragmentFactories annotation. Note,
 	 * that this is recursive method, which will gather all classes from
-	 * {@link com.wit.android.support.fragment.annotation.FragmentFactories} annotation presented above
-	 * the given <var>classOfFragment</var>.
+	 * {@link com.wit.android.support.fragment.annotation.FragmentFactories @FragmentFactories}
+	 * annotation presented above the given <var>classOfFragment</var>.
 	 *
 	 * @param classOfFactory Class of fragment where to check FragmentFactories annotation.
 	 * @param factories      List of already gathered factories.
@@ -404,7 +408,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	/**
 	 * <p>
 	 * Invoked whenever {@link #createFragmentInstance(int, android.os.Bundle)} is called and any of
-	 * the current joined factories doesn't provide fragment instance for the specified <var>fragmentId</var>.
+	 * the current joined factories does not provide fragment instance for the specified <var>fragmentId</var>.
 	 * </p>
 	 */
 	protected abstract Fragment onCreateFragmentInstance(int fragmentId, Bundle params);

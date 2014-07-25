@@ -26,9 +26,9 @@ import com.wit.android.support.fragment.R;
 /**
  * <h4>Class Overview</h4>
  * <p>
- * Description.
+ * todo: description
  * </p>
- * <h6>Provided Directions</h6>
+ * <h6>Provided Transitions</h6>
  * <b>Alpha:</b>
  * <ul>
  * <li>{@link FragmentTransition#FADE_IN}</li>
@@ -41,6 +41,7 @@ import com.wit.android.support.fragment.R;
  * <li>{@link FragmentTransition#SLIDE_TO_TOP}</li>
  * </ul>
  * <b>Scale & Slide:</b>
+ * <ul>
  * <li>{@link FragmentTransition#SCALE_IN_AND_SLIDE_TO_LEFT}</li>
  * <li>{@link FragmentTransition#SCALE_IN_AND_SLIDE_TO_RIGHT}</li>
  * <li>{@link FragmentTransition#SCALE_IN_AND_SLIDE_TO_TOP}</li>
@@ -49,10 +50,6 @@ import com.wit.android.support.fragment.R;
  * <li>{@link FragmentTransition#SLIDE_TO_LEFT_AND_SCALE_OUT}</li>
  * <li>{@link FragmentTransition#SLIDE_TO_BOTTOM_AND_SCALE_OUT}</li>
  * <li>{@link FragmentTransition#SLIDE_TO_TOP_AND_SCALE_OUT}</li>
- * <ul>
- * </ul>
- * <b>Flip:</b>
- * <ul>
  * </ul>
  *
  * @author Martin Albedinsky
@@ -88,15 +85,19 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Parcelable creator for android internal purpose.
+	 * Creator used to create an instance or array of instances of FragmentTransition from {@link android.os.Parcel}.
 	 * </p>
 	 */
 	public static final Creator<FragmentTransition> CREATOR = new Creator<FragmentTransition>() {
+		/**
+		 */
 		@Override
 		public FragmentTransition createFromParcel(Parcel source) {
 			return new FragmentTransition(source);
 		}
 
+		/**
+		 */
 		@Override
 		public FragmentTransition[] newArray(int size) {
 			return new FragmentTransition[size];
@@ -105,7 +106,7 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Use this to show new incoming fragment which will replace the current fragment without any
+	 * Use this to show a new incoming fragment which will replace the current fragment without any
 	 * animation.
 	 * </p>
 	 */
@@ -442,12 +443,12 @@ public class FragmentTransition implements Parcelable {
 	/**
 	 * Animation resource id.
 	 */
-	private int mInAnimResId, mOutAnimResId, mInAnimBackResId, mOutAnimBackResId;
+	private final int mInAnimResId, mOutAnimResId, mInAnimBackResId, mOutAnimBackResId;
 
 	/**
 	 * Name of this transition.
 	 */
-	private String mName = "";
+	private final String mName;
 
 	/**
 	 * Arrays --------------------------------------------------------------------------------------
@@ -463,13 +464,9 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Creates a new instance of FragmentTransition with the given animations. The back-stack animation
-	 * resource ids will be set to <code>0</code>.
+	 * Same as {@link #FragmentTransition(int, int, int, int)} with back-stack animations set to
+	 * <code>0</code>.
 	 * </p>
-	 *
-	 * @param inAnim  The resource id of the animation for an incoming fragment.
-	 * @param outAnim The resource id of the animation for an outgoing fragment to the back stack
-	 *                or which is to be destroyed.
 	 */
 	public FragmentTransition(int inAnim, int outAnim) {
 		this(inAnim, outAnim, 0, 0);
@@ -489,12 +486,13 @@ public class FragmentTransition implements Parcelable {
 	 * Creates a new instance of FragmentTransition with the given animations and name.
 	 * </p>
 	 *
-	 * @param inAnim      The resource id of the animation for an incoming fragment.
-	 * @param outAnim     The resource id of the animation for an outgoing fragment to the back stack
-	 *                    or which is to be destroyed.
-	 * @param inAnimBack  The resource id of the animation for an incoming fragment from the back stack.
-	 * @param outAnimBack The resource id of the animation for an outgoing fragment which is to be
-	 *                    destroyed.
+	 * @param inAnim      A resource id of the animation for an incoming fragment.
+	 * @param outAnim     A resource id of the animation for an outgoing fragment to be added to the
+	 *                    back stack or to be destroyed and replaced by the incoming one.
+	 * @param inAnimBack  A resource id of the animation for an incoming fragment to be showed from
+	 *                    the back stack.
+	 * @param outAnimBack A resource id of the animation for an outgoing fragment to be destroyed and
+	 *                    replaced by the incoming one.
 	 * @param name        The name of this transition.
 	 */
 	public FragmentTransition(int inAnim, int outAnim, int inAnimBack, int outAnimBack, String name) {
@@ -507,17 +505,18 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Called by {@link #CREATOR}.
+	 * Called form {@link #CREATOR} to create an instance of FragmentTransition form the given parcel
+	 * <var>source</var>.
 	 * </p>
 	 *
-	 * @param input Parcelable source with saved data.
+	 * @param source Parcel with data for a new instance.
 	 */
-	protected FragmentTransition(Parcel input) {
-		this.mInAnimResId = input.readInt();
-		this.mOutAnimResId = input.readInt();
-		this.mInAnimBackResId = input.readInt();
-		this.mOutAnimBackResId = input.readInt();
-		this.mName = input.readString();
+	protected FragmentTransition(Parcel source) {
+		this.mInAnimResId = source.readInt();
+		this.mOutAnimResId = source.readInt();
+		this.mInAnimBackResId = source.readInt();
+		this.mOutAnimBackResId = source.readInt();
+		this.mName = source.readString();
 	}
 
 	/**
@@ -563,7 +562,7 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Returns the id of the animation for a new incoming fragment.
+	 * Returns a resource id of the animation for a new incoming fragment.
 	 * </p>
 	 *
 	 * @return Animation resource id.
@@ -574,7 +573,8 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Returns the id of the animation for the current outgoing fragment to back stack.
+	 * Returns a resource id of the animation for the current outgoing fragment to be added to the
+	 * back stack or to be destroyed and replaced by the incoming one.
 	 * </p>
 	 *
 	 * @return Animation resource id.
@@ -585,24 +585,26 @@ public class FragmentTransition implements Parcelable {
 
 	/**
 	 * <p>
-	 * Returns the id of the animation for the current outgoing fragment.
-	 * </p>
-	 *
-	 * @return Animation resource id.
-	 */
-	public int getOutAnimBackResId() {
-		return mOutAnimBackResId;
-	}
-
-	/**
-	 * <p>
-	 * Returns the id of the animation for the incoming fragment from the back stack.
+	 * Returns a resource id of the animation for the incoming fragment to be showed from the back
+	 * stack.
 	 * </p>
 	 *
 	 * @return Animation resource id.
 	 */
 	public int getInAnimBackResId() {
 		return mInAnimBackResId;
+	}
+
+	/**
+	 * <p>
+	 * Returns a resource id of the animation for the current outgoing fragment to be destroyed and
+	 * replaced by the incoming one.
+	 * </p>
+	 *
+	 * @return Animation resource id.
+	 */
+	public int getOutAnimBackResId() {
+		return mOutAnimBackResId;
 	}
 
 	/**
