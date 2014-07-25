@@ -37,27 +37,29 @@ import java.util.List;
  * todo: description
  * </p>
  * <h6>Accepted annotations</h6>
- * {@link com.wit.android.support.fragment.annotation.ContentView @ContentView} [<b>class</b>]
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.annotation.ContentView @ContentView} [<b>class, recursively</b>]</li>
  * <p>
  * If this annotation is presented, the layout id presented within this annotation will be used to
- * inflate the root view for an instance of this fragment class in
+ * inflate the root view for an instance of annotated BaseFragment sub-class in
  * {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}.
  * </p>
- * {@link com.wit.android.support.fragment.annotation.ClickableViews @ClickableViews} [<b>class</b>]
+ * <li>{@link com.wit.android.support.fragment.annotation.ClickableViews @ClickableViews} [<b>class, recursively</b>]</li>
  * <p>
- * If this annotation is presented, all views found by ids presented within this annotation will be
- * found and an inner {@link android.view.View.OnClickListener} will be attached to them. If any of
- * these views is clicked, {@link #onViewClick(android.view.View, int)} will be invoked with that
- * specific view and its id.
+ * If this annotation is presented, an inner {@link android.view.View.OnClickListener} will be attached
+ * to all views found by ids presented within this annotation. If any of these views is clicked,
+ * {@link #onViewClick(android.view.View, int)} will be invoked with that particular view and its id.
  * </p>
- * {@link com.wit.android.support.fragment.annotation.InjectView @InjectView} [<b>member</b>]
+ * <li>{@link com.wit.android.support.fragment.annotation.InjectView @InjectView} [<b>field</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.InjectView.Last @InjectView.Last} [<b>field</b>]</li>
  * <p>
- * All members marked with this annotation will be automatically injected (by {@link android.view.View#findViewById(int)})
+ * All fields marked with this annotation will be automatically injected (by {@link android.view.View#findViewById(int)})
  * using the root view passed to {@link #onViewCreated(android.view.View, android.os.Bundle)}.
- * <b>Note that {@link com.wit.android.support.fragment.annotation.InjectViews @InjectViews} annotation
- * is required above this class implementation to run injecting process, otherwise all marked fields/views
- * will be ignored.</b>
+ * <b>Note that {@link com.wit.android.support.fragment.annotation.InjectViews @InjectViews} [class]
+ * annotation is required above each sub-class of BaseFragment to run injecting process, otherwise
+ * all marked fields (views) of such a sub-class will be ignored.</b>
  * </p>
+ * </ul>
  *
  * @author Martin Albedinsky
  * @see com.wit.android.support.fragment.ActionBarFragment
@@ -135,9 +137,9 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
-	 * Creates a new instance of BaseFragment. If {@link com.wit.android.support.fragment.annotation.ContentView}
-	 * or {@link com.wit.android.support.fragment.annotation.ClickableViews} annotations are presented,
-	 * they will be processed here.
+	 * Creates a new instance of BaseFragment. If {@link com.wit.android.support.fragment.annotation.ContentView @ContentView}
+	 * or {@link com.wit.android.support.fragment.annotation.ClickableViews @ClickableViews} annotations
+	 * are presented above a sub-class of BaseFragment, they will be processed here.
 	 * </p>
 	 */
 	public BaseFragment() {
@@ -145,9 +147,9 @@ public abstract class BaseFragment extends Fragment {
 		/**
 		 * Process class annotations.
 		 */
-		// Retrieve content view.
+		// Obtain content view.
 		this.mContentView = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, ContentView.class, BaseFragment.class);
-		// Retrieve clickable view ids.
+		// Obtain clickable view ids.
 		// Note, that we will gather ids from all annotated class to this parent.
 		this.aClickableViewIds = this.gatherClickableViewIds(classOfFragment, new ArrayList<Integer>());
 		if (aClickableViewIds.isEmpty()) {
@@ -230,10 +232,10 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
-	 * Called to dispatch back press action to this fragment instance.
+	 * Called to dispatch back press event to this fragment instance.
 	 * </p>
 	 *
-	 * @return <code>True</code> if this instance of fragment processes dispatched back press action,
+	 * @return <code>True</code> if this instance of fragment processes dispatched back press event,
 	 * <code>false</code> otherwise.
 	 */
 	public boolean dispatchBackPressed() {
@@ -312,6 +314,16 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	/**
+	 * <p>
+	 * Same as {@link #getText(int)}, but first is performed check if the parent activity of this
+	 * fragment instance is available to prevent illegal state exceptions.
+	 * </p>
+	 */
+	public CharSequence obtainText(int resId) {
+		return isActivityAvailable() ? getText(resId) : "";
+	}
+
+	/**
 	 * Getters + Setters ---------------------------------------------------------------------------
 	 */
 
@@ -321,12 +333,11 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
-	 * Invoked to process back press action.
+	 * Invoked immediately after {@link #dispatchBackPressed()} was called to process back press event.
 	 * </p>
 	 *
-	 * @return <code>True</code> if this instance of fragment processes dispatched back press action,
+	 * @return <code>True</code> if this instance of fragment processes dispatched back press event,
 	 * <code>false</code> otherwise.
-	 * @see #dispatchBackPressed()
 	 */
 	protected boolean onBackPressed() {
 		return false;
@@ -334,7 +345,8 @@ public abstract class BaseFragment extends Fragment {
 
 	/**
 	 * <p>
-	 * Invoked to process on the given <var>view</var> click action.
+	 * Invoked immediately after {@link #dispatchViewClick(android.view.View)} was called to process
+	 * click event on the given <var>view</var>.
 	 * </p>
 	 *
 	 * @param view The view which was clicked.
@@ -378,7 +390,7 @@ public abstract class BaseFragment extends Fragment {
 			}
 		}
 
-		// Retrieve also ids of super class, but only to this BaseFragment super.
+		// Obtain also ids of super class, but only to this BaseFragment super.
 		final Class<?> superOfFragment = classOfFragment.getSuperclass();
 		if (superOfFragment != null && !superOfFragment.equals(BaseFragment.class)) {
 			gatherClickableViewIds(superOfFragment, ids);

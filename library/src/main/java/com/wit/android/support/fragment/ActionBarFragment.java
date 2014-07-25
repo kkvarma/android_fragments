@@ -38,22 +38,24 @@ import com.wit.android.support.fragment.util.FragmentAnnotations;
  * todo: description
  * </p>
  * <p>
- * <b>Note, that implementation of this fragment can be used only within the context of an
+ * <b>Note, that implementation of this fragment can be used only within the context of
  * {@link android.support.v7.app.ActionBarActivity}</b>.
  * </p>
  * <h6>Accepted annotations</h6>
- * {@link com.wit.android.support.fragment.annotation.ActionBarOptions @ActionBarOptions} [<b>class</b>]
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.annotation.ActionBarOptions @ActionBarOptions} [<b>class</b>]</li>
  * <p>
- * If this annotation is presented, all options presented within this annotation will be applied to
- * the instance of ActionBar presented within the context of an instance of this ActionBarFragment class
- * implementation. Such a set up is accomplished in {@link #onViewCreated(android.view.View, android.os.Bundle)}.
+ * If this annotation is presented, all options presented within this annotation will be used to set
+ * up an instance of ActionBar accessible from within context of a sub-class of ActionBarFragment.
+ * Such a set up is accomplished in {@link #onViewCreated(android.view.View, android.os.Bundle)}.
  * </p>
- * {@link com.wit.android.support.fragment.annotation.MenuOptions @MenuOptions} [<b>class</b>]
+ * <li>{@link com.wit.android.support.fragment.annotation.MenuOptions @MenuOptions} [<b>class, recursively</b>]</li>
  * <p>
  * If this annotation is presented, options menu will be requested in {@link #onCreate(android.os.Bundle)}
  * by {@link #setHasOptionsMenu(boolean)} and menu will be created in {@link #onCreateOptionsMenu(android.view.Menu, android.view.MenuInflater)}
  * according to the options presented within this annotation.
  * </p>
+ * </ul>
  *
  * @author Martin Albedinsky
  */
@@ -125,9 +127,9 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Creates a new instance of ActionBarFragment. If {@link com.wit.android.support.fragment.annotation.ActionBarOptions}
-	 * or {@link com.wit.android.support.fragment.annotation.MenuOptions} annotations are presented,
-	 * they will be processed here.
+	 * Creates a new instance of ActionBarFragment. If {@link com.wit.android.support.fragment.annotation.ActionBarOptions @ActionBarOptions}
+	 * or {@link com.wit.android.support.fragment.annotation.MenuOptions @MenuOptions} annotations are
+	 * presented above a sub-class of ActionBarFragment, they will be processed here.
 	 * </p>
 	 */
 	public ActionBarFragment() {
@@ -136,13 +138,13 @@ public class ActionBarFragment extends BaseFragment {
 		/**
 		 * Process class annotations.
 		 */
-		// Retrieve action bar options.
+		// Obtain action bar options.
 		this.mActionBarOptions = FragmentAnnotations.obtainAnnotationFrom(
 				classOfFragment, ActionBarOptions.class
 		);
-		// Retrieve options menu.
+		// Obtain options menu.
 		this.mMenuOptions = FragmentAnnotations.obtainAnnotationFrom(
-				classOfFragment, MenuOptions.class,ActionBarFragment.class
+				classOfFragment, MenuOptions.class, ActionBarFragment.class
 		);
 	}
 
@@ -168,6 +170,9 @@ public class ActionBarFragment extends BaseFragment {
 		}
 		// Obtain action bar from the parent activity.
 		this.mActionBar = getActionBarActivity().getSupportActionBar();
+		if (mActionBar != null && mActionBarOptions != null) {
+			mActionBar.setDisplayHomeAsUpEnabled(mActionBarOptions.homeAsUp());
+		}
 		// Enable/disable options menu.
 		setHasOptionsMenu(mMenuOptions != null);
 		this.bCreated = true;
@@ -219,7 +224,7 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#supportInvalidateOptionsMenu()}.
+	 * Wrapped {@link android.support.v7.app.ActionBarActivity#supportInvalidateOptionsMenu()}.
 	 * </p>
 	 *
 	 * @see #isActivityAvailable()
@@ -232,7 +237,7 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#supportRequestWindowFeature(int)}.
+	 * Wrapped {@link android.support.v7.app.ActionBarActivity#supportRequestWindowFeature(int)}.
 	 * </p>
 	 *
 	 * @see #isActivityAvailable()
@@ -255,7 +260,8 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.app.ActionBar#setTitle(int)}.
+	 * Wrapped {@link android.app.ActionBar#setTitle(int)} on the ActionBar instance accessible from
+	 * this fragment instance.
 	 * </p>
 	 *
 	 * @see #setActionBarTitle(CharSequence)
@@ -269,7 +275,8 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.app.ActionBar#setTitle(CharSequence)}.
+	 * Wrapped {@link android.app.ActionBar#setTitle(CharSequence)} on the ActionBar instance accessible
+	 * from this fragment instance.
 	 * </p>
 	 *
 	 * @see #setActionBarTitle(int)
@@ -283,7 +290,8 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.app.ActionBar#setIcon(int)}.
+	 * Wrapped {@link android.app.ActionBar#setIcon(int)} on the ActionBar instance accessible from
+	 * this fragment instance.
 	 * </p>
 	 *
 	 * @see #setActionBarIcon(android.graphics.drawable.Drawable)
@@ -297,7 +305,8 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.app.ActionBar#setIcon(Drawable)}.
+	 * Wrapped {@link android.app.ActionBar#setIcon(Drawable)} on the ActionBar instance accessible
+	 * from this fragment instance.
 	 * </p>
 	 *
 	 * @see #setActionBarIcon(int)
@@ -311,7 +320,8 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#setSupportProgress(int)}.
+	 * Wrapped {@link android.support.v7.app.ActionBarActivity#setSupportProgress(int)} on the current
+	 * activity.
 	 * </p>
 	 *
 	 * @see #setProgressBarVisibility(boolean)
@@ -325,7 +335,8 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#setSupportProgressBarVisibility(boolean)}.
+	 * Wrapped {@link android.support.v7.app.ActionBarActivity#setSupportProgressBarVisibility(boolean)}
+	 * on the current activity.
 	 * </p>
 	 *
 	 * @see #setProgress(int)
@@ -340,7 +351,8 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#setSupportProgressBarIndeterminate(boolean)}.
+	 * Wrapped {@link android.support.v7.app.ActionBarActivity#setSupportProgressBarIndeterminate(boolean)}.
+	 * on the current activity.
 	 * </p>
 	 *
 	 * @see #setProgressBarIndeterminateVisibility(boolean)
@@ -354,7 +366,8 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Same as {@link android.support.v7.app.ActionBarActivity#setSupportProgressBarIndeterminateVisibility(boolean)}.
+	 * Wrapped {@link android.support.v7.app.ActionBarActivity#setSupportProgressBarIndeterminateVisibility(boolean)}.
+	 * on the current activity.
 	 * </p>
 	 *
 	 * @see #setProgressBarIndeterminate(boolean)
@@ -372,10 +385,10 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Returns flag indicating whether the action bar is available or not.
+	 * Returns flag indicating whether the ActionBar is available or not.
 	 * </p>
 	 *
-	 * @return <code>True</code> if action bar obtained from the parent activity is available,
+	 * @return <code>True</code> if ActionBar obtained from the parent activity is available,
 	 * <code>false</code> otherwise.
 	 */
 	protected boolean isActionBarAvailable() {
@@ -384,9 +397,9 @@ public class ActionBarFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Returns action bar which can be accessed by this fragment. <b>Note</b>, that action bar can be
-	 * accessed only between {@link #onCreate(android.os.Bundle)} and {@link #onDestroy()}, otherwise
-	 * exception will be thrown.
+	 * Returns an instance of ActionBar which can be accessed by this fragment. <b>Note</b>, that
+	 * ActionBar can be accessed only between {@link #onCreate(android.os.Bundle)} and {@link #onDestroy()},
+	 * otherwise exception will be thrown.
 	 * </p>
 	 *
 	 * @return The instance of ActionBar obtained from the parent activity.
@@ -395,8 +408,8 @@ public class ActionBarFragment extends BaseFragment {
 	protected ActionBar getActionBar() {
 		if (!bCreated) {
 			throw new IllegalStateException(
-					"Action bar can be accessed only when fragment is created." +
-							((Object) this).getClass().getSimpleName() + " isn't created yet or is already destroyed."
+					"ActionBar can be accessed only when fragment is created." +
+							((Object) this).getClass().getSimpleName() + " is not created yet or is already destroyed."
 			);
 		}
 		return mActionBar;
@@ -407,7 +420,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * Returns an instance of {@link android.support.v7.app.ActionBarActivity}.
 	 * </p>
 	 *
-	 * @return The current parent activity of this fragment instance casted to the ActionBarActivity.
+	 * @return The current parent activity of this fragment instance casted to ActionBarActivity.
 	 * @see #isActivityAvailable()
 	 */
 	protected ActionBarActivity getActionBarActivity() {
