@@ -200,6 +200,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 		 * Build our custom adapter view layout.
 		 */
 		final FrameLayout layout = new FrameLayout(inflater.getContext());
+		layout.setLayoutParams(onCreateLayoutParams());
 		// Resolve empty view.
 		final View emptyView = onCreateEmptyView(inflater, layout, savedInstanceState);
 		if (emptyView != null) {
@@ -398,6 +399,18 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 
 	/**
 	 * <p>
+	 * Invoked to create a new instance of layout parameters for the layout in which will be AdapterView
+	 * and its empty view placed.
+	 * </p>
+	 *
+	 * @return An instance of layout params. By default this creates params to MATCH_PARENT size.
+	 */
+	protected ViewGroup.LayoutParams onCreateLayoutParams() {
+		return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+	}
+
+	/**
+	 * <p>
 	 * Invoked to create a new instance of the adapter view specific for this instance of AdapterFragment.
 	 * </p>
 	 *
@@ -468,10 +481,12 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 		// Base set up.
 		this.setAdapterInner(mAdapter);
 		if (mEmptyView == null && mEmptyViewRes > 0) {
-			setEmptyView(inflateView(mEmptyViewRes));
+			this.mEmptyView = inflateView(mEmptyViewRes);
 		}
 		if (mEmptyView != null) {
-			adapterView.setEmptyView(mEmptyView);
+			if (mAdapterViewOptions == null || mAdapterViewOptions.attachEmptyView()) {
+				adapterView.setEmptyView(mEmptyView);
+			}
 			if (mEmptyView instanceof TextView) {
 				if (mAdapterViewOptions != null && mAdapterViewOptions.emptyText() > 0) {
 					((TextView) mEmptyView).setText(mAdapterViewOptions.emptyText());

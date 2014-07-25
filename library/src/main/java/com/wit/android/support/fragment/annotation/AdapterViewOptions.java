@@ -77,6 +77,14 @@ public @interface AdapterViewOptions {
 	int viewId() default VIEW_DEFAULT_ID;
 
 	/**
+	 * Flag indicating whether an empty view should be attached to AdapterView by
+	 * {@link android.widget.AdapterView#setEmptyView(android.view.View)} or not.
+	 * <p/>
+	 * Default value: <b>true</b>
+	 */
+	boolean attachEmptyView() default true;
+
+	/**
 	 * The desired id for an empty view.
 	 * <p/>
 	 * Default value: <b>{@link #EMPTY_VIEW_DEFAULT_ID}</b>

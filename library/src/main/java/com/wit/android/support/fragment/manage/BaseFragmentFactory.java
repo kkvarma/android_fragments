@@ -40,8 +40,11 @@ import java.util.List;
  * <ul>
  * <li>{@link com.wit.android.support.fragment.annotation.FactoryFragments @FactoryFragments} [<b>class</b>]</li>
  * <p>
- * If this annotation is presented, todo
- * Also if {@link com.wit.android.support.fragment.annotation.FactoryFragments#createTags()}
+ * If this annotation is presented, all ids of fragments presented within this annotation will be
+ * attached to an instance of annotated BaseFragmentFactory sub-class, so {@link #isFragmentProvided(int)}
+ * will returns always <code>true</code> for each of these ids.
+ * <p/>
+ * Also if {@link com.wit.android.support.fragment.annotation.FactoryFragments#createTags() @FactoryFragments#createTags()}
  * is set to <code>true</code>, there will be automatically created (cached) tags for all such ids,
  * so they can be obtained by calling {@link #getFragmentTag(int)} with the specific fragment id.
  * </p>
@@ -333,7 +336,8 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
-	 * todo:
+	 * Invoked from {@link #isFragmentProvided(int)} if none of the current joined factories provide
+	 * a fragment with the specified <var>fragmentId</var>.
 	 * </p>
 	 */
 	protected boolean providesFragment(int fragmentId) {
@@ -342,7 +346,8 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
-	 * todo:
+	 * Invoked from {@link #getFragmentTag(int)} if none of the current joined factories provide a tag
+	 * for the specified <var>fragmentId</var>.
 	 * </p>
 	 */
 	protected String onGetFragmentTag(int fragmentId) {
@@ -351,7 +356,8 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
-	 * todo:
+	 * Invoked form {@link #getFragmentShowOptions(int, android.os.Bundle)} if none of the current
+	 * joined factories provide an options for fragment with the specified <var>fragmentId</var>.
 	 * </p>
 	 */
 	protected FragmentController.ShowOptions onGetFragmentShowOptions(int fragmentId, Bundle params) {
