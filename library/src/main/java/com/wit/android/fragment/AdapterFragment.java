@@ -504,6 +504,9 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 			if (mAdapterViewOptions.longClickable()) {
 				adapterView.setOnItemLongClickListener(this);
 			}
+		} else {
+			// As default set up only item click listener.
+			adapterView.setOnItemClickListener(this);
 		}
 	}
 
