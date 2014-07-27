@@ -40,14 +40,6 @@ import java.lang.annotation.Target;
 public @interface ContentView {
 
 	/**
-	 * Constants ===================================================================================
-	 */
-
-	/**
-	 * Methods =====================================================================================
-	 */
-
-	/**
 	 * A resource id of the desired layout to inflate as root view.
 	 */
 	int value();

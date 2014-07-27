@@ -41,14 +41,6 @@ import java.lang.annotation.Target;
 public @interface ActionModeOptions {
 
 	/**
-	 * Constants ===================================================================================
-	 */
-
-	/**
-	 * Methods =====================================================================================
-	 */
-
-	/**
 	 * A resource id of the desired xml menu for an ActionMode.
 	 *
 	 * @see android.view.ActionMode.Callback#onCreateActionMode(android.view.ActionMode, android.view.Menu)

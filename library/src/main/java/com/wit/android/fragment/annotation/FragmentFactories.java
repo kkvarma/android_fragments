@@ -43,14 +43,6 @@ import java.lang.annotation.Target;
 public @interface FragmentFactories {
 
 	/**
-	 * Constants ===================================================================================
-	 */
-
-	/**
-	 * Methods =====================================================================================
-	 */
-
-	/**
 	 * An array with classes of FragmentFactory which should be joined.
 	 */
 	Class<? extends FragmentController.FragmentFactory>[] value();

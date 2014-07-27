@@ -37,84 +37,9 @@ import android.widget.ListView;
 public class ListFragment<A extends ListAdapter> extends AdapterFragment<ListView, A> {
 
 	/**
-	 * Constants ===================================================================================
-	 */
-
-	/**
-	 * Log TAG.
-	 */
-	// private static final String TAG = ListFragment.class.getSimpleName();
-
-	/**
-	 * Flag indicating whether the debug output trough log-cat is enabled or not.
-	 */
-	// private static final boolean DEBUG_ENABLED = true;
-
-	/**
-	 * Flag indicating whether the output trough log-cat is enabled or not.
-	 */
-	// private static final boolean LOG_ENABLED = true;
-
-	/**
-	 * Enums =======================================================================================
-	 */
-
-	/**
-	 * Static members ==============================================================================
-	 */
-
-	/**
-	 * Members =====================================================================================
-	 */
-
-	/**
-	 * Arrays --------------------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Booleans ------------------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Constructors ================================================================================
-	 */
-
-	/**
-	 * Methods =====================================================================================
-	 */
-
-	/**
-	 * Public --------------------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Getters + Setters ---------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Protected -----------------------------------------------------------------------------------
-	 */
-
-	/**
 	 */
 	@Override
 	protected ListView onCreateAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return new ListView(inflater.getContext(), null, android.R.attr.listViewStyle);
 	}
-
-	/**
-	 * Private -------------------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Abstract methods ----------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Inner classes ===============================================================================
-	 */
-
-	/**
-	 * Interface ===================================================================================
-	 */
 }
