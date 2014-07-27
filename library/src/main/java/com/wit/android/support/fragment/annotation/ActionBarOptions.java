@@ -40,14 +40,6 @@ import java.lang.annotation.Target;
 public @interface ActionBarOptions {
 
 	/**
-	 * Constants ===================================================================================
-	 */
-
-	/**
-	 * Methods =====================================================================================
-	 */
-
-	/**
 	 * A resource id of the desired text which should be set as title for an ActionBar.
 	 *
 	 * @see android.support.v7.app.ActionBar#setTitle(int)

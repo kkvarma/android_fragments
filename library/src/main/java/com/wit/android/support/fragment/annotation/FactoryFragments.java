@@ -41,14 +41,6 @@ import java.lang.annotation.Target;
 public @interface FactoryFragments {
 
 	/**
-	 * Constants ===================================================================================
-	 */
-
-	/**
-	 * Methods =====================================================================================
-	 */
-
-	/**
 	 * An array with Fragment ids to be provided by FragmentFactory.
 	 *
 	 * @see com.wit.android.support.fragment.manage.FragmentController.FragmentFactory#isFragmentProvided(int)
