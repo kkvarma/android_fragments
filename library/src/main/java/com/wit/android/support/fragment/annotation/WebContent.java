@@ -40,14 +40,6 @@ import java.lang.annotation.Target;
 public @interface WebContent {
 
 	/**
-	 * Constants ===================================================================================
-	 */
-
-	/**
-	 * Methods =====================================================================================
-	 */
-
-	/**
 	 * The desired content to be loaded into {@link android.webkit.WebView}. Can be a raw <b>HTML</b>,
 	 * web <b>URL</b> or path to a <b>FILE</b> with the desired HTML content.
 	 */
