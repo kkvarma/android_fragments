@@ -54,6 +54,10 @@ public @interface InjectView {
 	int value();
 
 	/**
+	 * Inner annotations ===========================================================================
+	 */
+
+	/**
 	 * <h4>Annotation Overview</h4>
 	 * <p>
 	 * Same as {@link InjectView}. This special annotation type is used to improve views injecting,

@@ -41,14 +41,6 @@ import java.lang.annotation.Target;
 public @interface ClickableViews {
 
 	/**
-	 * Constants ===================================================================================
-	 */
-
-	/**
-	 * Methods =====================================================================================
-	 */
-
-	/**
 	 * An array with ids of views which are clickable, so an instance of {@link android.view.View.OnClickListener}
 	 * should be attached to them to listen for click events.
 	 */

@@ -35,6 +35,7 @@ import android.widget.ListView;
  * @see com.wit.android.support.fragment.GridFragment
  */
 public class ListFragment<A extends ListAdapter> extends AdapterFragment<ListView, A> {
+
 	/**
 	 */
 	@Override
