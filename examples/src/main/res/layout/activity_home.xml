@@ -19,10 +19,10 @@
  * =================================================================================================
  */
 -->
-<com.wit.android.support.examples.widget.ExNavigationLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                            android:id="@+id/Ex.Activity.Home.ExNavigationLayout"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="match_parent">
+<com.wit.android.examples.widget.ExNavigationLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                    android:id="@+id/Ex.Activity.Home.ExNavigationLayout"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -66,4 +66,4 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"/>
 
-</com.wit.android.support.examples.widget.ExNavigationLayout>
+</com.wit.android.examples.widget.ExNavigationLayout>
