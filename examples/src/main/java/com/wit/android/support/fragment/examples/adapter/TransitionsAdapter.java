@@ -24,8 +24,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.wit.android.support.examples.libs.adapter.ExSimpleSpinnerAdapter;
-import com.wit.android.support.examples.libs.adapter.annotation.ExItemHolder;
+import com.wit.android.support.examples.libs.adapter.ExViewHolder;
 import com.wit.android.support.examples.libs.adapter.annotation.ExItemView;
+import com.wit.android.support.examples.libs.adapter.annotation.ExItemViewHolder;
 import com.wit.android.support.fragment.examples.R;
 import com.wit.android.support.fragment.manage.FragmentTransition;
 
@@ -39,8 +40,8 @@ import java.util.List;
  *
  * @author Martin Albedinsky
  */
-@ExItemHolder(TransitionsAdapter.ViewHolder.class)
 @ExItemView(R.layout.spinner_item_transition)
+@ExItemViewHolder(TransitionsAdapter.ViewHolder.class)
 public class TransitionsAdapter extends ExSimpleSpinnerAdapter<FragmentTransition> {
 
 	/**
@@ -82,16 +83,9 @@ public class TransitionsAdapter extends ExSimpleSpinnerAdapter<FragmentTransitio
 	}
 
 	/**
-	 */
-	@Override
-	protected void onUpdateView(FragmentTransition fragmentTransition, Object holder) {
-		((ViewHolder) holder).setText(fragmentTransition.name());
-	}
-
-	/**
 	 *
 	 */
-	public static class ViewHolder implements ExItemHolder.ExViewHolder {
+	public static class ViewHolder implements ExViewHolder<FragmentTransition, TransitionsAdapter> {
 
 		/**
 		 *
@@ -101,19 +95,19 @@ public class TransitionsAdapter extends ExSimpleSpinnerAdapter<FragmentTransitio
 		/**
 		 */
 		@Override
-		public void onCreate(View view) {
+		public void create(int position, View view) {
 			this.label = (TextView) view;
 		}
 
 		/**
-		 *
-		 * @param text
 		 */
-		void setText(CharSequence text) {
-			if (!TextUtils.isEmpty(text)) {
-				label.setText(text.toString().replace("_", " "));
+		@Override
+		public void bind(int position, FragmentTransition item, TransitionsAdapter adapter) {
+			final String name = item.name();
+			if (TextUtils.isEmpty(name)) {
+				label.setText("Unknown transition");
 			} else {
-				label.setText(text);
+				label.setText(name.replace("_", " "));
 			}
 		}
 	}

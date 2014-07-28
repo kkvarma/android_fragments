@@ -21,7 +21,6 @@ package com.wit.android.support.fragment.examples.adapter;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wit.android.support.examples.libs.adapter.ExSimpleAdapter;
-import com.wit.android.support.examples.libs.adapter.annotation.ExItemHolder;
+import com.wit.android.support.examples.libs.adapter.ExViewHolder;
+import com.wit.android.support.examples.libs.adapter.annotation.ExItemViewHolder;
 import com.wit.android.support.fragment.examples.R;
 
 /**
@@ -39,7 +39,7 @@ import com.wit.android.support.fragment.examples.R;
  *
  * @author Martin Albedinsky
  */
-@ExItemHolder(AppsAdapter.ViewHolder.class)
+@ExItemViewHolder(AppsAdapter.ViewHolder.class)
 public class AppsAdapter extends ExSimpleAdapter<ApplicationInfo> {
 
 	/**
@@ -50,12 +50,12 @@ public class AppsAdapter extends ExSimpleAdapter<ApplicationInfo> {
 	/**
 	 *
 	 */
-	private boolean bAsGrid;
+	private final boolean bAsGrid;
 
 	/**
 	 *
 	 */
-	private PackageManager mPackageManager;
+	final PackageManager mPackageManager;
 
 	/**
 	 * @param context
@@ -75,21 +75,9 @@ public class AppsAdapter extends ExSimpleAdapter<ApplicationInfo> {
 	}
 
 	/**
-	 */
-	@Override
-	public void onBindView(int position, Object viewHolder) {
-		final ApplicationInfo item = getItem(position);
-		if (item != null) {
-			final ViewHolder holder = (ViewHolder) viewHolder;
-			holder.setLabel(item.loadLabel(mPackageManager));
-			holder.setIcon(item.loadIcon(mPackageManager));
-		}
-	}
-
-	/**
 	 *
 	 */
-	public static class ViewHolder implements ExItemHolder.ExViewHolder {
+	public static class ViewHolder implements ExViewHolder<ApplicationInfo, AppsAdapter> {
 
 		/**
 		 *
@@ -104,23 +92,17 @@ public class AppsAdapter extends ExSimpleAdapter<ApplicationInfo> {
 		/**
 		 */
 		@Override
-		public void onCreate(View view) {
+		public void create(int position, View view) {
 			this.label = (TextView) view.findViewById(R.id.ListItem_App_TextView);
 			this.icon = (ImageView) view.findViewById(R.id.ListItem_App_ImageView);
 		}
 
 		/**
-		 * @param drawable
 		 */
-		void setIcon(Drawable drawable) {
-			icon.setImageDrawable(drawable);
-		}
-
-		/**
-		 * @param text
-		 */
-		void setLabel(CharSequence text) {
-			label.setText(text);
+		@Override
+		public void bind(int position, ApplicationInfo item, AppsAdapter adapter) {
+			label.setText(item.loadLabel(adapter.mPackageManager));
+			icon.setImageDrawable(item.loadIcon(adapter.mPackageManager));
 		}
 	}
 }
