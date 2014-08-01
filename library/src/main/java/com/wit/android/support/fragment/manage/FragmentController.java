@@ -837,6 +837,25 @@ public class FragmentController {
 	}
 
 	/**
+	 * Called to dispatch the back stack change.
+	 *
+	 * @param entriesCount The count of the fragment back stack entries.
+	 * @param action       The back stack change action identifier.
+	 */
+	void dispatchBackStackChanged(int entriesCount, int action) {
+		final boolean added = action == BackStackListener.ADDED;
+		if (entriesCount > 0) {
+			final FragmentManager.BackStackEntry entry = mFragmentManager.getBackStackEntryAt(entriesCount - 1);
+			if (entry != null) {
+				notifyBackStackEntryChange(mTopBackStackEntry = entry, added);
+			}
+		} else if (mTopBackStackEntry != null) {
+			notifyBackStackEntryChange(mTopBackStackEntry, false);
+			this.mTopBackStackEntry = null;
+		}
+	}
+
+	/**
 	 * Private -------------------------------------------------------------------------------------
 	 */
 
@@ -857,7 +876,7 @@ public class FragmentController {
 			return false;
 		}
 		final boolean success = onShowFragment(fragment, mFragmentFactory.getFragmentTransactionOptions(fragmentId, params));
-		return success && dispatchFragmentChanged(fragmentId, fragment.getTag(), true);
+		return success && notifyFragmentChanged(fragmentId, fragment.getTag(), true);
 	}
 
 	/**
@@ -869,7 +888,7 @@ public class FragmentController {
 	 */
 	private boolean performShowFragment(Fragment fragment, TransactionOptions options) {
 		final boolean success = onShowFragment(fragment, options);
-		return success && dispatchFragmentChanged(fragment.getId(), fragment.getTag(), false);
+		return success && notifyFragmentChanged(fragment.getId(), fragment.getTag(), false);
 	}
 
 	/**
@@ -889,32 +908,13 @@ public class FragmentController {
 	}
 
 	/**
-	 * Called to dispatch back stack change.
-	 *
-	 * @param entriesCount The count of the fragment back stack entries.
-	 * @param action       The back stack change action identifier.
-	 */
-	private void dispatchBackStackChanged(int entriesCount, int action) {
-		final boolean added = action == BackStackListener.ADDED;
-		if (entriesCount > 0) {
-			final FragmentManager.BackStackEntry entry = mFragmentManager.getBackStackEntryAt(entriesCount - 1);
-			if (entry != null) {
-				dispatchBackStackEntryChange(mTopBackStackEntry = entry, added);
-			}
-		} else if (mTopBackStackEntry != null) {
-			dispatchBackStackEntryChange(mTopBackStackEntry, false);
-			this.mTopBackStackEntry = null;
-		}
-	}
-
-	/**
-	 * Called to dispatch back stack entry change.
+	 * Called to notify, that the given <var>changedEntry</var> was added or removed from the back stack.
 	 *
 	 * @param changedEntry The back stack entry which was changed.
 	 * @param added        <code>True</code> if the specified entry was added to the back stack,
 	 *                     <code>false</code> if was removed.
 	 */
-	private void dispatchBackStackEntryChange(FragmentManager.BackStackEntry changedEntry, boolean added) {
+	private void notifyBackStackEntryChange(FragmentManager.BackStackEntry changedEntry, boolean added) {
 		this.mCurrentFragmentTag = changedEntry.getName();
 		if (mBackStackListener != null) {
 			// Dispatch to listener.
@@ -923,14 +923,15 @@ public class FragmentController {
 	}
 
 	/**
-	 * Called to dispatch fragment change.
+	 * Called to notify, that there was fragment with the given id and tag currently changed, so replaces
+	 * the old one.
 	 *
 	 * @param id      The id of the currently changed (showed) fragment.
 	 * @param tag     The tag of the currently changed (showed) fragment.
 	 * @param factory <code>True</code> if the changed fragment was obtained from a factory,
 	 *                <code>false</code> otherwise.
 	 */
-	private boolean dispatchFragmentChanged(int id, String tag, boolean factory) {
+	private boolean notifyFragmentChanged(int id, String tag, boolean factory) {
 		this.mCurrentFragmentTag = tag;
 		if (mFragmentListener != null) {
 			mFragmentListener.onFragmentChanged(id, mCurrentFragmentTag, factory);
