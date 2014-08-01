@@ -503,7 +503,7 @@ public class WebFragment extends BaseFragment {
 				if (DEBUG_ENABLED) {
 					Log.d(TAG, "onPageFinished('" + url + "')");
 				}
-				dispatchLoadingFinished(url);
+				notifyLoadingFinished(url);
 			}
 
 			/**
@@ -522,7 +522,7 @@ public class WebFragment extends BaseFragment {
 				if (DEBUG_ENABLED) {
 					Log.d(TAG, "onPageStarted('" + url + "')");
 				}
-				dispatchLoadingStarted(url);
+				notifyLoadingStarted(url);
 			}
 
 			/**
@@ -597,7 +597,7 @@ public class WebFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Called to dispatch message, that loading process of the specified <var>webUrl</var> just started.
+	 * Called to notify, that loading process of the specified <var>webUrl</var> just started.
 	 * </p>
 	 * <p>
 	 * By default this will dispatch {@link OnWebContentLoadingListener#onLoadingStarted(String)}
@@ -606,7 +606,7 @@ public class WebFragment extends BaseFragment {
 	 *
 	 * @param webUrl Web url which is currently being loaded into the current web view.
 	 */
-	protected void dispatchLoadingStarted(String webUrl) {
+	protected void notifyLoadingStarted(String webUrl) {
 		if (mContentLoadingListener != null) {
 			mContentLoadingListener.onLoadingStarted(webUrl);
 		}
@@ -614,7 +614,7 @@ public class WebFragment extends BaseFragment {
 
 	/**
 	 * <p>
-	 * Called to dispatch message, that loading process of the specified <var>webUrl</var> was finished.
+	 * Called to notify, that loading process of the specified <var>webUrl</var> was finished.
 	 * </p>
 	 * <p>
 	 * By default, this will dispatch {@link OnWebContentLoadingListener#onLoadingFinished(String)}
@@ -623,7 +623,7 @@ public class WebFragment extends BaseFragment {
 	 *
 	 * @param webUrl Web url which was currently loaded into the current web view.
 	 */
-	protected void dispatchLoadingFinished(String webUrl) {
+	protected void notifyLoadingFinished(String webUrl) {
 		if (mContentLoadingListener != null) {
 			mContentLoadingListener.onLoadingFinished(webUrl);
 		}

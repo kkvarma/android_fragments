@@ -2,9 +2,9 @@
 <img align="left" src="http://www.wolf-itechnologies.com/images/wit/android/wit_ic_android_100.png" />
 </a>
 
-Android Fragments (3.5)
+Android Fragments (3.6)
 ===============
-> [last updated: **25.07.2014**]
+> [last updated: **01.08.2014**]
 
 <h1 align="right">
 	From the <a href="" title="">Android Libraries</a>
@@ -48,7 +48,7 @@ Android Fragments (3.5)
 
 ## Compatibility ##
 
-Supported from the **Android API version 14**.
+Supported from the **Android API version 7**, so almost **every Android** powered device out there :).
 
 ## Known Issues ##
 

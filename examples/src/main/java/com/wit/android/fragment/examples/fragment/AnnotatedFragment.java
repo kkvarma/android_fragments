@@ -20,6 +20,8 @@ package com.wit.android.fragment.examples.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.wit.android.fragment.BaseFragment;
@@ -45,10 +47,33 @@ public class AnnotatedFragment extends BaseFragment {
 	// private static final String TAG = AnnotatedFragment.class.getSimpleName();
 
 	@InjectView(R.id.Fragment_Annotations_TextView_Content)
-	private TextView mContentTextView;
+	private TextView mTextContent;
 
-	@InjectView.Last(R.id.Fragment_Annotations_TextView_Title)
-	private TextView mTitleTextView;
+	@InjectView(R.id.Fragment_Annotations_TextView_Title)
+	private TextView mTextTitle;
+
+	/**
+	 * Views below are only for testing purpose ----------------------------------------------------
+	 */
+
+	@InjectView(0)
+	private View mViewInjectFirst;
+
+	@InjectView(0)
+	private View mViewInjectSecond;
+
+	@InjectView.Last(0)
+	private View mViewInjectThird;
+
+	@InjectView(0)
+	private Button mButton;
+
+	@InjectView(0)
+	private AutoCompleteTextView mAutoCompleteTextView;
+
+	/**
+	 * ---------------------------------------------------------------------------------------------
+	 */
 
 	/**
 	 * @return
@@ -62,8 +87,8 @@ public class AnnotatedFragment extends BaseFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		mTitleTextView.setText("Lorem ipsum");
-		mContentTextView.setText(
+		mTextTitle.setText("Title section");
+		mTextContent.setText(
 				"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut " +
 						"labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco " +
 						"laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in" +

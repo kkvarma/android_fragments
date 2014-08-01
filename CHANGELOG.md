@@ -3,6 +3,9 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
+### **3.6*** (<i>01.08.2014</i>) ###
+- Renamed all dispatch... methods meant to notify listeners to notify... due to optimizing some naming conventions in all libraries.
+
 ### **3.5** (<i>25.07.2014</i>) ###
 - Renamed FragmentController.ShowOptions to FragmentController.TransactionOptions to be more accurate.
 - Improved documentation.
