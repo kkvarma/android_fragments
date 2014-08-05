@@ -199,7 +199,10 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 		/**
 		 * Build our custom adapter view layout.
 		 */
-		final FrameLayout layout = new FrameLayout(inflater.getContext());
+		final ViewGroup layout = onCreateLayout(inflater, container, savedInstanceState);
+		if (layout == null) {
+			throw new NullPointerException("Layout created by " + ((Object) this).getClass().getSimpleName() + ".onCreateLayout(...) can't be null.");
+		}
 		layout.setLayoutParams(onCreateLayoutParams());
 		// Resolve empty view.
 		final View emptyView = onCreateEmptyView(inflater, layout, savedInstanceState);
@@ -399,11 +402,36 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 
 	/**
 	 * <p>
+	 * Invoked from {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}
+	 * to create layout where an AdapterView and its empty view will be placed. <b>Note</b>, that this
+	 * is invoked only in case that <code>super.onCreateView(...)</code> doesn't creates a view for
+	 * this fragment from the {@link com.wit.android.support.fragment.annotation.ContentView @ContentView}
+	 * annotation.
+	 * </p>
+	 * <p>
+	 * <b>Alos note</b>, that this method should always return valid layout, otherwise {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}
+	 * method will fail and exception will be thrown.
+	 * </p>
+	 *
+	 * @param inflater           Valid layout inflater.
+	 * @param container          The fragment root view into which will be created layout placed.
+	 * @param savedInstanceState Bundle with saved state or <code>null</code> if this fragment's view
+	 *                           is just being first time created.
+	 * @return This returns be default an instance of {@link android.widget.FrameLayout}.
+	 * @see #onCreateLayoutParams()
+	 */
+	protected ViewGroup onCreateLayout(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return new FrameLayout(inflater.getContext());
+	}
+
+	/**
+	 * <p>
 	 * Invoked to create a new instance of layout parameters for the layout in which will be AdapterView
 	 * and its empty view placed.
 	 * </p>
 	 *
-	 * @return An instance of layout params. By default this creates params to MATCH_PARENT size.
+	 * @return An instance of layout params. By default this creates params to <b>MATCH_PARENT</b> size.
+	 * @see #onCreateLayout(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	protected ViewGroup.LayoutParams onCreateLayoutParams() {
 		return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
