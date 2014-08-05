@@ -396,7 +396,7 @@ public class ActionBarFragment extends BaseFragment {
 	protected ActionBar getActionBar() {
 		if (!bCreated) {
 			throw new IllegalStateException(
-					"ActionBar can be accessed only when fragment is created." +
+					"ActionBar can be accessed only when fragment is created. " +
 							((Object) this).getClass().getSimpleName() + " is not created yet or is already destroyed."
 			);
 		}
