@@ -48,7 +48,7 @@ Android Support Fragments (3.6)
 
 ## Compatibility ##
 
-Supported from the **Android API version 7**, so almost **every Android** powered device out there :).
+Supported from the **Android [API Level 7](http://developer.android.com/about/versions/android-2.1.html "See API highlights")**.
 
 ## Known Issues ##
 
