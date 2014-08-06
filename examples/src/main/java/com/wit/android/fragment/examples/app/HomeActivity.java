@@ -88,15 +88,15 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 	/**
 	 */
 	@Override
-	public void onBackStackChanged(boolean added, int id, String tag) {
-		Log.d(TAG, "onBackStackChanged(added:" + added + ") id: " + id + " | tag: " + tag);
+	public void onFragmentsBackStackChanged(boolean added, int id, String tag) {
+		Log.d(TAG, "onFragmentsBackStackChanged(added:" + added + ") id: " + id + " | tag: " + tag);
 	}
 
 	/**
 	 */
 	@Override
-	public void onFragmentChanged(int id, String tag, boolean factory) {
-		Log.d(TAG, "onFragmentChanged(factory:" + factory + ") id: " + id + " | tag: " + tag);
+	public void onFragmentChanged(int id, String tag, boolean fromFactory) {
+		Log.d(TAG, "onFragmentChanged(factory:" + fromFactory + ") id: " + id + " | tag: " + tag);
 	}
 
 	/**
