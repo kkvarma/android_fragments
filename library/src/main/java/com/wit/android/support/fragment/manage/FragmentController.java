@@ -918,7 +918,7 @@ public class FragmentController {
 		this.mCurrentFragmentTag = changedEntry.getName();
 		if (mBackStackListener != null) {
 			// Dispatch to listener.
-			mBackStackListener.onBackStackChanged(added, changedEntry.getId(), mCurrentFragmentTag);
+			mBackStackListener.onFragmentsBackStackChanged(added, changedEntry.getId(), mCurrentFragmentTag);
 		}
 	}
 
@@ -1363,12 +1363,12 @@ public class FragmentController {
 		 * time showed by an instance of FragmentController.
 		 * </p>
 		 *
-		 * @param id      An id of the currently changed (showed) fragment.
-		 * @param tag     A tag of the currently changed (showed) fragment.
-		 * @param factory <code>True</code> if the changed fragment was obtained from a factory,
-		 *                <code>false</code> otherwise.
+		 * @param id          An id of the currently changed (showed) fragment.
+		 * @param tag         A tag of the currently changed (showed) fragment.
+		 * @param fromFactory <code>True</code> if the changed fragment was obtained from a factory,
+		 *                    <code>false</code> otherwise.
 		 */
-		public void onFragmentChanged(int id, String tag, boolean factory);
+		public void onFragmentChanged(int id, String tag, boolean fromFactory);
 	}
 
 	/**
@@ -1393,6 +1393,6 @@ public class FragmentController {
 		 *              default behaviour of the fragments back stack managed by {@link android.support.v4.app.FragmentManager}.
 		 * @param tag   A tag of the back stack entry of which status was changed.
 		 */
-		public void onBackStackChanged(boolean added, int id, String tag);
+		public void onFragmentsBackStackChanged(boolean added, int id, String tag);
 	}
 }
