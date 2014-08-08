@@ -397,6 +397,62 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	}
 
 	/**
+	 * <p>
+	 * todo:
+	 * </p>
+	 *
+	 * @param visible
+	 */
+	public void setAdapterViewVisible(boolean visible) {
+		if (mAdapterView != null) {
+			if (visible && mAdapterView.getVisibility() != View.VISIBLE) {
+				mAdapterView.setVisibility(View.VISIBLE);
+			} else if (!visible && mAdapterView.getVisibility() == View.VISIBLE) {
+				mAdapterView.setVisibility(View.GONE);
+			}
+		}
+	}
+
+	/**
+	 * <p>
+	 * todo:
+	 * </p>
+	 *
+	 * @return
+	 */
+	public boolean isAdapterViewVisible() {
+		return mAdapterView != null && mAdapterView.getVisibility() == View.VISIBLE;
+	}
+
+	/**
+	 * <p>
+	 * todo:
+	 * </p>
+	 *
+	 * @param visible
+	 */
+	public void setEmptyViewVisible(boolean visible) {
+		if (mEmptyView != null) {
+			if (visible && mEmptyView.getVisibility() != View.VISIBLE) {
+				mEmptyView.setVisibility(View.VISIBLE);
+			} else if (!visible && mEmptyView.getVisibility() == View.VISIBLE) {
+				mEmptyView.setVisibility(View.GONE);
+			}
+		}
+	}
+
+	/**
+	 * <p>
+	 * todo:
+	 * </p>
+	 *
+	 * @return
+	 */
+	public boolean isEmptyViewVisible() {
+		return mEmptyView != null && mEmptyView.getVisibility() == View.VISIBLE;
+	}
+
+	/**
 	 * Protected -----------------------------------------------------------------------------------
 	 */
 

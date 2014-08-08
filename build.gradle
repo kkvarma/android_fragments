@@ -26,8 +26,8 @@ allprojects {
  * Library options =================================================================================
  */
 ext.artifactName = "fragments"
-ext.versionCode = 360
-ext.versionName = "3.6"
+ext.versionCode = 370
+ext.versionName = "3.7"
 
 /**
  * Android SDK options =============================================================================
