@@ -398,10 +398,11 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 
 	/**
 	 * <p>
-	 * todo:
+	 * Changes visibility of the adapter view either to {@link View#VISIBLE} or {@link View#GONE} depends
+	 * on the given <var>visible</var> flag.
 	 * </p>
 	 *
-	 * @param visible
+	 * @param visible <code>True</code> to set adapter view visible, <code>false</code> to hide it.
 	 */
 	public void setAdapterViewVisible(boolean visible) {
 		if (mAdapterView != null) {
@@ -415,10 +416,16 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 
 	/**
 	 * <p>
-	 * todo:
+	 * Returns visibility of the current adapter view.
+	 * </p>
+	 * <p>
+	 * <b>Note</b>, that this will always return visibility of the AdapterView presented within this
+	 * fragment's root view, because AdapterView is for this fragment essential and is never <code>null</code>
+	 * while this fragment has its root view created.
 	 * </p>
 	 *
-	 * @return
+	 * @return <code>True</code> if the adapter view is visible, <code>false</code> if not or if it
+	 * is not presented.
 	 */
 	public boolean isAdapterViewVisible() {
 		return mAdapterView != null && mAdapterView.getVisibility() == View.VISIBLE;
@@ -426,10 +433,11 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 
 	/**
 	 * <p>
-	 * todo:
+	 * Changes visibility of the empty view either to {@link View#VISIBLE} or {@link View#GONE} depends
+	 * on the given <var>visible</var> flag.
 	 * </p>
 	 *
-	 * @param visible
+	 * @param visible <code>True</code> to set empty view visible, <code>false</code> to hide it.
 	 */
 	public void setEmptyViewVisible(boolean visible) {
 		if (mEmptyView != null) {
@@ -443,10 +451,11 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 
 	/**
 	 * <p>
-	 * todo:
+	 * Returns visibility of the current empty view.
 	 * </p>
 	 *
-	 * @return
+	 * @return <code>True</code> if the empty view is visible, <code>false</code> if not or if it is
+	 * not presented.
 	 */
 	public boolean isEmptyViewVisible() {
 		return mEmptyView != null && mEmptyView.getVisibility() == View.VISIBLE;
