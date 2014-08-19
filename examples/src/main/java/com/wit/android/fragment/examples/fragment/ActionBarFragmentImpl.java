@@ -18,7 +18,15 @@
  */
 package com.wit.android.fragment.examples.fragment;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import com.wit.android.fragment.ActionBarFragment;
+import com.wit.android.fragment.annotation.ContentView;
+import com.wit.android.fragment.annotation.MenuOptions;
+import com.wit.android.fragment.examples.R;
 
 /**
  * <p>
@@ -27,6 +35,8 @@ import com.wit.android.fragment.ActionBarFragment;
  *
  * @author Martin Albedinsky
  */
+@ContentView(R.layout.fragment_action_bar)
+@MenuOptions(R.menu.menu_fragment_actionbar)
 public class ActionBarFragmentImpl extends ActionBarFragment {
 
 	/**
@@ -36,9 +46,52 @@ public class ActionBarFragmentImpl extends ActionBarFragment {
 
 	/**
 	 *
+	 */
+	private static final String PARAMS_TITLE_RES = "com.wit.android.fragment.examples.fragment.ActionBarFragmentImpl.PARAMS.TitleRes";
+
+	/**
+	 *
+	 * @param titleRes
 	 * @return
 	 */
-	public static ActionBarFragmentImpl newInstance() {
-		return new ActionBarFragmentImpl();
+	public static Bundle createParams(int titleRes) {
+		final Bundle params = new Bundle();
+		params.putInt(PARAMS_TITLE_RES, titleRes);
+		return params;
+	}
+
+	/**
+	 *
+	 * @param params
+	 * @return
+	 */
+	public static ActionBarFragmentImpl newInstance(Bundle params) {
+		return newInstanceWithArguments(ActionBarFragmentImpl.class, params);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.Ex_Menu_Action_Search:
+				Toast.makeText(getActivity(), "SEARCH menu item", Toast.LENGTH_SHORT).show();
+				return true;
+			case R.id.Ex_Menu_Action_Edit:
+				Toast.makeText(getActivity(), "EDIT menu item", Toast.LENGTH_SHORT).show();
+				return true;
+			case R.id.Ex_Menu_Action_New:
+				Toast.makeText(getActivity(), "NEW menu item", Toast.LENGTH_SHORT).show();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 */
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		setActionBarTitle(getArguments().getInt(PARAMS_TITLE_RES));
 	}
 }

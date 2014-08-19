@@ -220,6 +220,17 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 					}
 				});
 				break;
+			case FragmentsFactory.ACTION_BAR:
+				registerNavigationAction(new Runnable() {
+
+					/**
+					 */
+					@Override
+					public void run() {
+						mController.showFragment(id, ActionBarFragmentImpl.createParams(R.string.ActionBarFragment_Title));
+					}
+				});
+				break;
 			default:
 				registerNavigationAction(new Runnable() {
 

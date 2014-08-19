@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
 /*
  * =================================================================================================
- *                Copyright (C) 2013 - 2014 Martin Albedinsky [Wolf-ITechnologies]
+ *                    Copyright (C) 2014 Martin Albedinsky [Wolf-ITechnologies]
  * =================================================================================================
  *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
- * *************************************************************************************************
+ * -------------------------------------------------------------------------------------------------
  * You may use this file only in compliance with the License. More details and copy of this License
  * you may obtain at
  *
@@ -18,10 +16,27 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
---><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="380" android:versionName="3.8" package="com.wit.android.support.fragment">
+package com.wit.android.support.fragment.annotation;
 
-    <uses-sdk android:minSdkVersion="7"/>
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-    <application/>
-
-</manifest>
+/**
+ * <h4>Annotation Overview</h4>
+ * <p>
+ * Annotation type used to mark an <b>int</b> field which specifies an id of fragment provided by
+ * instance of {@link com.wit.android.support.fragment.manage.BaseFragmentFactory BaseFragmentFactory}.
+ * </p>
+ * <h6>Usage</h6>
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>
+ * </ul>
+ *
+ * @author Martin Albedinsky
+ */
+@Target({ElementType.FIELD, ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface FactoryFragment {
+}

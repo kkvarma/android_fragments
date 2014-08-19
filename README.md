@@ -2,7 +2,7 @@
 <img align="left" src="http://www.wolf-itechnologies.com/images/wit/android/wit_ic_android_100.png" />
 </a>
 
-Android Fragments (3.7)
+Android Fragments (3.8)
 ===============
 > [last updated: **19.08.2014**]
 
@@ -48,7 +48,7 @@ Android Fragments (3.7)
 
 ## Compatibility ##
 
-Supported from the **Android [API Level 14](http://developer.android.com/about/versions/android-4.0.html "See API highlights")**.
+Supported from the **Android [API Level 7](http://developer.android.com/about/versions/android-2.1.html "See API highlights")**.
 
 ## Known Issues ##
 
