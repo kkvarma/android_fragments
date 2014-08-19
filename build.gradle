@@ -25,7 +25,7 @@ allprojects {
 /**
  * Library options =================================================================================
  */
-ext.artifactName = "fragments"
+ext.artifactName = "support-fragments"
 ext.versionCode = 370
 ext.versionName = "3.7"
 
