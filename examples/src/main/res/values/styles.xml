@@ -23,7 +23,7 @@
 
     <!-- ### TRANSITIONS ======================================================================= -->
 
-    <style name="Transitions.Widget.TextView.SpinnerItem" parent="Ex.App.Widget.TextView.ListItem.Label">
+    <style name="Transitions.Widget.TextView.Item.Spinner" parent="Ex.Widget.TextView.Item.List.Label">
         <item name="android:textSize">15sp</item>
         <item name="android:padding">12dip</item>
         <item name="android:ellipsize">end</item>
@@ -32,23 +32,22 @@
 
     <!-- ### LIST ITEM ========================================================================= -->
 
-    <style name="ListItem.App.Widget.ImageView" parent="">
+    <style name="Widget.ImageView.Item.List" parent="">
         <item name="android:layout_width">48dip</item>
         <item name="android:layout_height">48dip</item>
     </style>
 
-    <style name="ListItem.App.Widget.TextView" parent="Ex.App.Widget.TextView.ListItem.Label">
+    <style name="Widget.TextView.Item.List.Label" parent="Ex.Widget.TextView.Item.List.Label">
         <item name="android:layout_margin">8dip</item>
     </style>
 
+    <!-- ### ACTION MODE ======================================================================= -->
 
-    <!-- ### WEB ACTIVITY ====================================================================== -->
-
-    <style name="Activity.Web.ActionMode.Widget.UrlEdit" parent="Ex.App.Widget.EditText">
-        <item name="android:textColor">@color/Ex.Widget.ActionBar.Text.Title</item>
+    <style name="Widget.EditText.ActionMode.Url" parent="Ex.Widget.EditText">
+        <item name="android:textColor">@color/Ex.Widget.TextView.ActionBar.Title</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginRight">10dip</item>
-        <item name="android:background">@drawable/bg_web_action_mode_url_edit</item>
+        <item name="android:background">@drawable/bg_action_mode_edit_url</item>
     </style>
 
 </resources>
