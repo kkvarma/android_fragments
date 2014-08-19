@@ -22,9 +22,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-            android:id="@id/Ex.App.Menu.Edit"
-            android:icon="@drawable/ex_app_ic_action_edit"
-            android:title="@string/Ex.App.Menu.Edit"
+            android:id="@id/Ex.Menu.Action.Edit"
+            android:icon="@drawable/ex_ic_action_edit"
+            android:title="@string/Ex.Menu.Label.Edit"
             android:showAsAction="ifRoom|withText"/>
 
 </menu>

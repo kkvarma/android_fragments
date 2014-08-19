@@ -324,6 +324,22 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	/**
+	 * <p>
+	 * Wrapped {@link android.app.Activity#runOnUiThread(Runnable)} on this fragment's parent activity.
+	 * </p>
+	 *
+	 * @return <code>True</code> if parent activity is available and action was posted, <code>false</code>
+	 * otherwise.
+	 */
+	public final boolean runOnUiThread(Runnable action) {
+		if (isActivityAvailable()) {
+			getActivity().runOnUiThread(action);
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Getters + Setters ---------------------------------------------------------------------------
 	 */
 
@@ -416,7 +432,7 @@ public abstract class BaseFragment extends Fragment {
 	 * Updates current private flags.
 	 *
 	 * @param flag The value of the flag to add/remove from current private flags.
-	 * @param add Boolean flag indicating whether to add or remove the specified <var>flag</var>.
+	 * @param add  Boolean flag indicating whether to add or remove the specified <var>flag</var>.
 	 */
 	private void updatePrivateFlags(int flag, boolean add) {
 		if (add) {

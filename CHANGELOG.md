@@ -3,6 +3,10 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
+### **3.7** (<i>19.08.2014</i>) ###
+- Added `setAdapterViewVisible(boolean), setEmptyViewVisible(boolean)` into AdapterFragment.
+- Added `runOnUiThread(Runnable)` into BaseFragment.
+
 ### **3.6** (<i>05.08.2014</i>) ###
 - Renamed all dispatch... methods meant to notify listeners to notify... due to optimizing some naming conventions in all libraries.
 - Allowed to create root layout for the AdapterFragment.

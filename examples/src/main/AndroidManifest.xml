@@ -30,7 +30,7 @@
             android:allowBackup="true"
             android:icon="@drawable/ex_ic_launcher"
             android:label="@string/App.Name"
-            android:theme="@style/Ex.App.Theme">
+            android:theme="@style/Ex.Theme">
 
         <activity android:name=".app.HomeActivity">
 

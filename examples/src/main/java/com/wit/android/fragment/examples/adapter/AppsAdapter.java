@@ -71,7 +71,7 @@ public class AppsAdapter extends ExSimpleAdapter<ApplicationInfo> {
 	 */
 	@Override
 	public View onCreateView(int position, LayoutInflater inflater, ViewGroup parent) {
-		return bAsGrid ? inflate(R.layout.grid_item_app, parent) : inflate(R.layout.list_item_app, parent);
+		return bAsGrid ? inflate(R.layout.item_grid_app, parent) : inflate(R.layout.item_list_app, parent);
 	}
 
 	/**
@@ -93,8 +93,8 @@ public class AppsAdapter extends ExSimpleAdapter<ApplicationInfo> {
 		 */
 		@Override
 		public void create(int position, View view) {
-			this.label = (TextView) view.findViewById(R.id.ListItem_App_TextView);
-			this.icon = (ImageView) view.findViewById(R.id.ListItem_App_ImageView);
+			this.label = (TextView) view.findViewById(R.id.Item_TextView_Label);
+			this.icon = (ImageView) view.findViewById(R.id.Item_ImageView_Icon);
 		}
 
 		/**

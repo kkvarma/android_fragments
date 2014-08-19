@@ -40,7 +40,7 @@ import java.util.List;
  *
  * @author Martin Albedinsky
  */
-@ExItemView(R.layout.spinner_item_transition)
+@ExItemView(R.layout.item_spinner_transition)
 @ExItemViewHolder(TransitionsAdapter.ViewHolder.class)
 public class TransitionsAdapter extends ExSimpleSpinnerAdapter<FragmentTransition> {
 

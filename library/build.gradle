@@ -1,8 +1,4 @@
-apply plugin: 'android-library'
-
-/**
- * Library dependencies ============================================================================
- */
+apply plugin: 'com.android.library'
 
 /**
  * Android Library options =========================================================================
@@ -23,6 +19,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
 }
+
+/**
+ * Library dependencies ============================================================================
+ */
 
 /**
  * Additional gradle tasks =========================================================================
@@ -50,7 +50,8 @@ android.libraryVariants.all { variant ->
             rename { String fileName ->
                 fileName.replace(
                         'library',
-                        rootProject.artifactName + '-' + rootProject.versionName)
+                        String.valueOf(rootProject.artifactName + '-' + rootProject.versionName)
+                )
             }
         }
     }
@@ -106,7 +107,8 @@ def updateArtifact(artifactName, classifier) {
         rename { String fileName ->
             fileName.replace(
                     'library',
-                    rootProject.artifactName + '-' + rootProject.versionName)
+                    String.valueOf(rootProject.artifactName + '-' + rootProject.versionName)
+            )
         }
     }
 }
