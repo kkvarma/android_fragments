@@ -23,6 +23,7 @@ package com.wit.android.fragment.examples.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 
+import com.wit.android.fragment.annotation.FactoryFragment;
 import com.wit.android.fragment.annotation.FactoryFragments;
 import com.wit.android.fragment.manage.BaseFragmentFactory;
 import com.wit.android.fragment.manage.FragmentController;

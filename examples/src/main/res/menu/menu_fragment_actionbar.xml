@@ -19,25 +19,24 @@
  * =================================================================================================
  */
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:compat="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
             android:id="@id/Ex.Menu.Action.Search"
             android:icon="@drawable/ex_ic_action_search"
             android:title="@string/Ex.Menu.Label.Search"
-            compat:showAsAction="ifRoom|withText"/>
+            android:showAsAction="ifRoom|withText"/>
 
     <item
             android:id="@id/Ex.Menu.Action.Edit"
             android:icon="@drawable/ex_ic_action_edit"
             android:title="@string/Ex.Menu.Label.Edit"
-            compat:showAsAction="ifRoom|withText"/>
+            android:showAsAction="ifRoom|withText"/>
 
     <item
             android:id="@id/Ex.Menu.Action.New"
             android:icon="@drawable/ex_ic_action_new"
             android:title="@string/Ex.Menu.Label.New"
-            compat:showAsAction="ifRoom|withText"/>
+            android:showAsAction="ifRoom|withText"/>
 
 </menu>

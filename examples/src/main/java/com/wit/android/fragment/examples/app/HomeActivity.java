@@ -33,6 +33,7 @@ import com.wit.android.examples.app.ExBaseHomeActivity;
 import com.wit.android.examples.model.ExNavigationItem;
 import com.wit.android.fragment.examples.R;
 import com.wit.android.fragment.examples.adapter.TransitionsAdapter;
+import com.wit.android.fragment.examples.fragment.ActionBarFragmentImpl;
 import com.wit.android.fragment.examples.fragment.FragmentsFactory;
 import com.wit.android.fragment.manage.FragmentController;
 import com.wit.android.fragment.manage.FragmentTransition;
