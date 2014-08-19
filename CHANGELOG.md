@@ -3,6 +3,11 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
+### **3.8** (<i>**.08.2014</i>) ###
+- Added new @FactoryFragment annotation to mark an int field within FragmentFactory as fragment id.
+- Updated @InjectView annotation by `@InjectView.clickable()` flag.
+- Added some support methods to create params for Fragment inside BaseFragment class.
+
 ### **3.7** (<i>19.08.2014</i>) ###
 - Added `setAdapterViewVisible(boolean), setEmptyViewVisible(boolean)` into AdapterFragment.
 - Added `runOnUiThread(Runnable)` into BaseFragment.

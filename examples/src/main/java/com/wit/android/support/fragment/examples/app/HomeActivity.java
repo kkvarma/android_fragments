@@ -33,6 +33,7 @@ import com.wit.android.support.examples.app.ExBaseHomeActivity;
 import com.wit.android.support.examples.model.ExNavigationItem;
 import com.wit.android.support.fragment.examples.R;
 import com.wit.android.support.fragment.examples.adapter.TransitionsAdapter;
+import com.wit.android.support.fragment.examples.fragment.ActionBarFragmentImpl;
 import com.wit.android.support.fragment.examples.fragment.FragmentsFactory;
 import com.wit.android.support.fragment.manage.FragmentController;
 import com.wit.android.support.fragment.manage.FragmentTransition;
@@ -217,6 +218,17 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 								id,
 								FragmentsFactory.createParams(null, bAddFragmentToBackStack)
 						);
+					}
+				});
+				break;
+			case FragmentsFactory.ACTION_BAR:
+				registerNavigationAction(new Runnable() {
+
+					/**
+					 */
+					@Override
+					public void run() {
+						mController.showFragment(id, ActionBarFragmentImpl.createParams(R.string.ActionBarFragment_Title));
 					}
 				});
 				break;

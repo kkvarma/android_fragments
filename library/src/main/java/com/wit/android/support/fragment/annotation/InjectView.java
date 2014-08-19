@@ -54,6 +54,15 @@ public @interface InjectView {
 	int value();
 
 	/**
+	 * Flag indicating whether the desired view is clickable or not. If <code>true</code>, the injected
+	 * view will be processed same way as if its id was presented within {@link com.wit.android.support.fragment.annotation.ClickableViews @ClickableViews}
+	 * annotation.
+	 * <p/>
+	 * Default value: <b>false</b>
+	 */
+	boolean clickable() default false;
+
+	/**
 	 * Inner annotations ===========================================================================
 	 */
 
@@ -102,5 +111,14 @@ public @interface InjectView {
 		 * An id of the desired view presented within the root view hierarchy to inject.
 		 */
 		int value();
+
+		/**
+		 * Flag indicating whether the desired view is clickable or not. If <code>true</code>, the injected
+		 * view will be processed same way as if its id was presented within {@link com.wit.android.support.fragment.annotation.ClickableViews @ClickableViews}
+		 * annotation.
+		 * <p/>
+		 * Default value: <b>false</b>
+		 */
+		boolean clickable() default false;
 	}
 }

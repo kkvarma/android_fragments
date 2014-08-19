@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wit.android.support.fragment.BaseFragment;
 import com.wit.android.support.fragment.annotation.ContentView;
@@ -51,6 +52,9 @@ public class AnnotatedFragment extends BaseFragment {
 
 	@InjectView(R.id.Fragment_Annotations_TextView_Title)
 	private TextView mTextTitle;
+
+	@InjectView(value = R.id.Fragment_Annotations_Button_SignIn, clickable = true)
+	private Button mButtonSignIn;
 
 	/**
 	 * Views below are only for testing purpose ----------------------------------------------------
@@ -95,5 +99,17 @@ public class AnnotatedFragment extends BaseFragment {
 						" voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " +
 						"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
 		);
+	}
+
+	/**
+	 */
+	@Override
+	protected boolean onViewClick(View view, int id) {
+		switch (id) {
+			case R.id.Fragment_Annotations_Button_SignIn:
+				Toast.makeText(getActivity(), mButtonSignIn.getText() + " button clicked", Toast.LENGTH_SHORT).show();
+				return true;
+		}
+		return super.onViewClick(view, id);
 	}
 }
