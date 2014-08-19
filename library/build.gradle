@@ -1,14 +1,6 @@
 apply plugin: 'com.android.library'
 
 /**
- * Library dependencies ============================================================================
- */
-dependencies {
-    compile 'com.android.support:support-v4:20.+'
-    compile 'com.android.support:appcompat-v7:20.+'
-}
-
-/**
  * Android Library options =========================================================================
  */
 android {
@@ -26,6 +18,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+}
+
+/**
+ * Library dependencies ============================================================================
+ */
+dependencies {
+    compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.android.support:appcompat-v7:20.0.0'
 }
 
 /**
@@ -54,7 +54,8 @@ android.libraryVariants.all { variant ->
             rename { String fileName ->
                 fileName.replace(
                         'library',
-                        rootProject.artifactName + '-' + rootProject.versionName)
+                        String.valueOf(rootProject.artifactName + '-' + rootProject.versionName)
+                )
             }
         }
     }
@@ -110,7 +111,8 @@ def updateArtifact(artifactName, classifier) {
         rename { String fileName ->
             fileName.replace(
                     'library',
-                    rootProject.artifactName + '-' + rootProject.versionName)
+                    String.valueOf(rootProject.artifactName + '-' + rootProject.versionName)
+            )
         }
     }
 }

@@ -2,7 +2,7 @@
 <img align="left" src="http://github.wolf-itechnologies.com/images/wit/android/global/icons/wit_ic_android_examples_100.png" />
 </a>
 
-Android Fragments (Examples)
+Android Support Fragments (Examples)
 ===============
 
 This simple examples project shows how to use the source code provided within this repository.
@@ -18,18 +18,18 @@ This simple examples project shows how to use the source code provided within th
 If You decide to **download** source code of this repository to run this examples project, according to **dependencies** shown below:
 
 	/**
-	 * Used repositories =========================================================
+	 * Used repositories ===========================================================================
 	 */
 	repositories {
 	    mavenLocal()
 	}
 	
 	/**
-	 * Examples dependencies =====================================================
+	 * Examples dependencies =======================================================================
 	 */
 	dependencies {
 	    compile project(':library')
-        compile 'com.wit.android.support:examples:+@aar'
+        compile 'com.wit.android.support:examples:1.0'
 	}
 
 You need to **have downloaded/installed** the latest version of [**com.wit.android.support.examples**](https://github.com/Wolf-ITechnologies/maven_android_repository/tree/master/support/examples "Go to download page") library within Your **Maven local repository**.

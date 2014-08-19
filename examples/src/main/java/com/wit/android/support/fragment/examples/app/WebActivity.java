@@ -92,7 +92,7 @@ public class WebActivity extends ExBaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		boolean processed = false;
 		switch (item.getItemId()) {
-			case R.id.Ex_App_Menu_Edit:
+			case R.id.Ex_Menu_Action_Edit:
 				startSupportActionMode(new ActionModeCallback());
 				processed = true;
 				break;
@@ -112,12 +112,12 @@ public class WebActivity extends ExBaseActivity {
 		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		final FrameLayout contentLayout = new FrameLayout(this);
-		contentLayout.setId(R.id.Ex_App_Content_Container);
+		contentLayout.setId(R.id.Ex_Content_Container);
 		setContentView(contentLayout);
 
-		this.mActionView = getLayoutInflater().inflate(R.layout.web_action_mode_url_edit, null);
+		this.mActionView = getLayoutInflater().inflate(R.layout.action_mode_edit_url, null);
 		if (mActionView != null) {
-			mUrlEdit = (EditText) mActionView.findViewById(R.id.Web_ActionMode_EditText_UrlEdit);
+			mUrlEdit = (EditText) mActionView.findViewById(R.id.ActionMode_EditText_Url);
 		}
 
 		// Set up action bar.
