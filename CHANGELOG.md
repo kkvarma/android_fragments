@@ -3,7 +3,7 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
-### **3.7** (<i>...08.2014</i>) ###
+### **3.7** (<i>19.08.2014</i>) ###
 - Added `setAdapterViewVisible(boolean), setEmptyViewVisible(boolean)` into AdapterFragment.
 - Added `runOnUiThread(Runnable)` into BaseFragment.
 
