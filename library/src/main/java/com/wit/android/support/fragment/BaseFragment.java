@@ -50,8 +50,8 @@ import java.util.List;
  * to all views found by ids presented within this annotation. If any of these views is clicked,
  * {@link #onViewClick(android.view.View, int)} will be invoked with that particular view and its id.
  * </p>
- * <li>{@link com.wit.android.support.fragment.annotation.InjectView @InjectView} [<b>field</b>]</li>
- * <li>{@link com.wit.android.support.fragment.annotation.InjectView.Last @InjectView.Last} [<b>field</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.InjectView @InjectView} [<b>field, recursively</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.InjectView.Last @InjectView.Last} [<b>field, recursively</b>]</li>
  * <p>
  * All fields marked with this annotation will be automatically injected (by {@link android.view.View#findViewById(int)})
  * using the root view passed to {@link #onViewCreated(android.view.View, android.os.Bundle)}.
@@ -166,6 +166,28 @@ public abstract class BaseFragment extends Fragment {
 	 */
 
 	/**
+	 * <p>
+	 * Creates a new instance of the given <var>classOfFragment</var> with the given <var>args</var>.
+	 * </p>
+	 *
+	 * @param classOfFragment Class of the desired fragment to instantiate.
+	 * @param args            Arguments to set to new instance of fragment by {@link Fragment#setArguments(android.os.Bundle)}.
+	 * @param <F>             Type of the desired fragment.
+	 * @return New instance of fragment with the given arguments or <code>null</code> if some instantiation
+	 * error occurs.
+	 */
+	public static <F extends Fragment> F newInstanceWithArguments(Class<F> classOfFragment, Bundle args) {
+		try {
+			final F fragment = classOfFragment.newInstance();
+			fragment.setArguments(args);
+			return fragment;
+		} catch (java.lang.InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -199,10 +221,9 @@ public abstract class BaseFragment extends Fragment {
 				view.setBackgroundResource(mContentView.backgroundRes());
 			}
 		}
-		// Resolve clickable views.
+		// Set up clickable views.
+		final ClickListener clickListener = new ClickListener();
 		if (aClickableViewIds != null && !aClickableViewIds.isEmpty()) {
-			// Set up clickable views.
-			final ClickListener clickListener = new ClickListener();
 			for (int id : aClickableViewIds) {
 				View child = view.findViewById(id);
 				if (child == null) {
@@ -211,7 +232,7 @@ public abstract class BaseFragment extends Fragment {
 				child.setOnClickListener(clickListener);
 			}
 		}
-		FragmentAnnotations.injectFragmentViews(this, BaseFragment.class);
+		FragmentAnnotations.injectFragmentViews(this, BaseFragment.class, clickListener);
 	}
 
 	/**

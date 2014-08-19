@@ -28,7 +28,7 @@
     <!-- # PROJECT ARTIFACT PROPERTIES ========================================================= -->
     <groupId>com.wit.android.support</groupId>
     <artifactId>support-fragments</artifactId>
-    <version>3.7</version>
+    <version>3.8</version>
     <packaging>aar</packaging>
 
     <!-- # PROJECT DEPENDENCIES ================================================================ -->

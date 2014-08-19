@@ -1,6 +1,6 @@
 /*
  * =================================================================================================
- *                Copyright (C) 2013 - 2014 Martin Albedinsky [Wolf-ITechnologies]
+ *                    Copyright (C) 2014 Martin Albedinsky [Wolf-ITechnologies]
  * =================================================================================================
  *         Licensed under the Apache License, Version 2.0 or later (further "License" only).
  * -------------------------------------------------------------------------------------------------
@@ -16,59 +16,27 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.support.fragment.manage;
+package com.wit.android.support.fragment.annotation;
 
-import android.test.suitebuilder.annotation.SmallTest;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
+ * <h4>Annotation Overview</h4>
  * <p>
- * Tests logic of {@link } in the {@link android.test.AndroidTestCase} environment.
+ * Annotation type used to mark an <b>int</b> field which specifies an id of fragment provided by
+ * instance of {@link com.wit.android.support.fragment.manage.BaseFragmentFactory BaseFragmentFactory}.
  * </p>
+ * <h6>Usage</h6>
+ * <ul>
+ * <li>{@link com.wit.android.support.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>
+ * </ul>
  *
  * @author Martin Albedinsky
  */
-public class FragmentFactoryTest extends android.test.AndroidTestCase {
-
-	/**
-	 * Test Constants =============================
-	 */
-
-	/**
-	 * Debug/Test TAG.
-	 */
-	private static final String TAG = FragmentFactoryTest.class.getSimpleName();
-
-	/**
-	 * Test Members ===============================
-	 */
-
-	/**
-	 * Methods ====================================
-	 */
-
-	/**
-	 * Set-up methods -----------------------------
-	 */
-
-	/**
-	 * Set ups before each test.
-	 *
-	 * @throws Exception
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-
-		// FIXME: to obtain context
-		// getContext();
-	}
-
-	/**
-	 * Test methods -------------------------------
-	 */
-
-	@SmallTest
-	public void testCreateFragmentTag() throws Exception {
-
-	}
+@Target({ElementType.FIELD, ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface FactoryFragment {
 }

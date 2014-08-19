@@ -23,9 +23,12 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.wit.android.support.fragment.annotation.FactoryFragment;
 import com.wit.android.support.fragment.annotation.FactoryFragments;
 import com.wit.android.support.fragment.annotation.FragmentFactories;
+import com.wit.android.support.fragment.util.FragmentAnnotations;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,6 +50,14 @@ import java.util.List;
  * Also if {@link com.wit.android.support.fragment.annotation.FactoryFragments#createTags() @FactoryFragments#createTags()}
  * is set to <code>true</code>, there will be automatically created (cached) tags for all such ids,
  * so they can be obtained by calling {@link #getFragmentTag(int)} with the specific fragment id.
+ * </p>
+ * <li>{@link com.wit.android.support.fragment.annotation.FactoryFragment @FactoryFragment} [<b>field</b>]</li>
+ * <p>
+ * This annotation provides same results as {@link com.wit.android.support.fragment.annotation.FactoryFragments @FactoryFragments}
+ * annotation, but this annotation is meant to be used to mark directly constant fields which specifies
+ * fragment ids.
+ * <p/>
+ * <b>Note</b>, that tag for fragment with the specified id will be automatically created.
  * </p>
  * <li>{@link com.wit.android.support.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class, recursively</b>]</li>
  * <p>
@@ -141,6 +152,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 		/**
 		 * Process class annotations.
 		 */
+		final SparseArray<String> tags = new SparseArray<>();
 		// Obtain fragment ids.
 		if (classOfFactory.isAnnotationPresent(FactoryFragments.class)) {
 			final FactoryFragments fragments = classOfFactory.getAnnotation(FactoryFragments.class);
@@ -154,13 +166,15 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 				// Create also tags if requested.
 				if (fragments.createTags()) {
-					final SparseArray<String> tags = new SparseArray<>(ids.length);
 					for (int id : ids) {
 						tags.put(id, getFragmentTag(id));
 					}
-					this.aFragmentTags = tags;
 				}
 			}
+		}
+		this.obtainAnnotatedFragmentIds(classOfFactory, tags);
+		if (tags.size() > 0) {
+			this.aFragmentTags = tags;
 		}
 		// Obtain joined factories.
 		final List<Class<? extends FragmentController.FragmentFactory>> factories = this.gatherJoinedFactories(
@@ -405,6 +419,37 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 			gatherJoinedFactories(superOfFactory, factories);
 		}
 		return factories;
+	}
+
+	/**
+	 * Obtains all annotated fragment ids from the given <var>classOfFactory</var> and puts them into
+	 * the current set of fragment ids.
+	 *
+	 * @param classOfFactory Class of this fragment factory.
+	 * @param tags           Initial array of fragment tags.
+	 */
+	private void obtainAnnotatedFragmentIds(Class<?> classOfFactory, final SparseArray<String> tags) {
+		FragmentAnnotations.iterateFields(classOfFactory, new FragmentAnnotations.FieldProcessor() {
+
+			/**
+			 */
+			@Override
+			public void onProcessField(Field field, String name) {
+				if (field.isAnnotationPresent(FactoryFragment.class) && int.class.equals(field.getType())) {
+					if (aFragmentIds == null) {
+						aFragmentIds = new ArrayList<>();
+					}
+					try {
+						final int id = (int) field.get(BaseFragmentFactory.this);
+						aFragmentIds.add(id);
+						// Create also tag.
+						tags.put(id, getFragmentTag(id));
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 
 	/**
