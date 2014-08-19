@@ -30,7 +30,7 @@
             android:orientation="vertical">
 
         <FrameLayout
-                android:id="@id/Ex.App.Content.Container"
+                android:id="@id/Ex.Content.Container"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_weight="1"/>

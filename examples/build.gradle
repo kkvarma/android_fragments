@@ -1,21 +1,6 @@
 apply plugin: 'com.android.application'
 
 /**
- * Used repositories ===============================================================================
- */
-repositories {
-    mavenLocal()
-}
-
-/**
- * Examples dependencies ===========================================================================
- */
-dependencies {
-    compile project(':library')
-    compile 'com.wit.android.support:examples:+@aar'
-}
-
-/**
  * Android Project options =========================================================================
  */
 android {
@@ -59,4 +44,19 @@ android {
             }
         }
     }
+}
+
+/**
+ * Used repositories ===============================================================================
+ */
+repositories {
+    mavenLocal()
+}
+
+/**
+ * Examples dependencies ===========================================================================
+ */
+dependencies {
+    compile project(':library')
+    compile 'com.wit.android.support:examples:1.0'
 }

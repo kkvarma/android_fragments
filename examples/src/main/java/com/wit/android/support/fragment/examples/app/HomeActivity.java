@@ -142,7 +142,7 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 
 		// Set up fragment controller.
 		this.mController = new FragmentController(this);
-		mController.setFragmentContainerId(R.id.Ex_App_Content_Container);
+		mController.setFragmentContainerId(R.id.Ex_Content_Container);
 		mController.setFragmentFactory(new FragmentsFactory());
 
 		// Set up action bar.
