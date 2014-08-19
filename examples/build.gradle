@@ -58,5 +58,5 @@ repositories {
  */
 dependencies {
     compile project(':library')
-    compile 'com.wit.android.support:examples:1.0'
+    compile 'com.wit.android.support:support-examples:1.0'
 }
