@@ -38,5 +38,5 @@ You can install above downloaded examples dependency into _Your Maven local repo
 
 * <b>Windows</b> (<i>in single line</i>):
 
-	``mvn install:install-file -DgroupId=com.wit.android.support -DartifactId=examples -Dversion=VERSION``
+	``mvn install:install-file -DgroupId=com.wit.android.support -DartifactId=support-examples -Dversion=VERSION``
 	``-Dfile=examples-VERSION.aar -Dpackaging=aar -DgeneratePom=true``
