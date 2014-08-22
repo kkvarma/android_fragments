@@ -42,8 +42,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FactoryFragment {
 
-	// A resource id of the desired text which should be set as title for an ActionBar.
-
 	/**
 	 * Type of the desired fragment of which instance should be instantiated when calling
 	 * {@link com.wit.android.support.fragment.manage.BaseFragmentFactory#createFragmentInstance(int, android.os.Bundle) BaseFragmentFactory#createFragmentInstance(int, android.os.Bundle)}

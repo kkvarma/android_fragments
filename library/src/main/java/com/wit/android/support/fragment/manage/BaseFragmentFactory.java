@@ -58,7 +58,7 @@ import java.util.List;
  * fragment ids and also provides more configuration options like the type of fragment which should
  * be instantiated for the specified id.
  * <p/>
- * <b>Note</b>, that taggedName for fragment with the specified id will be automatically created.
+ * <b>Note</b>, that tag for fragment with the specified id will be automatically created.
  * </p>
  * <li>{@link com.wit.android.support.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class, recursive</b>]</li>
  * <p>
@@ -202,19 +202,19 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
-	 * Creates a taggedName for fragment in the required format for the specified class of factory and <var>fragmentName</var>.
+	 * Creates a tag for fragment in the required format for the specified class of factory and <var>fragmentName</var>.
 	 * </p>
 	 * <p>
 	 * Example format: <u>com.android.app.fragment.factories.ProfileActivityFactory.TAG.EditProfile</u><br/><br/>
 	 * - where <b>com.android.app.fragment.factories</b> is a name of the package where the specified
 	 * <var>classOfFactory</var> is situated, <b>ProfileActivityFactory</b> is a name of the <var>classOfFactory</var>
-	 * class, <b>TAG</b> is taggedName identifier an <b>EditProfile</b> is <var>fragmentName</var>.
+	 * class, <b>TAG</b> is tag identifier an <b>EditProfile</b> is <var>fragmentName</var>.
 	 * </p>
 	 *
-	 * @param classOfFactory A class of the factory for which should be requested taggedName created.
+	 * @param classOfFactory A class of the factory for which should be requested tag created.
 	 * @param fragmentName   A fragment name (can be fragment's class name) for which should be requested
-	 *                       taggedName created.
-	 * @return Fragment taggedName in required format, or <code>null</code> if the <var>fragmentName</var>
+	 *                       tag created.
+	 * @return Fragment tag in required format, or <code>null</code> if the <var>fragmentName</var>
 	 * is <code>null</code> or empty.
 	 */
 	public static String createFragmentTag(Class<? extends FragmentController.FragmentFactory> classOfFactory, String fragmentName) {
@@ -266,7 +266,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	@Override
 	public String getFragmentTag(int fragmentId) {
 		if (hasJoinedFactories()) {
-			// Try to obtain taggedName from the joined factories.
+			// Try to obtain tag from the joined factories.
 			for (FragmentController.FragmentFactory factory : aFactories) {
 				if (factory.isFragmentProvided(fragmentId)) {
 					return factory.getFragmentTag(fragmentId);
@@ -357,7 +357,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
-	 * Invoked from {@link #getFragmentTag(int)} if none of the current joined factories provide a taggedName
+	 * Invoked from {@link #getFragmentTag(int)} if none of the current joined factories provide a tag
 	 * for the specified <var>fragmentId</var>.
 	 * </p>
 	 * <p>
@@ -499,7 +499,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 		final int id;
 
 		/**
-		 * Fragment taggedName specified for this item.
+		 * Fragment tag specified for this item.
 		 */
 		final String tag;
 
