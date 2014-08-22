@@ -46,4 +46,12 @@
 
     <string name="AdapterFragment.Text.Empty">No items available</string>
 
+    <!-- ### ACTION BAR FRAGMENT =============================================================== -->
+
+    <string name="ActionBarFragment.Title">ActionBar fragment</string>
+
+    <!-- ### ANNOTATED FRAGMENT ================================================================ -->
+
+    <string name="AnnotatedFragment.Button.SignIn">Sign In</string>
+
 </resources>

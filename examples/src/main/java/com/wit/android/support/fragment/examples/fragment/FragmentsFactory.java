@@ -23,6 +23,7 @@ package com.wit.android.support.fragment.examples.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.wit.android.support.fragment.annotation.FactoryFragment;
 import com.wit.android.support.fragment.annotation.FactoryFragments;
 import com.wit.android.support.fragment.manage.BaseFragmentFactory;
 import com.wit.android.support.fragment.manage.FragmentController;
@@ -37,10 +38,7 @@ import com.wit.android.support.fragment.manage.FragmentTransition;
  */
 @FactoryFragments({
 		FragmentsFactory.TRANSITIONS,
-		FragmentsFactory.LIST,
-		FragmentsFactory.GRID,
-		FragmentsFactory.ACTION_BAR,
-		FragmentsFactory.ANNOTATIONS
+		FragmentsFactory.LIST
 })
 public class FragmentsFactory extends BaseFragmentFactory {
 
@@ -49,29 +47,17 @@ public class FragmentsFactory extends BaseFragmentFactory {
 	 */
 	//private static final String TAG = FragmentsFactory.class.getSimpleName();
 
-	/**
-	 *
-	 */
 	public static final int TRANSITIONS = 0x01;
 
-	/**
-	 *
-	 */
 	public static final int LIST = 0x02;
 
-	/**
-	 *
-	 */
+	@FactoryFragment(type = GridFragmentImpl.class, taggedName = "GridFragment")
 	public static final int GRID = 0x03;
 
-	/**
-	 *
-	 */
+	@FactoryFragment(taggedName = "ActionBarFragment")
 	public static final int ACTION_BAR = 0x04;
 
-	/**
-	 *
-	 */
+	@FactoryFragment(type = AnnotatedFragment.class, taggedName = "AnnotatedFragment")
 	public static final int ANNOTATIONS = 0x05;
 
 	/**
@@ -105,14 +91,10 @@ public class FragmentsFactory extends BaseFragmentFactory {
 				return ImageFragment.newInstance();
 			case LIST:
 				return ListFragmentImpl.newInstance();
-			case GRID:
-				return GridFragmentImpl.newInstance();
 			case ACTION_BAR:
-				return ActionBarFragmentImpl.newInstance();
-			case ANNOTATIONS:
-				return AnnotatedFragment.newInstance();
+				return ActionBarFragmentImpl.newInstance(params);
 		}
-		return null;
+		return super.onCreateFragmentInstance(fragmentId, params);
 	}
 
 	/**

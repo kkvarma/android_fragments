@@ -19,29 +19,25 @@
  * =================================================================================================
  */
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              style="@style/Ex.Layout"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_gravity="center_horizontal">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:compat="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-            android:id="@+id/Fragment.Annotations.TextView.Title"
-            style="@style/Ex.Widget.TextView.Section.Heading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+    <item
+            android:id="@id/Ex.Menu.Action.Search"
+            android:icon="@drawable/ex_ic_action_search"
+            android:title="@string/Ex.Menu.Label.Search"
+            compat:showAsAction="ifRoom|withText"/>
 
-    <TextView
-            android:id="@+id/Fragment.Annotations.TextView.Content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dip"/>
+    <item
+            android:id="@id/Ex.Menu.Action.Edit"
+            android:icon="@drawable/ex_ic_action_edit"
+            android:title="@string/Ex.Menu.Label.Edit"
+            compat:showAsAction="ifRoom|withText"/>
 
-    <Button
-            android:id="@+id/Fragment.Annotations.Button.SignIn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/AnnotatedFragment.Button.SignIn"/>
+    <item
+            android:id="@id/Ex.Menu.Action.New"
+            android:icon="@drawable/ex_ic_action_new"
+            android:title="@string/Ex.Menu.Label.New"
+            compat:showAsAction="ifRoom|withText"/>
 
-</LinearLayout>
+</menu>

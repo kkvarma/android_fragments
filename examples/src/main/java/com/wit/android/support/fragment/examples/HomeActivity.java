@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.support.fragment.examples.app;
+package com.wit.android.support.fragment.examples;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -31,8 +31,8 @@ import android.widget.CheckBox;
 
 import com.wit.android.support.examples.app.ExBaseHomeActivity;
 import com.wit.android.support.examples.model.ExNavigationItem;
-import com.wit.android.support.fragment.examples.R;
 import com.wit.android.support.fragment.examples.adapter.TransitionsAdapter;
+import com.wit.android.support.fragment.examples.fragment.ActionBarFragmentImpl;
 import com.wit.android.support.fragment.examples.fragment.FragmentsFactory;
 import com.wit.android.support.fragment.manage.FragmentController;
 import com.wit.android.support.fragment.manage.FragmentTransition;
@@ -153,7 +153,6 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 		if (!(bRestored = savedInstanceState != null)) {
 			final int selectedPosition = 0;
 			setNavigationItemSelected(selectedPosition);
-
 			onNavigationChange(FragmentsFactory.TRANSITIONS);
 		}
 	}
@@ -215,8 +214,19 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 					public void run() {
 						mController.showFragment(
 								id,
-								FragmentsFactory.createParams(null, bAddFragmentToBackStack)
+								FragmentsFactory.createParams(FragmentTransition.FADE_IN, bAddFragmentToBackStack)
 						);
+					}
+				});
+				break;
+			case FragmentsFactory.ACTION_BAR:
+				registerNavigationAction(new Runnable() {
+
+					/**
+					 */
+					@Override
+					public void run() {
+						mController.showFragment(id, ActionBarFragmentImpl.createParams(R.string.ActionBarFragment_Title));
 					}
 				});
 				break;
@@ -272,7 +282,7 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 				break;
 			default:
 				if (mController != null) {
-					mController.clearBackStack();
+					mController.clearBackStackImmediate();
 				}
 				mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 				mActionBar.setDisplayHomeAsUpEnabled(true);
