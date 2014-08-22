@@ -4,7 +4,7 @@
 
 Android Support Fragments (3.8)
 ===============
-> [last updated: **19.08.2014**]
+> [last updated: **22.08.2014**]
 
 <h1 align="right">
 	From the <a href="" title="">Android Libraries</a>

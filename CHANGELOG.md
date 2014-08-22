@@ -3,9 +3,10 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
-### **3.8** (<i>**.08.2014</i>) ###
+### **3.8** (<i>22.08.2014</i>) ###
 - Added new @FactoryFragment annotation to mark an int field within FragmentFactory as fragment id.
 - Updated @InjectView annotation by `@InjectView.clickable()` flag.
+- Updated views injecting.
 - Added some support methods to create params for Fragment inside BaseFragment class.
 
 ### **3.7** (<i>19.08.2014</i>) ###

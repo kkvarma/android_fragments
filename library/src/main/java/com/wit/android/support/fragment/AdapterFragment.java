@@ -47,14 +47,14 @@ import java.lang.reflect.InvocationTargetException;
  * </p>
  * <h6>Accepted annotations</h6>
  * <ul>
- * <li>{@link com.wit.android.support.fragment.annotation.AdapterViewOptions @AdapterViewOptions} [<b>class, recursively</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.AdapterViewOptions @AdapterViewOptions} [<b>class, recursive</b>]</li>
  * <p>
  * If this annotation is presented, all necessary stuffs around AdapterView like empty view, empty text
  * will be managed using this annotation. This annotation with {@link com.wit.android.support.fragment.annotation.ContentView @ContentView}
  * annotation allows to set up custom AdapterFragment layout with custom ids without implementing
  * any Java code.
  * </p>
- * <li>{@link com.wit.android.support.fragment.annotation.ActionModeOptions @ActionModeOptions} [<b>class, recursively</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.ActionModeOptions @ActionModeOptions} [<b>class, recursive</b>]</li>
  * <p>
  * If this annotation is presented, the {@link android.support.v7.view.ActionMode} will be started
  * with a new instance of {@link com.wit.android.support.fragment.AdapterFragment.ActionModeCallback}

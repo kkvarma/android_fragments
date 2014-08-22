@@ -18,7 +18,7 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.support.fragment.examples.app;
+package com.wit.android.support.fragment.examples;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -35,7 +35,6 @@ import android.widget.Toast;
 import com.wit.android.support.examples.app.ExBaseActivity;
 import com.wit.android.support.examples.libs.fragment.manage.ExFragmentController;
 import com.wit.android.support.fragment.WebFragment;
-import com.wit.android.support.fragment.examples.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -59,7 +58,7 @@ public class WebActivity extends ExBaseActivity {
 	 */
 	// private static final String TAG = WebActivity.class.getSimpleName();
 
-	private static final String WEB_FRAGMENT_TAG = "com.wit.android.support.fragment.examples.app.WebActivity.TAG.WebFragment";
+	private static final String WEB_FRAGMENT_TAG = "com.wit.android.support.fragment.examples.WebActivity.TAG.WebFragment";
 
 	/**
 	 *
