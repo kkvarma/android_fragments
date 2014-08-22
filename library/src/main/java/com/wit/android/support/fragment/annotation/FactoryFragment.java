@@ -18,6 +18,8 @@
  */
 package com.wit.android.support.fragment.annotation;
 
+import android.support.v4.app.Fragment;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -39,4 +41,18 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FactoryFragment {
+
+	// A resource id of the desired text which should be set as title for an ActionBar.
+
+	/**
+	 * Type of the desired fragment of which instance should be instantiated when calling
+	 * {@link com.wit.android.support.fragment.manage.BaseFragmentFactory#createFragmentInstance(int, android.os.Bundle) BaseFragmentFactory#createFragmentInstance(int, android.os.Bundle)}
+	 * for this id .
+	 */
+	Class<? extends Fragment> type() default Fragment.class;
+
+	/**
+	 * Name of the desired fragment to be placed within TAG used when showing such a fragment.
+	 */
+	String taggedName() default "";
 }
