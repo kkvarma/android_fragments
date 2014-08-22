@@ -47,7 +47,7 @@ public class FragmentController {
 
 	/**
 	 * <p>
-	 * Default taggedName used when showing fragments.
+	 * Default tag used when showing fragments.
 	 * </p>
 	 */
 	public static final String FRAGMENT_TAG = "com.wit.android.fragment.manage.FragmentController.TAG.Fragment";
@@ -286,7 +286,7 @@ public class FragmentController {
 
 	/**
 	 * <p>
-	 * Same as {@link #findFragmentByTag(String)}, where fragment taggedName will be requested from the
+	 * Same as {@link #findFragmentByTag(String)}, where fragment tag will be requested from the
 	 * current factory by the specified <var>fragmentId</var>.
 	 * </p>
 	 *
@@ -444,7 +444,7 @@ public class FragmentController {
 
 	/**
 	 * <p>
-	 * Same as {@link #setFragmentOptionsMenuVisible(String, boolean)}, where fragment taggedName will be requested
+	 * Same as {@link #setFragmentOptionsMenuVisible(String, boolean)}, where fragment tag will be requested
 	 * form the current factory by the specified <var>fragmentId</var>.
 	 * </p>
 	 *
@@ -461,7 +461,7 @@ public class FragmentController {
 	 * Shows/hides options menu of the requested fragment by calling {@link android.app.Fragment#setHasOptionsMenu(boolean)}.
 	 * </p>
 	 *
-	 * @param fragmentTag A taggedName of the desired fragment of which options to show/hide.
+	 * @param fragmentTag A tag of the desired fragment of which options to show/hide.
 	 * @param visible     <code>True</code> to show options menu, <code>false</code> to hide options menu.
 	 * @return <code>True</code> if fragment was found and request to show/hide its options menu was
 	 * performed, <code>false</code> otherwise.
@@ -608,15 +608,15 @@ public class FragmentController {
 
 	/**
 	 * <p>
-	 * Returns a taggedName of the currently showing fragment. <b>Note</b>, that this is only accurate, as
+	 * Returns a tag of the currently showing fragment. <b>Note</b>, that this is only accurate, as
 	 * it depends on how are fragments changing, and if all fragments are managed by this controller.
 	 * </p>
 	 * <p>
-	 * The current value of this taggedName is changing when back stack change occur or there was showed a
+	 * The current value of this tag is changing when back stack change occur or there was showed a
 	 * new fragment by some of methods provided by this controller.
 	 * </p>
 	 *
-	 * @return A taggedName of the currently showing fragment.
+	 * @return A tag of the currently showing fragment.
 	 */
 	public String getCurrentFragmentTag() {
 		return mCurrentFragmentTag;
@@ -624,10 +624,10 @@ public class FragmentController {
 
 	/**
 	 * <p>
-	 * Returns a taggedName of the currently visible fragment.
+	 * Returns a tag of the currently visible fragment.
 	 * </p>
 	 *
-	 * @return Fragment taggedName or <code>null</code> if there is currently no fragment visible.
+	 * @return Fragment tag or <code>null</code> if there is currently no fragment visible.
 	 * @see #getVisibleFragment()
 	 * @see #getVisibleSecondFragmentTag()
 	 */
@@ -638,10 +638,10 @@ public class FragmentController {
 
 	/**
 	 * <p>
-	 * Returns a taggedName of the second currently visible fragment.
+	 * Returns a tag of the second currently visible fragment.
 	 * </p>
 	 *
-	 * @return Fragment taggedName or <code>null</code> if there is only one or none currently visible fragment.
+	 * @return Fragment tag or <code>null</code> if there is only one or none currently visible fragment.
 	 * @see #getVisibleSecondFragment()
 	 * @see #getVisibleFragmentTag()
 	 */
@@ -865,7 +865,7 @@ public class FragmentController {
 	 * @return <code>True</code> if showing was successful, <code>false</code> otherwise.
 	 */
 	private boolean performShowFragment(int fragmentId, Bundle params) {
-		// First obtain fragment instance then fragment taggedName.
+		// First obtain fragment instance then fragment tag.
 		Fragment fragment = mFragmentFactory.createFragmentInstance(fragmentId, params);
 		if (fragment == null) {
 			// Invalid fragment instance.
@@ -920,11 +920,11 @@ public class FragmentController {
 	}
 
 	/**
-	 * Called to notify, that there was fragment with the given id and taggedName currently changed, so replaces
+	 * Called to notify, that there was fragment with the given id and tag currently changed, so replaces
 	 * the old one.
 	 *
 	 * @param id      The id of the currently changed (showed) fragment.
-	 * @param tag     The taggedName of the currently changed (showed) fragment.
+	 * @param tag     The tag of the currently changed (showed) fragment.
 	 * @param factory <code>True</code> if the changed fragment was obtained from a factory,
 	 *                <code>false</code> otherwise.
 	 */
@@ -951,7 +951,7 @@ public class FragmentController {
 	 * </p>
 	 * <h4>Default SetUp:</h4>
 	 * <ul>
-	 * <li>taggedName: {@link com.wit.android.fragment.manage.FragmentController#FRAGMENT_TAG}</li>
+	 * <li>tag: {@link com.wit.android.fragment.manage.FragmentController#FRAGMENT_TAG}</li>
 	 * <li>transition: {@link FragmentTransition#NONE}</li>
 	 * <li>container id: <b>-1</b></li>
 	 * <li>back-stacking: <b>false</b></li>
@@ -1014,7 +1014,7 @@ public class FragmentController {
 
 		/**
 		 * Flag indicating, whether a same fragment (currently showing) can be replaced by a new one
-		 * with this options containing same taggedName or not.
+		 * with this options containing same tag or not.
 		 */
 		protected boolean replaceSame = true;
 
@@ -1136,10 +1136,10 @@ public class FragmentController {
 
 		/**
 		 * <p>
-		 * Sets a taggedName for the fragment to be showed.
+		 * Sets a tag for the fragment to be showed.
 		 * </p>
 		 *
-		 * @param fragmentTag The desired fragment taggedName.
+		 * @param fragmentTag The desired fragment tag.
 		 * @return This options instance.
 		 */
 		public TransactionOptions tag(String fragmentTag) {
@@ -1321,7 +1321,7 @@ public class FragmentController {
 
 		/**
 		 * <p>
-		 * Returns a taggedName for the fragment associated with the specified <var>fragmentId</var> within
+		 * Returns a tag for the fragment associated with the specified <var>fragmentId</var> within
 		 * this fragment factory.
 		 * </p>
 		 *
@@ -1361,7 +1361,7 @@ public class FragmentController {
 		 * </p>
 		 *
 		 * @param id          An id of the currently changed (showed) fragment.
-		 * @param tag         A taggedName of the currently changed (showed) fragment.
+		 * @param tag         A tag of the currently changed (showed) fragment.
 		 * @param fromFactory <code>True</code> if the changed fragment was obtained from a factory,
 		 *                    <code>false</code> otherwise.
 		 */
