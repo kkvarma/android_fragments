@@ -20,6 +20,7 @@ package com.wit.android.fragment.manage;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -47,20 +48,20 @@ import java.util.List;
  * attached to an instance of annotated BaseFragmentFactory sub-class, so {@link #isFragmentProvided(int)}
  * will returns always <code>true</code> for each of these ids.
  * <p/>
- * Also if {@link com.wit.android.fragment.annotation.FactoryFragments#createTags() @FactoryFragments#createTags()}
- * is set to <code>true</code>, there will be automatically created (cached) tags for all such ids,
- * so they can be obtained by calling {@link #getFragmentTag(int)} with the specific fragment id.
+ * Also, there will be automatically created default tags for all such ids, so they can be obtained
+ * by calling {@link #getFragmentTag(int)} with the specific fragment id.
  * </p>
  * <li>{@link com.wit.android.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class, recursively</b>]</li>
  * <li>{@link com.wit.android.fragment.annotation.FactoryFragment @FactoryFragment} [<b>field</b>]</li>
  * <p>
  * This annotation provides same results as {@link com.wit.android.fragment.annotation.FactoryFragments @FactoryFragments}
  * annotation, but this annotation is meant to be used to mark directly constant fields which specifies
- * fragment ids.
+ * fragment ids and also provides more configuration options like the type of fragment which should
+ * be instantiated for the specified id.
  * <p/>
- * <b>Note</b>, that tag for fragment with the specified id will be automatically created.
+ * <b>Note</b>, that taggedName for fragment with the specified id will be automatically created.
  * </p>
- * <li>{@link com.wit.android.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class, recursively</b>]</li>
+ * <li>{@link com.wit.android.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class, recursive</b>]</li>
  * <p>
  * If this annotation is presented, all classes of FragmentFactory provided by this annotation will
  * be instantiated and joined to an instance of annotated BaseFragmentFactory sub-class.
@@ -112,14 +113,9 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 */
 
 	/**
-	 * List of tags for all fragments provided by this factory.
+	 * Array with gathered
 	 */
-	private List<Integer> aFragmentIds = null;
-
-	/**
-	 * Array of tags for all fragments provided by this factory.
-	 */
-	private SparseArray<String> aFragmentTags = null;
+	private SparseArray<FragmentItem> aFragmentItems;
 
 	/**
 	 * List with joined factories. Instances and tags are first obtained from these factories then
@@ -153,29 +149,25 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 		/**
 		 * Process class annotations.
 		 */
-		final SparseArray<String> tags = new SparseArray<>();
+		final SparseArray<FragmentItem> items = new SparseArray<>();
 		// Obtain fragment ids.
 		if (classOfFactory.isAnnotationPresent(FactoryFragments.class)) {
 			final FactoryFragments fragments = classOfFactory.getAnnotation(FactoryFragments.class);
 
 			final int[] ids = fragments.value();
 			if (ids.length > 0) {
-				this.aFragmentIds = new ArrayList<>(ids.length);
 				for (int id : ids) {
-					aFragmentIds.add(id);
-				}
-
-				// Create also tags if requested.
-				if (fragments.createTags()) {
-					for (int id : ids) {
-						tags.put(id, getFragmentTag(id));
-					}
+					items.put(id, new FragmentItem(
+							id,
+							getFragmentTag(id),
+							null
+					));
 				}
 			}
 		}
-		this.obtainAnnotatedFragmentIds(classOfFactory, tags);
-		if (tags.size() > 0) {
-			this.aFragmentTags = tags;
+		this.processAnnotatedFragments(classOfFactory, items);
+		if (items.size() > 0) {
+			this.aFragmentItems = items;
 		}
 		// Obtain joined factories.
 		final List<Class<? extends FragmentController.FragmentFactory>> factories = this.gatherJoinedFactories(
@@ -211,19 +203,19 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
-	 * Creates a tag for fragment in the required format for the specified class of factory and <var>fragmentName</var>.
+	 * Creates a taggedName for fragment in the required format for the specified class of factory and <var>fragmentName</var>.
 	 * </p>
 	 * <p>
 	 * Example format: <u>com.android.app.fragment.factories.ProfileActivityFactory.TAG.EditProfile</u><br/><br/>
 	 * - where <b>com.android.app.fragment.factories</b> is a name of the package where the specified
 	 * <var>classOfFactory</var> is situated, <b>ProfileActivityFactory</b> is a name of the <var>classOfFactory</var>
-	 * class, <b>TAG</b> is tag identifier an <b>EditProfile</b> is <var>fragmentName</var>.
+	 * class, <b>TAG</b> is taggedName identifier an <b>EditProfile</b> is <var>fragmentName</var>.
 	 * </p>
 	 *
-	 * @param classOfFactory A class of the factory for which should be requested tag created.
+	 * @param classOfFactory A class of the factory for which should be requested taggedName created.
 	 * @param fragmentName   A fragment name (can be fragment's class name) for which should be requested
-	 *                       tag created.
-	 * @return Fragment tag in required format, or <code>null</code> if the <var>fragmentName</var>
+	 *                       taggedName created.
+	 * @return Fragment taggedName in required format, or <code>null</code> if the <var>fragmentName</var>
 	 * is <code>null</code> or empty.
 	 */
 	public static String createFragmentTag(Class<? extends FragmentController.FragmentFactory> classOfFactory, String fragmentName) {
@@ -275,7 +267,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	@Override
 	public String getFragmentTag(int fragmentId) {
 		if (hasJoinedFactories()) {
-			// Try to obtain tag from the joined factories.
+			// Try to obtain taggedName from the joined factories.
 			for (FragmentController.FragmentFactory factory : aFactories) {
 				if (factory.isFragmentProvided(fragmentId)) {
 					return factory.getFragmentTag(fragmentId);
@@ -354,19 +346,48 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * Invoked from {@link #isFragmentProvided(int)} if none of the current joined factories provide
 	 * a fragment with the specified <var>fragmentId</var>.
 	 * </p>
+	 * <p>
+	 * By default this will check for registered fragment parsed from annotated fields marked
+	 * by {@link com.wit.android.fragment.annotation.FactoryFragment @FactoryFragment} annotation
+	 * for the specified id. If there is no such a fragment item, <code>false</code> will be returned.
+	 * </p>
 	 */
 	protected boolean providesFragment(int fragmentId) {
-		return (aFragmentIds != null) && aFragmentIds.contains(fragmentId);
+		return (aFragmentItems != null) && aFragmentItems.indexOfKey(fragmentId) >= 0;
 	}
 
 	/**
 	 * <p>
-	 * Invoked from {@link #getFragmentTag(int)} if none of the current joined factories provide a tag
+	 * Invoked from {@link #getFragmentTag(int)} if none of the current joined factories provide a taggedName
 	 * for the specified <var>fragmentId</var>.
+	 * </p>
+	 * <p>
+	 * By default this will check for registered fragment parsed from annotated fields marked
+	 * by {@link com.wit.android.fragment.annotation.FactoryFragment @FactoryFragment} annotation
+	 * for the specified id. If there is no such a fragment item, {@link #createFragmentTag(Class, String)}
+	 * will be called with appropriate parameters.
 	 * </p>
 	 */
 	protected String onGetFragmentTag(int fragmentId) {
-		return (aFragmentTags != null) ? aFragmentTags.get(fragmentId) : createFragmentTag(getClass(), Integer.toString(fragmentId));
+		return providesFragment(fragmentId) ? aFragmentItems.get(fragmentId).tag : createFragmentTag(getClass(), Integer.toString(fragmentId));
+	}
+
+	/**
+	 * <p>
+	 * Invoked whenever {@link #createFragmentInstance(int, android.os.Bundle)} is called and any of
+	 * the current joined factories does not provide fragment instance for the specified <var>fragmentId</var>.
+	 * </p>
+	 * <p>
+	 * By default this will check for registered fragment parsed from annotated fields marked
+	 * by {@link com.wit.android.fragment.annotation.FactoryFragment @FactoryFragment} annotation
+	 * for the specified id and tries to create its instance from class provided by
+	 * {@link com.wit.android.fragment.annotation.FactoryFragment#type() @FactoryFragment.type()}
+	 * if not default <code>Fragment.class</code>. If there is no such a fragment item, <code>null</code>
+	 * will be returned.
+	 * </p>
+	 */
+	protected Fragment onCreateFragmentInstance(int fragmentId, Bundle params) {
+		return providesFragment(fragmentId) ? aFragmentItems.get(fragmentId).newInstance() : null;
 	}
 
 	/**
@@ -423,13 +444,14 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	}
 
 	/**
-	 * Obtains all annotated fragment ids from the given <var>classOfFactory</var> and puts them into
-	 * the current set of fragment ids.
+	 * Processes all annotated fields marked with {@link com.wit.android.support.fragment.annotation.FactoryFragment @FactoryFragment}
+	 * annotation and puts them into the given <var>items</var> array.
 	 *
 	 * @param classOfFactory Class of this fragment factory.
-	 * @param tags           Initial array of fragment tags.
+	 * @param items          Initial array of fragment items.
 	 */
-	private void obtainAnnotatedFragmentIds(Class<?> classOfFactory, final SparseArray<String> tags) {
+	@SuppressWarnings("unchecked")
+	private void processAnnotatedFragments(final Class<?> classOfFactory, final SparseArray<FragmentItem> items) {
 		FragmentAnnotations.iterateFields(classOfFactory, new FragmentAnnotations.FieldProcessor() {
 
 			/**
@@ -437,14 +459,16 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 			@Override
 			public void onProcessField(Field field, String name) {
 				if (field.isAnnotationPresent(FactoryFragment.class) && int.class.equals(field.getType())) {
-					if (aFragmentIds == null) {
-						aFragmentIds = new ArrayList<>();
-					}
+					final FactoryFragment factoryFragment = field.getAnnotation(FactoryFragment.class);
 					try {
 						final int id = (int) field.get(BaseFragmentFactory.this);
-						aFragmentIds.add(id);
-						// Create also tag.
-						tags.put(id, getFragmentTag(id));
+						items.put(id, new FragmentItem(
+								id,
+								TextUtils.isEmpty(factoryFragment.taggedName()) ?
+										getFragmentTag(id) :
+										createFragmentTag((Class<? extends FragmentController.FragmentFactory>) classOfFactory, factoryFragment.taggedName()),
+								factoryFragment.type()
+						));
 					} catch (IllegalAccessException e) {
 						e.printStackTrace();
 					}
@@ -458,16 +482,68 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 */
 
 	/**
-	 * <p>
-	 * Invoked whenever {@link #createFragmentInstance(int, android.os.Bundle)} is called and any of
-	 * the current joined factories does not provide fragment instance for the specified <var>fragmentId</var>.
-	 * </p>
-	 */
-	protected abstract Fragment onCreateFragmentInstance(int fragmentId, Bundle params);
-
-	/**
 	 * Inner classes ===============================================================================
 	 */
+
+	/**
+	 * Holder for fragment item configuration.
+	 */
+	static class FragmentItem {
+
+		/**
+		 * Members =================================================================================
+		 */
+
+		/**
+		 * Fragment id specified for this item.
+		 */
+		final int id;
+
+		/**
+		 * Fragment taggedName specified for this item.
+		 */
+		final String tag;
+
+		/**
+		 * Fragment type specified for this item.
+		 */
+		final Class<? extends Fragment> type;
+
+		/**
+		 * Constructors ============================================================================
+		 */
+
+		/**
+		 * Creates a new instance of FragmentItem with the given parameters.
+		 */
+		FragmentItem(int id, String tag, Class<? extends Fragment> type) {
+			this.id = id;
+			this.tag = tag;
+			this.type = type;
+		}
+
+		/**
+		 * Methods =================================================================================
+		 */
+
+		/**
+		 * Creates a new instance of Fragment specified for this item.
+		 *
+		 * @return New fragment instance or <code>null</code> if type of this item is {@link Fragment Fragment.class}
+		 * which is default and can not be instantiated or instantiation error occur.
+		 */
+		public Fragment newInstance() {
+			if (type == null || type.equals(Fragment.class)) {
+				return null;
+			}
+			try {
+				return type.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				Log.e(TAG, "Failed to instantiate fragment class of(" + type + "). Make sure this fragment has public empty constructor.");
+			}
+			return null;
+		}
+	}
 
 	/**
 	 * Interface ===================================================================================

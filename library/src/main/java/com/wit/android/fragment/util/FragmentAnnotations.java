@@ -20,12 +20,10 @@ package com.wit.android.fragment.util;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.View;
 
 import com.wit.android.fragment.annotation.InjectView;
 import com.wit.android.fragment.annotation.InjectViews;
-import com.wit.android.fragment.config.FragmentsConfig;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -47,12 +45,12 @@ public final class FragmentAnnotations {
 	/**
 	 * Log TAG.
 	 */
-	private static final String TAG = FragmentAnnotations.class.getSimpleName();
+	// private static final String TAG = FragmentAnnotations.class.getSimpleName();
 
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
 	 */
-	private static final boolean DEBUG = FragmentsConfig.LIBRARY_DEBUG_LOG_ENABLED;
+	// private static final boolean DEBUG = FragmentsConfig.LIBRARY_DEBUG_LOG_ENABLED;
 
 	/**
 	 * Flag indicating whether the output for user trough log-cat is enabled or not.
@@ -168,6 +166,41 @@ public final class FragmentAnnotations {
 
 	/**
 	 * <p>
+	 * Same as {@link #injectView(java.lang.reflect.Field, Object, android.view.View, android.view.View.OnClickListener)}
+	 * with <code>null</code> OnClickListener.
+	 * </p>
+	 */
+	public static boolean injectView(Field field, Object fieldHolder, View root) {
+		return injectView(field, fieldHolder, root, null);
+	}
+
+
+	/**
+	 * <p>
+	 * Injects view obtained from the given <var>root</var> view by id presented within
+	 * {@link com.wit.android.fragment.annotation.InjectView @InjectView} or
+	 * {@link com.wit.android.fragment.annotation.InjectView.Last @InjectView.Last} annotation
+	 * as value to the given <var>field</var>.
+	 * </p>
+	 *
+	 * @param field           Field to which should be obtained view set as value.
+	 * @param fieldParent     Context in which is the passed view <var>field</var> presented.
+	 * @param root            Root view from which can be requested view obtained.
+	 * @param onClickListener An instance of OnClickListener which should be set to injected view
+	 *                        if {@link com.wit.android.fragment.annotation.InjectView#clickable() @InjectView.clickable()}
+	 *                        flag is set to <code>true</code>.
+	 * @return @return <code>True</code> when view obtained from the given root view by id presented within
+	 * annotation placed above the given field was successfully set to that field, <code>false</code>
+	 * if such a view was not found or the given field does not have InjectView or InjectView.Last
+	 * presented.
+	 * @throws RuntimeException If the given field is not instance of {@link android.view.View}.
+	 */
+	public static boolean injectView(Field field, Object fieldParent, View root, View.OnClickListener onClickListener) {
+		return injectViewInner(field, fieldParent, root, onClickListener);
+	}
+
+	/**
+	 * <p>
 	 * Same as {@link #injectFragmentViews(android.app.Fragment, Class, android.view.View.OnClickListener)}
 	 * with <code>null</code> <var>onClickListener</var>.
 	 * </p>
@@ -207,6 +240,8 @@ public final class FragmentAnnotations {
 	 *                        flag is set to <code>true</code>.
 	 * @throws java.lang.IllegalStateException If the given fragment does not have created root view
 	 *                                         yet or it is already invalid.
+	 * @throws RuntimeException                If one of the marked fields of the fragment (or its super)
+	 *                                         to inject is not instance of {@link android.view.View}.
 	 * @see #injectActivityViews(android.app.Activity, Class)
 	 */
 	public static void injectFragmentViews(Fragment fragment, Class<?> maxSuperClass, View.OnClickListener onClickListener) {
@@ -246,8 +281,10 @@ public final class FragmentAnnotations {
 	 * @param onClickListener An instance of OnClickListener which should be set to injected views
 	 *                        if {@link com.wit.android.fragment.annotation.InjectView#clickable() @InjectView.clickable()}
 	 *                        flag is set to <code>true</code>.
-	 * @throws java.lang.IllegalStateException If a view with the {@link android.R.id#content} id can
-	 *                                         not be found from the given activity.
+	 * @throws java.lang.IllegalStateException If view with the {@link android.R.id#content} id can
+	 *                                         not be found within the given activity's view hierarchy.
+	 * @throws RuntimeException                If one of the marked fields of the given activity (or its
+	 *                                         super) to inject is not instance of {@link android.view.View}.
 	 */
 	public static void injectActivityViews(Activity activity, Class<?> maxSuperClass, View.OnClickListener onClickListener) {
 		final View content = activity.getWindow().getDecorView().findViewById(android.R.id.content);
@@ -295,26 +332,11 @@ public final class FragmentAnnotations {
 			// Process annotated fields.
 			final Field[] fields = classOfRootContext.getDeclaredFields();
 			if (fields.length > 0) {
-				View view;
-				InjectView injectView;
-				InjectView.Last injectLastView;
 				for (Field field : fields) {
-					if (field.isAnnotationPresent(InjectView.class)) {
-						injectView = field.getAnnotation(InjectView.class);
-						if ((view = injectView(field, rootContext, root, injectView.value())) != null && injectView.clickable()) {
-							view.setOnClickListener(onClickListener);
-						}
-					} else if (field.isAnnotationPresent(InjectView.Last.class)) {
-						injectLastView = field.getAnnotation(InjectView.Last.class);
-						if ((view = injectView(field, rootContext, root, injectLastView.value())) != null && injectLastView.clickable()) {
-							view.setOnClickListener(onClickListener);
-						}
-						if (DEBUG) {
-							Log.d(TAG, "Finishing injecting views of(" + rootContext + ") on field(" + field + ").");
-						}
+					injectViewInner(field, rootContext, root, onClickListener);
+					if (field.isAnnotationPresent(InjectView.Last.class)) {
 						break;
 					}
-
 				}
 			}
 		}
@@ -330,25 +352,61 @@ public final class FragmentAnnotations {
 	 * Sets a view obtained by the given <var>id</var> from the given <var>root</var> view as value
 	 * the the given <var>field</var>.
 	 *
-	 * @param field       A field to which should be obtained view set as value.
-	 * @param rootContext A context in which is the passed view <var>field</var> presented.
-	 * @param root        A root view of the given context.
-	 * @param id          An id of the view to look up by in the root view.
-	 * @return Injected view or <code>null</code> if injection failed or view was not found.
+	 * @param field           A field to which should be obtained view set as value.
+	 * @param fieldParent     A context in which is the passed view <var>field</var> presented.
+	 * @param root            A root view of the given context.
+	 * @param onClickListener An instance of OnClickListener which should be set to injected view
+	 *                        if {@link com.wit.android.fragment.annotation.InjectView#clickable() @InjectView.clickable()}
+	 *                        flag is set to <code>true</code>.
+	 * @return <code>True</code> when view obtained from the given root view by id presented within
+	 * annotation placed above the given field was successfully set to that field, <code>false</code>
+	 * if such a view was not found or the given field does not have InjectView or InjectView.Last
+	 * presented.
 	 */
-	private static View injectView(Field field, Object rootContext, View root, int id) {
-		View view = null;
+	private static boolean injectViewInner(Field field, Object fieldParent, View root, View.OnClickListener onClickListener) {
+		View view;
+		if (field.isAnnotationPresent(InjectView.class)) {
+			final InjectView injectView = field.getAnnotation(InjectView.class);
+			if ((view = root.findViewById(injectView.value())) != null && attachView(field, fieldParent, view)) {
+				if (injectView.clickable()) {
+					view.setOnClickListener(onClickListener);
+				}
+				return true;
+			}
+		} else if (field.isAnnotationPresent(InjectView.Last.class)) {
+			final InjectView.Last injectLastView = field.getAnnotation(InjectView.Last.class);
+			if ((view = root.findViewById(injectLastView.value())) != null && attachView(field, fieldParent, view)) {
+				if (injectLastView.clickable()) {
+					view.setOnClickListener(onClickListener);
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Attaches the given <var>view</var> instance to the given <var>field</var> as its value for the
+	 * given <var>fieldParent</var> object.
+	 *
+	 * @param field       A field to which should be the given view set as value.
+	 * @param fieldParent A context in which is the passed view <var>field</var> presented.
+	 * @param view        View to be set as value of the given field.
+	 * @return <code>True</code> when attaching succeeded, <code>false</code> otherwise.
+	 * @throws RuntimeException If the given field is not instance of {@link android.view.View}.
+	 */
+	private static boolean attachView(Field field, Object fieldParent, View view) {
 		// Check correct type of the field.
-		final Class<?> classOfField = field.getType();
-		if (View.class.isAssignableFrom(classOfField)) {
+		if (View.class.isAssignableFrom(field.getType())) {
 			field.setAccessible(true);
 			try {
-				field.set(rootContext, view = root.findViewById(id));
+				field.set(fieldParent, view);
+				return true;
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 			}
 		}
-		return view;
+		throw new RuntimeException("Field(" + fieldParent.getClass().getSimpleName() + "." + field.getName() + ") is not instance of view, thus can not be injected.");
 	}
 
 	/**

@@ -18,12 +18,12 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment.examples.app;
+package com.wit.android.fragment.examples;
 
-import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.view.ActionMode;
 import android.text.Editable;
-import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,10 +32,9 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.wit.android.examples.app.ExBaseActivity;
-import com.wit.android.examples.libs.fragment.manage.ExFragmentController;
-import com.wit.android.fragment.WebFragment;
-import com.wit.android.fragment.examples.R;
+import com.wit.android.support.examples.app.ExBaseActivity;
+import com.wit.android.support.examples.libs.fragment.manage.ExFragmentController;
+import com.wit.android.support.fragment.WebFragment;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -59,7 +58,7 @@ public class WebActivity extends ExBaseActivity {
 	 */
 	// private static final String TAG = WebActivity.class.getSimpleName();
 
-	private static final String WEB_FRAGMENT_TAG = "com.wit.android.fragment.examples.app.WebActivity.TAG.WebFragment";
+	private static final String WEB_FRAGMENT_TAG = "com.wit.android.fragment.examples.WebActivity.TAG.WebFragment";
 
 	/**
 	 *
@@ -82,7 +81,7 @@ public class WebActivity extends ExBaseActivity {
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.web_activity, menu);
+		getMenuInflater().inflate(com.wit.android.support.fragment.examples.R.menu.web_activity, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -92,8 +91,8 @@ public class WebActivity extends ExBaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		boolean processed = false;
 		switch (item.getItemId()) {
-			case R.id.Ex_Menu_Action_Edit:
-				startActionMode(new ActionModeCallback());
+			case com.wit.android.support.fragment.examples.R.id.Ex_Menu_Action_Edit:
+				startSupportActionMode(new ActionModeCallback());
 				processed = true;
 				break;
 			case android.R.id.home:
@@ -109,19 +108,19 @@ public class WebActivity extends ExBaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		final FrameLayout contentLayout = new FrameLayout(this);
-		contentLayout.setId(R.id.Ex_Content_Container);
+		contentLayout.setId(com.wit.android.support.fragment.examples.R.id.Ex_Content_Container);
 		setContentView(contentLayout);
 
-		this.mActionView = getLayoutInflater().inflate(R.layout.action_mode_edit_url, null);
+		this.mActionView = getLayoutInflater().inflate(com.wit.android.support.fragment.examples.R.layout.action_mode_edit_url, null);
 		if (mActionView != null) {
-			mUrlEdit = (EditText) mActionView.findViewById(R.id.ActionMode_EditText_Url);
+			mUrlEdit = (EditText) mActionView.findViewById(com.wit.android.support.fragment.examples.R.id.ActionMode_EditText_Url);
 		}
 
 		// Set up action bar.
-		final ActionBar actionBar = getActionBar();
+		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		if (savedInstanceState == null) {
@@ -201,7 +200,7 @@ public class WebActivity extends ExBaseActivity {
 				if (WebFragment.isValidWebUrl(url)) {
 					loadUrl(url);
 				} else {
-					Toast.makeText(WebActivity.this, R.string.Activity_Web_Toast_OnlyUrlIsAllowed, Toast.LENGTH_SHORT).show();
+					Toast.makeText(WebActivity.this, com.wit.android.support.fragment.examples.R.string.Activity_Web_Toast_OnlyUrlIsAllowed, Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
@@ -211,12 +210,12 @@ public class WebActivity extends ExBaseActivity {
 
 		@Override
 		public void onLoadingStarted(String webUrl) {
-			setProgressBarIndeterminateVisibility(true);
+			setSupportProgressBarIndeterminateVisibility(true);
 		}
 
 		@Override
 		public void onLoadingFinished(String webUrl) {
-			setProgressBarIndeterminateVisibility(false);
+			setSupportProgressBarIndeterminateVisibility(false);
 		}
 	}
 

@@ -43,7 +43,7 @@ import com.wit.android.fragment.util.FragmentAnnotations;
  * up an instance of ActionBar accessible from within context of a sub-class of ActionBarFragment.
  * Such a set up is accomplished in {@link #onViewCreated(android.view.View, android.os.Bundle)}.
  * </p>
- * <li>{@link com.wit.android.fragment.annotation.MenuOptions @MenuOptions} [<b>class, recursively</b>]</li>
+ * <li>{@link com.wit.android.fragment.annotation.MenuOptions @MenuOptions} [<b>class, recursive</b>]</li>
  * <p>
  * If this annotation is presented, options menu will be requested in {@link #onCreate(android.os.Bundle)}
  * by {@link #setHasOptionsMenu(boolean)} and menu will be created in {@link #onCreateOptionsMenu(android.view.Menu, android.view.MenuInflater)}

@@ -18,25 +18,24 @@
  * under the License.
  * =================================================================================
  */
-package com.wit.android.fragment.examples.app;
+package com.wit.android.fragment.examples;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 
-import com.wit.android.examples.app.ExBaseHomeActivity;
-import com.wit.android.examples.model.ExNavigationItem;
-import com.wit.android.fragment.examples.R;
-import com.wit.android.fragment.examples.adapter.TransitionsAdapter;
-import com.wit.android.fragment.examples.fragment.ActionBarFragmentImpl;
-import com.wit.android.fragment.examples.fragment.FragmentsFactory;
-import com.wit.android.fragment.manage.FragmentController;
-import com.wit.android.fragment.manage.FragmentTransition;
+import com.wit.android.support.examples.app.ExBaseHomeActivity;
+import com.wit.android.support.examples.model.ExNavigationItem;
+import com.wit.android.support.fragment.examples.adapter.TransitionsAdapter;
+import com.wit.android.support.fragment.examples.fragment.ActionBarFragmentImpl;
+import com.wit.android.support.fragment.examples.fragment.FragmentsFactory;
+import com.wit.android.support.fragment.manage.FragmentController;
+import com.wit.android.support.fragment.manage.FragmentTransition;
 
 import java.util.List;
 
@@ -139,22 +138,21 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_home);
+		setContentView(com.wit.android.support.fragment.examples.R.layout.activity_home);
 
 		// Set up fragment controller.
 		this.mController = new FragmentController(this);
-		mController.setFragmentContainerId(R.id.Ex_Content_Container);
+		mController.setFragmentContainerId(com.wit.android.support.fragment.examples.R.id.Ex_Content_Container);
 		mController.setFragmentFactory(new FragmentsFactory());
 
 		// Set up action bar.
-		mActionBar = getActionBar();
+		mActionBar = getSupportActionBar();
 		this.mTransitionsAdapter = new TransitionsAdapter(this);
 		mActionBar.setListNavigationCallbacks(mTransitionsAdapter, this);
 
 		if (!(bRestored = savedInstanceState != null)) {
 			final int selectedPosition = 0;
 			setNavigationItemSelected(selectedPosition);
-
 			onNavigationChange(FragmentsFactory.TRANSITIONS);
 		}
 	}
@@ -166,33 +164,33 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 		final ExNavigationItem.Builder builder = new ExNavigationItem.Builder(resources);
 		list.add(createItem(
 				FragmentsFactory.TRANSITIONS,
-				R.string.Navigation_Label_Transitions,
+				com.wit.android.support.fragment.examples.R.string.Navigation_Label_Transitions,
 				builder
 		));
 		list.add(createItem(
 				FragmentsFactory.LIST,
-				R.string.Navigation_Label_ListFragment,
+				com.wit.android.support.fragment.examples.R.string.Navigation_Label_ListFragment,
 				builder
 		));
 		list.add(createItem(
 				FragmentsFactory.GRID,
-				R.string.Navigation_Label_GridFragment,
+				com.wit.android.support.fragment.examples.R.string.Navigation_Label_GridFragment,
 				builder
 		));
 		list.add(builder
 						.id(WebActivity.NAVIGATION_ID)
-						.title(R.string.Navigation_Label_WebFragment)
+						.title(com.wit.android.support.fragment.examples.R.string.Navigation_Label_WebFragment)
 						.selectable(false)
 						.build()
 		);
 		list.add(createItem(
 				FragmentsFactory.ACTION_BAR,
-				R.string.Navigation_Label_ActionBarFragment,
+				com.wit.android.support.fragment.examples.R.string.Navigation_Label_ActionBarFragment,
 				builder
 		));
 		list.add(createItem(
 				FragmentsFactory.ANNOTATIONS,
-				R.string.Navigation_Label_AnnotatedFragment,
+				com.wit.android.support.fragment.examples.R.string.Navigation_Label_AnnotatedFragment,
 				builder
 		));
 		return list;
@@ -216,7 +214,7 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 					public void run() {
 						mController.showFragment(
 								id,
-								FragmentsFactory.createParams(null, bAddFragmentToBackStack)
+								FragmentsFactory.createParams(FragmentTransition.FADE_IN, bAddFragmentToBackStack)
 						);
 					}
 				});
@@ -228,7 +226,7 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 					 */
 					@Override
 					public void run() {
-						mController.showFragment(id, ActionBarFragmentImpl.createParams(R.string.ActionBarFragment_Title));
+						mController.showFragment(id, ActionBarFragmentImpl.createParams(com.wit.android.support.fragment.examples.R.string.ActionBarFragment_Title));
 					}
 				});
 				break;
@@ -265,7 +263,7 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 			mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 			mActionBar.setTitle("");
 		} else {
-			mActionBar.setTitle(R.string.App_Name);
+			mActionBar.setTitle(com.wit.android.support.fragment.examples.R.string.App_Name);
 		}
 	}
 
@@ -284,7 +282,7 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 				break;
 			default:
 				if (mController != null) {
-					mController.clearBackStack();
+					mController.clearBackStackImmediate();
 				}
 				mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 				mActionBar.setDisplayHomeAsUpEnabled(true);

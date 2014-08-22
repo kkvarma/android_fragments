@@ -26,19 +26,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.wit.android.examples.libs.fragment.ExActionBarFragment;
+import com.wit.android.fragment.ActionBarFragment;
 import com.wit.android.fragment.examples.R;
 
 import java.util.Random;
 
 /**
- * <p>
- * Description.
- * </p>
+ * todo:
  *
  * @author Martin Albedinsky
  */
-public class ImageFragment extends ExActionBarFragment {
+public class ImageFragment extends ActionBarFragment {
 
 	/**
 	 * Log TAG.

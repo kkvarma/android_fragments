@@ -46,13 +46,4 @@ public @interface FactoryFragments {
 	 * @see com.wit.android.fragment.manage.FragmentController.FragmentFactory#isFragmentProvided(int)
 	 */
 	int[] value();
-
-	/**
-	 * Flag indicating whether to pre-create tags for the provided fragments or not.
-	 * <p/>
-	 * Default value: <b>true</b>
-	 *
-	 * @see com.wit.android.fragment.manage.FragmentController.FragmentFactory#getFragmentTag(int)
-	 */
-	boolean createTags() default true;
 }

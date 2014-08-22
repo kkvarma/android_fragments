@@ -26,8 +26,11 @@ import android.view.ViewGroup;
 
 import com.wit.android.fragment.annotation.ClickableViews;
 import com.wit.android.fragment.annotation.ContentView;
+import com.wit.android.fragment.annotation.InjectView;
+import com.wit.android.fragment.annotation.InjectViews;
 import com.wit.android.fragment.util.FragmentAnnotations;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,26 +41,32 @@ import java.util.List;
  * </p>
  * <h6>Accepted annotations</h6>
  * <ul>
- * <li>{@link com.wit.android.fragment.annotation.ContentView @ContentView} [<b>class, recursively</b>]</li>
+ * <li>{@link com.wit.android.fragment.annotation.ContentView @ContentView} [<b>class, recursive</b>]</li>
  * <p>
  * If this annotation is presented, the layout id presented within this annotation will be used to
  * inflate the root view for an instance of annotated BaseFragment sub-class in
  * {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}.
  * </p>
- * <li>{@link com.wit.android.fragment.annotation.ClickableViews @ClickableViews} [<b>class, recursively</b>]</li>
+ * <li>{@link com.wit.android.fragment.annotation.ClickableViews @ClickableViews} [<b>class, recursive</b>]</li>
  * <p>
  * If this annotation is presented, an inner {@link android.view.View.OnClickListener} will be attached
  * to all views found by ids presented within this annotation. If any of these views is clicked,
  * {@link #onViewClick(android.view.View, int)} will be invoked with that particular view and its id.
+ * <p/>
+ * OnClickListener is attached to these views whenever {@link #onViewCreated(android.view.View, android.os.Bundle)}
+ * is called.
  * </p>
- * <li>{@link com.wit.android.fragment.annotation.InjectView @InjectView} [<b>field, recursively</b>]</li>
- * <li>{@link com.wit.android.fragment.annotation.InjectView.Last @InjectView.Last} [<b>field, recursively</b>]</li>
+ * <li>{@link com.wit.android.fragment.annotation.InjectView @InjectView} [<b>field, recursive</b>]</li>
+ * <li>{@link com.wit.android.fragment.annotation.InjectView.Last @InjectView.Last} [<b>field, recursive</b>]</li>
  * <p>
  * All fields marked with this annotation will be automatically injected (by {@link android.view.View#findViewById(int)})
  * using the root view passed to {@link #onViewCreated(android.view.View, android.os.Bundle)}.
  * <b>Note that {@link com.wit.android.fragment.annotation.InjectViews @InjectViews} [class]
  * annotation is required above each sub-class of BaseFragment to run injecting process, otherwise
  * all marked fields (views) of such a sub-class will be ignored.</b>
+ * <p/>
+ * All marked view fields are injected whenever {@link #onViewCreated(android.view.View, android.os.Bundle)}
+ * is called.
  * </p>
  * </ul>
  *
@@ -109,9 +118,9 @@ public abstract class BaseFragment extends Fragment {
 	 */
 
 	/**
-	 *
+	 * Content view annotation holding configuration for the root view of this fragment.
 	 */
-	private ContentView mContentView = null;
+	private ContentView mContentView;
 
 	/**
 	 * Stores all private flags for this object.
@@ -123,9 +132,17 @@ public abstract class BaseFragment extends Fragment {
 	 */
 
 	/**
-	 *
+	 * Array with ids of views to which should be attached instance of {@link android.view.View.OnClickListener}.
+	 * When one of these views is clicked, {@link #onViewClick(android.view.View, int)} is invoked to
+	 * handle click event.
 	 */
 	private List<Integer> aClickableViewIds;
+
+	/**
+	 * Array with gathered view fields which should be injected to this fragment whenever the new
+	 * root view hierarchy is created for this fragment instance.
+	 */
+	private List<Field> aViewsToInject;
 
 	/**
 	 * Booleans ------------------------------------------------------------------------------------
@@ -139,7 +156,10 @@ public abstract class BaseFragment extends Fragment {
 	 * <p>
 	 * Creates a new instance of BaseFragment. If {@link com.wit.android.fragment.annotation.ContentView @ContentView}
 	 * or {@link com.wit.android.fragment.annotation.ClickableViews @ClickableViews} annotations
-	 * are presented above a sub-class of BaseFragment, they will be processed here.
+	 * are presented above a sub-class of BaseFragment, they will be processed here. Also all declared
+	 * fields marked by annotation {@link com.wit.android.fragment.annotation.InjectView @InjectView}
+	 * or {@link com.wit.android.fragment.annotation.InjectView.Last @InjectView.Last} will
+	 * be recursively gathered and stored to be later injected.
 	 * </p>
 	 */
 	public BaseFragment() {
@@ -155,6 +175,23 @@ public abstract class BaseFragment extends Fragment {
 		if (aClickableViewIds.isEmpty()) {
 			this.aClickableViewIds = null;
 		}
+		// Store all fields to inject as views.
+		this.aViewsToInject = new ArrayList<>();
+		this.iterateInjectableViewFields(classOfFragment, new FragmentAnnotations.FieldProcessor() {
+
+			/**
+			 */
+			@Override
+			public void onProcessField(Field field, String name) {
+				if (field.isAnnotationPresent(InjectView.class) || field.isAnnotationPresent(InjectView.Last.class)) {
+					aViewsToInject.add(field);
+				}
+			}
+		});
+		if (aViewsToInject.isEmpty()) {
+			this.aViewsToInject = null;
+		}
+
 	}
 
 	/**
@@ -223,7 +260,7 @@ public abstract class BaseFragment extends Fragment {
 		}
 		// Set up clickable views.
 		final ClickListener clickListener = new ClickListener();
-		if (aClickableViewIds != null && !aClickableViewIds.isEmpty()) {
+		if (aClickableViewIds != null) {
 			for (int id : aClickableViewIds) {
 				View child = view.findViewById(id);
 				if (child == null) {
@@ -232,7 +269,12 @@ public abstract class BaseFragment extends Fragment {
 				child.setOnClickListener(clickListener);
 			}
 		}
-		FragmentAnnotations.injectFragmentViews(this, BaseFragment.class, clickListener);
+
+		if (aViewsToInject != null) {
+			for (Field field : aViewsToInject) {
+				FragmentAnnotations.injectView(field, this, view, clickListener);
+			}
+		}
 	}
 
 	/**
@@ -325,7 +367,7 @@ public abstract class BaseFragment extends Fragment {
 	/**
 	 * <p>
 	 * <p>
-	 * Same as  {@link #getString(int, Object..)}, but first is performed check if the parent activity
+	 * Same as  {@link #getString(int, Object...)}, but first is performed check if the parent activity
 	 * of this fragment instance is available to prevent illegal state exceptions.
 	 * </p>
 	 * </p>
@@ -426,13 +468,31 @@ public abstract class BaseFragment extends Fragment {
 				ids.addAll(idsToList(clickableViews.value()));
 			}
 		}
-
 		// Obtain also ids of super class, but only to this BaseFragment super.
 		final Class<?> superOfFragment = classOfFragment.getSuperclass();
 		if (superOfFragment != null && !superOfFragment.equals(BaseFragment.class)) {
 			gatherClickableViewIds(superOfFragment, ids);
 		}
 		return ids;
+	}
+
+	/**
+	 * Iterates all declared fields of the given <var>classOfFragment</var> using
+	 * {@link FragmentAnnotations#iterateFields(Class, FragmentAnnotations.FieldProcessor)} utility
+	 * method passing it the given <var>fieldProcessor</var> and classOfFragment.
+	 *
+	 * @param classOfFragment Class of which fields to iterate.
+	 * @param fieldProcessor  Field processor to handle fields iteration.
+	 */
+	private void iterateInjectableViewFields(Class<?> classOfFragment, FragmentAnnotations.FieldProcessor fieldProcessor) {
+		if (classOfFragment.isAnnotationPresent(InjectViews.class)) {
+			FragmentAnnotations.iterateFields(classOfFragment, fieldProcessor);
+		}
+		// Iterate also fields of super class, but only to this BaseFragment super.
+		final Class<?> superOfFragment = classOfFragment.getSuperclass();
+		if (superOfFragment != null && !superOfFragment.equals(BaseFragment.class)) {
+			iterateInjectableViewFields(superOfFragment, fieldProcessor);
+		}
 	}
 
 	/**

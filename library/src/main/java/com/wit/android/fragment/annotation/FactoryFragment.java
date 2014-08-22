@@ -18,6 +18,8 @@
  */
 package com.wit.android.fragment.annotation;
 
+import android.app.Fragment;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -27,11 +29,11 @@ import java.lang.annotation.Target;
  * <h4>Annotation Overview</h4>
  * <p>
  * Annotation type used to mark an <b>int</b> field which specifies an id of fragment provided by
- * instance of {@link com.wit.android.support.fragment.manage.BaseFragmentFactory BaseFragmentFactory}.
+ * instance of {@link com.wit.android.fragment.manage.BaseFragmentFactory BaseFragmentFactory}.
  * </p>
  * <h6>Usage</h6>
  * <ul>
- * <li>{@link com.wit.android.support.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>
+ * <li>{@link com.wit.android.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>
  * </ul>
  *
  * @author Martin Albedinsky
@@ -39,4 +41,18 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FactoryFragment {
+
+	// A resource id of the desired text which should be set as title for an ActionBar.
+
+	/**
+	 * Type of the desired fragment of which instance should be instantiated when calling
+	 * {@link com.wit.android.fragment.manage.BaseFragmentFactory#createFragmentInstance(int, android.os.Bundle) BaseFragmentFactory#createFragmentInstance(int, android.os.Bundle)}
+	 * for this id .
+	 */
+	Class<? extends Fragment> type() default Fragment.class;
+
+	/**
+	 * Name of the desired fragment to be placed within TAG used when showing such a fragment.
+	 */
+	String taggedName() default "";
 }

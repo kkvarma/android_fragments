@@ -38,8 +38,7 @@ import com.wit.android.fragment.manage.FragmentTransition;
  */
 @FactoryFragments({
 		FragmentsFactory.TRANSITIONS,
-		FragmentsFactory.LIST,
-		FragmentsFactory.GRID
+		FragmentsFactory.LIST
 })
 public class FragmentsFactory extends BaseFragmentFactory {
 
@@ -52,12 +51,13 @@ public class FragmentsFactory extends BaseFragmentFactory {
 
 	public static final int LIST = 0x02;
 
+	@FactoryFragment(type = GridFragmentImpl.class, taggedName = "GridFragment")
 	public static final int GRID = 0x03;
 
-	@FactoryFragment
+	@FactoryFragment(taggedName = "ActionBarFragment")
 	public static final int ACTION_BAR = 0x04;
 
-	@FactoryFragment
+	@FactoryFragment(type = AnnotatedFragment.class, taggedName = "AnnotatedFragment")
 	public static final int ANNOTATIONS = 0x05;
 
 	/**
@@ -91,14 +91,10 @@ public class FragmentsFactory extends BaseFragmentFactory {
 				return ImageFragment.newInstance();
 			case LIST:
 				return ListFragmentImpl.newInstance();
-			case GRID:
-				return GridFragmentImpl.newInstance();
 			case ACTION_BAR:
 				return ActionBarFragmentImpl.newInstance(params);
-			case ANNOTATIONS:
-				return AnnotatedFragment.newInstance();
 		}
-		return null;
+		return super.onCreateFragmentInstance(fragmentId, params);
 	}
 
 	/**
