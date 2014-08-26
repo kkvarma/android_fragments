@@ -8,10 +8,10 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
+        applicationId 'com.wit.android.support.fragment'
         minSdkVersion rootProject.minSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
-        applicationId 'com.wit.android.support.fragment'
     }
 
     compileOptions {

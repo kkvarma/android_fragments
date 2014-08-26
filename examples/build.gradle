@@ -8,11 +8,11 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
+        applicationId 'com.wit.android.support.fragment.examples'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
-        applicationId 'com.wit.android.support.fragment.examples'
     }
 
     compileOptions {
@@ -58,5 +58,5 @@ repositories {
  */
 dependencies {
     compile project(':library')
-    compile 'com.wit.android.support:support-examples:1.0'
+    compile 'com.wit.android.support:support-examples:1.1'
 }

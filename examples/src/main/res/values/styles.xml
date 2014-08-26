@@ -44,7 +44,7 @@
     <!-- ### ACTION MODE ======================================================================= -->
 
     <style name="Widget.EditText.ActionMode.Url" parent="Ex.Widget.EditText">
-        <item name="android:textColor">@color/Ex.Widget.TextView.ActionBar.Title</item>
+        <item name="android:textColor">@color/Ex.Widget.TextView.ActionBar.Title.textColor</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginRight">10dip</item>
         <item name="android:background">@drawable/bg_action_mode_edit_url</item>

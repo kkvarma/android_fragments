@@ -27,19 +27,19 @@
               android:layout_gravity="center_horizontal">
 
     <TextView
-            android:id="@+id/Fragment.Annotations.TextView.Title"
+            android:id="@+id/fragment_annotations_text_view_title"
             style="@style/Ex.Widget.TextView.Section.Heading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     <TextView
-            android:id="@+id/Fragment.Annotations.TextView.Content"
+            android:id="@+id/fragment_annotations_text_view_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dip"/>
 
     <Button
-            android:id="@+id/Fragment.Annotations.Button.SignIn"
+            android:id="@+id/fragment_annotations_button_sign_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/AnnotatedFragment.Button.SignIn"/>
