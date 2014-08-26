@@ -47,7 +47,6 @@
                     android:background="#333"/>
 
             <CheckBox
-                    android:id="@+id/Activity.Home.CheckBox.AddFragmentToBackStack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/Activity.Home.Check.AddFragmentToBackStack"
