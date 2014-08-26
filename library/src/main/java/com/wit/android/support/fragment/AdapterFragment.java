@@ -93,10 +93,6 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	// private static final boolean LOG_ENABLED = true;
 
 	/**
-	 * Enums =======================================================================================
-	 */
-
-	/**
 	 * Static members ==============================================================================
 	 */
 
@@ -125,7 +121,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	ActionMode mActionMode;
 
 	/**
-	 *
+	 * Resource id of empty view layout to inflate.
 	 */
 	private int mEmptyViewRes;
 
@@ -144,14 +140,6 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * Annotation holding an options for this fragment's action mode.
 	 */
 	private ActionModeOptions mActionModeOptions;
-
-	/**
-	 * Arrays --------------------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Booleans ------------------------------------------------------------------------------------
-	 */
 
 	/**
 	 * Constructors ================================================================================

@@ -80,13 +80,6 @@ public class AnnotatedFragment extends BaseFragment {
 	 */
 
 	/**
-	 * @return
-	 */
-	public static AnnotatedFragment newInstance() {
-		return new AnnotatedFragment();
-	}
-
-	/**
 	 */
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {

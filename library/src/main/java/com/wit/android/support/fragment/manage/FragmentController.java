@@ -71,10 +71,6 @@ public class FragmentController {
 	private static final boolean LOG_ENABLED = FragmentsConfig.LIBRARY_LOG_ENABLED;
 
 	/**
-	 * Enums =======================================================================================
-	 */
-
-	/**
 	 * Static members ==============================================================================
 	 */
 
@@ -117,14 +113,6 @@ public class FragmentController {
 	 *
 	 */
 	private String mCurrentFragmentTag;
-
-	/**
-	 * Arrays --------------------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Booleans ------------------------------------------------------------------------------------
-	 */
 
 	/**
 	 * Constructors ================================================================================
@@ -872,7 +860,7 @@ public class FragmentController {
 		Fragment fragment = mFragmentFactory.createFragmentInstance(fragmentId, params);
 		if (fragment == null) {
 			// Invalid fragment instance.
-			Log.e(TAG, "No such fragment instance for the requested fragment id(" + fragmentId + "). Please check your fragment factory(" + mFragmentFactory.getClass().getSimpleName() + ").");
+			Log.e(TAG, "No fragment instance provided by factory(" + mFragmentFactory.getClass().getSimpleName() + ") for the requested fragment id(" + fragmentId + ").");
 			return false;
 		}
 		final boolean success = onShowFragment(fragment, mFragmentFactory.getFragmentTransactionOptions(fragmentId, params));
