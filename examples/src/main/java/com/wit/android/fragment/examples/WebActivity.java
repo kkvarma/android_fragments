@@ -21,8 +21,8 @@
 package com.wit.android.fragment.examples;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.view.ActionMode;
+import android.app.ActionBar;
+import android.view.ActionMode;
 import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,9 +32,9 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.wit.android.support.examples.ExBaseActivity;
-import com.wit.android.support.examples.libs.fragment.manage.ExFragmentController;
-import com.wit.android.support.fragment.WebFragment;
+import com.wit.android.examples.ExBaseActivity;
+import com.wit.android.examples.libs.fragment.manage.ExFragmentController;
+import com.wit.android.fragment.WebFragment;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -91,7 +91,7 @@ public class WebActivity extends ExBaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.ex_menu_action_edit:
-				startSupportActionMode(new ActionModeCallback());
+				startActionMode(new ActionModeCallback());
 				return true;
 			case android.R.id.home:
 				finish();
@@ -105,19 +105,19 @@ public class WebActivity extends ExBaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		final FrameLayout contentLayout = new FrameLayout(this);
 		contentLayout.setId(R.id.ex_content_container);
 		setContentView(contentLayout);
 
-		this.mActionView = getLayoutInflater().inflate(com.wit.android.support.fragment.examples.R.layout.action_mode_edit_url, null);
+		this.mActionView = getLayoutInflater().inflate(com.wit.android.fragment.examples.R.layout.action_mode_edit_url, null);
 		if (mActionView != null) {
 			mUrlEdit = (EditText) mActionView.findViewById(R.id.action_mode_edit_url_edit_text);
 		}
 
 		// Set up action bar.
-		final ActionBar actionBar = getSupportActionBar();
+		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		if (savedInstanceState == null) {
@@ -197,7 +197,7 @@ public class WebActivity extends ExBaseActivity {
 				if (WebFragment.isValidWebUrl(url)) {
 					loadUrl(url);
 				} else {
-					Toast.makeText(WebActivity.this, com.wit.android.support.fragment.examples.R.string.Activity_Web_Toast_OnlyUrlIsAllowed, Toast.LENGTH_SHORT).show();
+					Toast.makeText(WebActivity.this, com.wit.android.fragment.examples.R.string.Activity_Web_Toast_OnlyUrlIsAllowed, Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
@@ -207,12 +207,12 @@ public class WebActivity extends ExBaseActivity {
 
 		@Override
 		public void onLoadingStarted(String webUrl) {
-			setSupportProgressBarIndeterminateVisibility(true);
+			setProgressBarIndeterminateVisibility(true);
 		}
 
 		@Override
 		public void onLoadingFinished(String webUrl) {
-			setSupportProgressBarIndeterminateVisibility(false);
+			setProgressBarIndeterminateVisibility(false);
 		}
 	}
 
