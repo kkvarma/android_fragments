@@ -20,7 +20,7 @@
  */
 -->
 <com.wit.android.support.examples.widget.ExNavigationLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                            android:id="@+id/Ex.Activity.Home.ExNavigationLayout"
+                                                            android:id="@+id/ex_activity_home_ex_navigation_layout"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="match_parent">
 
@@ -30,7 +30,7 @@
             android:orientation="vertical">
 
         <FrameLayout
-                android:id="@id/Ex.Content.Container"
+                android:id="@id/ex_content_container"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_weight="1"/>
@@ -60,7 +60,7 @@
     </LinearLayout>
 
     <com.wit.android.support.examples.widget.ExNavigationListView
-            android:id="@+id/Ex.Activity.Home.ExNavigationListView"
+            android:id="@+id/ex_activity_home_ex_navigation_list_view"
             style="@style/Ex.Navigation.Widget.ListView"
             android:layout_width="@dimen/Ex.Navigation.width"
             android:layout_height="match_parent"

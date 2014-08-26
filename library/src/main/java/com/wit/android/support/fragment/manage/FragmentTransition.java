@@ -76,10 +76,6 @@ public class FragmentTransition implements Parcelable {
 	// private static final boolean LOG_ENABLED = true;
 
 	/**
-	 * Enums =======================================================================================
-	 */
-
-	/**
 	 * Static members ==============================================================================
 	 */
 
@@ -449,14 +445,6 @@ public class FragmentTransition implements Parcelable {
 	 * Name of this transition.
 	 */
 	private final String mName;
-
-	/**
-	 * Arrays --------------------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Booleans ------------------------------------------------------------------------------------
-	 */
 
 	/**
 	 * Constructors ================================================================================

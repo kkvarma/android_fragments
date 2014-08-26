@@ -40,9 +40,31 @@ import java.lang.annotation.Target;
 public @interface ActionBarOptions {
 
 	/**
+	 * Constants ===================================================================================
+	 */
+
+	/**
+	 * <p>
+	 * Flag indicating that an ActionBar's home as up icon should be enabled (visible).
+	 * </p>
+	 */
+	public static final int HOME_AS_UP_ENABLED = 0x01;
+
+	/**
+	 * <p>
+	 * Flag indicating that an ActionBar's home as up icon should be disabled (invisible).
+	 * </p>
+	 */
+	public static final int HOME_AS_UP_DISABLED = 0x02;
+
+	/**
+	 * Methods =====================================================================================
+	 */
+
+	/**
 	 * A resource id of the desired text which should be set as title for an ActionBar.
 	 *
-	 * @see android.support.v7.app.ActionBar#setTitle(int)
+	 * @see android.app.ActionBar#setTitle(int)
 	 */
 	int title();
 
@@ -51,16 +73,17 @@ public @interface ActionBarOptions {
 	 * <p/>
 	 * Default value: <b>-1</b>
 	 *
-	 * @see android.support.v7.app.ActionBar#setIcon(int)
+	 * @see android.app.ActionBar#setIcon(int)
 	 */
 	int icon() default -1;
 
 	/**
-	 * Flag indicating whether to display/hide an ActionBar's home as up icon.
+	 * Flag indicating whether to display/hide an ActionBar's home as up icon. Can be one of
+	 * {@link #HOME_AS_UP_ENABLED}, {@link #HOME_AS_UP_DISABLED} or 0 to not "touch" home as up icon.
 	 * <p/>
-	 * Default value: <b>false</b>
+	 * Default value: <b>0</b>
 	 *
-	 * @see android.support.v7.app.ActionBar#setDisplayHomeAsUpEnabled(boolean)
+	 * @see android.app.ActionBar#setDisplayHomeAsUpEnabled(boolean)
 	 */
-	boolean homeAsUp() default false;
+	int homeAsUp() default 0;
 }

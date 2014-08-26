@@ -25,7 +25,7 @@
               android:orientation="horizontal">
 
     <EditText
-            android:id="@+id/ActionMode.EditText.Url"
+            android:id="@+id/action_mode_edit_url_edit_text"
             style="@style/Widget.EditText.ActionMode.Url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

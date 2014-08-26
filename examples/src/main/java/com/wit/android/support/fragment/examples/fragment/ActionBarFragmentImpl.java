@@ -36,7 +36,7 @@ import com.wit.android.support.fragment.examples.R;
  * @author Martin Albedinsky
  */
 @ContentView(R.layout.fragment_action_bar)
-@MenuOptions(R.menu.menu_fragment_actionbar)
+@MenuOptions(R.menu.menu_test)
 public class ActionBarFragmentImpl extends ActionBarFragment {
 
 	/**
@@ -61,26 +61,17 @@ public class ActionBarFragmentImpl extends ActionBarFragment {
 	}
 
 	/**
-	 *
-	 * @param params
-	 * @return
-	 */
-	public static ActionBarFragmentImpl newInstance(Bundle params) {
-		return newInstanceWithArguments(ActionBarFragmentImpl.class, params);
-	}
-
-	/**
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case R.id.Ex_Menu_Action_Search:
+			case R.id.ex_menu_action_search:
 				Toast.makeText(getActivity(), "SEARCH menu item", Toast.LENGTH_SHORT).show();
 				return true;
-			case R.id.Ex_Menu_Action_Edit:
+			case R.id.ex_menu_action_edit:
 				Toast.makeText(getActivity(), "EDIT menu item", Toast.LENGTH_SHORT).show();
 				return true;
-			case R.id.Ex_Menu_Action_New:
+			case R.id.ex_menu_action_new:
 				Toast.makeText(getActivity(), "NEW menu item", Toast.LENGTH_SHORT).show();
 				return true;
 		}

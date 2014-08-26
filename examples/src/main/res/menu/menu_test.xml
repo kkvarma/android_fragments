@@ -23,19 +23,19 @@
       xmlns:compat="http://schemas.android.com/apk/res-auto">
 
     <item
-            android:id="@id/Ex.Menu.Action.Search"
+            android:id="@id/ex_menu_action_search"
             android:icon="@drawable/ex_ic_action_search"
             android:title="@string/Ex.Menu.Label.Search"
             compat:showAsAction="ifRoom|withText"/>
 
     <item
-            android:id="@id/Ex.Menu.Action.Edit"
+            android:id="@id/ex_menu_action_edit"
             android:icon="@drawable/ex_ic_action_edit"
             android:title="@string/Ex.Menu.Label.Edit"
             compat:showAsAction="ifRoom|withText"/>
 
     <item
-            android:id="@id/Ex.Menu.Action.New"
+            android:id="@id/ex_menu_action_new"
             android:icon="@drawable/ex_ic_action_new"
             android:title="@string/Ex.Menu.Label.New"
             compat:showAsAction="ifRoom|withText"/>
