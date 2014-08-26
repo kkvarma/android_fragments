@@ -93,8 +93,8 @@ public class AppsAdapter extends ExSimpleAdapter<ApplicationInfo> {
 		 */
 		@Override
 		public void create(int position, View view) {
-			this.label = (TextView) view.findViewById(R.id.Item_TextView_Label);
-			this.icon = (ImageView) view.findViewById(R.id.Item_ImageView_Icon);
+			this.label = (TextView) view.findViewById(R.id.item_app_text_view_label);
+			this.icon = (ImageView) view.findViewById(R.id.item_app_image_view_icon);
 		}
 
 		/**

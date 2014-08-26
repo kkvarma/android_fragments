@@ -113,7 +113,7 @@ public class WebActivity extends ExBaseActivity {
 
 		this.mActionView = getLayoutInflater().inflate(R.layout.action_mode_edit_url, null);
 		if (mActionView != null) {
-			mUrlEdit = (EditText) mActionView.findViewById(R.id.ActionMode_EditText_Url);
+			mUrlEdit = (EditText) mActionView.findViewById(R.id.action_mode_edit_url_edit_text);
 		}
 
 		// Set up action bar.
