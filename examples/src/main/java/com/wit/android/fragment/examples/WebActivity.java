@@ -32,7 +32,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.wit.android.support.examples.app.ExBaseActivity;
+import com.wit.android.support.examples.ExBaseActivity;
 import com.wit.android.support.examples.libs.fragment.manage.ExFragmentController;
 import com.wit.android.support.fragment.WebFragment;
 
@@ -81,7 +81,7 @@ public class WebActivity extends ExBaseActivity {
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(com.wit.android.support.fragment.examples.R.menu.web_activity, menu);
+		getMenuInflater().inflate(R.menu.menu_web, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -89,18 +89,15 @@ public class WebActivity extends ExBaseActivity {
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		boolean processed = false;
 		switch (item.getItemId()) {
-			case com.wit.android.support.fragment.examples.R.id.Ex_Menu_Action_Edit:
+			case R.id.ex_menu_action_edit:
 				startSupportActionMode(new ActionModeCallback());
-				processed = true;
-				break;
+				return true;
 			case android.R.id.home:
 				finish();
-				processed = true;
-				break;
+				return true;
 		}
-		return processed || super.onOptionsItemSelected(item);
+		return super.onOptionsItemSelected(item);
 	}
 
 	/**
@@ -111,12 +108,12 @@ public class WebActivity extends ExBaseActivity {
 		supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		final FrameLayout contentLayout = new FrameLayout(this);
-		contentLayout.setId(com.wit.android.support.fragment.examples.R.id.Ex_Content_Container);
+		contentLayout.setId(R.id.ex_content_container);
 		setContentView(contentLayout);
 
 		this.mActionView = getLayoutInflater().inflate(com.wit.android.support.fragment.examples.R.layout.action_mode_edit_url, null);
 		if (mActionView != null) {
-			mUrlEdit = (EditText) mActionView.findViewById(com.wit.android.support.fragment.examples.R.id.ActionMode_EditText_Url);
+			mUrlEdit = (EditText) mActionView.findViewById(R.id.action_mode_edit_url_edit_text);
 		}
 
 		// Set up action bar.

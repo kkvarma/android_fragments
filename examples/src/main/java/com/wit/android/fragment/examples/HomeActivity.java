@@ -29,7 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 
-import com.wit.android.support.examples.app.ExBaseHomeActivity;
+import com.wit.android.support.examples.ExBaseHomeActivity;
 import com.wit.android.support.examples.model.ExNavigationItem;
 import com.wit.android.support.fragment.examples.adapter.TransitionsAdapter;
 import com.wit.android.support.fragment.examples.fragment.ActionBarFragmentImpl;
@@ -142,7 +142,7 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 
 		// Set up fragment controller.
 		this.mController = new FragmentController(this);
-		mController.setFragmentContainerId(com.wit.android.support.fragment.examples.R.id.Ex_Content_Container);
+		mController.setFragmentContainerId(R.id.ex_content_container);
 		mController.setFragmentFactory(new FragmentsFactory());
 
 		// Set up action bar.

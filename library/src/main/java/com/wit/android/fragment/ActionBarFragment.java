@@ -19,7 +19,6 @@
 package com.wit.android.fragment;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -75,10 +74,6 @@ public class ActionBarFragment extends BaseFragment {
 	// private static final boolean LOG_ENABLED = true;
 
 	/**
-	 * Enums =======================================================================================
-	 */
-
-	/**
 	 * Static members ==============================================================================
 	 */
 
@@ -87,12 +82,12 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
-	 *
+	 * Annotation holding configuration for the ActionBar of this fragment.
 	 */
 	private ActionBarOptions mActionBarOptions;
 
 	/**
-	 *
+	 * Annotation holding configuration for the options menu of this fragment.
 	 */
 	private MenuOptions mMenuOptions;
 
@@ -103,17 +98,9 @@ public class ActionBarFragment extends BaseFragment {
 	private ActionBar mActionBar;
 
 	/**
-	 * Arrays --------------------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Booleans ------------------------------------------------------------------------------------
-	 */
-
-	/**
 	 * Flag indicating whether this fragment is already created or not.
 	 */
-	private boolean bCreated = false;
+	private boolean mCreated;
 
 	/**
 	 * Constructors ================================================================================
@@ -155,15 +142,21 @@ public class ActionBarFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		final Activity activity = getActivity();
 		// Obtain action bar from the parent activity.
-		this.mActionBar = activity.getActionBar();
+		this.mActionBar = mActivity.getActionBar();
 		if (mActionBar != null && mActionBarOptions != null) {
-			mActionBar.setDisplayHomeAsUpEnabled(mActionBarOptions.homeAsUp());
+			switch (mActionBarOptions.homeAsUp()) {
+				case ActionBarOptions.HOME_AS_UP_DISABLED:
+					mActionBar.setDisplayHomeAsUpEnabled(false);
+					break;
+				case ActionBarOptions.HOME_AS_UP_ENABLED:
+					mActionBar.setDisplayHomeAsUpEnabled(true);
+					break;
+			}
 		}
 		// Enable/disable options menu.
 		setHasOptionsMenu(mMenuOptions != null);
-		this.bCreated = true;
+		this.mCreated = true;
 	}
 
 	/**
@@ -186,8 +179,6 @@ public class ActionBarFragment extends BaseFragment {
 					super.onCreateOptionsMenu(menu, inflater);
 					inflater.inflate(mMenuOptions.value(), menu);
 					break;
-				default:
-					throw new IllegalStateException("Unknown options menu flags(" + mMenuOptions.flags() + ").");
 			}
 			return;
 		}
@@ -218,8 +209,8 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #isActivityAvailable()
 	 */
 	public void invalidateOptionsMenu() {
-		if (isActivityAvailable()) {
-			getActivity().invalidateOptionsMenu();
+		if (mActivity != null) {
+			mActivity.invalidateOptionsMenu();
 		}
 	}
 
@@ -231,7 +222,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #isActivityAvailable()
 	 */
 	public boolean requestWindowFeature(int featureId) {
-		return isActivityAvailable() && getActivity().requestWindowFeature(featureId);
+		return mActivity != null && mActivity.requestWindowFeature(featureId);
 	}
 
 	/**
@@ -239,7 +230,7 @@ public class ActionBarFragment extends BaseFragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		this.bCreated = false;
+		this.mCreated = false;
 	}
 
 	/**
@@ -256,7 +247,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #isActionBarAvailable()
 	 */
 	public void setActionBarTitle(int resId) {
-		if (isActionBarAvailable()) {
+		if (mActionBar != null) {
 			mActionBar.setTitle(resId);
 		}
 	}
@@ -271,7 +262,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #isActionBarAvailable()
 	 */
 	public void setActionBarTitle(CharSequence title) {
-		if (isActionBarAvailable()) {
+		if (mActionBar != null) {
 			mActionBar.setTitle(title);
 		}
 	}
@@ -286,7 +277,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #isActionBarAvailable()
 	 */
 	public void setActionBarIcon(int resId) {
-		if (isActionBarAvailable()) {
+		if (mActionBar != null) {
 			mActionBar.setIcon(resId);
 		}
 	}
@@ -301,7 +292,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #isActionBarAvailable()
 	 */
 	public void setActionBarIcon(Drawable icon) {
-		if (isActionBarAvailable()) {
+		if (mActionBar != null) {
 			mActionBar.setIcon(icon);
 		}
 	}
@@ -316,8 +307,8 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #isActivityAvailable()
 	 */
 	public void setProgress(int progress) {
-		if (isActivityAvailable()) {
-			getActivity().setProgress(progress);
+		if (mActivity != null) {
+			mActivity.setProgress(progress);
 		}
 	}
 
@@ -332,8 +323,8 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #isActivityAvailable()
 	 */
 	public void setProgressBarVisibility(boolean visible) {
-		if (isActivityAvailable()) {
-			getActivity().setProgressBarVisibility(visible);
+		if (mActivity != null) {
+			mActivity.setProgressBarVisibility(visible);
 		}
 	}
 
@@ -347,8 +338,8 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #isActivityAvailable()
 	 */
 	public void setProgressBarIndeterminate(boolean indeterminate) {
-		if (isActivityAvailable()) {
-			getActivity().setProgressBarIndeterminate(indeterminate);
+		if (mActivity != null) {
+			mActivity.setProgressBarIndeterminate(indeterminate);
 		}
 	}
 
@@ -362,8 +353,8 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #isActivityAvailable()
 	 */
 	public void setProgressBarIndeterminateVisibility(boolean visible) {
-		if (isActivityAvailable()) {
-			getActivity().setProgressBarIndeterminateVisibility(visible);
+		if (mActivity != null) {
+			mActivity.setProgressBarIndeterminateVisibility(visible);
 		}
 	}
 
@@ -390,14 +381,13 @@ public class ActionBarFragment extends BaseFragment {
 	 * otherwise exception will be thrown.
 	 * </p>
 	 *
-	 * @return The instance of ActionBar obtained from the parent activity.
+	 * @return Instance of the ActionBar obtained from the parent activity.
 	 * @throws java.lang.IllegalStateException If this fragment isn't created yet or is already destroyed.
 	 */
 	protected ActionBar getActionBar() {
-		if (!bCreated) {
+		if (!mCreated) {
 			throw new IllegalStateException(
-					"ActionBar can be accessed only when fragment is created. " +
-							((Object) this).getClass().getSimpleName() + " is not created yet or is already destroyed."
+					"Can not to access ActionBar." + ((Object) this).getClass().getSimpleName() + " is not created yet or is already destroyed."
 			);
 		}
 		return mActionBar;

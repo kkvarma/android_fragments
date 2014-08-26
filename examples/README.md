@@ -30,7 +30,7 @@ If You decide to **download** source code of this repository to run this example
 	dependencies {
 	    compile project(':library')
 	    compile 'com.android.support:support-v4:20.0.0'
-        compile 'com.wit.android:examples:1.0'
+        compile 'com.wit.android:examples:1.1'
 	}
 
 You need to **have downloaded/installed** the latest version of [**com.wit.android.examples**](https://github.com/Wolf-ITechnologies/maven_android_repository/tree/master/examples "Go to download page") library within Your **Maven local repository**.

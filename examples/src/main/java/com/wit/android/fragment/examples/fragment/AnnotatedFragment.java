@@ -47,13 +47,13 @@ public class AnnotatedFragment extends BaseFragment {
 	 */
 	// private static final String TAG = AnnotatedFragment.class.getSimpleName();
 
-	@InjectView(R.id.Fragment_Annotations_TextView_Content)
+	@InjectView(R.id.fragment_annotations_text_view_content)
 	private TextView mTextContent;
 
-	@InjectView(R.id.Fragment_Annotations_TextView_Title)
+	@InjectView(R.id.fragment_annotations_text_view_title)
 	private TextView mTextTitle;
 
-	@InjectView(value = R.id.Fragment_Annotations_Button_SignIn, clickable = true)
+	@InjectView(value = R.id.fragment_annotations_button_sign_in, clickable = true)
 	private Button mButtonSignIn;
 
 	/**
@@ -80,13 +80,6 @@ public class AnnotatedFragment extends BaseFragment {
 	 */
 
 	/**
-	 * @return
-	 */
-	public static AnnotatedFragment newInstance() {
-		return new AnnotatedFragment();
-	}
-
-	/**
 	 */
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -106,7 +99,7 @@ public class AnnotatedFragment extends BaseFragment {
 	@Override
 	protected boolean onViewClick(View view, int id) {
 		switch (id) {
-			case R.id.Fragment_Annotations_Button_SignIn:
+			case R.id.fragment_annotations_button_sign_in:
 				Toast.makeText(getActivity(), mButtonSignIn.getText() + " button clicked", Toast.LENGTH_SHORT).show();
 				return true;
 		}

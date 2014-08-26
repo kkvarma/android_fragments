@@ -92,10 +92,6 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	// private static final boolean LOG_ENABLED = true;
 
 	/**
-	 * Enums =======================================================================================
-	 */
-
-	/**
 	 * Static members ==============================================================================
 	 */
 
@@ -104,34 +100,34 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 */
 
 	/**
+	 * <p>
+	 * Default fragment transaction options with {@link FragmentTransition#FADE_IN} transition.
+	 * </p>
+	 */
+	private final FragmentController.TransactionOptions DEFAULT_OPTIONS = new FragmentController.TransactionOptions()
+			.transition(FragmentTransition.FADE_IN);
+
+	/**
 	 * Id of the fragment which was last checked by {@link #isFragmentProvided(int)}.
 	 */
 	private int mLastCheckedFragmentId = -1;
 
 	/**
-	 * Arrays --------------------------------------------------------------------------------------
-	 */
-
-	/**
 	 * Array with gathered
 	 */
-	private SparseArray<FragmentItem> aFragmentItems;
+	private SparseArray<FragmentItem> mFragmentItems;
 
 	/**
 	 * List with joined factories. Instances and tags are first obtained from these factories then
 	 * from this one.
 	 */
-	private List<FragmentController.FragmentFactory> aFactories;
-
-	/**
-	 * Booleans ------------------------------------------------------------------------------------
-	 */
+	private List<FragmentController.FragmentFactory> mFactories;
 
 	/**
 	 * Flag indicating whether an instance of fragment for {@link #mLastCheckedFragmentId} can be
 	 * provided by this factory or not.
 	 */
-	private boolean bFragmentProvided = false;
+	private boolean mFragmentProvided = false;
 
 	/**
 	 * Constructors ================================================================================
@@ -167,7 +163,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 		}
 		this.processAnnotatedFragments(classOfFactory, items);
 		if (items.size() > 0) {
-			this.aFragmentItems = items;
+			this.mFragmentItems = items;
 		}
 		// Obtain joined factories.
 		final List<Class<? extends FragmentController.FragmentFactory>> factories = this.gatherJoinedFactories(
@@ -231,19 +227,19 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	@Override
 	public boolean isFragmentProvided(int fragmentId) {
 		if (fragmentId == mLastCheckedFragmentId) {
-			return bFragmentProvided;
+			return mFragmentProvided;
 		}
 		// Store last checked fragment id.
 		this.mLastCheckedFragmentId = fragmentId;
 		// Check joined factories.
 		if (hasJoinedFactories()) {
-			for (FragmentController.FragmentFactory factory : aFactories) {
+			for (FragmentController.FragmentFactory factory : mFactories) {
 				if (factory.isFragmentProvided(fragmentId)) {
-					return bFragmentProvided = true;
+					return mFragmentProvided = true;
 				}
 			}
 		}
-		return bFragmentProvided = providesFragment(fragmentId);
+		return mFragmentProvided = providesFragment(fragmentId);
 	}
 
 	/**
@@ -252,7 +248,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	public Fragment createFragmentInstance(int fragmentId, Bundle params) {
 		if (hasJoinedFactories()) {
 			// Try to obtain dialog fragment from the current joined factories.
-			for (FragmentController.FragmentFactory factory : aFactories) {
+			for (FragmentController.FragmentFactory factory : mFactories) {
 				if (factory.isFragmentProvided(fragmentId)) {
 					return factory.createFragmentInstance(fragmentId, params);
 				}
@@ -268,7 +264,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	public String getFragmentTag(int fragmentId) {
 		if (hasJoinedFactories()) {
 			// Try to obtain tag from the joined factories.
-			for (FragmentController.FragmentFactory factory : aFactories) {
+			for (FragmentController.FragmentFactory factory : mFactories) {
 				if (factory.isFragmentProvided(fragmentId)) {
 					return factory.getFragmentTag(fragmentId);
 				}
@@ -283,7 +279,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	public FragmentController.TransactionOptions getFragmentTransactionOptions(int fragmentId, Bundle params) {
 		if (hasJoinedFactories()) {
 			// Try to obtain TransactionOptions from the joined factories.
-			for (FragmentController.FragmentFactory factory : aFactories) {
+			for (FragmentController.FragmentFactory factory : mFactories) {
 				if (factory.isFragmentProvided(fragmentId)) {
 					return factory.getFragmentTransactionOptions(fragmentId, params);
 				}
@@ -301,7 +297,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * @see #getJoinedFactories()
 	 */
 	public boolean hasJoinedFactories() {
-		return (aFactories != null) && !aFactories.isEmpty();
+		return (mFactories != null) && !mFactories.isEmpty();
 	}
 
 	/**
@@ -334,7 +330,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * @see #joinFactory(com.wit.android.fragment.manage.FragmentController.FragmentFactory)
 	 */
 	public final List<FragmentController.FragmentFactory> getJoinedFactories() {
-		return aFactories;
+		return mFactories;
 	}
 
 	/**
@@ -343,7 +339,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 
 	/**
 	 * <p>
-	 * Invoked from {@link #isFragmentProvided(int)} if none of the current joined factories provide
+	 * Invoked from {@link #isFragmentProvided(int)} if none of the current joined factories provides
 	 * a fragment with the specified <var>fragmentId</var>.
 	 * </p>
 	 * <p>
@@ -353,13 +349,13 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * </p>
 	 */
 	protected boolean providesFragment(int fragmentId) {
-		return (aFragmentItems != null) && aFragmentItems.indexOfKey(fragmentId) >= 0;
+		return (mFragmentItems != null) && mFragmentItems.indexOfKey(fragmentId) >= 0;
 	}
 
 	/**
 	 * <p>
-	 * Invoked from {@link #getFragmentTag(int)} if none of the current joined factories provide a tag
-	 * for the specified <var>fragmentId</var>.
+	 * Invoked from {@link #getFragmentTag(int)} if none of the current joined factories provides a
+	 * tag for the specified <var>fragmentId</var>.
 	 * </p>
 	 * <p>
 	 * By default this will check for registered fragment parsed from annotated fields marked
@@ -369,13 +365,13 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * </p>
 	 */
 	protected String onGetFragmentTag(int fragmentId) {
-		return providesFragment(fragmentId) ? aFragmentItems.get(fragmentId).tag : createFragmentTag(getClass(), Integer.toString(fragmentId));
+		return providesFragment(fragmentId) ? mFragmentItems.get(fragmentId).tag : createFragmentTag(getClass(), Integer.toString(fragmentId));
 	}
 
 	/**
 	 * <p>
-	 * Invoked whenever {@link #createFragmentInstance(int, android.os.Bundle)} is called and any of
-	 * the current joined factories does not provide fragment instance for the specified <var>fragmentId</var>.
+	 * Invoked whenever {@link #createFragmentInstance(int, android.os.Bundle)} is called and none of
+	 * the current joined factories provides a fragment instance for the specified <var>fragmentId</var>.
 	 * </p>
 	 * <p>
 	 * By default this will check for registered fragment parsed from annotated fields marked
@@ -387,17 +383,23 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * </p>
 	 */
 	protected Fragment onCreateFragmentInstance(int fragmentId, Bundle params) {
-		return providesFragment(fragmentId) ? aFragmentItems.get(fragmentId).newInstance() : null;
+		return providesFragment(fragmentId) ? mFragmentItems.get(fragmentId).newInstance(params) : null;
 	}
 
 	/**
 	 * <p>
-	 * Invoked form {@link #getFragmentTransactionOptions(int, android.os.Bundle)} if none of the current
-	 * joined factories provide an options for fragment with the specified <var>fragmentId</var>.
+	 * Invoked form {@link #getFragmentTransactionOptions(int, android.os.Bundle)} if none of the
+	 * current joined factories provides an options for fragment with the specified <var>fragmentId</var>.
+	 * </p>
+	 * <p>
+	 * By default, this returns default transaction options with {@link FragmentTransition#FADE_IN}
+	 * transition and tag for the specified <var>fragmentId</var> obtained by {@link #getFragmentTag(int)}.
+	 * <b>Note</b>, that changing some attribute of these options will affect options when calling
+	 * this method next time except the <b>tag</b> attribute.
 	 * </p>
 	 */
 	protected FragmentController.TransactionOptions onGetFragmentTransactionOptions(int fragmentId, Bundle params) {
-		return new FragmentController.TransactionOptions().tag(getFragmentTag(fragmentId));
+		return DEFAULT_OPTIONS.tag(getFragmentTag(fragmentId));
 	}
 
 	/**
@@ -411,10 +413,10 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * @return List of the joined factories. Always <code>valid</code> list.
 	 */
 	private List<FragmentController.FragmentFactory> accessFactories() {
-		if (aFactories == null) {
-			aFactories = new ArrayList<>();
+		if (mFactories == null) {
+			mFactories = new ArrayList<>();
 		}
-		return aFactories;
+		return mFactories;
 	}
 
 	/**
@@ -529,15 +531,20 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 		/**
 		 * Creates a new instance of Fragment specified for this item.
 		 *
+		 * @param params Parameters for fragment to be set as its arguments.
 		 * @return New fragment instance or <code>null</code> if type of this item is {@link Fragment Fragment.class}
 		 * which is default and can not be instantiated or instantiation error occur.
 		 */
-		public Fragment newInstance() {
+		public Fragment newInstance(Bundle params) {
 			if (type == null || type.equals(Fragment.class)) {
 				return null;
 			}
 			try {
-				return type.newInstance();
+				final Fragment fragment = type.newInstance();
+				if (params != null) {
+					fragment.setArguments(params);
+				}
+				return fragment;
 			} catch (InstantiationException | IllegalAccessException e) {
 				Log.e(TAG, "Failed to instantiate fragment class of(" + type + "). Make sure this fragment has public empty constructor.");
 			}

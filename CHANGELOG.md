@@ -3,6 +3,9 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
+### **4.0** (<i>26.08.2014</i>) ###
+- Refactored ActionBarFragment structure + some minor documentation changes.
+
 ### **3.8** (<i>22.08.2014</i>) ###
 - Added new @FactoryFragment annotation to mark an int field within FragmentFactory as fragment id.
 - Updated @InjectView annotation by `@InjectView.clickable()` flag.

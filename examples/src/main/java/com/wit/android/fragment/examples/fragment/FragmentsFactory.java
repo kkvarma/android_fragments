@@ -54,7 +54,7 @@ public class FragmentsFactory extends BaseFragmentFactory {
 	@FactoryFragment(type = GridFragmentImpl.class, taggedName = "GridFragment")
 	public static final int GRID = 0x03;
 
-	@FactoryFragment(taggedName = "ActionBarFragment")
+	@FactoryFragment(type = ActionBarFragmentImpl.class, taggedName = "ActionBarFragment")
 	public static final int ACTION_BAR = 0x04;
 
 	@FactoryFragment(type = AnnotatedFragment.class, taggedName = "AnnotatedFragment")
@@ -91,9 +91,8 @@ public class FragmentsFactory extends BaseFragmentFactory {
 				return ImageFragment.newInstance();
 			case LIST:
 				return ListFragmentImpl.newInstance();
-			case ACTION_BAR:
-				return ActionBarFragmentImpl.newInstance(params);
 		}
+		// Super will create instances for annotated ids.
 		return super.onCreateFragmentInstance(fragmentId, params);
 	}
 
@@ -101,19 +100,17 @@ public class FragmentsFactory extends BaseFragmentFactory {
 	 */
 	@Override
 	protected FragmentController.TransactionOptions onGetFragmentTransactionOptions(int fragmentId, Bundle params) {
-		final FragmentController.TransactionOptions options = super.onGetFragmentTransactionOptions(fragmentId, params);
 		switch (fragmentId) {
 			case TRANSITIONS:
 				if (params != null) {
-					// Set up requested transition.
-					options.transition((FragmentTransition) params.getParcelable(PARAMS_TRANSITION));
-					options.addToBackStack(params.getBoolean(PARAMS_ADD_TO_BACK_STACK, false));
+					return new FragmentController.TransactionOptions()
+							// Set up requested transition.
+							.transition((FragmentTransition) params.getParcelable(PARAMS_TRANSITION))
+							.addToBackStack(params.getBoolean(PARAMS_ADD_TO_BACK_STACK, false))
+							.tag(getFragmentTag(fragmentId));
 				}
 				break;
-			default:
-				options.transition(FragmentTransition.FADE_IN);
-				break;
 		}
-		return options;
+		return super.onGetFragmentTransactionOptions(fragmentId, params);
 	}
 }

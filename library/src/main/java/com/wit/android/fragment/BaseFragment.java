@@ -18,7 +18,7 @@
  */
 package com.wit.android.fragment;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,16 +106,18 @@ public abstract class BaseFragment extends Fragment {
 	private static final int PFLAG_VIEW_RESTORED = 0x02;
 
 	/**
-	 * Enums =======================================================================================
-	 */
-
-	/**
 	 * Static members ==============================================================================
 	 */
 
 	/**
 	 * Members =====================================================================================
 	 */
+
+	/**
+	 * Activity to which is this instance of fragment currently attached, <code>null</code> if this
+	 * fragment is not attached to any activity.
+	 */
+	Activity mActivity;
 
 	/**
 	 * Content view annotation holding configuration for the root view of this fragment.
@@ -128,25 +130,17 @@ public abstract class BaseFragment extends Fragment {
 	private int mPrivateFlags;
 
 	/**
-	 * Arrays --------------------------------------------------------------------------------------
-	 */
-
-	/**
 	 * Array with ids of views to which should be attached instance of {@link android.view.View.OnClickListener}.
 	 * When one of these views is clicked, {@link #onViewClick(android.view.View, int)} is invoked to
 	 * handle click event.
 	 */
-	private List<Integer> aClickableViewIds;
+	private List<Integer> mClickableViewIds;
 
 	/**
 	 * Array with gathered view fields which should be injected to this fragment whenever the new
 	 * root view hierarchy is created for this fragment instance.
 	 */
-	private List<Field> aViewsToInject;
-
-	/**
-	 * Booleans ------------------------------------------------------------------------------------
-	 */
+	private List<Field> mViewsToInject;
 
 	/**
 	 * Constructors ================================================================================
@@ -171,12 +165,12 @@ public abstract class BaseFragment extends Fragment {
 		this.mContentView = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, ContentView.class, BaseFragment.class);
 		// Obtain clickable view ids.
 		// Note, that we will gather ids from all annotated class to this parent.
-		this.aClickableViewIds = this.gatherClickableViewIds(classOfFragment, new ArrayList<Integer>());
-		if (aClickableViewIds.isEmpty()) {
-			this.aClickableViewIds = null;
+		this.mClickableViewIds = this.gatherClickableViewIds(classOfFragment, new ArrayList<Integer>());
+		if (mClickableViewIds.isEmpty()) {
+			this.mClickableViewIds = null;
 		}
 		// Store all fields to inject as views.
-		this.aViewsToInject = new ArrayList<>();
+		this.mViewsToInject = new ArrayList<>();
 		this.iterateInjectableViewFields(classOfFragment, new FragmentAnnotations.FieldProcessor() {
 
 			/**
@@ -184,14 +178,13 @@ public abstract class BaseFragment extends Fragment {
 			@Override
 			public void onProcessField(Field field, String name) {
 				if (field.isAnnotationPresent(InjectView.class) || field.isAnnotationPresent(InjectView.Last.class)) {
-					aViewsToInject.add(field);
+					mViewsToInject.add(field);
 				}
 			}
 		});
-		if (aViewsToInject.isEmpty()) {
-			this.aViewsToInject = null;
+		if (mViewsToInject.isEmpty()) {
+			this.mViewsToInject = null;
 		}
-
 	}
 
 	/**
@@ -222,6 +215,14 @@ public abstract class BaseFragment extends Fragment {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 */
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		this.mActivity = activity;
 	}
 
 	/**
@@ -260,8 +261,8 @@ public abstract class BaseFragment extends Fragment {
 		}
 		// Set up clickable views.
 		final ClickListener clickListener = new ClickListener();
-		if (aClickableViewIds != null) {
-			for (int id : aClickableViewIds) {
+		if (mClickableViewIds != null) {
+			for (int id : mClickableViewIds) {
 				View child = view.findViewById(id);
 				if (child == null) {
 					throw new NullPointerException("Clickable view with id(" + id + ") not found.");
@@ -270,8 +271,8 @@ public abstract class BaseFragment extends Fragment {
 			}
 		}
 
-		if (aViewsToInject != null) {
-			for (Field field : aViewsToInject) {
+		if (mViewsToInject != null) {
+			for (Field field : mViewsToInject) {
 				FragmentAnnotations.injectView(field, this, view, clickListener);
 			}
 		}
@@ -291,6 +292,14 @@ public abstract class BaseFragment extends Fragment {
 	public void onDestroy() {
 		super.onDestroy();
 		this.updatePrivateFlags(PFLAG_VIEW_RESTORED, false);
+	}
+
+	/**
+	 */
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		this.mActivity = null;
 	}
 
 	/**
@@ -441,11 +450,15 @@ public abstract class BaseFragment extends Fragment {
 	 * <p>
 	 * Returns flag indicating whether the parent Activity of this fragment instance is available or not.
 	 * </p>
+	 * <p>
+	 * Parent activity is always available between {@link #onAttach(android.app.Activity)} and
+	 * {@link #onDetach()} life cycle calls.
+	 * </p>
 	 *
 	 * @return <code>True</code> if activity is available, <code>false</code> otherwise.
 	 */
 	protected boolean isActivityAvailable() {
-		return getActivity() != null;
+		return mActivity != null;
 	}
 
 	/**

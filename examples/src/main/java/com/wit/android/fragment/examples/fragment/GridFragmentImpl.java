@@ -53,14 +53,6 @@ public class GridFragmentImpl extends GridFragment<AppsAdapter> {
 	private PackageManager mPackageManager;
 
 	/**
-	 *
-	 * @return
-	 */
-	public static GridFragmentImpl newInstance() {
-		return new GridFragmentImpl();
-	}
-
-	/**
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
