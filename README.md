@@ -60,7 +60,7 @@ The **latest version** of this library will be always at the [**release**](https
 
 ## Support ##
 
-If You have any questions related to this project, feel free and contact us at **[github.public@wolf-itechnologies.com](mailto:github.public@wolf-itechnologies.com)**.
+If You have any questions related to this project, feel free and contact us at **[github@wolf-itechnologies.com](mailto:github.public@wolf-itechnologies.com)**.
 
 ## License ##
 
