@@ -1,5 +1,5 @@
 <a href="http://www.android.com/">
-<img align="left" src="http://github.wolf-itechnologies.com/images/wit/android/global/icons/wit_ic_android_develop_100.png" />
+<img align="left" src="http://github.wolf-itechnologies.com/images/wit/android/global/icons/wit_ic_android_master_100.png" />
 </a>
 
 Android Fragments (Examples)
