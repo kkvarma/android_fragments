@@ -230,11 +230,6 @@ public class WebFragment extends BaseFragment {
 	private OnWebContentLoadingListener mContentLoadingListener;
 
 	/**
-	 * Byte set of the private flags.
-	 */
-	private int mPrivateFlags;
-
-	/**
 	 * Constructors ================================================================================
 	 */
 
@@ -246,15 +241,6 @@ public class WebFragment extends BaseFragment {
 	 */
 	public WebFragment() {
 		super();
-		final Class<?> classOfFragment = ((Object) this).getClass();
-		/**
-		 * Process class annotations.
-		 */
-		// Obtain web content.
-		if (classOfFragment.isAnnotationPresent(WebContent.class)) {
-			this.mContent = classOfFragment.getAnnotation(WebContent.class).value();
-			this.updatePrivateFlags(PFLAG_CONTENT_CHANGED, true);
-		}
 	}
 
 	/**
@@ -618,6 +604,18 @@ public class WebFragment extends BaseFragment {
 	}
 
 	/**
+	 */
+	@Override
+	void processClassAnnotations(Class<?> classOfFragment) {
+		super.processClassAnnotations(classOfFragment);
+		// Obtain web content.
+		if (classOfFragment.isAnnotationPresent(WebContent.class)) {
+			this.mContent = classOfFragment.getAnnotation(WebContent.class).value();
+			this.updatePrivateFlags(PFLAG_CONTENT_CHANGED, true);
+		}
+	}
+
+	/**
 	 * Private -------------------------------------------------------------------------------------
 	 */
 
@@ -642,30 +640,6 @@ public class WebFragment extends BaseFragment {
 			}
 		}
 		return mContentType;
-	}
-
-	/**
-	 * Updates the current private flags.
-	 *
-	 * @param flag The desired flag to add or remove.
-	 * @param add  <code>True</code> to remove the desired flag, <code>false</code> to add it.
-	 */
-	private void updatePrivateFlags(int flag, boolean add) {
-		if (add) {
-			this.mPrivateFlags |= flag;
-		} else if (hasPrivateFlag(flag)) {
-			this.mPrivateFlags &= ~flag;
-		}
-	}
-
-	/**
-	 * Checks whether the desired <var>flag</var> is presented within the current private flags or not.
-	 *
-	 * @param flag The flag to check.
-	 * @return <code>True</code> if the desired flag is presented, <code>false</code> otherwise.
-	 */
-	private boolean hasPrivateFlag(int flag) {
-		return (mPrivateFlags & flag) != 0;
 	}
 
 	/**
