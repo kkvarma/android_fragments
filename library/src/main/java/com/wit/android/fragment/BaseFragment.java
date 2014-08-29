@@ -121,14 +121,14 @@ public abstract class BaseFragment extends Fragment {
 	Activity mActivity;
 
 	/**
+	 * Stores all private flags for this object.
+	 */
+	int mPrivateFlags;
+
+	/**
 	 * Content view annotation holding configuration for the root view of this fragment.
 	 */
 	private ContentView mContentView;
-
-	/**
-	 * Stores all private flags for this object.
-	 */
-	private int mPrivateFlags;
 
 	/**
 	 * Array with ids of views to which should be attached instance of {@link android.view.View.OnClickListener}.
@@ -158,34 +158,7 @@ public abstract class BaseFragment extends Fragment {
 	 * </p>
 	 */
 	public BaseFragment() {
-		final Class<?> classOfFragment = ((Object) this).getClass();
-		/**
-		 * Process class annotations.
-		 */
-		// Obtain content view.
-		this.mContentView = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, ContentView.class, BaseFragment.class);
-		// Obtain clickable view ids.
-		// Note, that we will gather ids from all annotated class to this parent.
-		this.mClickableViewIds = this.gatherClickableViewIds(classOfFragment, new ArrayList<Integer>());
-		if (mClickableViewIds.isEmpty()) {
-			this.mClickableViewIds = null;
-		}
-		// Store all fields to inject as views.
-		this.mViewsToInject = new ArrayList<>();
-		this.iterateInjectableViewFields(classOfFragment, new FragmentAnnotations.FieldProcessor() {
-
-			/**
-			 */
-			@Override
-			public void onProcessField(Field field, String name) {
-				if (field.isAnnotationPresent(InjectView.class) || field.isAnnotationPresent(InjectView.Last.class)) {
-					mViewsToInject.add(field);
-				}
-			}
-		});
-		if (mViewsToInject.isEmpty()) {
-			this.mViewsToInject = null;
-		}
+		processClassAnnotations(((Object) this).getClass());
 	}
 
 	/**
@@ -463,6 +436,37 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	/**
+	 *
+	 * @param classOfFragment
+	 */
+	void processClassAnnotations(Class<?> classOfFragment) {
+		// Obtain content view.
+		this.mContentView = FragmentAnnotations.obtainAnnotationFrom(classOfFragment, ContentView.class, BaseFragment.class);
+		// Obtain clickable view ids.
+		// Note, that we will gather ids from all annotated class to this parent.
+		this.mClickableViewIds = this.gatherClickableViewIds(classOfFragment, new ArrayList<Integer>());
+		if (mClickableViewIds.isEmpty()) {
+			this.mClickableViewIds = null;
+		}
+		// Store all fields to inject as views.
+		this.mViewsToInject = new ArrayList<>();
+		this.iterateInjectableViewFields(classOfFragment, new FragmentAnnotations.FieldProcessor() {
+
+			/**
+			 */
+			@Override
+			public void onProcessField(Field field, String name) {
+				if (field.isAnnotationPresent(InjectView.class) || field.isAnnotationPresent(InjectView.Last.class)) {
+					mViewsToInject.add(field);
+				}
+			}
+		});
+		if (mViewsToInject.isEmpty()) {
+			this.mViewsToInject = null;
+		}
+	}
+
+	/**
 	 * Private -------------------------------------------------------------------------------------
 	 */
 
@@ -524,12 +528,12 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	/**
-	 * Updates current private flags.
+	 * Updates the current private flags.
 	 *
-	 * @param flag The value of the flag to add/remove from current private flags.
+	 * @param flag Value of the desired flag to add/remove to/from the current private flags.
 	 * @param add  Boolean flag indicating whether to add or remove the specified <var>flag</var>.
 	 */
-	private void updatePrivateFlags(int flag, boolean add) {
+	void updatePrivateFlags(int flag, boolean add) {
 		if (add) {
 			this.mPrivateFlags |= flag;
 		} else {
@@ -538,13 +542,13 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	/**
-	 * Returns boolean flag indicating whether the specified <var>flag</var> is contained within
-	 * current private flags.
+	 * Returns a boolean flag indicating whether the specified <var>flag</var> is contained within
+	 * the current private flags or not.
 	 *
-	 * @param flag The value of the flag to check.
+	 * @param flag Value of the flag to check.
 	 * @return <code>True</code> if the requested flag is contained, <code>false</code> otherwise.
 	 */
-	private boolean hasPrivateFlag(int flag) {
+	boolean hasPrivateFlag(int flag) {
 		return (mPrivateFlags & flag) != 0;
 	}
 

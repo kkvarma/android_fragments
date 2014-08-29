@@ -2,9 +2,9 @@
 <img align="left" src="http://www.wolf-itechnologies.com/images/wit/android/wit_ic_android_100.png" />
 </a>
 
-Android Fragments (4.0)
+Android Fragments (4.0.1)
 ===============
-> [last updated: **26.08.2014**]
+> [last updated: **29.08.2014**]
 
 <h1 align="right">
 	From the <a href="" title="">Android Libraries</a>

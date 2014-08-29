@@ -153,18 +153,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * </p>
 	 */
 	protected AdapterFragment() {
-		final Class<?> classOfFragment = ((Object) this).getClass();
-		/**
-		 * Process class annotations.
-		 */
-		// Obtain adapter view options.
-		this.mAdapterViewOptions = FragmentAnnotations.obtainAnnotationFrom(
-				classOfFragment, AdapterViewOptions.class, AdapterFragment.class
-		);
-		// Obtain action mode options.
-		this.mActionModeOptions = FragmentAnnotations.obtainAnnotationFrom(
-				classOfFragment, ActionModeOptions.class, AdapterFragment.class
-		);
+		super();
 	}
 
 	/**
@@ -191,19 +180,32 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 		if (layout == null) {
 			throw new NullPointerException("Layout created by " + ((Object) this).getClass().getSimpleName() + ".onCreateLayout(...) can't be null.");
 		}
-		layout.setLayoutParams(onCreateLayoutParams());
+		final ViewGroup.LayoutParams layoutParams = createLayoutParams();
+		if (layoutParams != null) {
+			layout.setLayoutParams(layoutParams);
+		}
 		// Resolve empty view.
 		final View emptyView = onCreateEmptyView(inflater, layout, savedInstanceState);
 		if (emptyView != null) {
 			emptyView.setId(mAdapterViewOptions != null ? mAdapterViewOptions.emptyViewId() : AdapterViewOptions.EMPTY_VIEW_DEFAULT_ID);
-			layout.addView(emptyView, createEmptyViewParams());
+			final FrameLayout.LayoutParams emptyParams = createEmptyViewParams();
+			if (emptyParams != null) {
+				layout.addView(emptyView, emptyParams);
+			} else {
+				layout.addView(emptyView);
+			}
 		}
 		// Resolve adapter view.
 		final View adapterView = createAdapterViewInner(inflater, layout, savedInstanceState);
 		if (adapterView != null) {
 			// Ensure that adapter view will have correct id.
 			adapterView.setId(mAdapterViewOptions != null ? mAdapterViewOptions.viewId() : AdapterViewOptions.VIEW_DEFAULT_ID);
-			layout.addView(adapterView, createAdapterViewParams());
+			final FrameLayout.LayoutParams adapterParams = createAdapterViewParams();
+			if (adapterParams != null) {
+				layout.addView(adapterView, adapterParams);
+			} else {
+				layout.addView(adapterView);
+			}
 		}
 		return layout;
 	}
@@ -471,7 +473,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @param savedInstanceState Bundle with saved state or <code>null</code> if this fragment's view
 	 *                           is just being first time created.
 	 * @return This returns be default an instance of {@link android.widget.FrameLayout}.
-	 * @see #onCreateLayoutParams()
+	 * @see #createLayoutParams()
 	 */
 	protected ViewGroup onCreateLayout(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return new FrameLayout(inflater.getContext());
@@ -486,7 +488,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @return An instance of layout params. By default this creates params to <b>MATCH_PARENT</b> size.
 	 * @see #onCreateLayout(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
-	protected ViewGroup.LayoutParams onCreateLayoutParams() {
+	protected ViewGroup.LayoutParams createLayoutParams() {
 		return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 	}
 
@@ -509,8 +511,13 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * <p>
 	 * Called to create a new instance of layout parameters for this fragment's adapter view.
 	 * </p>
+	 * <p>
+	 * Return <code>null</code> if the default layout parameters should be used when adding this view
+	 * into parent's view hierarchy.
+	 * </p>
 	 *
 	 * @return An instance of layout params, depends on the root view of this AdapterFragment.
+	 * By default this creates params to <b>MATCH_PARENT</b> size.
 	 */
 	protected FrameLayout.LayoutParams createAdapterViewParams() {
 		return new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
@@ -536,8 +543,13 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * <p>
 	 * Called to create a new instance of the layout parameters for this fragment's empty view.
 	 * </p>
+	 * <p>
+	 * Return <code>null</code> if the default layout parameters should be used when adding this view
+	 * into parent's view hierarchy.
+	 * </p>
 	 *
 	 * @return An instance of layout params, depends on the root view of this AdapterFragment.
+	 * By default this creates params to <b>WRAP_CONTENT</b> size with {@link Gravity#CENTER} gravity.
 	 */
 	protected FrameLayout.LayoutParams createEmptyViewParams() {
 		final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -707,6 +719,21 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * </p>
 	 */
 	protected void onActionModeFinished() {
+	}
+
+	/**
+	 */
+	@Override
+	void processClassAnnotations(Class<?> classOfFragment) {
+		super.processClassAnnotations(classOfFragment);
+		// Obtain adapter view options.
+		this.mAdapterViewOptions = FragmentAnnotations.obtainAnnotationFrom(
+				classOfFragment, AdapterViewOptions.class, AdapterFragment.class
+		);
+		// Obtain action mode options.
+		this.mActionModeOptions = FragmentAnnotations.obtainAnnotationFrom(
+				classOfFragment, ActionModeOptions.class, AdapterFragment.class
+		);
 	}
 
 	/**
