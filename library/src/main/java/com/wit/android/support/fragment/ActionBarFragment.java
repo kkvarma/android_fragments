@@ -121,18 +121,6 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 	public ActionBarFragment() {
 		super();
-		final Class<?> classOfFragment = ((Object) this).getClass();
-		/**
-		 * Process class annotations.
-		 */
-		// Obtain action bar options.
-		this.mActionBarOptions = FragmentAnnotations.obtainAnnotationFrom(
-				classOfFragment, ActionBarOptions.class
-		);
-		// Obtain options menu.
-		this.mMenuOptions = FragmentAnnotations.obtainAnnotationFrom(
-				classOfFragment, MenuOptions.class, ActionBarFragment.class
-		);
 	}
 
 	/**
@@ -415,6 +403,21 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 	protected ActionBarActivity getActionBarActivity() {
 		return (ActionBarActivity) mActivity;
+	}
+
+	/**
+	 */
+	@Override
+	void processClassAnnotations(Class<?> classOfFragment) {
+		super.processClassAnnotations(classOfFragment);
+		// Obtain action bar options.
+		this.mActionBarOptions = FragmentAnnotations.obtainAnnotationFrom(
+				classOfFragment, ActionBarOptions.class
+		);
+		// Obtain options menu.
+		this.mMenuOptions = FragmentAnnotations.obtainAnnotationFrom(
+				classOfFragment, MenuOptions.class, ActionBarFragment.class
+		);
 	}
 
 	/**
