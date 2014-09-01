@@ -806,7 +806,7 @@ public class FragmentController {
 	 * </p>
 	 * <p>
 	 * This implementation commits the passed <var>transaction</var> and in case that the <var>options</var>
-	 * has set flag {@link com.wit.android.support.fragment.manage.FragmentController.TransactionOptions#showImmediately}
+	 * has set flag {@link com.wit.android.support.fragment.manage.FragmentController.TransactionOptions#showImmediate}
 	 * to <code>true</code>, {@link android.support.v4.app.FragmentManager#executePendingTransactions()}
 	 * will be invoked too on the attached FragmentManager.
 	 * </p>
@@ -818,7 +818,7 @@ public class FragmentController {
 	protected boolean onCommitTransaction(FragmentTransaction transaction, TransactionOptions options) {
 		// Commit transaction.
 		transaction.commit();
-		if (options.showImmediately) {
+		if (options.showImmediate) {
 			mFragmentManager.executePendingTransactions();
 		}
 		return true;
@@ -1012,7 +1012,7 @@ public class FragmentController {
 		/**
 		 * Flag indicating, whether a new fragment should be showed immediately or not.
 		 */
-		protected boolean showImmediately = false;
+		protected boolean showImmediate = false;
 
 		/**
 		 * Flag indicating, whether to add a new fragment or replace old one.
@@ -1044,7 +1044,7 @@ public class FragmentController {
 			this.tag = source.readString();
 			this.addToBackStack = source.readInt() == 1;
 			this.replaceSame = source.readInt() == 1;
-			this.showImmediately = source.readInt() == 1;
+			this.showImmediate = source.readInt() == 1;
 			this.add = source.readInt() == 1;
 			this.transition = source.readParcelable(FragmentTransition.class.getClassLoader());
 		}
@@ -1061,7 +1061,7 @@ public class FragmentController {
 			dest.writeString(tag);
 			dest.writeInt(addToBackStack ? 1 : 0);
 			dest.writeInt(replaceSame ? 1 : 0);
-			dest.writeInt(showImmediately ? 1 : 0);
+			dest.writeInt(showImmediate ? 1 : 0);
 			dest.writeInt(add ? 1 : 0);
 			transition.writeToParcel(dest, flags);
 		}
@@ -1203,11 +1203,11 @@ public class FragmentController {
 		 * Sets a flag indicating, whether a new fragment should be showed immediately or not.
 		 * </p>
 		 *
-		 * @param immediately <code>True</code> to show immediately, <code>false</code> otherwise.
+		 * @param immediate <code>True</code> to show immediately, <code>false</code> otherwise.
 		 * @return This options instance.
 		 */
-		public TransactionOptions showImmediately(boolean immediately) {
-			this.showImmediately = immediately;
+		public TransactionOptions showImmediate(boolean immediate) {
+			this.showImmediate = immediate;
 			return this;
 		}
 	}
