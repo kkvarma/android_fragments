@@ -3,6 +3,8 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
+### **4.0.2** (<i>01.09.2014</i>) ###
+
 ### **4.0.1** (<i>29.08.2014</i>) ###
 - If null LayoutParams are returned by one of the related methods within the AdapterFragment, the default params are used when adding a specific created view into root layout.
 
