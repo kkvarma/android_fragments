@@ -30,11 +30,11 @@ public final class FragmentsConfig {
 	/**
 	 * Flag indicating whether the output for this library trough log-cat is enabled or not.
 	 */
-	public static final boolean LIBRARY_LOG_ENABLED = true;
+	public static boolean LIBRARY_LOG_ENABLED = true;
 
 	/**
 	 * Flag indicating whether the debug output for this library trough log-cat is enabled or not.
 	 */
-	public static final boolean LIBRARY_DEBUG_LOG_ENABLED = false;
+	public static boolean LIBRARY_DEBUG_LOG_ENABLED = false;
 
 }
