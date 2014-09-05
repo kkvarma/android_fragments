@@ -25,4 +25,4 @@ library.
 > Use below rules to **not obfuscate** any source code of this library project.
 
     # Keep all classes within library package.
-    -keep class com.wit.android.support.fragment.** { *; }
+    -keep class com.wit.android.fragment.** { *; }
