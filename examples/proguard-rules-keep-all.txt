@@ -32,9 +32,9 @@
 
 # EXAMPLES LIBRARY SPECIFIC RULES ==================================================================
 # Keep adapter item view holders which are instantiated using reflection.
--keep public class * implements com.wit.android.support.examples.libs.adapter.ExViewHolder
+-keep public class * implements com.wit.android.examples.libs.adapter.ExViewHolder
 
 # EXAMPLES PROJECT SPECIFIC RULES ==================================================================
 # Keep all classes within library package.
--keep class com.wit.android.support.fragment.** { *; }
+-keep class com.wit.android.fragment.** { *; }
 

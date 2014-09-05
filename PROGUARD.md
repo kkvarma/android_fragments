@@ -10,16 +10,16 @@ library.
 > Use below rules to **obfuscate as much** source code of this library project **as possible**.
 
     # Keep members with @FactoryFragment annotation within fragment factories.
-    -keepclassmembers public class * extends com.wit.android.support.fragment.manage.BaseFragmentFactory {
-        @com.wit.android.support.fragment.annotation.FactoryFragment *;
+    -keepclassmembers public class * extends com.wit.android.fragment.manage.BaseFragmentFactory {
+        @com.wit.android.fragment.annotation.FactoryFragment *;
     }
     # Keep BaseFragment implementation details:
     # - public empty constructors for proper working of instantiation process using reflection,
     # - view members to inject marked with @InjectView, @InjectView.Last annotations.
-    -keepclassmembers public class * extends com.wit.android.support.fragment.BaseFragment {
+    -keepclassmembers public class * extends com.wit.android.fragment.BaseFragment {
         public <init>();
-        @com.wit.android.support.fragment.annotation.InjectView *;
-        @com.wit.android.support.fragment.annotation.InjectView$Last *;
+        @com.wit.android.fragment.annotation.InjectView *;
+        @com.wit.android.fragment.annotation.InjectView$Last *;
     }
 
 > Use below rules to **not obfuscate** any source code of this library project.
