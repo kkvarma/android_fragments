@@ -9,8 +9,10 @@ library.
 
 > Use below rules to **obfuscate as much** source code of this library project **as possible**.
 
-``
+    # Keep members with @FactoryFragment annotation within fragment factories.
+    -keepclassmembers public class * extends com.wit.android.support.fragment.manage.BaseFragmentFactory {
+        @com.wit.android.support.fragment.annotation.FactoryFragment *;
+    }
 
 > Use below rules to **not obfuscate** any source code of this library project.
 
-``
