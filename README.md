@@ -2,9 +2,9 @@
 <img align="left" src="http://www.wolf-itechnologies.com/images/wit/android/wit_ic_android_100.png" />
 </a>
 
-Android Fragments (4.0.2)
+Android Fragments (4.0.3)
 ===============
-> [last updated: **02.09.2014**]
+> [last updated: **05.09.2014**]
 
 <h1 align="right">
 	From the <a href="" title="">Android Libraries</a>
@@ -48,7 +48,7 @@ Android Fragments (4.0.2)
 
 ## Compatibility ##
 
-Supported from the **Android [API Level 14](http://developer.android.com/about/versions/android-4.0.html "See API highlights")**.
+Supported from the **Android [API Level 7](http://developer.android.com/about/versions/android-2.1.html "See API highlights")**.
 
 ## Known Issues ##
 
