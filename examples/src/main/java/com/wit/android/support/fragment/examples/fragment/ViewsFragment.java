@@ -20,7 +20,6 @@ package com.wit.android.support.fragment.examples.fragment;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,45 +38,22 @@ import com.wit.android.support.fragment.examples.R;
  * @author Martin Albedinsky
  */
 @InjectViews
-@ContentView(R.layout.fragment_annotations)
-public class AnnotatedFragment extends BaseFragment {
+@ContentView(R.layout.fragment_views)
+public class ViewsFragment extends BaseFragment {
 
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = ExampleListFragment.class.getSimpleName();
+	// private static final String TAG = ViewsFragment.class.getSimpleName();
 
-	@InjectView(R.id.fragment_annotations_text_view_content)
-	private TextView mTextContent;
-
-	@InjectView(R.id.fragment_annotations_text_view_title)
-	private TextView mTextTitle;
-
-	@InjectView(value = R.id.fragment_annotations_button_sign_in, clickable = true)
+	@InjectView(value = R.id.fragment_views_button_sign_in, clickable = true)
 	private Button mButtonSignIn;
 
-	/**
-	 * Views below are only for testing purpose ----------------------------------------------------
-	 */
+	@InjectView(R.id.fragment_views_text_view_content)
+	private TextView mTextContent;
 
-	@InjectView(0)
-	private View mViewInjectFirst;
-
-	@InjectView(0)
-	private View mViewInjectSecond;
-
-	@InjectView.Last(0)
-	private View mViewInjectThird;
-
-	@InjectView(0)
-	private Button mButton;
-
-	@InjectView(0)
-	private AutoCompleteTextView mAutoCompleteTextView;
-
-	/**
-	 * ---------------------------------------------------------------------------------------------
-	 */
+	@InjectView.Last(R.id.fragment_views_text_view_title)
+	private TextView mTextTitle;
 
 	/**
 	 */
@@ -99,7 +75,7 @@ public class AnnotatedFragment extends BaseFragment {
 	@Override
 	protected boolean onViewClick(View view, int id) {
 		switch (id) {
-			case R.id.fragment_annotations_button_sign_in:
+			case R.id.fragment_views_button_sign_in:
 				Toast.makeText(getActivity(), mButtonSignIn.getText() + " button clicked", Toast.LENGTH_SHORT).show();
 				return true;
 		}

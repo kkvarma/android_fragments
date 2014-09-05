@@ -28,7 +28,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
-import com.wit.android.support.fragment.config.FragmentsConfig;
+import com.wit.android.support.fragment.FragmentsConfig;
 
 import java.util.ArrayList;
 import java.util.List;
