@@ -19,13 +19,14 @@
 package com.wit.android.support.fragment.examples.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wit.android.support.fragment.BaseFragment;
+import com.wit.android.support.fragment.ActionBarFragment;
 import com.wit.android.support.fragment.annotation.ContentView;
 import com.wit.android.support.fragment.annotation.InjectView;
 import com.wit.android.support.fragment.annotation.InjectViews;
@@ -40,12 +41,12 @@ import com.wit.android.support.fragment.examples.R;
  */
 @InjectViews
 @ContentView(R.layout.fragment_annotations)
-public class AnnotatedFragment extends BaseFragment {
+public class AnnotatedFragment extends ActionBarFragment {
 
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = ExampleListFragment.class.getSimpleName();
+	private static final String TAG = AnnotatedFragment.class.getSimpleName();
 
 	@InjectView(R.id.fragment_annotations_text_view_content)
 	private TextView mTextContent;
@@ -82,8 +83,17 @@ public class AnnotatedFragment extends BaseFragment {
 	/**
 	 */
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Log.d(TAG, "Fragment created.");
+	}
+
+	/**
+	 */
+	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		Log.d(TAG, "View created.");
 		mTextTitle.setText("Title section");
 		mTextContent.setText(
 				"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut " +

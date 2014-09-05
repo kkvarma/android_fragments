@@ -30,4 +30,18 @@
     public static *** v(...);
 }
 
-# PROJECT SPECIFIC RULES ===========================================================================
+# EXAMPLES LIBRARY SPECIFIC RULES ==================================================================
+# Keep adapter item view holders which are instantiated by reflection.
+-keep public class * implements com.wit.android.support.examples.libs.adapter.ExViewHolder
+
+# EXAMPLES PROJECT SPECIFIC RULES ==================================================================
+# Keep members with @FactoryFragment annotation within fragment factories.
+-keepclassmembers public class * extends com.wit.android.support.fragment.manage.BaseFragmentFactory {
+    @com.wit.android.support.fragment.annotation.FactoryFragment *;
+}
+# Keep public empty constructors of fragments which are instantiated using reflection.
+# Keep also members with @InjectView, @InjectView.Last annotation.
+-keepclassmembers public class * extends com.wit.android.support.fragment.BaseFragment {
+    public <init>();
+    @com.wit.android.support.fragment.annotation.InjectView *;
+}
