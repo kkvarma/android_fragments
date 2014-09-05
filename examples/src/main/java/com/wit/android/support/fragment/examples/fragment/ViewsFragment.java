@@ -19,14 +19,12 @@
 package com.wit.android.support.fragment.examples.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wit.android.support.fragment.ActionBarFragment;
+import com.wit.android.support.fragment.BaseFragment;
 import com.wit.android.support.fragment.annotation.ContentView;
 import com.wit.android.support.fragment.annotation.InjectView;
 import com.wit.android.support.fragment.annotation.InjectViews;
@@ -40,60 +38,28 @@ import com.wit.android.support.fragment.examples.R;
  * @author Martin Albedinsky
  */
 @InjectViews
-@ContentView(R.layout.fragment_annotations)
-public class AnnotatedFragment extends ActionBarFragment {
+@ContentView(R.layout.fragment_views)
+public class ViewsFragment extends BaseFragment {
 
 	/**
 	 * Log TAG.
 	 */
-	private static final String TAG = AnnotatedFragment.class.getSimpleName();
+	// private static final String TAG = ViewsFragment.class.getSimpleName();
 
-	@InjectView(R.id.fragment_annotations_text_view_content)
-	private TextView mTextContent;
-
-	@InjectView(R.id.fragment_annotations_text_view_title)
-	private TextView mTextTitle;
-
-	@InjectView(value = R.id.fragment_annotations_button_sign_in, clickable = true)
+	@InjectView(value = R.id.fragment_views_button_sign_in, clickable = true)
 	private Button mButtonSignIn;
 
-	/**
-	 * Views below are only for testing purpose ----------------------------------------------------
-	 */
+	@InjectView(R.id.fragment_views_text_view_content)
+	private TextView mTextContent;
 
-	@InjectView(0)
-	private View mViewInjectFirst;
-
-	@InjectView(0)
-	private View mViewInjectSecond;
-
-	@InjectView.Last(0)
-	private View mViewInjectThird;
-
-	@InjectView(0)
-	private Button mButton;
-
-	@InjectView(0)
-	private AutoCompleteTextView mAutoCompleteTextView;
-
-	/**
-	 * ---------------------------------------------------------------------------------------------
-	 */
-
-	/**
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Log.d(TAG, "Fragment created.");
-	}
+	@InjectView.Last(R.id.fragment_views_text_view_title)
+	private TextView mTextTitle;
 
 	/**
 	 */
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		Log.d(TAG, "View created.");
 		mTextTitle.setText("Title section");
 		mTextContent.setText(
 				"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut " +
@@ -109,7 +75,7 @@ public class AnnotatedFragment extends ActionBarFragment {
 	@Override
 	protected boolean onViewClick(View view, int id) {
 		switch (id) {
-			case R.id.fragment_annotations_button_sign_in:
+			case R.id.fragment_views_button_sign_in:
 				Toast.makeText(getActivity(), mButtonSignIn.getText() + " button clicked", Toast.LENGTH_SHORT).show();
 				return true;
 		}

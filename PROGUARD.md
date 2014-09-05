@@ -13,6 +13,16 @@ library.
     -keepclassmembers public class * extends com.wit.android.support.fragment.manage.BaseFragmentFactory {
         @com.wit.android.support.fragment.annotation.FactoryFragment *;
     }
+    # Keep BaseFragment implementation details:
+    # - public empty constructors to proper work instantiation using reflection,
+    # - view members to inject marked with @InjectView, @InjectView.Last annotations.
+    -keepclassmembers public class * extends com.wit.android.support.fragment.BaseFragment {
+        public <init>();
+        @com.wit.android.support.fragment.annotation.InjectView *;
+        @com.wit.android.support.fragment.annotation.InjectView$Last *;
+    }
 
 > Use below rules to **not obfuscate** any source code of this library project.
 
+    # Keep all classes within library package.
+    -keep class com.wit.android.** { *; }

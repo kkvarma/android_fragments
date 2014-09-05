@@ -31,7 +31,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.wit.android.support.fragment.annotation.WebContent;
-import com.wit.android.support.fragment.config.FragmentsConfig;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

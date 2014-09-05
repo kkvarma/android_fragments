@@ -177,8 +177,7 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 				R.string.Navigation_Label_GridFragment,
 				builder
 		));
-		list.add(builder
-						.id(WebActivity.NAVIGATION_ID)
+		list.add(builder.id(WebActivity.NAVIGATION_ID)
 						.title(R.string.Navigation_Label_WebFragment)
 						.selectable(false)
 						.build()
@@ -189,8 +188,8 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 				builder
 		));
 		list.add(createItem(
-				FragmentsFactory.ANNOTATIONS,
-				R.string.Navigation_Label_AnnotatedFragment,
+				FragmentsFactory.VIEWS,
+				R.string.Navigation_Label_ViewsFragment,
 				builder
 		));
 		return list;
@@ -268,11 +267,10 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 	}
 
 	/**
-	 *
 	 * @param itemId
 	 */
 	private void onNavigationChange(int itemId) {
-		switch(itemId) {
+		switch (itemId) {
 			case FragmentsFactory.TRANSITIONS:
 				mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 				mActionBar.setSelectedNavigationItem(0);
