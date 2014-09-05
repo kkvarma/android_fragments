@@ -152,7 +152,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * annotations are presented above a subclass of this AdapterFragment, they will be processed here.
 	 * </p>
 	 */
-	protected AdapterFragment() {
+	public AdapterFragment() {
 		super();
 	}
 

@@ -57,8 +57,8 @@ public class FragmentsFactory extends BaseFragmentFactory {
 	@FactoryFragment(type = ActionBarFragmentImpl.class, taggedName = "ActionBarFragment")
 	public static final int ACTION_BAR = 0x04;
 
-	@FactoryFragment(type = AnnotatedFragment.class, taggedName = "AnnotatedFragment")
-	public static final int ANNOTATIONS = 0x05;
+	@FactoryFragment(type = ViewsFragment.class, taggedName = "ViewsFragment")
+	public static final int VIEWS = 0x05;
 
 	/**
 	 *
