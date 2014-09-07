@@ -42,13 +42,13 @@ import java.util.List;
  * </p>
  * <h6>Accepted annotations</h6>
  * <ul>
- * <li>{@link com.wit.android.support.fragment.annotation.ContentView @ContentView} [<b>class, recursive</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.ContentView @ContentView} [<b>class - inherited</b>]</li>
  * <p>
  * If this annotation is presented, the layout id presented within this annotation will be used to
  * inflate the root view for an instance of annotated BaseFragment sub-class in
  * {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}.
  * </p>
- * <li>{@link com.wit.android.support.fragment.annotation.ClickableViews @ClickableViews} [<b>class, recursive</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.ClickableViews @ClickableViews} [<b>class - inherited</b>]</li>
  * <p>
  * If this annotation is presented, an inner {@link android.view.View.OnClickListener} will be attached
  * to all views found by ids presented within this annotation. If any of these views is clicked,
@@ -57,12 +57,12 @@ import java.util.List;
  * OnClickListener is attached to these views whenever {@link #onViewCreated(android.view.View, android.os.Bundle)}
  * is called.
  * </p>
- * <li>{@link com.wit.android.support.fragment.annotation.InjectView @InjectView} [<b>field, recursive</b>]</li>
- * <li>{@link com.wit.android.support.fragment.annotation.InjectView.Last @InjectView.Last} [<b>field, recursive</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.InjectView @InjectView} [<b>member - recursive</b>]</li>
+ * <li>{@link com.wit.android.support.fragment.annotation.InjectView.Last @InjectView.Last} [<b>member - recursive</b>]</li>
  * <p>
  * All fields marked with this annotation will be automatically injected (by {@link android.view.View#findViewById(int)})
  * using the root view passed to {@link #onViewCreated(android.view.View, android.os.Bundle)}.
- * <b>Note that {@link com.wit.android.support.fragment.annotation.InjectViews @InjectViews} [class]
+ * <b>Note that {@link com.wit.android.support.fragment.annotation.InjectViews @InjectViews}
  * annotation is required above each sub-class of BaseFragment to run injecting process, otherwise
  * all marked fields (views) of such a sub-class will be ignored.</b>
  * <p/>

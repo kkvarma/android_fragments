@@ -29,6 +29,21 @@
     public static *** d(...);
     public static *** v(...);
 }
+# Keep native methods of all classes.
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+# Keep enum static methods to access its value/-s.
+-keepclassmembers enum * {
+    public static ***[] values();
+    public static *** valueOf(java.lang.String);
+}
+# Keep names of creators of all parcelable classes.
+-keep class * implements android.os.Parcelable {
+    public static final android.os.Parcelable$Creator *;
+}
+# Keep all annotations.
+-keep public @interface *
 
 # LIBRARY REQUIRED RULES ===========================================================================
 # Keep all classes within library package.
