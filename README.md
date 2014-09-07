@@ -2,7 +2,7 @@
 <img align="left" src="http://www.wolf-itechnologies.com/images/wit/android/wit_ic_android_100.png" />
 </a>
 
-Android Support Fragments (4.0.4)
+Android Support Fragments (4.0.5)
 ===============
 > [last updated: **07.09.2014**]
 
