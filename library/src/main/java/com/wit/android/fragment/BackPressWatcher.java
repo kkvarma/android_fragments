@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  * =================================================================================================
  */
-package com.wit.android.support.fragment;
+package com.wit.android.fragment;
 
 /**
  * <h4>Interface Overview</h4>
