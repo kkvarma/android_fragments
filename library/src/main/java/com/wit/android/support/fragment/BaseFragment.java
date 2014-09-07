@@ -74,7 +74,7 @@ import java.util.List;
  * @author Martin Albedinsky
  * @see com.wit.android.support.fragment.ActionBarFragment
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements BackPressWatcher, ViewClickWatcher {
 
 	/**
 	 * Constants ===================================================================================
@@ -277,26 +277,15 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	/**
-	 * <p>
-	 * Called to dispatch back press event to this fragment instance.
-	 * </p>
-	 *
-	 * @return <code>True</code> if this instance of fragment processes dispatched back press event,
-	 * <code>false</code> otherwise.
 	 */
+	@Override
 	public boolean dispatchBackPressed() {
 		return onBackPressed();
 	}
 
 	/**
-	 * <p>
-	 * Called to dispatch view click event to this fragment instance.
-	 * </p>
-	 *
-	 * @param view The view which was clicked.
-	 * @return <code>True</code> if this fragment handles dispatched click event for the given
-	 * <var>view</var>, <code>false</code> otherwise.
 	 */
+	@Override
 	public boolean dispatchViewClick(View view) {
 		return onViewClick(view, view.getId());
 	}
