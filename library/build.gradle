@@ -66,15 +66,16 @@ android.libraryVariants.all { variant ->
         from 'src/main/java'
     }
 
-    task("${variant.name}Library", dependsOn: [assembleRelease, "${variant.name}Aar", "${variant.name}Javadoc", "${variant.name}Sources"]) {}
+    task("${variant.name}Library", dependsOn: [assembleRelease, "${variant.name}Aar", "${variant.name}Javadoc", "${variant.name}Sources"]) {
+        updateArtifact('library-javadoc', 'javadoc')
+        updateArtifact('library-sources', 'sources')
+    }
 }
 
 /**
  * Task to update all(library, javadoc, sources) artifacts.
  */
 task updateArtifacts {
-    // Do not update already updated .aar! artifact.
-    // updateArtifact('library', '')
     updateArtifact('library-javadoc', 'javadoc')
     updateArtifact('library-sources', 'sources')
 }

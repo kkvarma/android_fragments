@@ -51,8 +51,7 @@ import java.util.List;
  * Also, there will be automatically created default tags for all such ids, so they can be obtained
  * by calling {@link #getFragmentTag(int)} with the specific fragment id.
  * </p>
- * <li>{@link com.wit.android.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class, recursively</b>]</li>
- * <li>{@link com.wit.android.fragment.annotation.FactoryFragment @FactoryFragment} [<b>field</b>]</li>
+ * <li>{@link com.wit.android.fragment.annotation.FactoryFragment @FactoryFragment} [<b>member</b>]</li>
  * <p>
  * This annotation provides same results as {@link com.wit.android.fragment.annotation.FactoryFragments @FactoryFragments}
  * annotation, but this annotation is meant to be used to mark directly constant fields which specifies
@@ -61,7 +60,7 @@ import java.util.List;
  * <p/>
  * <b>Note</b>, that tag for fragment with the specified id will be automatically created.
  * </p>
- * <li>{@link com.wit.android.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class, recursive</b>]</li>
+ * <li>{@link com.wit.android.fragment.annotation.FragmentFactories @FragmentFactories} [<b>class - inherited</b>]</li>
  * <p>
  * If this annotation is presented, all classes of FragmentFactory provided by this annotation will
  * be instantiated and joined to an instance of annotated BaseFragmentFactory sub-class.
