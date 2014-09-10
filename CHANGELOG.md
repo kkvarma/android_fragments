@@ -3,9 +3,11 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
+### **4.0.6** (<i>...09.2014</i>) ###
+- Updated @ActionBarOptions + @WebOptions annotations.
+
 ### **4.0.5** (<i>07.09.2014</i>) ###
 - Added interfaces for BackPress + ViewClick events for fragment.
-- Updated @ActionBarOptions + @WebOptions annotations.
 
 ### **4.0.3** (<i>05.09.2014</i>) ###
 - Added proguard rules specific for this library project.
