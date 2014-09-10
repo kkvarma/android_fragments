@@ -219,6 +219,11 @@ public class WebFragment extends BaseFragment {
 	private String mContent;
 
 	/**
+	 * Annotation holding configuration for the WebView of this fragment.
+	 */
+	private WebContent mWebContent;
+
+	/**
 	 * Type of the current content.
 	 */
 	private int mContentType = CONTENT_EMPTY;
@@ -295,6 +300,16 @@ public class WebFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// Process annotation.
+		if (mWebContent != null) {
+			if (mWebContent.valueRes() > 0) {
+				this.mContent = obtainString(mWebContent.valueRes());
+			} else {
+				this.mContent = mWebContent.value();
+			}
+			this.updatePrivateFlags(PFLAG_CONTENT_CHANGED, true);
+		}
 
 		final Bundle args = getArguments();
 		if (savedInstanceState == null && args != null) {
@@ -609,8 +624,7 @@ public class WebFragment extends BaseFragment {
 		super.processClassAnnotations(classOfFragment);
 		// Obtain web content.
 		if (classOfFragment.isAnnotationPresent(WebContent.class)) {
-			this.mContent = classOfFragment.getAnnotation(WebContent.class).value();
-			this.updatePrivateFlags(PFLAG_CONTENT_CHANGED, true);
+			this.mWebContent = classOfFragment.getAnnotation(WebContent.class);
 		}
 	}
 

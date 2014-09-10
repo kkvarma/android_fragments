@@ -19,6 +19,8 @@
 package com.wit.android.fragment;
 
 import android.app.ActionBar;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -181,10 +183,18 @@ public class ActionBarFragment extends BaseFragment {
 		// Resolve action bar options.
 		if (mActionBarOptions != null) {
 			if (mActionBarOptions.title() >= 0) {
-				setActionBarTitle(mActionBarOptions.title());
+				if (mActionBarOptions.title() != ActionBarOptions.NONE) {
+					setActionBarTitle(mActionBarOptions.title());
+				} else {
+					setActionBarTitle("");
+				}
 			}
 			if (mActionBarOptions.icon() >= 0) {
-				setActionBarIcon(mActionBarOptions.icon());
+				if (mActionBarOptions.icon() != ActionBarOptions.NONE) {
+					setActionBarIcon(mActionBarOptions.icon());
+				} else {
+					setActionBarIcon(new ColorDrawable(Color.TRANSPARENT));
+				}
 			}
 		}
 	}
