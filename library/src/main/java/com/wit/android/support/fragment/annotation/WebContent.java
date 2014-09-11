@@ -25,9 +25,7 @@ import java.lang.annotation.Target;
 
 /**
  * <h4>Annotation Overview</h4>
- * <p>
  * Defines an annotation for determining a content to be loaded into {@link android.webkit.WebView}.
- * </p>
  * <h6>Usage</h6>
  * <ul>
  * <li>{@link com.wit.android.support.fragment.WebFragment WebFragment}</li>

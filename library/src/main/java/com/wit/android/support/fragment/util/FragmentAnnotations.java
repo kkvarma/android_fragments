@@ -30,13 +30,34 @@ import java.lang.reflect.Field;
 
 /**
  * <h4>Class Overview</h4>
- * <p>
  * Annotation utils.
- * </p>
  *
  * @author Martin Albedinsky
  */
 public final class FragmentAnnotations {
+
+	/**
+	 * Interface ===================================================================================
+	 */
+
+	/**
+	 * <h4>Interface Overview</h4>
+	 * Simple callback which allows processing of all declared fields of a desired class using one of
+	 * {@link #iterateFields(Class, FragmentAnnotations.FieldProcessor)},
+	 * {@link #iterateFields(Class, FragmentAnnotations.FieldProcessor, Class)} methods.
+	 *
+	 * @author Martin Albedinsky
+	 */
+	public static interface FieldProcessor {
+
+		/**
+		 * Invoked for each of iterated fields.
+		 *
+		 * @param field The currently iterated field.
+		 * @param name  A name of the currently iterated field.
+		 */
+		public void onProcessField(Field field, String name);
+	}
 
 	/**
 	 * Constants ===================================================================================
@@ -58,23 +79,7 @@ public final class FragmentAnnotations {
 	// private static final boolean USER_LOG = true;
 
 	/**
-	 * Static members ==============================================================================
-	 */
-
-	/**
-	 * Members =====================================================================================
-	 */
-
-	/**
-	 * Constructors ================================================================================
-	 */
-
-	/**
 	 * Methods =====================================================================================
-	 */
-
-	/**
-	 * Public --------------------------------------------------------------------------------------
 	 */
 
 	/**
@@ -287,18 +292,6 @@ public final class FragmentAnnotations {
 	}
 
 	/**
-	 * Getters + Setters ---------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Protected -----------------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Private -------------------------------------------------------------------------------------
-	 */
-
-	/**
 	 * Injects all annotated field views. Note, that this can run recursively, so it will check all
 	 * fields for {@link com.wit.android.support.fragment.annotation.InjectView @InjectView} or
 	 * {@link com.wit.android.support.fragment.annotation.InjectView.Last @InjectView.Last}
@@ -398,40 +391,5 @@ public final class FragmentAnnotations {
 			}
 		}
 		throw new RuntimeException("Field(" + fieldParent.getClass().getSimpleName() + "." + field.getName() + ") is not instance of view, thus can not be injected.");
-	}
-
-	/**
-	 * Abstract methods ----------------------------------------------------------------------------
-	 */
-
-	/**
-	 * Inner classes ===============================================================================
-	 */
-
-	/**
-	 * Interface ===================================================================================
-	 */
-
-	/**
-	 * <h4>Interface Overview</h4>
-	 * <p>
-	 * Simple callback which allows processing of all declared fields of a desired class using one of
-	 * {@link #iterateFields(Class, FragmentAnnotations.FieldProcessor)},
-	 * {@link #iterateFields(Class, FragmentAnnotations.FieldProcessor, Class)} methods.
-	 * </p>
-	 *
-	 * @author Martin Albedinsky
-	 */
-	public static interface FieldProcessor {
-
-		/**
-		 * <p>
-		 * Invoked for each of iterated fields.
-		 * </p>
-		 *
-		 * @param field The currently iterated field.
-		 * @param name  A name of the currently iterated field.
-		 */
-		public void onProcessField(Field field, String name);
 	}
 }

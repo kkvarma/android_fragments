@@ -27,10 +27,8 @@ import java.lang.annotation.Target;
 
 /**
  * <h4>Annotation Overview</h4>
- * <p>
  * Defines an annotation for determining how an {@link android.widget.AdapterView} and all necessary
  * stuffs around it should be set.
- * </p>
  * <h6>Usage</h6>
  * <ul>
  * <li>{@link com.wit.android.support.fragment.AdapterFragment AdapterFragment}</li>
@@ -47,16 +45,12 @@ public @interface AdapterViewOptions {
 	 */
 
 	/**
-	 * <p>
 	 * The default id for an AdapterView.
-	 * </p>
 	 */
 	public static final int VIEW_DEFAULT_ID = android.R.id.list;
 
 	/**
-	 * <p>
 	 * The default id for an empty view of AdapterView.
-	 * </p>
 	 */
 	public static final int EMPTY_VIEW_DEFAULT_ID = android.R.id.empty;
 

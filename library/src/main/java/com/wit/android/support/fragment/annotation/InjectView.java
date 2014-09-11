@@ -25,10 +25,8 @@ import java.lang.annotation.Target;
 
 /**
  * <h4>Annotation Overview</h4>
- * <p>
  * Annotation type used to mark a field (instance of {@link android.view.View}) which should be injected
  * into the context associated with the root view.
- * </p>
  * <h6>Usage</h6>
  * <ul>
  * <li>{@link com.wit.android.support.fragment.BaseFragment BaseFragment}</li>
@@ -68,16 +66,13 @@ public @interface InjectView {
 
 	/**
 	 * <h4>Annotation Overview</h4>
-	 * <p>
 	 * Same as {@link InjectView}. This special annotation type is used to improve views injecting,
 	 * so when this annotation is found during injecting process, fields iteration ends, so no more
 	 * fields will be iterated and no more views will be injected.
-	 * </p>
-	 * <p>
+	 * <p/>
 	 * <b>Note</b>, that all fields obtained from a specific class are always in the <b>alphabetical</b>
 	 * order, so when you decide to used this annotation, make sure, you place it above the
 	 * <b>alphabetically</b> last field which should be injected as View.
-	 * </p>
 	 * <h6>Annotations example</h6>
 	 * <pre>
 	 *  // ...
