@@ -37,9 +37,7 @@ import java.util.List;
 
 /**
  * <h4>Class Overview</h4>
- * <p>
  * todo: description
- * </p>
  * <h6>Accepted annotations</h6>
  * <ul>
  * <li>{@link com.wit.android.fragment.annotation.ContentView @ContentView} [<b>class - inherited</b>]</li>
@@ -77,13 +75,17 @@ import java.util.List;
 public abstract class BaseFragment extends Fragment implements BackPressWatcher, ViewClickWatcher {
 
 	/**
+	 * Interface ===================================================================================
+	 */
+
+	/**
 	 * Constants ===================================================================================
 	 */
 
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = BaseFragment.class.getSimpleName();
+	// private static final String TAG = "BaseFragment";
 
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
@@ -148,14 +150,12 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 */
 
 	/**
-	 * <p>
-	 * Creates a new instance of BaseFragment. If {@link com.wit.android.fragment.annotation.ContentView @ContentView}
+	 * Creates a new instance of BaseFragment. If {@link com.wit.android.support.fragment.annotation.ContentView @ContentView}
 	 * or {@link com.wit.android.fragment.annotation.ClickableViews @ClickableViews} annotations
 	 * are presented above a sub-class of BaseFragment, they will be processed here. Also all declared
 	 * fields marked by annotation {@link com.wit.android.fragment.annotation.InjectView @InjectView}
 	 * or {@link com.wit.android.fragment.annotation.InjectView.Last @InjectView.Last} will
 	 * be recursively gathered and stored to be later injected.
-	 * </p>
 	 */
 	public BaseFragment() {
 		processClassAnnotations(((Object) this).getClass());
@@ -170,9 +170,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 */
 
 	/**
-	 * <p>
 	 * Creates a new instance of the given <var>classOfFragment</var> with the given <var>args</var>.
-	 * </p>
 	 *
 	 * @param classOfFragment Class of the desired fragment to instantiate.
 	 * @param args            Arguments to set to new instance of fragment by {@link Fragment#setArguments(android.os.Bundle)}.
@@ -291,9 +289,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	}
 
 	/**
-	 * <p>
 	 * Returns flag indicating whether this fragment instance was restored or not.
-	 * </p>
 	 *
 	 * @return <code>True</code> if this fragment was restored (<i>like, after orientation change</i>),
 	 * <code>false</code> otherwise.
@@ -303,9 +299,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	}
 
 	/**
-	 * <p>
 	 * Returns flag indicating whether the view was restored or not.
-	 * </p>
 	 *
 	 * @return <code>True</code> if the view of this fragment was restored (<i>like, when the fragment
 	 * was showed from the back stack</i>), <code>false</code> otherwise.
@@ -315,9 +309,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	}
 
 	/**
-	 * <p>
 	 * Returns flag indicating whether the view is already created or not.
-	 * </p>
 	 *
 	 * @return <code>True</code> if the view of this fragment is already created, <code>false</code>
 	 * otherwise.
@@ -327,41 +319,31 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	}
 
 	/**
-	 * <p>
 	 * Same as {@link #getString(int)}, but first is performed check if the parent activity of this
 	 * fragment instance is available to prevent illegal state exceptions.
-	 * </p>
 	 */
 	public String obtainString(int resId) {
 		return isActivityAvailable() ? getString(resId) : "";
 	}
 
 	/**
-	 * <p>
-	 * <p>
 	 * Same as  {@link #getString(int, Object...)}, but first is performed check if the parent activity
 	 * of this fragment instance is available to prevent illegal state exceptions.
-	 * </p>
-	 * </p>
 	 */
 	public String obtainString(int resId, Object... args) {
 		return isActivityAvailable() ? getString(resId, args) : "";
 	}
 
 	/**
-	 * <p>
 	 * Same as {@link #getText(int)}, but first is performed check if the parent activity of this
 	 * fragment instance is available to prevent illegal state exceptions.
-	 * </p>
 	 */
 	public CharSequence obtainText(int resId) {
 		return isActivityAvailable() ? getText(resId) : "";
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.Activity#runOnUiThread(Runnable)} on this fragment's parent activity.
-	 * </p>
 	 *
 	 * @return <code>True</code> if parent activity is available and action was posted, <code>false</code>
 	 * otherwise.
@@ -383,9 +365,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 */
 
 	/**
-	 * <p>
 	 * Invoked immediately after {@link #dispatchBackPressed()} was called to process back press event.
-	 * </p>
 	 *
 	 * @return <code>True</code> if this instance of fragment processes dispatched back press event,
 	 * <code>false</code> otherwise.
@@ -395,10 +375,8 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	}
 
 	/**
-	 * <p>
 	 * Invoked immediately after {@link #dispatchViewClick(android.view.View)} was called to process
 	 * click event on the given <var>view</var>.
-	 * </p>
 	 *
 	 * @param view The view which was clicked.
 	 * @param id   The id of the clicked view.
@@ -410,13 +388,10 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	}
 
 	/**
-	 * <p>
 	 * Returns flag indicating whether the parent Activity of this fragment instance is available or not.
-	 * </p>
-	 * <p>
+	 * <p/>
 	 * Parent activity is always available between {@link #onAttach(android.app.Activity)} and
 	 * {@link #onDetach()} life cycle calls.
-	 * </p>
 	 *
 	 * @return <code>True</code> if activity is available, <code>false</code> otherwise.
 	 */
@@ -425,8 +400,9 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	}
 
 	/**
+	 * Called to process all annotations of the specified <var>classOfFragment</var>.
 	 *
-	 * @param classOfFragment
+	 * @param classOfFragment The class of which annotations to process.
 	 */
 	void processClassAnnotations(Class<?> classOfFragment) {
 		// Obtain content view.
@@ -542,10 +518,6 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	}
 
 	/**
-	 * Abstract methods ----------------------------------------------------------------------------
-	 */
-
-	/**
 	 * Inner classes ===============================================================================
 	 */
 
@@ -561,8 +533,4 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 			dispatchViewClick(view);
 		}
 	}
-
-	/**
-	 * Interface ===================================================================================
-	 */
 }

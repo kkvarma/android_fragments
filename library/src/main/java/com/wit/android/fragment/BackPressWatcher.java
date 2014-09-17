@@ -20,18 +20,14 @@ package com.wit.android.fragment;
 
 /**
  * <h4>Interface Overview</h4>
- * <p>
  * todo: description
- * </p>
  *
  * @author Martin Albedinsky
  */
 public interface BackPressWatcher {
 
 	/**
-	 * <p>
 	 * Called to dispatch a back press event to this watcher instance.
-	 * </p>
 	 *
 	 * @return <code>True</code> if this watcher processed the back press event, <code>false</code>
 	 * otherwise.

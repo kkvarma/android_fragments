@@ -32,8 +32,7 @@ import com.wit.android.fragment.FragmentsConfig;
 
 /**
  * <h4>Class Overview</h4>
- * <p>
- * </p>
+ * todo: description
  *
  * @author Martin Albedinsky
  * @see com.wit.android.fragment.manage.FragmentController.FragmentFactory
@@ -42,20 +41,121 @@ import com.wit.android.fragment.FragmentsConfig;
 public class FragmentController {
 
 	/**
+	 * Interface ===================================================================================
+	 */
+
+	/**
+	 * <h4>Interface Overview</h4>
+	 * Required interface for fragment factory.
+	 *
+	 * @author Martin Albedinsky
+	 * @see com.wit.android.fragment.manage.FragmentController
+	 */
+	public static interface FragmentFactory {
+
+		/**
+		 * Returns an instance of the fragment associated with the specified <var>fragmentId</var>
+		 * within this fragment factory.
+		 * <p/>
+		 * This is in most cases invoked from an instance of {@link com.wit.android.fragment.manage.FragmentController},
+		 * when that instance of FragmentController was requested to show fragment with the specified
+		 * <var>fragmentId</var>.
+		 *
+		 * @param fragmentId An id of the requested fragment to create.
+		 * @param params     Bundle with parameters for fragment.
+		 * @return An instance of the fragment associated with the specified <var>fragmentId</var> or
+		 * <code>null</code> if this fragment factory doesn't provides requested fragment.
+		 * @see #isFragmentProvided(int)
+		 */
+		public Fragment createFragmentInstance(int fragmentId, Bundle params);
+
+		/**
+		 * Returns an options for the fragment associated with the specified <var>fragmentId</var>
+		 * within this fragment factory to manage such a fragment showing by FragmentController.
+		 * <p/>
+		 * This is in most cases invoked form an instance of {@link com.wit.android.fragment.manage.FragmentController},
+		 * when that instance of FragmentController was requested to show fragment with the specified
+		 * <var>fragmentId</var>. In such a case, if this fragment factory will not provide valid
+		 * TransactionOptions, FragmentController will use default ones.
+		 *
+		 * @param fragmentId An id of the fragment for which are options requested.
+		 * @param params     Same params as for {@link #createFragmentInstance(int, android.os.Bundle)}.
+		 * @return TransactionOptions object for fragment associated with the specified <var>fragmentId</var>
+		 * or <code>null</code> if this fragment factory doesn't provides TransactionOptions for fragment
+		 * with the specified <var>fragmentId</var>.
+		 */
+		public TransactionOptions getFragmentTransactionOptions(int fragmentId, Bundle params);
+
+		/**
+		 * Returns a tag for the fragment associated with the specified <var>fragmentId</var> within
+		 * this fragment factory.
+		 *
+		 * @param fragmentId An id of the fragment for which is its TAG requested.
+		 * @return Tag for fragment associated with the specified <var>fragmentId</var> or <code>null</code>
+		 * if this fragment factory doesn't provides TAG for fragment with the specified <var>fragmentId</var>.
+		 */
+		public String getFragmentTag(int fragmentId);
+
+		/**
+		 * Returns flag indicating whether there is provided a fragment for the specified <var>fragmentId</var>
+		 * by this factory or not.
+		 *
+		 * @param fragmentId An id of the desired fragment to check.
+		 * @return <code>True</code> if fragment is provided, so {@link #createFragmentInstance(int, android.os.Bundle)}
+		 * will return an instance of such a fragment, <code>false</code> otherwise.
+		 */
+		public boolean isFragmentProvided(int fragmentId);
+	}
+
+	/**
+	 * <h4>Class Overview</h4>
+	 * todo: description
+	 *
+	 * @author Martin Albedinsky
+	 */
+	public static interface OnChangeListener {
+
+		/**
+		 * Invoked whenever an old fragment is replaced by a new one or simply a new fragment is first
+		 * time showed by an instance of FragmentController.
+		 *
+		 * @param id          An id of the currently changed (showed) fragment.
+		 * @param tag         A tag of the currently changed (showed) fragment.
+		 * @param fromFactory <code>True</code> if the changed fragment was obtained from a factory,
+		 *                    <code>false</code> otherwise.
+		 */
+		public void onFragmentChanged(int id, String tag, boolean fromFactory);
+	}
+
+	/**
+	 * <h4>Class Overview</h4>
+	 * todo: description
+	 *
+	 * @author Martin Albedinsky
+	 */
+	public static interface OnBackStackChangeListener {
+
+		/**
+		 * Invoked whenever fragments back stack change occur.
+		 *
+		 * @param added <code>True</code> if there was added new back stack entry, <code>false</code>
+		 *              if old one was removed.
+		 * @param id    An id of the back stack entry of which status was changed. This is actually
+		 *              a position of the added/removed entry in the fragments back stack. This is
+		 *              default behaviour of the fragments back stack managed by {@link android.app.FragmentManager}.
+		 * @param tag   A tag of the back stack entry of which status was changed.
+		 */
+		public void onFragmentsBackStackChanged(boolean added, int id, String tag);
+	}
+
+	/**
 	 * Constants ===================================================================================
 	 */
 
 	/**
-	 * <p>
-	 * Default tag used when showing fragments.
-	 * </p>
-	 */
-	public static final String FRAGMENT_TAG = "com.wit.android.fragment.manage.FragmentController.TAG.Fragment";
-
-	/**
 	 * Log TAG.
 	 */
-	private static final String TAG = FragmentController.class.getSimpleName();
+	private static final String TAG = "FragmentController";
 
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
@@ -66,6 +166,11 @@ public class FragmentController {
 	 * Flag indicating whether the output trough log-cat is enabled or not.
 	 */
 	private static final boolean LOG_ENABLED = FragmentsConfig.LIBRARY_LOG_ENABLED;
+
+	/**
+	 * Default tag used when showing fragments.
+	 */
+	public static final String FRAGMENT_TAG = "com.wit.android.fragment.manage.FragmentController.TAG.Fragment";
 
 	/**
 	 * Static members ==============================================================================
@@ -116,19 +221,15 @@ public class FragmentController {
 	 */
 
 	/**
-	 * <p>
 	 * Creates a new instance of FragmentController within the given <var>parentFragment</var>'s context.
-	 * </p>
-	 * <p>
+	 * <p/>
 	 * Passed fragment will be used to obtain an instance of {@link android.app.FragmentManager}
 	 * by {@link android.app.Fragment#getFragmentManager()} used to mange fragments by
 	 * this controller.
-	 * </p>
-	 * <p>
+	 * <p/>
 	 * If the given <var>parentFragment</var> implements {@link FragmentController.OnBackStackChangeListener}
 	 * or {@link com.wit.android.fragment.manage.FragmentController.OnChangeListener} it will be automatically set as these
 	 * callbacks to this controller.
-	 * </p>
 	 *
 	 * @param parentFragment A fragment in which will be this controller used.
 	 * @see #FragmentController(android.app.Activity)
@@ -144,19 +245,15 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Creates a new instance of FragmentController within the given <var>parentActivity</var>'s context.
-	 * </p>
-	 * <p>
+	 * <p/>
 	 * Passed activity will be used to obtain an instance of {@link android.app.FragmentManager}
 	 * by {@link android.app.Activity#getFragmentManager()} used to mange fragments
 	 * by this controller.
-	 * </p>
-	 * <p>
+	 * <p/>
 	 * If the given <var>parentActivity</var> implements {@link FragmentController.OnBackStackChangeListener}
 	 * or {@link com.wit.android.fragment.manage.FragmentController.OnChangeListener} it will be automatically set as these
 	 * callbacks to this controller.
-	 * </p>
 	 *
 	 * @param parentActivity An activity in which will be this controller used.
 	 * @see #FragmentController(android.app.Fragment)
@@ -172,9 +269,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Creates a new instance of FragmentController with the given <var>fragmentManager</var>.
-	 * </p>
 	 *
 	 * @param fragmentManager Fragment manager to manage fragments.
 	 * @throws java.lang.NullPointerException If the given fragment manager is <code>null</code>.
@@ -202,19 +297,15 @@ public class FragmentController {
 	 */
 
 	/**
-	 * <p>
 	 * Same as {@link #showFragment(int, android.os.Bundle)} without params.
-	 * </p>
 	 */
 	public boolean showFragment(int fragmentId) {
 		return showFragment(fragmentId, null);
 	}
 
 	/**
-	 * <p>
 	 * Shows an instance of fragment provided by the current factory obtained by the specified
 	 * <var>fragmentId</var>.
-	 * </p>
 	 *
 	 * @param fragmentId An id of the fragment from the current fragment factory to show.
 	 * @param params     Parameters for fragment to be passed to the factory by
@@ -236,19 +327,15 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Same as {@link #showFragment(android.app.Fragment, com.wit.android.fragment.manage.FragmentController.TransactionOptions)}
 	 * with default {@link com.wit.android.fragment.manage.FragmentController.TransactionOptions}.
-	 * </p>
 	 */
 	public boolean showFragment(Fragment fragment) {
 		return showFragment(fragment, new TransactionOptions());
 	}
 
 	/**
-	 * <p>
 	 * Shows the given fragment instance using the given options.
-	 * </p>
 	 *
 	 * @param fragment An instance of fragment to show.
 	 * @param options  Options used when showing fragment.
@@ -261,9 +348,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.FragmentManager#findFragmentById(int)}.
-	 * </p>
 	 *
 	 * @see #findFragmentByTag(String)
 	 * @see #findFactoryFragmentById(int)
@@ -273,10 +358,8 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Same as {@link #findFragmentByTag(String)}, where fragment tag will be requested from the
 	 * current factory by the specified <var>fragmentId</var>.
-	 * </p>
 	 *
 	 * @param fragmentId An id of the desired fragment from the current factory to find.
 	 * @throws IllegalStateException If there is no factory currently available.
@@ -288,9 +371,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.FragmentManager#findFragmentByTag(String)}.
-	 * </p>
 	 *
 	 * @see #findFragmentById(int)
 	 */
@@ -299,17 +380,13 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Returns an instance of the fragment which is currently being shown on the screen. To determine
 	 * visible fragment, these fragment's flags are checked:
 	 * <ul>
 	 * <li>{@link android.app.Fragment#isVisible()}</li>
 	 * <li>or {@link android.app.Fragment#isAdded()}</li>
 	 * </ul>
-	 * </p>
-	 * <p>
 	 * This will be actually an instance of the fragment which was showed as last.
-	 * </p>
 	 *
 	 * @return Instance of the currently visible or added fragment, or <code>null</code> if there
 	 * are no fragments (<code>n = 0</code>) within the current fragment manager or all checked fragments
@@ -355,7 +432,6 @@ public class FragmentController {
 	}*/
 
 	/**
-	 * <p>
 	 * Returns an instance of the second fragment which is currently being shown on the screen, where
 	 * two fragments are visible at the same time. To determine visible second fragment, these fragment's
 	 * flags are checked:
@@ -363,10 +439,7 @@ public class FragmentController {
 	 * <li>{@link android.app.Fragment#isVisible()}</li>
 	 * <li>or {@link android.app.Fragment#isAdded()}</li>
 	 * </ul>
-	 * </p>
-	 * <p>
 	 * This will be actually an instance of the fragment which was showed before the last one.
-	 * </p>
 	 *
 	 * @return Instance of the currently visible or added second fragment, or <code>null</code> if there
 	 * are no fragments (<code>n > 1</code>) within the current fragment manager or all checked fragments
@@ -413,28 +486,22 @@ public class FragmentController {
 	}*/
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.FragmentManager#popBackStack()}.
-	 * </p>
 	 */
 	public void hideVisibleFragment() {
 		mFragmentManager.popBackStack();
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.FragmentManager#popBackStackImmediate()}.
-	 * </p>
 	 */
 	public boolean hideVisibleFragmentImmediate() {
 		return mFragmentManager.popBackStackImmediate();
 	}
 
 	/**
-	 * <p>
 	 * Same as {@link #setFragmentOptionsMenuVisible(String, boolean)}, where fragment tag will be requested
 	 * form the current factory by the specified <var>fragmentId</var>.
-	 * </p>
 	 *
 	 * @param fragmentId An id of the desired fragment from the current factory, of which options menu
 	 *                   to show/hide.
@@ -445,9 +512,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Shows/hides options menu of the requested fragment by calling {@link android.app.Fragment#setHasOptionsMenu(boolean)}.
-	 * </p>
 	 *
 	 * @param fragmentTag A tag of the desired fragment of which options to show/hide.
 	 * @param visible     <code>True</code> to show options menu, <code>false</code> to hide options menu.
@@ -465,12 +530,9 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.FragmentManager#beginTransaction()}.
-	 * </p>
-	 * <p>
+	 * <p/>
 	 * <b>Do not forget to commit this new started transaction.</b>
-	 * </p>
 	 */
 	@SuppressLint("CommitTransaction")
 	public FragmentTransaction beginTransaction() {
@@ -478,9 +540,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Returns flag indicating whether this controller has some fragment factory or not.
-	 * </p>
 	 *
 	 * @return <code>True</code> if the current fragment factory is available, <code>false</code>
 	 * otherwise.
@@ -490,10 +550,8 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Returns flag indicating whether there are some fragments within the fragment manager's back
 	 * stack.
-	 * </p>
 	 *
 	 * @return <code>True</code> if fragment manager's back stack holds some entries, <code>false</code>
 	 * otherwise.
@@ -504,14 +562,11 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Clears fragments back stack by calling {@link android.app.FragmentManager#popBackStack()}
 	 * in loop of size obtained by {@link android.app.FragmentManager#getBackStackEntryCount()}.
-	 * </p>
-	 * <p>
+	 * <p/>
 	 * <b>Note</b>, that {@link android.app.FragmentManager#popBackStack()} is an asynchronous
 	 * call, so the fragments back stack can be cleared in the feature not immediately.
-	 * </p>
 	 *
 	 * @see #clearBackStackImmediate()
 	 */
@@ -525,14 +580,11 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Like {@link #clearBackStack()}, but this will call {@link android.app.FragmentManager#popBackStackImmediate()}.
-	 * </p>
-	 * <p>
+	 * <p/>
 	 * <b>Note</b>, that {@link android.app.FragmentManager#popBackStackImmediate()} is a
 	 * synchronous call, so the fragments back stack will be popped immediately within this call. If
 	 * there is too many fragments, this can take some time.
-	 * </p>
 	 *
 	 * @return <code>True</code> if there was at least one fragment popped, <code>false</code> otherwise.
 	 */
@@ -555,9 +607,7 @@ public class FragmentController {
 	 */
 
 	/**
-	 * <p>
 	 * Registers a callback to be invoked when some change occur in the fragments back stack.
-	 * </p>
 	 *
 	 * @param listener Listener callback.
 	 */
@@ -566,18 +616,14 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Removes the current OnBackStackChangeListener callback.
-	 * </p>
 	 */
 	public void removeOnBackStackChangeListener() {
 		this.mFragmentListener = null;
 	}
 
 	/**
-	 * <p>
 	 * Registers a callback to be invoked when fragments are being changed.
-	 * </p>
 	 *
 	 * @param listener Listener callback.
 	 */
@@ -586,23 +632,18 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Removes the current OnChangeListener callback.
-	 * </p>
 	 */
 	public void removeOnChangeListener() {
 		this.mBackStackListener = null;
 	}
 
 	/**
-	 * <p>
 	 * Returns a tag of the currently showing fragment. <b>Note</b>, that this is only accurate, as
 	 * it depends on how are fragments changing, and if all fragments are managed by this controller.
-	 * </p>
-	 * <p>
+	 * <p/>
 	 * The current value of this tag is changing when back stack change occur or there was showed a
 	 * new fragment by some of methods provided by this controller.
-	 * </p>
 	 *
 	 * @return A tag of the currently showing fragment.
 	 */
@@ -611,9 +652,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Returns a tag of the currently visible fragment.
-	 * </p>
 	 *
 	 * @return Fragment tag or <code>null</code> if there is currently no fragment visible.
 	 * @see #getVisibleFragment()
@@ -625,9 +664,7 @@ public class FragmentController {
 	}*/
 
 	/**
-	 * <p>
 	 * Returns a tag of the second currently visible fragment.
-	 * </p>
 	 *
 	 * @return Fragment tag or <code>null</code> if there is only one or none currently visible fragment.
 	 * @see #getVisibleSecondFragment()
@@ -639,9 +676,7 @@ public class FragmentController {
 	}*/
 
 	/**
-	 * <p>
 	 * Returns an instance of the FragmentManager attached to this controller.
-	 * </p>
 	 *
 	 * @return Instance of FragmentManager with which was this controller created.
 	 */
@@ -650,9 +685,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Sets an id of the layout container for fragment views.
-	 * </p>
 	 *
 	 * @param layoutId An id of the desired layout container within the current window view hierarchy,
 	 *                 into which should be views of all managed fragments placed.
@@ -663,9 +696,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Returns an id of the layout container for fragment views.
-	 * </p>
 	 *
 	 * @return An id of the layout container within the current window view hierarchy, into which are
 	 * views of all managed fragments placed or <code>-1</code> as default.
@@ -676,10 +707,8 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Sets the fragment factory for this fragment controller instance, which will be used to obtain
 	 * instances of fragments requested by this controller by specific <b>fragmentId</b>.
-	 * </p>
 	 *
 	 * @param factory Fragment factory to provide fragment instances, transaction options and fragment tags.
 	 * @see #getFragmentFactory()
@@ -690,9 +719,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Returns the current fragment factory.
-	 * </p>
 	 *
 	 * @return Current fragment factory, or <code>null</code> if there is no factory available.
 	 * @see #setFragmentFactory(com.wit.android.fragment.manage.FragmentController.FragmentFactory)
@@ -703,9 +730,7 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Returns the top entry of the fragments back stack.
-	 * </p>
 	 *
 	 * @return The top back stack entry or <code>null</code> if there are no back stack entries.
 	 */
@@ -718,9 +743,7 @@ public class FragmentController {
 	 */
 
 	/**
-	 * <p>
 	 * Invoked to show the given fragment instance using the given options.
-	 * </p>
 	 *
 	 * @param fragment Fragment to show.
 	 * @param options  Show options for the given fragment. If the given <var>options</var> are invalid,
@@ -797,16 +820,13 @@ public class FragmentController {
 	}
 
 	/**
-	 * <p>
 	 * Invoked to finally commit created fragment transaction. Here passed transaction is already set
 	 * upped according to the TransactionOptions.
-	 * </p>
-	 * <p>
+	 * <p/>
 	 * This implementation commits the passed <var>transaction</var> and in case that the <var>options</var>
 	 * has set flag {@link com.wit.android.fragment.manage.FragmentController.TransactionOptions#showImmediate}
 	 * to <code>true</code>, {@link android.app.FragmentManager#executePendingTransactions()}
 	 * will be invoked too on the attached FragmentManager.
-	 * </p>
 	 *
 	 * @param transaction Final fragment transaction to commit.
 	 * @param options     Already processed transaction.
@@ -925,18 +945,12 @@ public class FragmentController {
 	}
 
 	/**
-	 * Abstract methods ----------------------------------------------------------------------------
-	 */
-
-	/**
 	 * Inner classes ===============================================================================
 	 */
 
 	/**
 	 * <h4>Class Overview</h4>
-	 * <p>
 	 * todo: description
-	 * </p>
 	 * <h4>Default SetUp:</h4>
 	 * <ul>
 	 * <li>tag: {@link com.wit.android.fragment.manage.FragmentController#FRAGMENT_TAG}</li>
@@ -958,9 +972,7 @@ public class FragmentController {
 		 */
 
 		/**
-		 * <p>
 		 * Creator used to create an instance or array of instances of TransactionOptions from {@link android.os.Parcel}.
-		 * </p>
 		 */
 		public static final Creator<TransactionOptions> CREATOR = new Creator<TransactionOptions>() {
 			/**
@@ -1021,18 +1033,14 @@ public class FragmentController {
 		 */
 
 		/**
-		 * <p>
 		 * Creates a new instance of default TransactionOptions.
-		 * </p>
 		 */
 		public TransactionOptions() {
 		}
 
 		/**
-		 * <p>
 		 * Called form {@link #CREATOR} to create an instance of TransactionOptions form the given
 		 * parcel <var>source</var>.
-		 * </p>
 		 *
 		 * @param source Parcel with data for a new instance.
 		 */
@@ -1097,10 +1105,8 @@ public class FragmentController {
 		}
 
 		/**
-		 * <p>
 		 * Sets a flag indicating, whether to add or replace fragment to <code>true</code> so a new
 		 * fragment will be showed using {@link android.app.FragmentTransaction#add(int, android.app.Fragment, String)}.
-		 * </p>
 		 *
 		 * @return This options instance.
 		 */
@@ -1110,10 +1116,8 @@ public class FragmentController {
 		}
 
 		/**
-		 * <p>
 		 * Sets a flag indicating, whether to add or replace fragment to <code>false</code> so an old
 		 * fragment will be replaced by a new one using {@link android.app.FragmentTransaction#replace(int, android.app.Fragment, String)}.
-		 * </p>
 		 *
 		 * @return This options instance.
 		 */
@@ -1123,9 +1127,7 @@ public class FragmentController {
 		}
 
 		/**
-		 * <p>
 		 * Sets a tag for the fragment to be showed.
-		 * </p>
 		 *
 		 * @param fragmentTag The desired fragment tag.
 		 * @return This options instance.
@@ -1136,9 +1138,7 @@ public class FragmentController {
 		}
 
 		/**
-		 * <p>
 		 * Sets a flag indicating, whether fragment should be added to the fragments back stack or not.
-		 * </p>
 		 *
 		 * @param add <code>True</code> to add fragment to the back stack, <code>false</code> otherwise.
 		 * @return This options instance.
@@ -1149,9 +1149,7 @@ public class FragmentController {
 		}
 
 		/**
-		 * <p>
 		 * Sets a transition used to animate fragment views change.
-		 * </p>
 		 *
 		 * @param transition Transition with animations.
 		 * @return This options instance.
@@ -1163,12 +1161,9 @@ public class FragmentController {
 		}
 
 		/**
-		 * <p>
 		 * Sets an id of the layout container into which should be a new fragment's view placed.
-		 * </p>
-		 * <p>
+		 * <p/>
 		 * <b>Note</b>, that this id will be used only for this options.
-		 * </p>
 		 *
 		 * @param layoutId An id of the desired layout container to be used as container for fragment's
 		 *                 view.
@@ -1181,10 +1176,8 @@ public class FragmentController {
 		}
 
 		/**
-		 * <p>
 		 * Sets a flag indicating, whether the currently showing fragment with the same TAG can be
 		 * replaced by a new one (using this options) or not.
-		 * </p>
 		 *
 		 * @param replace <code>True</code> to replace a fragment with the same TAG as specified here,
 		 *                with a new one, <code>false</code> otherwise.
@@ -1196,9 +1189,7 @@ public class FragmentController {
 		}
 
 		/**
-		 * <p>
 		 * Sets a flag indicating, whether a new fragment should be showed immediately or not.
-		 * </p>
 		 *
 		 * @param immediate <code>True</code> to show immediately, <code>false</code> otherwise.
 		 * @return This options instance.
@@ -1210,7 +1201,7 @@ public class FragmentController {
 	}
 
 	/**
-	 *
+	 * Fragments back stack inner implementation.
 	 */
 	private final class BackStackListener implements FragmentManager.OnBackStackChangedListener {
 
@@ -1251,133 +1242,5 @@ public class FragmentController {
 				this.currentCount = n;
 			}
 		}
-	}
-
-	/**
-	 * Interface ===================================================================================
-	 */
-
-	/**
-	 * <h4>Interface Overview</h4>
-	 * <p>
-	 * Required interface for fragment factory.
-	 * </p>
-	 *
-	 * @author Martin Albedinsky
-	 * @see com.wit.android.fragment.manage.FragmentController
-	 */
-	public static interface FragmentFactory {
-
-		/**
-		 * <p>
-		 * Returns an instance of the fragment associated with the specified <var>fragmentId</var>
-		 * within this fragment factory.
-		 * </p>
-		 * <p>
-		 * This is in most cases invoked from an instance of {@link com.wit.android.fragment.manage.FragmentController},
-		 * when that instance of FragmentController was requested to show fragment with the specified
-		 * <var>fragmentId</var>.
-		 * </p>
-		 *
-		 * @param fragmentId An id of the requested fragment to create.
-		 * @param params     Bundle with parameters for fragment.
-		 * @return An instance of the fragment associated with the specified <var>fragmentId</var> or
-		 * <code>null</code> if this fragment factory doesn't provides requested fragment.
-		 * @see #isFragmentProvided(int)
-		 */
-		public Fragment createFragmentInstance(int fragmentId, Bundle params);
-
-		/**
-		 * <p>
-		 * Returns an options for the fragment associated with the specified <var>fragmentId</var>
-		 * within this fragment factory to manage such a fragment showing by FragmentController.
-		 * </p>
-		 * <p>
-		 * This is in most cases invoked form an instance of {@link com.wit.android.fragment.manage.FragmentController},
-		 * when that instance of FragmentController was requested to show fragment with the specified
-		 * <var>fragmentId</var>. In such a case, if this fragment factory will not provide valid
-		 * TransactionOptions, FragmentController will use default ones.
-		 * </p>
-		 *
-		 * @param fragmentId An id of the fragment for which are options requested.
-		 * @param params     Same params as for {@link #createFragmentInstance(int, android.os.Bundle)}.
-		 * @return TransactionOptions object for fragment associated with the specified <var>fragmentId</var>
-		 * or <code>null</code> if this fragment factory doesn't provides TransactionOptions for fragment
-		 * with the specified <var>fragmentId</var>.
-		 */
-		public TransactionOptions getFragmentTransactionOptions(int fragmentId, Bundle params);
-
-		/**
-		 * <p>
-		 * Returns a tag for the fragment associated with the specified <var>fragmentId</var> within
-		 * this fragment factory.
-		 * </p>
-		 *
-		 * @param fragmentId An id of the fragment for which is its TAG requested.
-		 * @return Tag for fragment associated with the specified <var>fragmentId</var> or <code>null</code>
-		 * if this fragment factory doesn't provides TAG for fragment with the specified <var>fragmentId</var>.
-		 */
-		public String getFragmentTag(int fragmentId);
-
-		/**
-		 * <p>
-		 * Returns flag indicating whether there is provided a fragment for the specified <var>fragmentId</var>
-		 * by this factory or not.
-		 * </p>
-		 *
-		 * @param fragmentId An id of the desired fragment to check.
-		 * @return <code>True</code> if fragment is provided, so {@link #createFragmentInstance(int, android.os.Bundle)}
-		 * will return an instance of such a fragment, <code>false</code> otherwise.
-		 */
-		public boolean isFragmentProvided(int fragmentId);
-	}
-
-	/**
-	 * <h4>Class Overview</h4>
-	 * <p>
-	 * todo: description
-	 * </p>
-	 *
-	 * @author Martin Albedinsky
-	 */
-	public static interface OnChangeListener {
-
-		/**
-		 * <p>
-		 * Invoked whenever an old fragment is replaced by a new one or simply a new fragment is first
-		 * time showed by an instance of FragmentController.
-		 * </p>
-		 *
-		 * @param id          An id of the currently changed (showed) fragment.
-		 * @param tag         A tag of the currently changed (showed) fragment.
-		 * @param fromFactory <code>True</code> if the changed fragment was obtained from a factory,
-		 *                    <code>false</code> otherwise.
-		 */
-		public void onFragmentChanged(int id, String tag, boolean fromFactory);
-	}
-
-	/**
-	 * <h4>Class Overview</h4>
-	 * <p>
-	 * todo: description
-	 * </p>
-	 *
-	 * @author Martin Albedinsky
-	 */
-	public static interface OnBackStackChangeListener {
-
-		/**
-		 * <p>
-		 * Invoked whenever fragments back stack change occur.
-		 * </p>
-		 *
-		 * @param added <code>True</code> if there was added new back stack entry, <code>false</code>
-		 *              if old one was removed.
-		 * @param id    An id of the back stack entry of which status was changed. This is actually
-		 *              a position of the added/removed entry in the fragments back stack. This is
-		 *              default behaviour of the fragments back stack managed by {@link android.support.v4.app.FragmentManager}.
-		 * @param tag   A tag of the back stack entry of which status was changed.
-		 */
-		public void onFragmentsBackStackChanged(boolean added, int id, String tag);
 	}
 }

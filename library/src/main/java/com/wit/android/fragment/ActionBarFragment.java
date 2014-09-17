@@ -33,10 +33,7 @@ import com.wit.android.fragment.util.FragmentAnnotations;
 
 /**
  * <h4>Class Overview</h4>
- * <p>
  * todo: description
- * </p>
- * <h6>Accepted annotations</h6>
  * <ul>
  * <li>{@link com.wit.android.fragment.annotation.ActionBarOptions @ActionBarOptions} [<b>class</b>]</li>
  * <p>
@@ -57,13 +54,17 @@ import com.wit.android.fragment.util.FragmentAnnotations;
 public class ActionBarFragment extends BaseFragment {
 
 	/**
+	 * Interface ===================================================================================
+	 */
+
+	/**
 	 * Constants ===================================================================================
 	 */
 
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = ActionBarFragment.class.getSimpleName();
+	// private static final String TAG = "ActionBarFragment";
 
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
@@ -109,11 +110,9 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
-	 * <p>
-	 * Creates a new instance of ActionBarFragment. If {@link com.wit.android.fragment.annotation.ActionBarOptions @ActionBarOptions}
+	 * Creates a new instance of ActionBarFragment. If {@link com.wit.android.support.fragment.annotation.ActionBarOptions @ActionBarOptions}
 	 * or {@link com.wit.android.fragment.annotation.MenuOptions @MenuOptions} annotations are
 	 * presented above a sub-class of ActionBarFragment, they will be processed here.
-	 * </p>
 	 */
 	public ActionBarFragment() {
 		super();
@@ -200,9 +199,7 @@ public class ActionBarFragment extends BaseFragment {
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.Activity#invalidateOptionsMenu()}.
-	 * </p>
 	 *
 	 * @see #isActivityAvailable()
 	 */
@@ -213,9 +210,7 @@ public class ActionBarFragment extends BaseFragment {
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.Activity#requestWindowFeature(int)}.
-	 * </p>
 	 *
 	 * @see #isActivityAvailable()
 	 */
@@ -236,10 +231,8 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.ActionBar#setTitle(int)} on the ActionBar instance accessible from
 	 * this fragment instance.
-	 * </p>
 	 *
 	 * @see #setActionBarTitle(CharSequence)
 	 * @see #isActionBarAvailable()
@@ -251,10 +244,8 @@ public class ActionBarFragment extends BaseFragment {
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.ActionBar#setTitle(CharSequence)} on the ActionBar instance accessible
 	 * from this fragment instance.
-	 * </p>
 	 *
 	 * @see #setActionBarTitle(int)
 	 * @see #isActionBarAvailable()
@@ -266,10 +257,8 @@ public class ActionBarFragment extends BaseFragment {
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.ActionBar#setIcon(int)} on the ActionBar instance accessible from
 	 * this fragment instance.
-	 * </p>
 	 *
 	 * @see #setActionBarIcon(android.graphics.drawable.Drawable)
 	 * @see #isActionBarAvailable()
@@ -281,10 +270,8 @@ public class ActionBarFragment extends BaseFragment {
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.ActionBar#setIcon(Drawable)} on the ActionBar instance accessible
 	 * from this fragment instance.
-	 * </p>
 	 *
 	 * @see #setActionBarIcon(int)
 	 * @see #isActionBarAvailable()
@@ -296,10 +283,8 @@ public class ActionBarFragment extends BaseFragment {
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.Activity#setProgress(int)} on the current
 	 * activity.
-	 * </p>
 	 *
 	 * @see #setProgressBarVisibility(boolean)
 	 * @see #isActivityAvailable()
@@ -311,10 +296,8 @@ public class ActionBarFragment extends BaseFragment {
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.Activity#setProgressBarVisibility(boolean)}
 	 * on the current activity.
-	 * </p>
 	 *
 	 * @see #setProgress(int)
 	 * @see #setProgressBarIndeterminate(boolean)
@@ -327,10 +310,8 @@ public class ActionBarFragment extends BaseFragment {
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.Activity#setProgressBarIndeterminate(boolean)}.
 	 * on the current activity.
-	 * </p>
 	 *
 	 * @see #setProgressBarIndeterminateVisibility(boolean)
 	 * @see #isActivityAvailable()
@@ -342,10 +323,8 @@ public class ActionBarFragment extends BaseFragment {
 	}
 
 	/**
-	 * <p>
 	 * Wrapped {@link android.app.Activity#setProgressBarIndeterminateVisibility(boolean)}.
 	 * on the current activity.
-	 * </p>
 	 *
 	 * @see #setProgressBarIndeterminate(boolean)
 	 * @see #isActivityAvailable()
@@ -361,9 +340,7 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
-	 * <p>
 	 * Returns flag indicating whether the ActionBar is available or not.
-	 * </p>
 	 *
 	 * @return <code>True</code> if ActionBar obtained from the parent activity is available,
 	 * <code>false</code> otherwise.
@@ -373,11 +350,9 @@ public class ActionBarFragment extends BaseFragment {
 	}
 
 	/**
-	 * <p>
 	 * Returns an instance of ActionBar which can be accessed by this fragment. <b>Note</b>, that
 	 * ActionBar can be accessed only between {@link #onCreate(android.os.Bundle)} and {@link #onDestroy()},
 	 * otherwise exception will be thrown.
-	 * </p>
 	 *
 	 * @return Instance of the ActionBar obtained from the parent activity.
 	 * @throws java.lang.IllegalStateException If this fragment isn't created yet or is already destroyed.
@@ -411,14 +386,6 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
-	 * Abstract methods ----------------------------------------------------------------------------
-	 */
-
-	/**
 	 * Inner classes ===============================================================================
-	 */
-
-	/**
-	 * Interface ===================================================================================
 	 */
 }

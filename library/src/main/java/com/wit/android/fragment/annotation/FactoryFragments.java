@@ -25,10 +25,8 @@ import java.lang.annotation.Target;
 
 /**
  * <h4>Annotation Overview</h4>
- * <p>
  * Defines an annotation for determining set of Fragment ids which are provided by a specific
  * {@link com.wit.android.fragment.manage.FragmentController.FragmentFactory FragmentFactory}.
- * </p>
  * <h6>Usage</h6>
  * <ul>
  * <li>{@link com.wit.android.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>

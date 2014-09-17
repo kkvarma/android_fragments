@@ -25,10 +25,8 @@ import java.lang.annotation.Target;
 
 /**
  * <h4>Annotation Overview</h4>
- * <p>
  * Defines an annotation for determining how an {@link android.view.ActionMode} should be
  * set.
- * </p>
  * <h6>Usage</h6>
  * <ul>
  * <li>{@link com.wit.android.fragment.ActionBarFragment ActionBarFragment}</li>

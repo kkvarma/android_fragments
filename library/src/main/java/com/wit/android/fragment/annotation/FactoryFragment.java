@@ -27,10 +27,8 @@ import java.lang.annotation.Target;
 
 /**
  * <h4>Annotation Overview</h4>
- * <p>
  * Annotation type used to mark an <b>int</b> field which specifies an id of fragment provided by
  * instance of {@link com.wit.android.fragment.manage.BaseFragmentFactory BaseFragmentFactory}.
- * </p>
  * <h6>Usage</h6>
  * <ul>
  * <li>{@link com.wit.android.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>

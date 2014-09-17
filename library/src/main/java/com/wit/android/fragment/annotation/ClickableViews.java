@@ -25,10 +25,8 @@ import java.lang.annotation.Target;
 
 /**
  * <h4>Annotation Overview</h4>
- * <p>
  * Defines an annotation for determining set of {@link android.view.View} ids which represents clickable
  * views in the root context's view hierarchy.
- * </p>
  * <h6>Usage</h6>
  * <ul>
  * <li>{@link com.wit.android.fragment.BaseFragment BaseFragment}</li>
