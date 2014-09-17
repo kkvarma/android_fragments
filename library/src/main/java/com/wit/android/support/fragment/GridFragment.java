@@ -26,9 +26,7 @@ import android.widget.ListAdapter;
 
 /**
  * <h4>Class Overview</h4>
- * <p>
  * todo: description
- * </p>
  *
  * @param <A> A type of the adapter used within the context of an instance of this GridFragment implementation.
  * @author Martin Albedinsky
