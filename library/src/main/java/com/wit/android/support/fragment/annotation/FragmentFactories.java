@@ -27,10 +27,8 @@ import java.lang.annotation.Target;
 
 /**
  * <h4>Annotation Overview</h4>
- * <p>
  * Defines an annotation for determining set of FragmentFactory classes which can be joined to another
  * FragmentFactory.
- * </p>
  * <h6>Usage</h6>
  * <ul>
  * <li>{@link com.wit.android.support.fragment.manage.BaseFragmentFactory BaseFragmentFactory}</li>

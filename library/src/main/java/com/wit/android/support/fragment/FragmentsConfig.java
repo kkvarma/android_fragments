@@ -19,9 +19,8 @@
 package com.wit.android.support.fragment;
 
 /**
- * <p>
+ * <h4>Class Overview</h4>
  * Configuration options for this library.
- * </p>
  *
  * @author Martin Albedinsky
  */

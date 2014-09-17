@@ -25,9 +25,7 @@ import java.lang.annotation.Target;
 
 /**
  * <h4>Annotation Overview</h4>
- * <p>
  * Defines an annotation for determining how an {@link android.support.v7.app.ActionBar} should be set.
- * </p>
  * <h6>Usage</h6>
  * <ul>
  * <li>{@link com.wit.android.support.fragment.ActionBarFragment ActionBarFragment}</li>
@@ -44,16 +42,18 @@ public @interface ActionBarOptions {
 	 */
 
 	/**
-	 * <p>
+	 * Flag for {@link #title()} or {@link #icon()} options to identify that the current value should
+	 * be hided/removed from either ActionBar title view or ActionBar icon view.
+	 */
+	public static final int NONE = 0x00;
+
+	/**
 	 * Flag indicating that an ActionBar's home as up icon should be enabled (visible).
-	 * </p>
 	 */
 	public static final int HOME_AS_UP_ENABLED = 0x01;
 
 	/**
-	 * <p>
 	 * Flag indicating that an ActionBar's home as up icon should be disabled (invisible).
-	 * </p>
 	 */
 	public static final int HOME_AS_UP_DISABLED = 0x02;
 
@@ -63,13 +63,19 @@ public @interface ActionBarOptions {
 
 	/**
 	 * A resource id of the desired text which should be set as title for an ActionBar.
+	 * <p/>
+	 * Use {@link #NONE} to remove the current title from ActionBar.
+	 * <p/>
+	 * Default value: <b>-1</b>
 	 *
 	 * @see android.app.ActionBar#setTitle(int)
 	 */
-	int title();
+	int title() default -1;
 
 	/**
 	 * A resource id of the desired image which should be set as icon for an ActionBar.
+	 * <p/>
+	 * Use {@link #NONE} to hide/remove the current icon from ActionBar.
 	 * <p/>
 	 * Default value: <b>-1</b>
 	 *

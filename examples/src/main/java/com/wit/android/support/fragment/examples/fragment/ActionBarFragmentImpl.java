@@ -19,11 +19,12 @@
 package com.wit.android.support.fragment.examples.fragment;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.wit.android.support.fragment.ActionBarFragment;
+import com.wit.android.support.fragment.annotation.ActionBarOptions;
 import com.wit.android.support.fragment.annotation.ContentView;
 import com.wit.android.support.fragment.annotation.MenuOptions;
 import com.wit.android.support.fragment.examples.R;
@@ -37,6 +38,7 @@ import com.wit.android.support.fragment.examples.R;
  */
 @MenuOptions(R.menu.menu_test)
 @ContentView(R.layout.fragment_action_bar)
+@ActionBarOptions(title = R.string.ActionBarFragment_Title, icon = ActionBarOptions.NONE)
 public class ActionBarFragmentImpl extends ActionBarFragment {
 
 	/**
@@ -81,8 +83,12 @@ public class ActionBarFragmentImpl extends ActionBarFragment {
 	/**
 	 */
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		setActionBarTitle(getArguments().getInt(PARAMS_TITLE_RES));
+	public void onDestroyView() {
+		// Add back removed icon.
+		final ActionBar actionBar = getActionBar();
+		if (actionBar != null) {
+			actionBar.setIcon(R.drawable.ex_ic_launcher);
+		}
+		super.onDestroyView();
 	}
 }

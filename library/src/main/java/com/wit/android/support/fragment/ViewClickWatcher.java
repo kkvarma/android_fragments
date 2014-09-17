@@ -22,18 +22,14 @@ import android.view.View;
 
 /**
  * <h4>Interface Overview</h4>
- * <p>
  * todo: description
- * </p>
  *
  * @author Martin Albedinsky
  */
 public interface ViewClickWatcher {
 
 	/**
-	 * <p>
 	 * Called to dispatch a view click event to this watcher instance.
-	 * </p>
 	 *
 	 * @param view The view which was clicked.
 	 * @return <code>True</code> if this watcher processed the click event for the specified <var>view</var>,

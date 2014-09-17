@@ -25,9 +25,7 @@ import java.lang.annotation.Target;
 
 /**
  * <h4>Annotation Overview</h4>
- * <p>
  * Defines an annotation for determining a content to be loaded into {@link android.webkit.WebView}.
- * </p>
  * <h6>Usage</h6>
  * <ul>
  * <li>{@link com.wit.android.support.fragment.WebFragment WebFragment}</li>
@@ -42,6 +40,15 @@ public @interface WebContent {
 	/**
 	 * The desired content to be loaded into {@link android.webkit.WebView}. Can be a raw <b>HTML</b>,
 	 * web <b>URL</b> or path to a <b>FILE</b> with the desired HTML content.
+	 * <p/>
+	 * Default value: <b>""</b>
 	 */
-	String value();
+	String value() default "";
+
+	/**
+	 * Like {@link #value()}, but this specifies a resource id of the desired web content.
+	 * <p/>
+	 * Default value: <b>-1</b>
+	 */
+	int valueRes() default -1;
 }

@@ -26,9 +26,7 @@ import android.widget.ListView;
 
 /**
  * <h4>Class Overview</h4>
- * <p>
  * todo: description
- * </p>
  *
  * @param <A> A type of the adapter used within the context of an instance of this ListFragment implementation.
  * @author Martin Albedinsky

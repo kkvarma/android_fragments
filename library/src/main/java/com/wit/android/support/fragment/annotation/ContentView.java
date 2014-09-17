@@ -25,9 +25,7 @@ import java.lang.annotation.Target;
 
 /**
  * <h4>Annotation Overview</h4>
- * <p>
  * Defines an annotation for determining which layout should be inflated as the root view.
- * </p>
  * <h6>Usage</h6>
  * <ul>
  * <li>{@link com.wit.android.support.fragment.BaseFragment BaseFragment}</li>
