@@ -22,6 +22,8 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -70,6 +72,7 @@ public class FragmentController {
 		 * <code>null</code> if this fragment factory doesn't provides requested fragment.
 		 * @see #isFragmentProvided(int)
 		 */
+		@Nullable
 		public Fragment createFragmentInstance(int fragmentId, Bundle params);
 
 		/**
@@ -87,6 +90,7 @@ public class FragmentController {
 		 * or <code>null</code> if this fragment factory doesn't provides TransactionOptions for fragment
 		 * with the specified <var>fragmentId</var>.
 		 */
+		@Nullable
 		public TransactionOptions getFragmentTransactionOptions(int fragmentId, Bundle params);
 
 		/**
@@ -97,6 +101,7 @@ public class FragmentController {
 		 * @return Tag for fragment associated with the specified <var>fragmentId</var> or <code>null</code>
 		 * if this fragment factory doesn't provides TAG for fragment with the specified <var>fragmentId</var>.
 		 */
+		@Nullable
 		public String getFragmentTag(int fragmentId);
 
 		/**
@@ -237,7 +242,7 @@ public class FragmentController {
 	 * @param parentFragment A fragment in which will be this controller used.
 	 * @see #FragmentController(android.support.v4.app.FragmentActivity)
 	 */
-	public FragmentController(Fragment parentFragment) {
+	public FragmentController(@NonNull Fragment parentFragment) {
 		this(parentFragment.getFragmentManager());
 		if (parentFragment instanceof OnBackStackChangeListener) {
 			setOnBackStackChangeListener((OnBackStackChangeListener) parentFragment);
@@ -261,7 +266,7 @@ public class FragmentController {
 	 * @param parentActivity An activity in which will be this controller used.
 	 * @see #FragmentController(android.support.v4.app.Fragment)
 	 */
-	public FragmentController(FragmentActivity parentActivity) {
+	public FragmentController(@NonNull FragmentActivity parentActivity) {
 		this(parentActivity.getSupportFragmentManager());
 		if (parentActivity instanceof OnBackStackChangeListener) {
 			setOnBackStackChangeListener((OnBackStackChangeListener) parentActivity);
@@ -275,14 +280,11 @@ public class FragmentController {
 	 * Creates a new instance of FragmentController with the given <var>fragmentManager</var>.
 	 *
 	 * @param fragmentManager Fragment manager to manage fragments.
-	 * @throws java.lang.NullPointerException If the given fragment manager is <code>null</code>.
 	 * @see #FragmentController(android.support.v4.app.FragmentActivity)
 	 * @see #FragmentController(android.support.v4.app.Fragment)
 	 */
-	public FragmentController(FragmentManager fragmentManager) {
-		if ((mFragmentManager = fragmentManager) == null) {
-			throw new NullPointerException("Invalid fragment manager.");
-		}
+	public FragmentController(@NonNull FragmentManager fragmentManager) {
+		this.mFragmentManager = fragmentManager;
 		mFragmentManager.addOnBackStackChangedListener(new BackStackListener());
 		// Check for back stacked fragments.
 		final int n = mFragmentManager.getBackStackEntryCount();
@@ -396,6 +398,7 @@ public class FragmentController {
 	 * are in the undesirable state.
 	 * @see #getVisibleSecondFragment()
 	 */
+	@Nullable
 	public Fragment getVisibleFragment() {
 		final List<Fragment> fragments = mFragmentManager.getFragments();
 		final List<Fragment> visibleFragments = new ArrayList<>();
@@ -449,6 +452,7 @@ public class FragmentController {
 	 * are in the undesirable state.
 	 * @see #getVisibleSecondFragment()
 	 */
+	@Nullable
 	public Fragment getVisibleSecondFragment() {
 		final List<Fragment> fragments = mFragmentManager.getFragments();
 		final List<Fragment> visibleFragments = new ArrayList<>();
@@ -509,9 +513,9 @@ public class FragmentController {
 	 * @param fragmentId An id of the desired fragment from the current factory, of which options menu
 	 *                   to show/hide.
 	 */
-	public boolean showFragmentOptionsMenu(int fragmentId, boolean enable) {
+	public boolean setFragmentOptionsMenuVisible(int fragmentId, boolean visible) {
 		// Check if we have fragment factory.
-		return this.checkFragmentFactory(fragmentId) && setFragmentOptionsMenuVisible(mFragmentFactory.getFragmentTag(fragmentId), enable);
+		return this.checkFragmentFactory(fragmentId) && setFragmentOptionsMenuVisible(mFragmentFactory.getFragmentTag(fragmentId), visible);
 	}
 
 	/**
@@ -521,7 +525,7 @@ public class FragmentController {
 	 * @param visible     <code>True</code> to show options menu, <code>false</code> to hide options menu.
 	 * @return <code>True</code> if fragment was found and request to show/hide its options menu was
 	 * performed, <code>false</code> otherwise.
-	 * @see #showFragmentOptionsMenu(int, boolean)
+	 * @see #setFragmentOptionsMenuVisible(int, boolean)
 	 */
 	public boolean setFragmentOptionsMenuVisible(String fragmentTag, boolean visible) {
 		final Fragment fragment = mFragmentManager.findFragmentByTag(fragmentTag);
@@ -537,6 +541,7 @@ public class FragmentController {
 	 * <p/>
 	 * <b>Do not forget to commit this new started transaction.</b>
 	 */
+	@NonNull
 	@SuppressLint("CommitTransaction")
 	public FragmentTransaction beginTransaction() {
 		return mFragmentManager.beginTransaction();
@@ -683,6 +688,7 @@ public class FragmentController {
 	 *
 	 * @return Instance of FragmentManager with which was this controller created.
 	 */
+	@NonNull
 	public FragmentManager getFragmentManager() {
 		return mFragmentManager;
 	}
@@ -728,6 +734,7 @@ public class FragmentController {
 	 * @see #setFragmentFactory(com.wit.android.support.fragment.manage.FragmentController.FragmentFactory)
 	 * @see #hasFactory()
 	 */
+	@Nullable
 	public FragmentFactory getFragmentFactory() {
 		return mFragmentFactory;
 	}
@@ -737,6 +744,7 @@ public class FragmentController {
 	 *
 	 * @return The top back stack entry or <code>null</code> if there are no back stack entries.
 	 */
+	@Nullable
 	public FragmentManager.BackStackEntry getTopBackStackEntry() {
 		return mTopBackStackEntry;
 	}
@@ -755,7 +763,7 @@ public class FragmentController {
 	 * This implementation always returns <code>true</code> or throws exception.
 	 * @throws java.lang.IllegalStateException If the current id for fragment layout container is invalid.
 	 */
-	protected boolean onShowFragment(Fragment fragment, TransactionOptions options) {
+	protected boolean onShowFragment(Fragment fragment, @Nullable TransactionOptions options) {
 		if (options == null) {
 			options = new TransactionOptions();
 		}
@@ -835,7 +843,7 @@ public class FragmentController {
 	 * @param options     Already processed transaction.
 	 * @return This implementation always returns <code>true</code>.
 	 */
-	protected boolean onCommitTransaction(FragmentTransaction transaction, TransactionOptions options) {
+	protected boolean onCommitTransaction(@NonNull FragmentTransaction transaction, @NonNull TransactionOptions options) {
 		// Commit transaction.
 		transaction.commit();
 		if (options.showImmediate) {

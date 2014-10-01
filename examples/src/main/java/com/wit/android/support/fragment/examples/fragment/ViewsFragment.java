@@ -44,7 +44,7 @@ public class ViewsFragment extends BaseFragment {
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = ViewsFragment.class.getSimpleName();
+	// private static final String TAG = "ViewsFragment";
 
 	@InjectView(value = R.id.fragment_views_button_sign_in, clickable = true)
 	private Button mButtonSignIn;

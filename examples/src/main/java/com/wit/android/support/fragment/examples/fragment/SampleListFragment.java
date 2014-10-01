@@ -21,36 +21,52 @@ package com.wit.android.support.fragment.examples.fragment;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.Toast;
 
-import com.wit.android.support.fragment.GridFragment;
+import com.wit.android.support.fragment.ListFragment;
+import com.wit.android.support.fragment.annotation.ActionModeOptions;
 import com.wit.android.support.fragment.annotation.AdapterViewOptions;
 import com.wit.android.support.fragment.examples.R;
 import com.wit.android.support.fragment.examples.adapter.AppsAdapter;
 import com.wit.android.support.fragment.examples.content.AppsAsyncTask;
 
 /**
- * <p>
- * Description.
- * </p>
+ * todo: description
  *
  * @author Martin Albedinsky
  */
-@AdapterViewOptions(emptyText = R.string.AdapterFragment_Text_Empty)
-public class GridFragmentImpl extends GridFragment<AppsAdapter> {
+@ActionModeOptions(menu = R.menu.menu_test)
+@AdapterViewOptions(emptyText = R.string.AdapterFragment_Text_Empty, longClickable = true)
+public class SampleListFragment extends ListFragment<AppsAdapter> {
 
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = GridFragmentImpl.class.getSimpleName();
+	// private static final String TAG = "SampleListFragment";
 
 	/**
 	 *
 	 */
 	private PackageManager mPackageManager;
+
+	/**
+	 *
+	 * @return
+	 */
+	public static SampleListFragment newInstance() {
+		return new SampleListFragment();
+	}
+
+	/**
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Dismiss action mode on menu item click.
+		return true;
+	}
 
 	/**
 	 */
@@ -59,15 +75,9 @@ public class GridFragmentImpl extends GridFragment<AppsAdapter> {
 		super.onCreate(savedInstanceState);
 		this.mPackageManager = getActivity().getPackageManager();
 
-		final AppsAdapter adapter = new AppsAdapter(getActivity(), true);
+		final AppsAdapter adapter = new AppsAdapter(getActivity(), false);
 		setAdapter(adapter);
 		new AppsAsyncTask(adapter).execute();
-	}
-
-	@Override
-	protected void onViewCreated(View view, GridView adapterView, Bundle savedInstanceState) {
-		super.onViewCreated(view, adapterView, savedInstanceState);
-		adapterView.setNumColumns(GridView.AUTO_FIT);
 	}
 
 	/**

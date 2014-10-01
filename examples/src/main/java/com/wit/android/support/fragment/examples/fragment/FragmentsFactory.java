@@ -51,10 +51,10 @@ public class FragmentsFactory extends BaseFragmentFactory {
 
 	public static final int LIST = 0x02;
 
-	@FactoryFragment(type = GridFragmentImpl.class, taggedName = "GridFragment")
+	@FactoryFragment(type = SampleGridFragment.class, taggedName = "GridFragment")
 	public static final int GRID = 0x03;
 
-	@FactoryFragment(type = ActionBarFragmentImpl.class, taggedName = "ActionBarFragment")
+	@FactoryFragment(type = SampleActionBarFragment.class, taggedName = "ActionBarFragment")
 	public static final int ACTION_BAR = 0x04;
 
 	@FactoryFragment(type = ViewsFragment.class, taggedName = "ViewsFragment")
@@ -90,7 +90,7 @@ public class FragmentsFactory extends BaseFragmentFactory {
 			case TRANSITIONS:
 				return ImageFragment.newInstance();
 			case LIST:
-				return ListFragmentImpl.newInstance();
+				return SampleListFragment.newInstance();
 		}
 		// Super will create instances for annotated ids.
 		return super.onCreateFragmentInstance(fragmentId, params);

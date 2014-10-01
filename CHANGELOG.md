@@ -3,6 +3,11 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
+### **4.1** (<i>01.10.2014</i>) ###
+- Added default value `0` for **menu** attribute of **@ActionModeOptions** annotation to allow starting
+of action mode without options menu.
+- Moved implementation of ActionMode management into **ActionBarFragment**.
+
 ### **4.0.7** (<i>11.09.2014</i>) ###
 - Updated @ActionBarOptions + @WebOptions annotations.
 
@@ -13,7 +18,8 @@ Change-Log
 - Added proguard rules specific for this library project.
 
 ### **4.0.1** (<i>29.08.2014</i>) ###
-- If null LayoutParams are returned by one of the related methods within the AdapterFragment, the default params are used when adding a specific created view into root layout.
+- If null LayoutParams are returned by one of the related methods within the AdapterFragment, the
+default params are used when adding a specific created view into root layout.
 
 ### **4.0** (<i>26.08.2014</i>) ###
 - Refactored ActionBarFragment structure + some minor documentation changes.
@@ -29,7 +35,8 @@ Change-Log
 - Added `runOnUiThread(Runnable)` into BaseFragment.
 
 ### **3.6** (<i>05.08.2014</i>) ###
-- Renamed all dispatch... methods meant to notify listeners to notify... due to optimizing some naming conventions in all libraries.
+- Renamed all dispatch... methods meant to notify listeners to notify... due to optimizing some naming
+conventions in all libraries.
 - Allowed to create root layout for the AdapterFragment.
 
 ### **3.5** (<i>25.07.2014</i>) ###
