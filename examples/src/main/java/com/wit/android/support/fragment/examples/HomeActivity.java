@@ -164,32 +164,32 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 		final ExNavigationItem.Builder builder = new ExNavigationItem.Builder(resources);
 		list.add(createItem(
 				FragmentsFactory.TRANSITIONS,
-				R.string.Navigation_Label_Transitions,
+				R.string.navigation_label_transitions,
 				builder
 		));
 		list.add(createItem(
 				FragmentsFactory.LIST,
-				R.string.Navigation_Label_ListFragment,
+				R.string.navigation_label_list_fragment,
 				builder
 		));
 		list.add(createItem(
 				FragmentsFactory.GRID,
-				R.string.Navigation_Label_GridFragment,
+				R.string.navigation_label_grid_fragment,
 				builder
 		));
 		list.add(builder.id(WebActivity.NAVIGATION_ID)
-						.title(R.string.Navigation_Label_WebFragment)
+						.title(R.string.navigation_label_web_fragment)
 						.selectable(false)
 						.build()
 		);
 		list.add(createItem(
 				FragmentsFactory.ACTION_BAR,
-				R.string.Navigation_Label_ActionBarFragment,
+				R.string.navigation_label_action_bar_fragment,
 				builder
 		));
 		list.add(createItem(
 				FragmentsFactory.VIEWS,
-				R.string.Navigation_Label_ViewsFragment,
+				R.string.navigation_label_views_fragment,
 				builder
 		));
 		return list;
@@ -225,7 +225,7 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 					 */
 					@Override
 					public void run() {
-						mController.showFragment(id, SampleActionBarFragment.createParams(R.string.ActionBarFragment_Title));
+						mController.showFragment(id, SampleActionBarFragment.createParams(R.string.action_bar_fragment_title));
 					}
 				});
 				break;
@@ -262,7 +262,7 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 			mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 			mActionBar.setTitle("");
 		} else {
-			mActionBar.setTitle(R.string.App_Name);
+			mActionBar.setTitle(R.string.app_name);
 		}
 	}
 

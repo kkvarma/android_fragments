@@ -23,12 +23,12 @@
      android:zAdjustment="bottom">
 
     <alpha
-            android:duration="@integer/Config.Anim.Fragment.Scale.Alpha.Out.Back.duration"
+            android:duration="@integer/fragment_config_anim_scale_alpha_out_back_duration"
             android:fromAlpha="1.0"
             android:toAlpha="0.5"/>
 
     <scale
-            android:duration="@integer/Config.Anim.Fragment.Scale.Out.Back.duration"
+            android:duration="@integer/fragment_config_anim_scale_out_back_duration"
             android:fromXScale="1.0"
             android:toXScale="0.8"
             android:pivotX="50%"

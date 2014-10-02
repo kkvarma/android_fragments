@@ -43,7 +43,7 @@ import com.wit.android.support.fragment.examples.content.AppsAsyncTask;
  * @author Martin Albedinsky
  */
 @ActionModeOptions
-@AdapterViewOptions(emptyText = R.string.AdapterFragment_Text_Empty, longClickable = true)
+@AdapterViewOptions(emptyText = R.string.adapter_fragment_empty, longClickable = true)
 public class SampleGridFragment extends GridFragment<AppsAdapter> {
 
 	/**

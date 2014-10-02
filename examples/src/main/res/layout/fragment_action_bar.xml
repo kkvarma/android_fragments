@@ -27,7 +27,7 @@
             style="@style/Ex.TextAppearance.Widget.TextView.Empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ActionBarFragment.Title"
+            android:text="@string/action_bar_fragment_title"
             android:textSize="30sp"
             android:textAllCaps="true"
             android:layout_gravity="center"/>
