@@ -174,8 +174,9 @@ public class ActionBarFragment extends BaseFragment {
 					break;
 			}
 		}
-		// Enable/disable options menu.
-		setHasOptionsMenu(mMenuOptions != null);
+		if (mMenuOptions != null) {
+			setHasOptionsMenu(true);
+		}
 		this.mCreated = true;
 	}
 
@@ -183,7 +184,7 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		if (mMenuOptions != null) {
+		if (mMenuOptions != null && mMenuOptions.value() > 0) {
 			if (mMenuOptions.clear()) {
 				menu.clear();
 			}
@@ -390,9 +391,7 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 	protected boolean startActionMode(ActionMode.Callback callback) {
 		if (!isInActionMode() && mActivity != null) {
-			onActionModeStarted(
-					mActionMode = getActionBarActivity().startSupportActionMode(callback)
-			);
+			onActionModeStarted(getActionBarActivity().startSupportActionMode(callback));
 			return true;
 		}
 		return false;
@@ -425,6 +424,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @param actionMode Currently started action mode.
 	 */
 	protected void onActionModeStarted(ActionMode actionMode) {
+		this.mActionMode = actionMode;
 	}
 
 	/**

@@ -4,7 +4,7 @@
 
 Android Fragments (Develop)
 ===============
-> [last updated: **01.10.2014**]
+> [last updated: **02.10.2014**]
 
 ### Develop branch ###
 This branch is only for **development purpose**. It isn't recommended to checkout this branch, due to **not stable** and also **not tested code**.
