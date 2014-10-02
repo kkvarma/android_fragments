@@ -197,7 +197,7 @@ public class WebActivity extends ExBaseActivity {
 				if (WebFragment.isValidWebUrl(url)) {
 					loadUrl(url);
 				} else {
-					Toast.makeText(WebActivity.this, R.string.Activity_Web_Toast_OnlyUrlIsAllowed, Toast.LENGTH_SHORT).show();
+					Toast.makeText(WebActivity.this, R.string.web_toast_only_url_is_allowed, Toast.LENGTH_SHORT).show();
 				}
 			}
 		}

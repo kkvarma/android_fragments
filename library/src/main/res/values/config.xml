@@ -20,96 +20,95 @@
  */
 -->
 <resources>
-    
-    <!-- ### GLOBAL ANIMATION DURATIONS ======================================================== -->
-    <eat-comment/>
+
+    <!-- ### ANIMATIONS ======================================================================== -->
+
     <!-- Duration for a new incoming fragment's horizontal animation -->
-    <integer name="Config.Anim.Fragment.Horizontal.In.duration">500</integer>
+    <integer name="fragment_config_anim_horizontal_in_duration">500</integer>
     <!-- Duration for an old incoming back-stacked fragment's horizontal animation -->
-    <integer name="Config.Anim.Fragment.Horizontal.In.Back.duration">350</integer>
+    <integer name="fragment_config_anim_horizontal_in_back_duration">350</integer>
     <!-- Duration for a current outgoing fragment's (new is incoming) horizontal animation -->
-    <integer name="Config.Anim.Fragment.Horizontal.Out.duration">500</integer>
+    <integer name="fragment_config_anim_horizontal_out_duration">500</integer>
     <!-- Duration for a current outgoing (back-stacked is incoming) fragment's horizontal animation -->
-    <integer name="Config.Anim.Fragment.Horizontal.Out.Back.duration">350</integer>
+    <integer name="fragment_config_anim_horizontal_out_back_duration">350</integer>
     <!-- Duration for a new incoming fragment's vertical animation -->
-    <integer name="Config.Anim.Fragment.Vertical.In.duration">500</integer>
+    <integer name="fragment_config_anim_vertical_in_duration">500</integer>
     <!-- Duration for an old incoming back-stacked fragment's vertical animation -->
-    <integer name="Config.Anim.Fragment.Vertical.In.Back.duration">350</integer>
+    <integer name="fragment_config_anim_vertical_in_back_duration">350</integer>
     <!-- Duration for a current outgoing fragment's (new is incoming) vertical animation -->
-    <integer name="Config.Anim.Fragment.Vertical.Out.duration">500</integer>
+    <integer name="fragment_config_anim_vertical_out_duration">500</integer>
     <!-- Duration for a current outgoing (back-stacked is incoming) fragment's vertical animation -->
-    <integer name="Config.Anim.Fragment.Vertical.Out.Back.duration">350</integer>
+    <integer name="fragment_config_anim_vertical_out_back_duration">350</integer>
 
-    <!-- ### ALPHA ANIMATION DURATIONS ========================================================= -->
-    <eat-comment/>
+    <!-- ### ANIMATIONS:Alpha animation durations. ============================================= -->
+
     <!-- Duration for a new incoming fragment's alpha animation -->
-    <integer name="Config.Anim.Fragment.Alpha.In.duration">@integer/Config.Anim.Fragment.Horizontal.In.duration</integer>
+    <integer name="fragment_config_anim_alpha_in_duration">@integer/fragment_config_anim_horizontal_in_duration</integer>
     <!-- Duration for an old incoming back-stacked fragment's alpha animation -->
-    <integer name="Config.Anim.Fragment.Alpha.In.Back.duration">@integer/Config.Anim.Fragment.Horizontal.In.Back.duration</integer>
+    <integer name="fragment_config_anim_alpha_in_back_duration">@integer/fragment_config_anim_horizontal_in_back_duration</integer>
     <!-- Duration for a current outgoing fragment's (new is incoming) alpha animation -->
-    <integer name="Config.Anim.Fragment.Alpha.Out.duration">@integer/Config.Anim.Fragment.Horizontal.Out.duration</integer>
+    <integer name="fragment_config_anim_alpha_out_duration">@integer/fragment_config_anim_horizontal_out_duration</integer>
     <!-- Duration for a current outgoing (back-stacked is incoming) fragment's alpha animation -->
-    <integer name="Config.Anim.Fragment.Alpha.Out.Back.duration">@integer/Config.Anim.Fragment.Horizontal.Out.Back.duration</integer>
-    
-    <!-- ### SLIDE ANIMATION DURATIONS ========================================================= -->
-    <eat-comment/>
+    <integer name="fragment_config_anim_alpha_out_back_duration">@integer/fragment_config_anim_horizontal_out_back_duration</integer>
+
+    <!-- ### ANIMATIONS:Slide animation durations. ============================================= -->
+
     <!-- Duration for a new incoming fragment's horizontal slide animation -->
-    <integer name="Config.Anim.Fragment.Slide.Horizontal.In.duration">@integer/Config.Anim.Fragment.Horizontal.In.duration</integer>
+    <integer name="fragment_config_anim_slide_horizontal_in_duration">@integer/fragment_config_anim_horizontal_in_duration</integer>
     <!-- Duration for an old incoming back-stacked fragment's horizontal slide animation -->
-    <integer name="Config.Anim.Fragment.Slide.Horizontal.In.Back.duration">@integer/Config.Anim.Fragment.Horizontal.In.Back.duration</integer>
+    <integer name="fragment_config_anim_slide_horizontal_in_back_duration">@integer/fragment_config_anim_horizontal_in_back_duration</integer>
     <!-- Duration for a current outgoing fragment's (new is incoming) horizontal slide animation -->
-    <integer name="Config.Anim.Fragment.Slide.Horizontal.Out.duration">@integer/Config.Anim.Fragment.Horizontal.Out.duration</integer>
+    <integer name="fragment_config_anim_slide_horizontal_out_duration">@integer/fragment_config_anim_horizontal_out_duration</integer>
     <!-- Duration for a current outgoing (back-stacked is incoming) fragment's horizontal slide animation -->
-    <integer name="Config.Anim.Fragment.Slide.Horizontal.Out.Back.duration">@integer/Config.Anim.Fragment.Horizontal.Out.Back.duration</integer>
+    <integer name="fragment_config_anim_slide_horizontal_out_back_duration">@integer/fragment_config_anim_horizontal_out_back_duration</integer>
     <!-- Duration for a new incoming fragment's vertical slide animation -->
-    <integer name="Config.Anim.Fragment.Slide.Vertical.In.duration">@integer/Config.Anim.Fragment.Horizontal.In.duration</integer>
+    <integer name="fragment_config_anim_slide_vertical_in_duration">@integer/fragment_config_anim_horizontal_in_duration</integer>
     <!-- Duration for an old incoming back-stacked fragment's vertical slide animation -->
-    <integer name="Config.Anim.Fragment.Slide.Vertical.In.Back.duration">@integer/Config.Anim.Fragment.Horizontal.In.Back.duration</integer>
+    <integer name="fragment_config_anim_slide_vertical_in_back_duration">@integer/fragment_config_anim_horizontal_in_back_duration</integer>
     <!-- Duration for a current outgoing fragment's (new is incoming) vertical slide animation -->
-    <integer name="Config.Anim.Fragment.Slide.Vertical.Out.duration">@integer/Config.Anim.Fragment.Horizontal.Out.duration</integer>
+    <integer name="fragment_config_anim_slide_vertical_out_duration">@integer/fragment_config_anim_horizontal_out_duration</integer>
     <!-- Duration for a current outgoing (back-stacked is incoming) fragment's vertical slide animation -->
-    <integer name="Config.Anim.Fragment.Slide.Vertical.Out.Back.duration">@integer/Config.Anim.Fragment.Horizontal.Out.Back.duration</integer>
+    <integer name="fragment_config_anim_slide_vertical_out_back_duration">@integer/fragment_config_anim_horizontal_out_back_duration</integer>
 
-    <!-- ### SCALE ANIMATION DURATIONS ========================================================= -->
-    <eat-comment/>
+    <!-- ### ANIMATIONS:Scale animation durations. ============================================= -->
+
     <!-- Duration for a new incoming fragment's scale animation -->
-    <integer name="Config.Anim.Fragment.Scale.In.duration">@integer/Config.Anim.Fragment.Horizontal.In.duration</integer>
+    <integer name="fragment_config_anim_scale_in_duration">@integer/fragment_config_anim_horizontal_in_duration</integer>
     <!-- Start offset duration for a new incoming fragment's scale animation -->
-    <integer name="Config.Anim.Fragment.Scale.In.offset">150</integer>
+    <integer name="fragment_config_anim_scale_in_delay">150</integer>
     <!-- Duration for an old incoming back-stacked fragment's scale animation -->
-    <integer name="Config.Anim.Fragment.Scale.In.Back.duration">@integer/Config.Anim.Fragment.Horizontal.In.Back.duration</integer>
+    <integer name="fragment_config_anim_scale_in_back_duration">@integer/fragment_config_anim_horizontal_in_back_duration</integer>
     <!-- Start offset duration for an old incoming back-stacked fragment's scale animation -->
-    <integer name="Config.Anim.Fragment.Scale.In.Back.offset">100</integer>
+    <integer name="fragment_config_anim_scale_in_back_delay">100</integer>
     <!-- Duration for a current outgoing fragment's (new is incoming) scale animation -->
-    <integer name="Config.Anim.Fragment.Scale.Out.duration">@integer/Config.Anim.Fragment.Horizontal.Out.duration</integer>
+    <integer name="fragment_config_anim_scale_out_duration">@integer/fragment_config_anim_horizontal_out_duration</integer>
     <!-- Duration for a current outgoing (back-stacked is incoming) fragment's scale animation -->
-    <integer name="Config.Anim.Fragment.Scale.Out.Back.duration">@integer/Config.Anim.Fragment.Horizontal.Out.Back.duration</integer>
+    <integer name="fragment_config_anim_scale_out_back_duration">@integer/fragment_config_anim_horizontal_out_back_duration</integer>
     <!-- Duration for a new incoming fragment's alpha animation within scale animation set -->
-    <integer name="Config.Anim.Fragment.Scale.Alpha.In.duration">400</integer>
+    <integer name="fragment_config_anim_scale_alpha_in_duration">400</integer>
     <!-- Duration for an old incoming back-stacked fragment's alpha animation within scale animation set -->
-    <integer name="Config.Anim.Fragment.Scale.Alpha.In.Back.duration">300</integer>
+    <integer name="fragment_config_anim_scale_alpha_in_back_duration">300</integer>
     <!-- Duration for a current outgoing fragment's (new is incoming) alpha animation within scale animation set -->
-    <integer name="Config.Anim.Fragment.Scale.Alpha.Out.duration">400</integer>
+    <integer name="fragment_config_anim_scale_alpha_out_duration">400</integer>
     <!-- Duration for a current outgoing (back-stacked is incoming) fragment's alpha animation within scale animation set -->
-    <integer name="Config.Anim.Fragment.Scale.Alpha.Out.Back.duration">300</integer>
+    <integer name="fragment_config_anim_scale_alpha_out_back_duration">300</integer>
 
-    <!-- ### FLIP ANIMATION DURATIONS ========================================================== -->
-    <eat-comment/>
+    <!-- ### ANIMATIONS:Flip animation durations. ============================================== -->
+
     <!-- Duration for a new incoming fragment's horizontal flip animation -->
-    <integer name="Config.Anim.Fragment.Flip.Horizontal.In.duration">@integer/Config.Anim.Fragment.Horizontal.In.duration</integer>
+    <integer name="fragment_config_anim_flip_horizontal_in_duration">@integer/fragment_config_anim_horizontal_in_duration</integer>
     <!-- Duration for an old incoming back-stacked fragment's horizontal flip animation -->
-    <integer name="Config.Anim.Fragment.Flip.Horizontal.In.Back.duration">@integer/Config.Anim.Fragment.Horizontal.In.Back.duration</integer>
+    <integer name="fragment_config_anim_flip_horizontal_in_back_duration">@integer/fragment_config_anim_horizontal_in_back_duration</integer>
     <!-- Duration for a current outgoing fragment's (new is incoming) horizontal flip animation -->
-    <integer name="Config.Anim.Fragment.Flip.Horizontal.Out.duration">@integer/Config.Anim.Fragment.Horizontal.Out.duration</integer>
+    <integer name="fragment_config_anim_flip_horizontal_out_duration">@integer/fragment_config_anim_horizontal_out_duration</integer>
     <!-- Duration for a current outgoing (back-stacked is incoming) fragment's horizontal flip animation -->
-    <integer name="Config.Anim.Fragment.Flip.Horizontal.Out.Back.duration">@integer/Config.Anim.Fragment.Horizontal.Out.Back.duration</integer>
+    <integer name="fragment_config_anim_flip_horizontal_out_back_duration">@integer/fragment_config_anim_horizontal_out_back_duration</integer>
     <!-- Duration for a new incoming fragment's vertical flip animation -->
-    <integer name="Config.Anim.Fragment.Flip.Vertical.In.duration">@integer/Config.Anim.Fragment.Horizontal.In.duration</integer>
+    <integer name="fragment_config_anim_flip_vertical_in_duration">@integer/fragment_config_anim_horizontal_in_duration</integer>
     <!-- Duration for an old incoming back-stacked fragment's vertical flip animation -->
-    <integer name="Config.Anim.Fragment.Flip.Vertical.In.Back.duration">@integer/Config.Anim.Fragment.Horizontal.In.Back.duration</integer>
+    <integer name="fragment_config_anim_flip_vertical_in_back_duration">@integer/fragment_config_anim_horizontal_in_back_duration</integer>
     <!-- Duration for a current outgoing fragment's (new is incoming) vertical flip animation -->
-    <integer name="Config.Anim.Fragment.Flip.Vertical.Out.duration">@integer/Config.Anim.Fragment.Horizontal.Out.duration</integer>
+    <integer name="fragment_config_anim_flip_vertical_out_duration">@integer/fragment_config_anim_horizontal_out_duration</integer>
     <!-- Duration for a current outgoing (back-stacked is incoming) fragment's vertical flip animation -->
-    <integer name="Config.Anim.Fragment.Flip.Vertical.Out.Back.duration">@integer/Config.Anim.Fragment.Horizontal.Out.Back.duration</integer>
-
+    <integer name="fragment_config_anim_flip_vertical_out_back_duration">@integer/fragment_config_anim_horizontal_out_back_duration</integer>
 </resources>

@@ -42,6 +42,6 @@
             android:id="@+id/fragment_views_button_sign_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ViewsFragment.Button.SignIn"/>
+            android:text="@string/views_fragment_button_sign_in"/>
 
 </LinearLayout>

@@ -21,6 +21,6 @@
 -->
 <translate xmlns:android="http://schemas.android.com/apk/res/android"
            android:zAdjustment="top"
-           android:duration="@integer/Config.Anim.Fragment.Slide.Vertical.In.duration"
+           android:duration="@integer/fragment_config_anim_slide_vertical_in_duration"
            android:fromYDelta="-100%p"
            android:toYDelta="0%p"/>
