@@ -45,13 +45,13 @@ android.libraryVariants.all { variant ->
         delete '../artifacts/' + rootProject.artifactName + '-' + rootProject.versionName + '.aar'
         // Copy the updated artifact from the build/libs directory to the library artifacts directory.
         copy {
-            from 'build/outputs/aar/library.aar'
+            from 'build/outputs/aar/library-release.aar'
             into '../artifacts'
 
             // Rename .aar! file to match library name and the current library version.
             rename { String fileName ->
                 fileName.replace(
-                        'library',
+                        'library-release',
                         String.valueOf(rootProject.artifactName + '-' + rootProject.versionName)
                 )
             }
