@@ -23,35 +23,34 @@
 
     <!-- ### APPLICATION ======================================================================= -->
 
-    <string name="App.Name">Support-Fragments</string>
+    <string name="app_name">Support-Fragments</string>
 
     <!-- ### NAVIGATION ======================================================================== -->
 
-    <string name="Navigation.Label.Transitions">Transitions</string>
-    <string name="Navigation.Label.ListFragment">List Fragment</string>
-    <string name="Navigation.Label.GridFragment">Grid Fragment</string>
-    <string name="Navigation.Label.WebFragment">Web Fragment</string>
-    <string name="Navigation.Label.ActionBarFragment">ActionBar Fragment</string>
-    <string name="Navigation.Label.ViewsFragment">Views Fragment (Injection)</string>
+    <string name="navigation_label_transitions">Transitions</string>
+    <string name="navigation_label_list_fragment">List Fragment</string>
+    <string name="navigation_label_grid_fragment">Grid Fragment</string>
+    <string name="navigation_label_web_fragment">Web Fragment</string>
+    <string name="navigation_label_action_bar_fragment">ActionBar Fragment</string>
+    <string name="navigation_label_views_fragment">Views Fragment (Injection)</string>
 
-    <!-- ### HOME ACTIVITY ===================================================================== -->
+    <!-- ### HOME ============================================================================== -->
 
-    <string name="Activity.Home.Check.AddFragmentToBackStack">Add fragment to back stack</string>
+    <string name="home_check_add_fragment_to_back_stack">Add fragment to back stack</string>
 
-    <!-- ### WEB ACTIVITY ====================================================================== -->
+    <!-- ### WEB =============================================================================== -->
 
-    <string name="Activity.Web.Toast.OnlyUrlIsAllowed">Only valid web URL is allowed here</string>
+    <string name="web_toast_only_url_is_allowed">Only valid web URL is allowed here</string>
 
     <!-- ### ADAPTER FRAGMENT ================================================================== -->
 
-    <string name="AdapterFragment.Text.Empty">No items available</string>
+    <string name="adapter_fragment_empty">No items available</string>
 
     <!-- ### ACTION BAR FRAGMENT =============================================================== -->
 
-    <string name="ActionBarFragment.Title">ActionBar fragment</string>
+    <string name="action_bar_fragment_title">ActionBar fragment</string>
 
     <!-- ### VIEWS FRAGMENT ================================================================ -->
 
-    <string name="ViewsFragment.Button.SignIn">Sign In</string>
-
+    <string name="views_fragment_button_sign_in">Sign In</string>
 </resources>

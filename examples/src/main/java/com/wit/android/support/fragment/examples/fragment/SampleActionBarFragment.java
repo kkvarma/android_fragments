@@ -38,7 +38,7 @@ import com.wit.android.support.fragment.examples.R;
  */
 @MenuOptions(R.menu.menu_test)
 @ContentView(R.layout.fragment_action_bar)
-@ActionBarOptions(title = R.string.ActionBarFragment_Title, icon = ActionBarOptions.NONE)
+@ActionBarOptions(title = R.string.action_bar_fragment_title, icon = ActionBarOptions.NONE)
 public class SampleActionBarFragment extends ActionBarFragment {
 
 	/**

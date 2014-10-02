@@ -40,7 +40,7 @@ import com.wit.android.support.fragment.examples.content.AppsAsyncTask;
  * @author Martin Albedinsky
  */
 @ActionModeOptions(menu = R.menu.menu_test)
-@AdapterViewOptions(emptyText = R.string.AdapterFragment_Text_Empty, longClickable = true)
+@AdapterViewOptions(emptyText = R.string.adapter_fragment_empty, longClickable = true)
 public class SampleListFragment extends ListFragment<AppsAdapter> {
 
 	/**
