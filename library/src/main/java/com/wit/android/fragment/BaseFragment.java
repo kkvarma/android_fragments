@@ -21,6 +21,7 @@ package com.wit.android.fragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,7 +151,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 */
 
 	/**
-	 * Creates a new instance of BaseFragment. If {@link com.wit.android.support.fragment.annotation.ContentView @ContentView}
+	 * Creates a new instance of BaseFragment. If {@link com.wit.android.fragment.annotation.ContentView @ContentView}
 	 * or {@link com.wit.android.fragment.annotation.ClickableViews @ClickableViews} annotations
 	 * are presented above a sub-class of BaseFragment, they will be processed here. Also all declared
 	 * fields marked by annotation {@link com.wit.android.fragment.annotation.InjectView @InjectView}
@@ -322,6 +323,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 * Same as {@link #getString(int)}, but first is performed check if the parent activity of this
 	 * fragment instance is available to prevent illegal state exceptions.
 	 */
+	@NonNull
 	public String obtainString(int resId) {
 		return isActivityAvailable() ? getString(resId) : "";
 	}
@@ -330,6 +332,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 * Same as  {@link #getString(int, Object...)}, but first is performed check if the parent activity
 	 * of this fragment instance is available to prevent illegal state exceptions.
 	 */
+	@NonNull
 	public String obtainString(int resId, Object... args) {
 		return isActivityAvailable() ? getString(resId, args) : "";
 	}
@@ -338,6 +341,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 * Same as {@link #getText(int)}, but first is performed check if the parent activity of this
 	 * fragment instance is available to prevent illegal state exceptions.
 	 */
+	@NonNull
 	public CharSequence obtainText(int resId) {
 		return isActivityAvailable() ? getText(resId) : "";
 	}
@@ -383,7 +387,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 * @return <code>True</code> if this fragment handles dispatched click event for the given
 	 * <var>view</var>, <code>false</code> otherwise.
 	 */
-	protected boolean onViewClick(View view, int id) {
+	protected boolean onViewClick(@NonNull View view, int id) {
 		return false;
 	}
 
@@ -420,7 +424,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 			/**
 			 */
 			@Override
-			public void onProcessField(Field field, String name) {
+			public void onProcessField(@NonNull Field field, String name) {
 				if (field.isAnnotationPresent(InjectView.class) || field.isAnnotationPresent(InjectView.Last.class)) {
 					mViewsToInject.add(field);
 				}

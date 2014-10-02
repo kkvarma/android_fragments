@@ -49,5 +49,4 @@
         <item name="android:layout_marginRight">10dip</item>
         <item name="android:background">@drawable/bg_action_mode_edit_url</item>
     </style>
-
 </resources>

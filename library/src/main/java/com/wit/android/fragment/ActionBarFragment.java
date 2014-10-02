@@ -23,11 +23,16 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.wit.android.fragment.annotation.ActionBarOptions;
+import com.wit.android.fragment.annotation.ActionModeOptions;
 import com.wit.android.fragment.annotation.MenuOptions;
 import com.wit.android.fragment.util.FragmentAnnotations;
 
@@ -46,6 +51,11 @@ import com.wit.android.fragment.util.FragmentAnnotations;
  * If this annotation is presented, options menu will be requested in {@link #onCreate(android.os.Bundle)}
  * by {@link #setHasOptionsMenu(boolean)} and menu will be created in {@link #onCreateOptionsMenu(android.view.Menu, android.view.MenuInflater)}
  * according to the options presented within this annotation.
+ * </p>
+ * <li>{@link com.wit.android.fragment.annotation.ActionModeOptions @ActionModeOptions} [<b>class - inherited</b>]</li>
+ * <p>
+ * If this annotation is presented, the {@link android.view.ActionMode} started by {@link }
+ * will be started with a new instance of {@link com.wit.android.fragment.ActionBarFragment.ActionModeCallback}.
  * </p>
  * </ul>
  *
@@ -85,6 +95,16 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
+	 * Current action mode.
+	 */
+	ActionMode mActionMode;
+
+	/**
+	 * Annotation holding an options for this fragment's action mode.
+	 */
+	ActionModeOptions mActionModeOptions;
+
+	/**
 	 * Annotation holding configuration for the ActionBar of this fragment.
 	 */
 	private ActionBarOptions mActionBarOptions;
@@ -110,7 +130,8 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
-	 * Creates a new instance of ActionBarFragment. If {@link com.wit.android.support.fragment.annotation.ActionBarOptions @ActionBarOptions}
+	 * Creates a new instance of ActionBarFragment. If {@link com.wit.android.fragment.annotation.ActionBarOptions @ActionBarOptions},
+	 * {@link com.wit.android.fragment.annotation.ActionModeOptions @ActionModeOptions}
 	 * or {@link com.wit.android.fragment.annotation.MenuOptions @MenuOptions} annotations are
 	 * presented above a sub-class of ActionBarFragment, they will be processed here.
 	 */
@@ -143,8 +164,9 @@ public class ActionBarFragment extends BaseFragment {
 					break;
 			}
 		}
-		// Enable/disable options menu.
-		setHasOptionsMenu(mMenuOptions != null);
+		if (mMenuOptions != null) {
+			setHasOptionsMenu(true);
+		}
 		this.mCreated = true;
 	}
 
@@ -152,7 +174,7 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		if (mMenuOptions != null) {
+		if (mMenuOptions != null && mMenuOptions.value() > 0) {
 			if (mMenuOptions.clear()) {
 				menu.clear();
 			}
@@ -340,6 +362,71 @@ public class ActionBarFragment extends BaseFragment {
 	 */
 
 	/**
+	 * Same as {@link #startActionMode(android.view.ActionMode.Callback)} with a new instance
+	 * of {@link com.wit.android.fragment.ActionBarFragment.ActionModeCallback} for this
+	 * fragment.
+	 */
+	protected boolean startActionMode() {
+		return startActionMode(new ActionModeCallback(this));
+	}
+
+	/**
+	 * Starts a new action mode for this fragment.
+	 *
+	 * @param callback The callback used to manage action mode.
+	 * @return <code>True</code> if action mode has been started, <code>false</code> if this fragment
+	 * is already in the action mode or the parent activity of this fragment is not available.
+	 * @see #isInActionMode()
+	 * @see #isActivityAvailable()
+	 */
+	protected boolean startActionMode(ActionMode.Callback callback) {
+		if (!isInActionMode() && mActivity != null) {
+			onActionModeStarted(getActivity().startActionMode(callback));
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Returns flag indicating whether this fragment is in the action mode or not.
+	 *
+	 * @return <code>True</code> if this fragment is in the action mode, <code>false</code> otherwise.
+	 * @see #getActionMode()
+	 */
+	protected boolean isInActionMode() {
+		return mActionMode != null;
+	}
+
+	/**
+	 * Returns the current action mode.
+	 *
+	 * @return The current action mode, or <code>null</code> if this fragment is not in action mode.
+	 * @see #isInActionMode()
+	 */
+	@Nullable
+	protected ActionMode getActionMode() {
+		return mActionMode;
+	}
+
+	/**
+	 * Invoked immediately after {@link #startActionMode(android.view.ActionMode.Callback)}
+	 * was called and this fragment was not in the action mode yet.
+	 *
+	 * @param actionMode Currently started action mode.
+	 */
+	protected void onActionModeStarted(@NonNull ActionMode actionMode) {
+		this.mActionMode = actionMode;
+	}
+
+	/**
+	 * Invoked whenever {@link com.wit.android.fragment.AdapterFragment.ActionModeCallback#onDestroyActionMode(android.view.ActionMode)}
+	 * is called on the current action mode callback (if instance of {@link com.wit.android.fragment.ActionBarFragment.ActionModeCallback}).
+	 */
+	protected void onActionModeFinished() {
+		this.mActionMode = null;
+	}
+
+	/**
 	 * Returns flag indicating whether the ActionBar is available or not.
 	 *
 	 * @return <code>True</code> if ActionBar obtained from the parent activity is available,
@@ -357,6 +444,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @return Instance of the ActionBar obtained from the parent activity.
 	 * @throws java.lang.IllegalStateException If this fragment isn't created yet or is already destroyed.
 	 */
+	@Nullable
 	protected ActionBar getActionBar() {
 		if (!mCreated) {
 			throw new IllegalStateException(
@@ -379,6 +467,10 @@ public class ActionBarFragment extends BaseFragment {
 		this.mMenuOptions = FragmentAnnotations.obtainAnnotationFrom(
 				classOfFragment, MenuOptions.class, ActionBarFragment.class
 		);
+		// Obtain action mode options.
+		this.mActionModeOptions = FragmentAnnotations.obtainAnnotationFrom(
+				classOfFragment, ActionModeOptions.class, ActionBarFragment.class
+		);
 	}
 
 	/**
@@ -388,4 +480,87 @@ public class ActionBarFragment extends BaseFragment {
 	/**
 	 * Inner classes ===============================================================================
 	 */
+
+	/**
+	 * <h4>Class Overview</h4>
+	 * todo: description
+	 *
+	 * @author Martin Albedinsky
+	 */
+	public static class ActionModeCallback implements ActionMode.Callback {
+
+		/**
+		 * Members =================================================================================
+		 */
+
+		/**
+		 * Instance of fragment within which context was this action mode started.
+		 */
+		protected final ActionBarFragment fragment;
+
+		/**
+		 * Constructors ============================================================================
+		 */
+
+		/**
+		 * Creates a new instance of ActionModeCallback without fragment.
+		 */
+		public ActionModeCallback() {
+			this(null);
+		}
+
+		/**
+		 * Creates a new instance of ActionModeCallback for the context of the given <var>fragment</var>.
+		 *
+		 * @param fragment The instance of fragment in which is being action mode started.
+		 */
+		public ActionModeCallback(ActionBarFragment fragment) {
+			this.fragment = fragment;
+		}
+
+		/**
+		 * Methods =================================================================================
+		 */
+
+		/**
+		 */
+		@Override
+		public boolean onCreateActionMode(@NonNull ActionMode actionMode, @NonNull Menu menu) {
+			final ActionModeOptions options = fragment != null ? fragment.mActionModeOptions : null;
+			if (options != null) {
+				if (options.menu() > 0) {
+					actionMode.getMenuInflater().inflate(options.menu(), menu);
+				}
+				return true;
+			}
+			return false;
+		}
+
+		/**
+		 */
+		@Override
+		public boolean onPrepareActionMode(@NonNull ActionMode actionMode, @NonNull Menu menu) {
+			return false;
+		}
+
+		/**
+		 */
+		@Override
+		public boolean onActionItemClicked(@NonNull ActionMode actionMode, @NonNull MenuItem menuItem) {
+			if (fragment != null && fragment.onOptionsItemSelected(menuItem)) {
+				actionMode.finish();
+				return true;
+			}
+			return false;
+		}
+
+		/**
+		 */
+		@Override
+		public void onDestroyActionMode(@NonNull ActionMode actionMode) {
+			if (fragment != null) {
+				fragment.onActionModeFinished();
+			}
+		}
+	}
 }

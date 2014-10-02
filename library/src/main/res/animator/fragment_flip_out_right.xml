@@ -27,14 +27,14 @@
             android:valueTo="180"
             android:propertyName="rotationY"
             android:interpolator="@android:interpolator/accelerate_decelerate"
-            android:duration="@integer/Config.Anim.Fragment.Flip.Horizontal.Out.duration" />
+            android:duration="@integer/fragment_config_anim_flip_horizontal_out_duration" />
 
     <!-- Hide an animated object after the first half of animation. -->
     <objectAnimator
             android:valueFrom="1.0"
             android:valueTo="0.0"
             android:propertyName="alpha"
-            android:startOffset="@integer/Config.Anim.Fragment.Flip.Horizontal.Out.offset"
+            android:startOffset="@integer/fragment_config_anim_flip_horizontal_out_delay"
             android:duration="1" />
 
 </set>

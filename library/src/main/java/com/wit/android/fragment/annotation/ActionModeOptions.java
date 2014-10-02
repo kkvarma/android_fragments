@@ -18,6 +18,8 @@
  */
 package com.wit.android.fragment.annotation;
 
+import android.view.ActionMode;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -40,8 +42,10 @@ public @interface ActionModeOptions {
 
 	/**
 	 * A resource id of the desired xml menu for an ActionMode.
+	 * <p/>
+	 * Default value: <b>0</b>
 	 *
-	 * @see android.view.ActionMode.Callback#onCreateActionMode(android.view.ActionMode, android.view.Menu)
+	 * @see ActionMode.Callback#onCreateActionMode(android.view.ActionMode, android.view.Menu)
 	 */
-	int menu();
+	int menu() default 0;
 }

@@ -21,12 +21,15 @@ package com.wit.android.fragment.examples.fragment;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
 import com.wit.android.fragment.GridFragment;
+import com.wit.android.fragment.annotation.ActionModeOptions;
 import com.wit.android.fragment.annotation.AdapterViewOptions;
 import com.wit.android.fragment.examples.R;
 import com.wit.android.fragment.examples.adapter.AppsAdapter;
@@ -39,13 +42,14 @@ import com.wit.android.fragment.examples.content.AppsAsyncTask;
  *
  * @author Martin Albedinsky
  */
-@AdapterViewOptions(emptyText = R.string.AdapterFragment_Text_Empty)
-public class GridFragmentImpl extends GridFragment<AppsAdapter> {
+@ActionModeOptions
+@AdapterViewOptions(emptyText = R.string.adapter_fragment_empty, longClickable = true)
+public class SampleGridFragment extends GridFragment<AppsAdapter> {
 
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = GridFragmentImpl.class.getSimpleName();
+	// private static final String TAG = "SampleGridFragment";
 
 	/**
 	 *
@@ -64,8 +68,10 @@ public class GridFragmentImpl extends GridFragment<AppsAdapter> {
 		new AppsAsyncTask(adapter).execute();
 	}
 
+	/**
+	 */
 	@Override
-	protected void onViewCreated(View view, GridView adapterView, Bundle savedInstanceState) {
+	protected void onViewCreated(@NonNull View view, @NonNull GridView adapterView, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, adapterView, savedInstanceState);
 		adapterView.setNumColumns(GridView.AUTO_FIT);
 	}
@@ -73,7 +79,7 @@ public class GridFragmentImpl extends GridFragment<AppsAdapter> {
 	/**
 	 */
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	public void onItemClick(@NonNull AdapterView<?> parent, @NonNull View view, int position, long id) {
 		final ApplicationInfo appInfo = getAdapter().getItem(position);
 		if (appInfo != null) {
 			try {

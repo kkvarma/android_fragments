@@ -19,7 +19,7 @@
 package com.wit.android.fragment.examples.fragment;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
+import android.app.ActionBar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -38,8 +38,8 @@ import com.wit.android.fragment.examples.R;
  */
 @MenuOptions(R.menu.menu_test)
 @ContentView(R.layout.fragment_action_bar)
-@ActionBarOptions(title = R.string.ActionBarFragment_Title, icon = ActionBarOptions.NONE)
-public class ActionBarFragmentImpl extends ActionBarFragment {
+@ActionBarOptions(title = R.string.action_bar_fragment_title, icon = ActionBarOptions.NONE)
+public class SampleActionBarFragment extends ActionBarFragment {
 
 	/**
 	 * Log TAG.

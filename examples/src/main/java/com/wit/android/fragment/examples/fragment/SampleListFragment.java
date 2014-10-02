@@ -21,30 +21,32 @@ package com.wit.android.fragment.examples.fragment;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.wit.android.fragment.ListFragment;
+import com.wit.android.fragment.annotation.ActionModeOptions;
 import com.wit.android.fragment.annotation.AdapterViewOptions;
 import com.wit.android.fragment.examples.R;
 import com.wit.android.fragment.examples.adapter.AppsAdapter;
 import com.wit.android.fragment.examples.content.AppsAsyncTask;
 
 /**
- * <p>
- * Description.
- * </p>
+ * todo: description
  *
  * @author Martin Albedinsky
  */
-@AdapterViewOptions(emptyText = R.string.AdapterFragment_Text_Empty)
-public class ListFragmentImpl extends ListFragment<AppsAdapter> {
+@ActionModeOptions(menu = R.menu.menu_test)
+@AdapterViewOptions(emptyText = R.string.adapter_fragment_empty, longClickable = true)
+public class SampleListFragment extends ListFragment<AppsAdapter> {
 
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = ListFragmentImpl.class.getSimpleName();
+	// private static final String TAG = "SampleListFragment";
 
 	/**
 	 *
@@ -55,8 +57,16 @@ public class ListFragmentImpl extends ListFragment<AppsAdapter> {
 	 *
 	 * @return
 	 */
-	public static ListFragmentImpl newInstance() {
-		return new ListFragmentImpl();
+	public static SampleListFragment newInstance() {
+		return new SampleListFragment();
+	}
+
+	/**
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Dismiss action mode on menu item click.
+		return true;
 	}
 
 	/**
@@ -74,7 +84,7 @@ public class ListFragmentImpl extends ListFragment<AppsAdapter> {
 	/**
 	 */
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	public void onItemClick(@NonNull AdapterView<?> parent, @NonNull View view, int position, long id) {
 		final ApplicationInfo appInfo = getAdapter().getItem(position);
 		if (appInfo != null) {
 			try {

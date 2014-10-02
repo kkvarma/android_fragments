@@ -49,7 +49,7 @@
             <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/Activity.Home.Check.AddFragmentToBackStack"
+                    android:text="@string/home_check_add_fragment_to_back_stack"
                     android:onClick="onAddToBackStackClick"
                     android:checked="true"
                     android:padding="10dip"/>

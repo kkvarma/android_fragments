@@ -20,6 +20,7 @@ package com.wit.android.fragment.manage;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.wit.android.fragment.R;
 
@@ -555,7 +556,7 @@ public class FragmentTransition implements Parcelable {
 	 *
 	 * @param source Parcel with data for a new instance.
 	 */
-	protected FragmentTransition(Parcel source) {
+	protected FragmentTransition(@NonNull Parcel source) {
 		this.mInAnimResId = source.readInt();
 		this.mOutAnimResId = source.readInt();
 		this.mInAnimBackResId = source.readInt();
@@ -574,7 +575,7 @@ public class FragmentTransition implements Parcelable {
 	/**
 	 */
 	@Override
-	public void writeToParcel(Parcel dest, int flags) {
+	public void writeToParcel(@NonNull Parcel dest, int flags) {
 		dest.writeInt(mInAnimResId);
 		dest.writeInt(mOutAnimResId);
 		dest.writeInt(mInAnimBackResId);

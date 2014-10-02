@@ -19,6 +19,7 @@
 package com.wit.android.fragment.util;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.app.Fragment;
 import android.view.View;
 
@@ -30,7 +31,7 @@ import java.lang.reflect.Field;
 
 /**
  * <h4>Class Overview</h4>
- * Annotation utils.
+ * Annotation utils for fragments.
  *
  * @author Martin Albedinsky
  */
@@ -56,7 +57,7 @@ public final class FragmentAnnotations {
 		 * @param field The currently iterated field.
 		 * @param name  A name of the currently iterated field.
 		 */
-		public void onProcessField(Field field, String name);
+		public void onProcessField(@NonNull Field field, String name);
 	}
 
 	/**
@@ -66,7 +67,7 @@ public final class FragmentAnnotations {
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = FragmentAnnotations.class.getSimpleName();
+	// private static final String TAG = "FragmentAnnotations";
 
 	/**
 	 * Flag indicating whether the debug output trough log-cat is enabled or not.
@@ -83,19 +84,15 @@ public final class FragmentAnnotations {
 	 */
 
 	/**
-	 * <p>
 	 * Same as {@link #obtainAnnotationFrom(Class, Class, Class)} with no <var>maxSuperClass</var>
 	 * specified.
-	 * </p>
 	 */
 	public static <A extends Annotation> A obtainAnnotationFrom(Class<?> fromClass, Class<A> classOfAnnotation) {
 		return obtainAnnotationFrom(fromClass, classOfAnnotation, null);
 	}
 
 	/**
-	 * <p>
 	 * Obtains the specified type of an annotation from the given <var>fromClass</var> if it is presented.
-	 * </p>
 	 *
 	 * @param fromClass         A class from which should be the requested annotation obtained.
 	 * @param classOfAnnotation A class of the requested annotation.
@@ -123,19 +120,15 @@ public final class FragmentAnnotations {
 	}
 
 	/**
-	 * <p>
 	 * Same as {@link #iterateFields(Class, FieldProcessor, Class)} with no <var>maxSuperClass</var>
 	 * specified.
-	 * </p>
 	 */
 	public static void iterateFields(Class<?> fieldsClass, FieldProcessor processor) {
 		iterateFields(fieldsClass, processor, null);
 	}
 
 	/**
-	 * <p>
 	 * Iterates all declared fields of the given <var>ofClass</var>.
-	 * </p>
 	 *
 	 * @param ofClass       A class of which fields to iterate.
 	 * @param processor     A field processor callback to be invoked for each of iterated fields.
@@ -161,10 +154,8 @@ public final class FragmentAnnotations {
 	}
 
 	/**
-	 * <p>
 	 * Same as {@link #injectView(java.lang.reflect.Field, Object, android.view.View, android.view.View.OnClickListener)}
 	 * with <code>null</code> OnClickListener.
-	 * </p>
 	 */
 	public static boolean injectView(Field field, Object fieldHolder, View root) {
 		return injectView(field, fieldHolder, root, null);
@@ -172,12 +163,10 @@ public final class FragmentAnnotations {
 
 
 	/**
-	 * <p>
 	 * Injects view obtained from the given <var>root</var> view by id presented within
 	 * {@link com.wit.android.fragment.annotation.InjectView @InjectView} or
 	 * {@link com.wit.android.fragment.annotation.InjectView.Last @InjectView.Last} annotation
 	 * as value to the given <var>field</var>.
-	 * </p>
 	 *
 	 * @param field           Field to which should be obtained view set as value.
 	 * @param fieldParent     Context in which is the passed view <var>field</var> presented.
@@ -196,17 +185,14 @@ public final class FragmentAnnotations {
 	}
 
 	/**
-	 * <p>
 	 * Same as {@link #injectFragmentViews(android.app.Fragment, Class, android.view.View.OnClickListener)}
 	 * with <code>null</code> <var>onClickListener</var>.
-	 * </p>
 	 */
 	public static void injectFragmentViews(Fragment fragment, Class<?> maxSuperClass) {
 		injectFragmentViews(fragment, maxSuperClass, null);
 	}
 
 	/**
-	 * <p>
 	 * Injects all annotated field views into the given <var>fragment</var> context. Each view to inject
 	 * must be marked with {@link com.wit.android.fragment.annotation.InjectView @InjectView}
 	 * or {@link com.wit.android.fragment.annotation.InjectView.Last @InjectView.Last}
@@ -215,16 +201,13 @@ public final class FragmentAnnotations {
 	 * of classes without @InjectViews annotation will be not injected. This is due to optimization,
 	 * because some of super classes of the given <var>fragment</var> may not have @InjectView annotated
 	 * fields, but still all their fields would be without optimization iterated.
-	 * </p>
-	 * <p>
+	 * <p/>
 	 * <b>Note</b>, that views to inject will be obtained from the current root view of the given
 	 * fragment ({@link android.app.Fragment#getView()}).
-	 * </p>
-	 * <p>
+	 *  <p/>
 	 * <b>If the context of which views you want to inject has like really a lot of fields, consider
 	 * to not use this approach, because it can really decrease performance (increase time of displaying
 	 * new screen, etc.).</b>
-	 * </p>
 	 *
 	 * @param fragment        An instance of the fragment into which context should be views injected.
 	 * @param maxSuperClass   If <code>not null</code>, this method will be called (recursively)
@@ -250,24 +233,19 @@ public final class FragmentAnnotations {
 	}
 
 	/**
-	 * <p>
 	 * Same as {@link #injectActivityViews(android.app.Activity, Class, android.view.View.OnClickListener)}
 	 * with <code>null</code> <var>onClickListener</var>.
-	 * </p>
 	 */
 	public static void injectActivityViews(Activity activity, Class<?> maxSuperClass) {
 		injectActivityViews(activity, maxSuperClass, null);
 	}
 
 	/**
-	 * <p>
 	 * Same as {@link #injectFragmentViews(android.app.Fragment, Class)}, where the given
 	 * <var>activity</var> will be used as context into which will be views injected.
-	 * </p>
-	 * <p>
+	 *  <p/>
 	 * <b>Note</b>, that views to inject will be obtained from the current root content view of the
 	 * given activity (<code>activity.getWindow().getDecorView().findViewById(android.R.id.content)</code>).
-	 * </p>
 	 *
 	 * @param activity        An instance of the activity into which context should be views injected.
 	 * @param maxSuperClass   If <code>not null</code>, this method will be called (recursively)
@@ -306,7 +284,7 @@ public final class FragmentAnnotations {
 	 *                           <var>maxSuperClass</var>), otherwise only fields of the given class
 	 *                           will be iterated.
 	 * @param onClickListener    An instance of OnClickListener which should be set to injected views
-	 *                           if {@link com.wit.android.support.fragment.annotation.InjectView#clickable() @InjectView.clickable()}
+	 *                           if {@link com.wit.android.fragment.annotation.InjectView#clickable() @InjectView.clickable()}
 	 *                           flag is set to <code>true</code>.
 	 */
 	private static void injectViews(Object rootContext, Class<?> classOfRootContext, View root, Class<?> maxSuperClass, View.OnClickListener onClickListener) {

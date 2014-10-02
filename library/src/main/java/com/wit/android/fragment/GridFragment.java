@@ -19,6 +19,8 @@
 package com.wit.android.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -35,9 +37,32 @@ import android.widget.ListAdapter;
 public class GridFragment<A extends ListAdapter> extends AdapterFragment<GridView, A> {
 
 	/**
+	 * Interface ===================================================================================
+	 */
+
+	/**
+	 * Constants ===================================================================================
+	 */
+
+	/**
+	 * Log TAG.
+	 */
+	// private static final String TAG = "GridFragment";
+
+	/**
+	 * Flag indicating whether the debug output trough log-cat is enabled or not.
+	 */
+	// private static final boolean DEBUG_ENABLED = true;
+
+	/**
+	 * Flag indicating whether the output trough log-cat is enabled or not.
+	 */
+	// private static final boolean LOG_ENABLED = true;
+
+	/**
 	 */
 	@Override
-	protected GridView onCreateAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	protected GridView onCreateAdapterView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return new GridView(inflater.getContext(), null, android.R.attr.gridViewStyle);
 	}
 }
