@@ -593,7 +593,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	protected boolean startActionMode(@NonNull ActionMode.Callback callback, @NonNull V adapterView, @NonNull View view, int position, long id) {
 		if (!isInActionMode() && mActivity != null) {
 			onActionModeStarted(
-					mActionMode = getActivity().startActionMode(callback),
+					mActivity.startActionMode(callback),
 					adapterView, view, position, id
 			);
 			return true;
@@ -615,6 +615,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 *                    ActionMode started.
 	 */
 	protected void onActionModeStarted(@NonNull ActionMode actionMode, @NonNull V adapterView, @NonNull View view, int position, long id) {
+		this.mActionMode = actionMode;
 	}
 
 	/**

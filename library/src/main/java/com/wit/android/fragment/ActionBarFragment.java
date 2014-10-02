@@ -409,6 +409,20 @@ public class ActionBarFragment extends BaseFragment {
 	}
 
 	/**
+	 * Finishes the current action mode.
+	 *
+	 * @return <code>True</code> if action mode has been finished, <code>false</code> if this fragment
+	 * is not in action mode, and thus nothing to finish.
+	 */
+	protected boolean finishActionMode() {
+		if (mActionMode != null) {
+			mActionMode.finish();
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Invoked immediately after {@link #startActionMode(android.view.ActionMode.Callback)}
 	 * was called and this fragment was not in the action mode yet.
 	 *
