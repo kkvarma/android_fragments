@@ -111,5 +111,4 @@
     <integer name="Config.Anim.Fragment.Flip.Vertical.Out.duration">@integer/Config.Anim.Fragment.Horizontal.Out.duration</integer>
     <!-- Duration for a current outgoing (back-stacked is incoming) fragment's vertical flip animation -->
     <integer name="Config.Anim.Fragment.Flip.Vertical.Out.Back.duration">@integer/Config.Anim.Fragment.Horizontal.Out.Back.duration</integer>
-
 </resources>
