@@ -20,13 +20,13 @@ package com.wit.android.support.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v7.view.ActionMode;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -34,7 +34,6 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.wit.android.support.fragment.annotation.ActionModeOptions;
 import com.wit.android.support.fragment.annotation.AdapterViewOptions;
 import com.wit.android.support.fragment.util.FragmentAnnotations;
 
@@ -60,6 +59,7 @@ import java.lang.reflect.InvocationTargetException;
  * See {@link #startActionMode(android.support.v7.view.ActionMode.Callback, android.widget.AdapterView, android.view.View, int, long)}
  * for more information.
  * </p>
+ * <li>{@link ActionBarFragment super annotations}</li>
  * </ul>
  *
  * @param <V> A type of the adapter view which presents data set provided by the adapter used within
@@ -118,11 +118,6 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	A mAdapter;
 
 	/**
-	 * Current action mode.
-	 */
-	ActionMode mActionMode;
-
-	/**
 	 * Resource id of empty view layout to inflate.
 	 */
 	private int mEmptyViewRes;
@@ -139,18 +134,12 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	private AdapterViewOptions mAdapterViewOptions;
 
 	/**
-	 * Annotation holding an options for this fragment's action mode.
-	 */
-	private ActionModeOptions mActionModeOptions;
-
-	/**
 	 * Constructors ================================================================================
 	 */
 
 	/**
 	 * Creates a new instance of AdapterFragment. If {@link com.wit.android.support.fragment.annotation.AdapterViewOptions @AdapterViewOptions}
-	 * or {@link com.wit.android.support.fragment.annotation.ActionModeOptions @ActionModeOptions}
-	 * annotations are presented above a subclass of this AdapterFragment, they will be processed here.
+	 * annotation is presented above a subclass of this AdapterFragment, it will be processed here.
 	 */
 	public AdapterFragment() {
 		super();
@@ -229,9 +218,9 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	}
 
 	/**
-	 * Returns flag indicating whether this adapter fragment holds some adapter or not.
+	 * Returns flag indicating whether this adapter fragment has adapter attached or not.
 	 *
-	 * @return <code>True</code> if adapter is presented, <code>false</code> otherwise.
+	 * @return <code>True</code> if adapter is attached, <code>false</code> otherwise.
 	 */
 	public boolean hasAdapter() {
 		return mAdapter != null;
@@ -240,7 +229,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	/**
 	 */
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	public void onItemClick(@NonNull AdapterView<?> parent, @NonNull View view, int position, long id) {
 	}
 
 	/**
@@ -249,7 +238,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * annotation is presented above a subclass of this AdapterFragment.
 	 */
 	@Override
-	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+	public boolean onItemLongClick(@NonNull AdapterView<?> parent, @NonNull View view, int position, long id) {
 		return (mActionModeOptions != null) && startActionModeInner(parent, view, position, id);
 	}
 
@@ -295,6 +284,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 *
 	 * @return The view which was set as empty view for this fragment's adapter view.
 	 */
+	@Nullable
 	public View getEmptyView() {
 		return mEmptyView;
 	}
@@ -437,7 +427,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @return This returns be default an instance of {@link android.widget.FrameLayout}.
 	 * @see #createLayoutParams()
 	 */
-	protected ViewGroup onCreateLayout(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	protected ViewGroup onCreateLayout(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return new FrameLayout(inflater.getContext());
 	}
 
@@ -461,7 +451,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 *                           is just being first time created.
 	 * @return This returns by default <code>null</code>.
 	 */
-	protected V onCreateAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	protected V onCreateAdapterView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return null;
 	}
 
@@ -488,7 +478,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 *                           is just being first time created.
 	 * @return An instance of empty view.
 	 */
-	protected View onCreateEmptyView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	protected View onCreateEmptyView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return new TextView(inflater.getContext(), null, android.R.attr.textViewStyle);
 	}
 
@@ -518,7 +508,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @param savedInstanceState Bundle with saved state or <code>null</code> if this fragment's view
 	 *                           is just being first time created.
 	 */
-	protected void onViewCreated(View view, V adapterView, Bundle savedInstanceState) {
+	protected void onViewCreated(@NonNull View view, @NonNull V adapterView, @Nullable Bundle savedInstanceState) {
 		// Base set up.
 		this.setAdapterInner(mAdapter);
 		if (mEmptyView == null && mEmptyViewRes > 0) {
@@ -565,7 +555,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * <code>false</code> if the current activity is already invalid or {@link LoaderManager} is not
 	 * available.
 	 */
-	protected boolean startLoader(int id, Bundle params, LoaderManager.LoaderCallbacks callbacks) {
+	protected boolean startLoader(int id, @Nullable Bundle params, @NonNull LoaderManager.LoaderCallbacks callbacks) {
 		if (isActivityAvailable()) {
 			final LoaderManager loaderManager = getActivity().getSupportLoaderManager();
 			if (loaderManager != null) {
@@ -581,7 +571,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	}
 
 	/**
-	 * Starts the action mode for this adapter fragment. <b>Note</b>, that by default is this called
+	 * Starts a new action mode for this fragment. <b>Note</b>, that by default is this called
 	 * from {@link #onItemLongClick(android.widget.AdapterView, android.view.View, int, long)} if
 	 * there is {@link com.wit.android.support.fragment.annotation.ActionModeOptions @ActionModeOptions}
 	 * annotation presented above a sub-class of this AdapterFragment. The started ActionMode will be
@@ -595,42 +585,20 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 *                    being ActionMode started.
 	 * @param id          An id of the item from the current adapter's data set for which is being
 	 *                    ActionMode started.
-	 * @return <code>True</code> if action mode started, <code>false</code> if this fragment is already
-	 * in the action mode or the parent activity of this AdapterFragment is not available.
+	 * @return <code>True</code> if action mode has been started, <code>false</code> if this fragment
+	 * is already in the action mode or the parent activity of this fragment is not available.
 	 * @see #isInActionMode()
 	 * @see #isActivityAvailable()
 	 */
-	protected boolean startActionMode(ActionMode.Callback callback, V adapterView, View view, int position, long id) {
-		if (!isInActionMode()) {
-			if (isActivityAvailable()) {
-				onActionModeStarted(
-						mActionMode = getActionBarActivity().startSupportActionMode(callback),
-						adapterView, view, position, id
-				);
-			}
+	protected boolean startActionMode(@NonNull ActionMode.Callback callback, @NonNull V adapterView, @NonNull View view, int position, long id) {
+		if (!isInActionMode() && mActivity != null) {
+			onActionModeStarted(
+					mActionMode = getActionBarActivity().startSupportActionMode(callback),
+					adapterView, view, position, id
+			);
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Returns flag indicating whether this fragment is in the action mode or not.
-	 *
-	 * @return <code>True</code> if this fragment is in the action mode, <code>false</code> otherwise.
-	 * @see #getActionMode()
-	 */
-	protected boolean isInActionMode() {
-		return mActionMode != null;
-	}
-
-	/**
-	 * Returns the current action mode.
-	 *
-	 * @return The current action mode, or <code>null</code> if this fragment is not in action mode.
-	 * @see #isInActionMode()
-	 */
-	protected ActionMode getActionMode() {
-		return mActionMode;
 	}
 
 	/**
@@ -646,14 +614,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @param id          An id of the item from the current adapter's data set for which is being
 	 *                    ActionMode started.
 	 */
-	protected void onActionModeStarted(ActionMode actionMode, V adapterView, View view, int position, long id) {
-	}
-
-	/**
-	 * Invoked whenever {@link com.wit.android.support.fragment.AdapterFragment.ActionModeCallback#onDestroyActionMode(android.support.v7.view.ActionMode)}
-	 * is called on the current action mode callback (if instance of {@link com.wit.android.support.fragment.AdapterFragment.ActionModeCallback}).
-	 */
-	protected void onActionModeFinished() {
+	protected void onActionModeStarted(@NonNull ActionMode actionMode, @NonNull V adapterView, @NonNull View view, int position, long id) {
 	}
 
 	/**
@@ -664,10 +625,6 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 		// Obtain adapter view options.
 		this.mAdapterViewOptions = FragmentAnnotations.obtainAnnotationFrom(
 				classOfFragment, AdapterViewOptions.class, AdapterFragment.class
-		);
-		// Obtain action mode options.
-		this.mActionModeOptions = FragmentAnnotations.obtainAnnotationFrom(
-				classOfFragment, ActionModeOptions.class, AdapterFragment.class
 		);
 	}
 
@@ -759,78 +716,22 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 *
 	 * @author Martin Albedinsky
 	 */
-	public static class ActionModeCallback implements ActionMode.Callback {
+	public static class ActionModeCallback extends ActionBarFragment.ActionModeCallback {
 
 		/**
-		 * Members =================================================================================
-		 */
-
-		/**
-		 * Instance of adapter fragment within which context was this action mode started.
-		 */
-		protected final AdapterFragment mAdapterFragment;
-
-		/**
-		 * Constructors ============================================================================
-		 */
-
-		/**
-		 * Creates a new instance of ActionModeCallback.
+		 * Creates a new instance of ActionModeCallback without fragment.
 		 */
 		public ActionModeCallback() {
 			this(null);
 		}
 
 		/**
-		 * Creates a new instance of ActionModeCallback for the context of the given <var>adapterFragment</var>.
+		 * Creates a new instance of ActionModeCallback for the context of the given <var>fragment</var>.
 		 *
-		 * @param adapterFragment The instance of adapter fragment in which was this action mode started.
+		 * @param fragment The instance of adapter fragment in which was this action mode started.
 		 */
-		public ActionModeCallback(AdapterFragment adapterFragment) {
-			this.mAdapterFragment = adapterFragment;
-		}
-
-		/**
-		 * Methods =================================================================================
-		 */
-
-		/**
-		 */
-		@Override
-		public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-			if (mAdapterFragment != null && mAdapterFragment.mActionModeOptions != null) {
-				actionMode.getMenuInflater().inflate(mAdapterFragment.mActionModeOptions.menu(), menu);
-				return true;
-			}
-			return false;
-		}
-
-		/**
-		 */
-		@Override
-		public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-			return false;
-		}
-
-		/**
-		 */
-		@Override
-		public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-			if (mAdapterFragment != null && mAdapterFragment.onOptionsItemSelected(menuItem)) {
-				actionMode.finish();
-				return true;
-			}
-			return false;
-		}
-
-		/**
-		 */
-		@Override
-		public void onDestroyActionMode(ActionMode actionMode) {
-			if (mAdapterFragment != null) {
-				mAdapterFragment.mActionMode = null;
-				mAdapterFragment.onActionModeFinished();
-			}
+		public ActionModeCallback(AdapterFragment fragment) {
+			super(fragment);
 		}
 	}
 }

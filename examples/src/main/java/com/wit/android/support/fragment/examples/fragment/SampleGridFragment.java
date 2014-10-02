@@ -21,11 +21,15 @@ package com.wit.android.support.fragment.examples.fragment;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.Toast;
 
-import com.wit.android.support.fragment.ListFragment;
+import com.wit.android.support.fragment.GridFragment;
+import com.wit.android.support.fragment.annotation.ActionModeOptions;
 import com.wit.android.support.fragment.annotation.AdapterViewOptions;
 import com.wit.android.support.fragment.examples.R;
 import com.wit.android.support.fragment.examples.adapter.AppsAdapter;
@@ -38,26 +42,19 @@ import com.wit.android.support.fragment.examples.content.AppsAsyncTask;
  *
  * @author Martin Albedinsky
  */
-@AdapterViewOptions(emptyText = R.string.AdapterFragment_Text_Empty)
-public class ListFragmentImpl extends ListFragment<AppsAdapter> {
+@ActionModeOptions
+@AdapterViewOptions(emptyText = R.string.AdapterFragment_Text_Empty, longClickable = true)
+public class SampleGridFragment extends GridFragment<AppsAdapter> {
 
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = ListFragmentImpl.class.getSimpleName();
+	// private static final String TAG = "SampleGridFragment";
 
 	/**
 	 *
 	 */
 	private PackageManager mPackageManager;
-
-	/**
-	 *
-	 * @return
-	 */
-	public static ListFragmentImpl newInstance() {
-		return new ListFragmentImpl();
-	}
 
 	/**
 	 */
@@ -66,7 +63,7 @@ public class ListFragmentImpl extends ListFragment<AppsAdapter> {
 		super.onCreate(savedInstanceState);
 		this.mPackageManager = getActivity().getPackageManager();
 
-		final AppsAdapter adapter = new AppsAdapter(getActivity(), false);
+		final AppsAdapter adapter = new AppsAdapter(getActivity(), true);
 		setAdapter(adapter);
 		new AppsAsyncTask(adapter).execute();
 	}
@@ -74,7 +71,15 @@ public class ListFragmentImpl extends ListFragment<AppsAdapter> {
 	/**
 	 */
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	protected void onViewCreated(@NonNull View view, @NonNull GridView adapterView, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, adapterView, savedInstanceState);
+		adapterView.setNumColumns(GridView.AUTO_FIT);
+	}
+
+	/**
+	 */
+	@Override
+	public void onItemClick(@NonNull AdapterView<?> parent, @NonNull View view, int position, long id) {
 		final ApplicationInfo appInfo = getAdapter().getItem(position);
 		if (appInfo != null) {
 			try {

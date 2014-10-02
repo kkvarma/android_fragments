@@ -32,7 +32,7 @@ import android.widget.CheckBox;
 import com.wit.android.support.examples.ExBaseHomeActivity;
 import com.wit.android.support.examples.model.ExNavigationItem;
 import com.wit.android.support.fragment.examples.adapter.TransitionsAdapter;
-import com.wit.android.support.fragment.examples.fragment.ActionBarFragmentImpl;
+import com.wit.android.support.fragment.examples.fragment.SampleActionBarFragment;
 import com.wit.android.support.fragment.examples.fragment.FragmentsFactory;
 import com.wit.android.support.fragment.manage.FragmentController;
 import com.wit.android.support.fragment.manage.FragmentTransition;
@@ -225,7 +225,7 @@ public class HomeActivity extends ExBaseHomeActivity implements FragmentControll
 					 */
 					@Override
 					public void run() {
-						mController.showFragment(id, ActionBarFragmentImpl.createParams(R.string.ActionBarFragment_Title));
+						mController.showFragment(id, SampleActionBarFragment.createParams(R.string.ActionBarFragment_Title));
 					}
 				});
 				break;
