@@ -21,6 +21,8 @@ package com.wit.android.support.fragment.examples.fragment;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -66,8 +68,10 @@ public class SampleGridFragment extends GridFragment<AppsAdapter> {
 		new AppsAsyncTask(adapter).execute();
 	}
 
+	/**
+	 */
 	@Override
-	protected void onViewCreated(View view, GridView adapterView, Bundle savedInstanceState) {
+	protected void onViewCreated(@NonNull View view, @NonNull GridView adapterView, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, adapterView, savedInstanceState);
 		adapterView.setNumColumns(GridView.AUTO_FIT);
 	}
@@ -75,7 +79,7 @@ public class SampleGridFragment extends GridFragment<AppsAdapter> {
 	/**
 	 */
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	public void onItemClick(@NonNull AdapterView<?> parent, @NonNull View view, int position, long id) {
 		final ApplicationInfo appInfo = getAdapter().getItem(position);
 		if (appInfo != null) {
 			try {

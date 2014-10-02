@@ -19,6 +19,7 @@
 package com.wit.android.support.fragment.examples.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -73,7 +74,7 @@ public class ViewsFragment extends BaseFragment {
 	/**
 	 */
 	@Override
-	protected boolean onViewClick(View view, int id) {
+	protected boolean onViewClick(@NonNull View view, int id) {
 		switch (id) {
 			case R.id.fragment_views_button_sign_in:
 				Toast.makeText(getActivity(), mButtonSignIn.getText() + " button clicked", Toast.LENGTH_SHORT).show();

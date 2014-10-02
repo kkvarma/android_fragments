@@ -19,6 +19,8 @@
 package com.wit.android.support.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -60,7 +62,7 @@ public class ListFragment<A extends ListAdapter> extends AdapterFragment<ListVie
 	/**
 	 */
 	@Override
-	protected ListView onCreateAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	protected ListView onCreateAdapterView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return new ListView(inflater.getContext(), null, android.R.attr.listViewStyle);
 	}
 }

@@ -74,7 +74,7 @@ public class FragmentController {
 		 * @see #isFragmentProvided(int)
 		 */
 		@Nullable
-		public Fragment createFragmentInstance(int fragmentId, Bundle params);
+		public Fragment createFragmentInstance(int fragmentId, @Nullable Bundle params);
 
 		/**
 		 * Returns an options for the fragment associated with the specified <var>fragmentId</var>
@@ -92,7 +92,7 @@ public class FragmentController {
 		 * with the specified <var>fragmentId</var>.
 		 */
 		@Nullable
-		public TransactionOptions getFragmentTransactionOptions(int fragmentId, Bundle params);
+		public TransactionOptions getFragmentTransactionOptions(int fragmentId, @Nullable Bundle params);
 
 		/**
 		 * Returns a tag for the fragment associated with the specified <var>fragmentId</var> within
