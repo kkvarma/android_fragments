@@ -41,7 +41,7 @@ public class ImageFragment extends ActionBarFragment {
 	/**
 	 * Log TAG.
 	 */
-	// private static final String TAG = ImageFragment.class.getSimpleName();
+	// private static final String TAG = "ImageFragment";
 
 	/**
 	 *

@@ -62,8 +62,10 @@ public @interface MenuOptions {
 
 	/**
 	 * A resource id of the desired xml menu.
+	 * <p/>
+	 * Default value: <b>0</b>
 	 */
-	int value();
+	int value() default 0;
 
 	/**
 	 * Flag indicating whether to clear the already created menu or not.
