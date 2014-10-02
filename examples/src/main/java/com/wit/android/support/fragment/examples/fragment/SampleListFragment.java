@@ -21,6 +21,7 @@ package com.wit.android.support.fragment.examples.fragment;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -83,7 +84,7 @@ public class SampleListFragment extends ListFragment<AppsAdapter> {
 	/**
 	 */
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	public void onItemClick(@NonNull AdapterView<?> parent, @NonNull View view, int position, long id) {
 		final ApplicationInfo appInfo = getAdapter().getItem(position);
 		if (appInfo != null) {
 			try {

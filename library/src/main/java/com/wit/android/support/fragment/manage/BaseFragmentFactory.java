@@ -19,6 +19,7 @@
 package com.wit.android.support.fragment.manage;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -237,7 +238,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 */
 	@Nullable
 	@Override
-	public Fragment createFragmentInstance(int fragmentId, Bundle params) {
+	public Fragment createFragmentInstance(int fragmentId, @Nullable Bundle params) {
 		if (hasJoinedFactories()) {
 			// Try to obtain dialog fragment from the current joined factories.
 			for (FragmentController.FragmentFactory factory : mFactories) {
@@ -270,7 +271,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 */
 	@Nullable
 	@Override
-	public FragmentController.TransactionOptions getFragmentTransactionOptions(int fragmentId, Bundle params) {
+	public FragmentController.TransactionOptions getFragmentTransactionOptions(int fragmentId, @Nullable Bundle params) {
 		if (hasJoinedFactories()) {
 			// Try to obtain TransactionOptions from the joined factories.
 			for (FragmentController.FragmentFactory factory : mFactories) {
@@ -362,7 +363,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * annotation presented for the specified <var>fragmentId</var> with valid fragment class type
 	 * ({@link FactoryFragment#type() @FactoryFragment.type()}), <code>null</code> otherwise.
 	 */
-	protected Fragment onCreateFragmentInstance(int fragmentId, Bundle params) {
+	protected Fragment onCreateFragmentInstance(int fragmentId, @Nullable Bundle params) {
 		return providesFragment(fragmentId) ? mItems.get(fragmentId).newInstance(params) : null;
 	}
 
@@ -373,7 +374,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * This implementation returns default transaction options with {@link FragmentTransition#FADE_IN}
 	 * transition and tag for the specified <var>fragmentId</var> obtained by {@link #getFragmentTag(int)}.
 	 */
-	protected FragmentController.TransactionOptions onGetFragmentTransactionOptions(int fragmentId, Bundle params) {
+	protected FragmentController.TransactionOptions onGetFragmentTransactionOptions(int fragmentId, @Nullable Bundle params) {
 		return new FragmentController.TransactionOptions()
 				.transition(FragmentTransition.FADE_IN)
 				.tag(getFragmentTag(fragmentId));
@@ -432,7 +433,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 			/**
 			 */
 			@Override
-			public void onProcessField(Field field, String name) {
+			public void onProcessField(@NonNull Field field, String name) {
 				if (field.isAnnotationPresent(FactoryFragment.class) && int.class.equals(field.getType())) {
 					final FactoryFragment factoryFragment = field.getAnnotation(FactoryFragment.class);
 					try {

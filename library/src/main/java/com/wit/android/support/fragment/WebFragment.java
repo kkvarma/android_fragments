@@ -21,6 +21,7 @@ package com.wit.android.support.fragment;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -436,6 +437,7 @@ public class WebFragment extends BaseFragment {
 	 *
 	 * @return The WebView of this web fragment instance.
 	 */
+	@Nullable
 	public WebView getWebView() {
 		return mWebView;
 	}
@@ -490,6 +492,7 @@ public class WebFragment extends BaseFragment {
 	 * @return Default web view client.
 	 * @see #onCreateWebChromeClient()
 	 */
+	@Nullable
 	protected WebViewClient onCreateWebViewClient() {
 		return new WebViewClient() {
 
@@ -543,6 +546,7 @@ public class WebFragment extends BaseFragment {
 	 * @return Default web chrome client.
 	 * @see #onCreateWebViewClient()
 	 */
+	@Nullable
 	protected WebChromeClient onCreateWebChromeClient() {
 		return new WebChromeClient() {
 

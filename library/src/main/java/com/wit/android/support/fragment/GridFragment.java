@@ -19,6 +19,8 @@
 package com.wit.android.support.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -60,7 +62,7 @@ public class GridFragment<A extends ListAdapter> extends AdapterFragment<GridVie
 	/**
 	 */
 	@Override
-	protected GridView onCreateAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	protected GridView onCreateAdapterView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return new GridView(inflater.getContext(), null, android.R.attr.gridViewStyle);
 	}
 }

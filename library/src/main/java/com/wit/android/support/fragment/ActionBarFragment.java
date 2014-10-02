@@ -22,6 +22,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
@@ -413,6 +415,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @return The current action mode, or <code>null</code> if this fragment is not in action mode.
 	 * @see #isInActionMode()
 	 */
+	@Nullable
 	protected ActionMode getActionMode() {
 		return mActionMode;
 	}
@@ -423,7 +426,7 @@ public class ActionBarFragment extends BaseFragment {
 	 *
 	 * @param actionMode Currently started action mode.
 	 */
-	protected void onActionModeStarted(ActionMode actionMode) {
+	protected void onActionModeStarted(@NonNull ActionMode actionMode) {
 		this.mActionMode = actionMode;
 	}
 
@@ -453,6 +456,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @return Instance of the ActionBar obtained from the parent activity.
 	 * @throws java.lang.IllegalStateException If this fragment isn't created yet or is already destroyed.
 	 */
+	@Nullable
 	protected ActionBar getActionBar() {
 		if (!mCreated) {
 			throw new IllegalStateException(
@@ -499,7 +503,6 @@ public class ActionBarFragment extends BaseFragment {
 	 * Inner classes ===============================================================================
 	 */
 
-
 	/**
 	 * <h4>Class Overview</h4>
 	 * todo: description
@@ -544,7 +547,7 @@ public class ActionBarFragment extends BaseFragment {
 		/**
 		 */
 		@Override
-		public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+		public boolean onCreateActionMode(@NonNull ActionMode actionMode, @NonNull Menu menu) {
 			final ActionModeOptions options = fragment != null ? fragment.mActionModeOptions : null;
 			if (options != null) {
 				if (options.menu() > 0) {
@@ -558,14 +561,14 @@ public class ActionBarFragment extends BaseFragment {
 		/**
 		 */
 		@Override
-		public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+		public boolean onPrepareActionMode(@NonNull ActionMode actionMode, @NonNull Menu menu) {
 			return false;
 		}
 
 		/**
 		 */
 		@Override
-		public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+		public boolean onActionItemClicked(@NonNull ActionMode actionMode, @NonNull MenuItem menuItem) {
 			if (fragment != null && fragment.onOptionsItemSelected(menuItem)) {
 				actionMode.finish();
 				return true;
@@ -576,7 +579,7 @@ public class ActionBarFragment extends BaseFragment {
 		/**
 		 */
 		@Override
-		public void onDestroyActionMode(ActionMode actionMode) {
+		public void onDestroyActionMode(@NonNull ActionMode actionMode) {
 			if (fragment != null) {
 				fragment.onActionModeFinished();
 			}
