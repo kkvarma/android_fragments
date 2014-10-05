@@ -24,7 +24,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -320,7 +319,7 @@ public class FragmentController {
 	 * fragment with the same TAG already showing and should not be replaced.
 	 * @throws java.lang.IllegalStateException If this controller does not have factory attached.
 	 */
-	public boolean showFragment(int fragmentId, Bundle params) {
+	public boolean showFragment(int fragmentId, @Nullable Bundle params) {
 		// Check if we have fragment factory and fragment is provided.
 		if (!checkFragmentFactory(fragmentId)) {
 			Log.e(TAG, "Current factory(" + mFactory.getClass().getSimpleName() + ") does not provide fragment for the requested id(" + fragmentId + ").");
@@ -333,7 +332,7 @@ public class FragmentController {
 	 * Same as {@link #showFragment(android.support.v4.app.Fragment, FragmentController.TransactionOptions)}
 	 * with default {@link FragmentController.TransactionOptions}.
 	 */
-	public boolean showFragment(Fragment fragment) {
+	public boolean showFragment(@NonNull Fragment fragment) {
 		return showFragment(fragment, new TransactionOptions());
 	}
 
@@ -341,8 +340,8 @@ public class FragmentController {
 	 * Same as {@link #showFragment(android.support.v4.app.Fragment, FragmentController.TransactionOptions)}
 	 * with default {@link FragmentController.TransactionOptions} with the given <var>fragmentTag</var>.
 	 */
-	public boolean showFragment(DialogFragment dialog, String fragmentTag) {
-		return showFragment(dialog, new TransactionOptions().tag(fragmentTag));
+	public boolean showFragment(@Nullable Fragment fragment, String fragmentTag) {
+		return showFragment(fragment, new TransactionOptions().tag(fragmentTag));
 	}
 
 	/**
@@ -353,7 +352,7 @@ public class FragmentController {
 	 * @return <code>True</code> if the fragment has been successfully showed, <code>false</code>
 	 * if there is already fragment with the same TAG already showing and should not be replaced.
 	 */
-	public boolean showFragment(Fragment fragment, TransactionOptions options) {
+	public boolean showFragment(@Nullable Fragment fragment, TransactionOptions options) {
 		return this.performShowFragment(fragment, options);
 	}
 
@@ -366,6 +365,7 @@ public class FragmentController {
 	 * FragmentManager with the specified tag.
 	 * @see #findFactoryFragmentById(int)
 	 */
+	@Nullable
 	public Fragment findFragmentByTag(String fragmentTag) {
 		return mFragmentManager.findFragmentByTag(fragmentTag);
 	}
@@ -373,6 +373,7 @@ public class FragmentController {
 	/**
 	 * Same as {@link #findFragmentByTag(String)}, but with id.
 	 */
+	@Nullable
 	public Fragment findFragmentById(int fragmentId) {
 		return mFragmentManager.findFragmentById(fragmentId);
 	}
@@ -384,6 +385,7 @@ public class FragmentController {
 	 * @param fragmentId Id of the desired factory fragment to find.
 	 * @throws java.lang.IllegalStateException If this controller does not have factory attached.
 	 */
+	@Nullable
 	public Fragment findFactoryFragmentById(int fragmentId) {
 		return this.checkFragmentFactory(fragmentId) ? findFragmentByTag(mFactory.getFragmentTag(fragmentId)) : null;
 	}
@@ -670,6 +672,7 @@ public class FragmentController {
 	 * @return Tag of the currently showing fragment or <code>null</code> if no fragment was shown
 	 * by this controller yet.
 	 */
+	@Nullable
 	public String getCurrentFragmentTag() {
 		return mCurrentFragmentTag;
 	}
@@ -681,6 +684,7 @@ public class FragmentController {
 	 * @see #getVisibleFragment()
 	 * @see #getVisibleSecondFragmentTag()
 	 */
+	@Nullable
 	public String getVisibleFragmentTag() {
 		final Fragment visibleFragment = getVisibleFragment();
 		return (visibleFragment != null) ? visibleFragment.getTag() : null;
@@ -693,6 +697,7 @@ public class FragmentController {
 	 * @see #getVisibleSecondFragment()
 	 * @see #getVisibleFragmentTag()
 	 */
+	@Nullable
 	public String getVisibleSecondFragmentTag() {
 		final Fragment visibleFragment = getVisibleSecondFragment();
 		return (visibleFragment != null) ? visibleFragment.getTag() : null;
@@ -749,7 +754,6 @@ public class FragmentController {
 	 * @see #setFragmentFactory(com.wit.android.support.fragment.manage.FragmentController.FragmentFactory)
 	 * @see #hasFragmentFactory()
 	 */
-	@Nullable
 	public FragmentFactory getFragmentFactory() {
 		return mFactory;
 	}
@@ -778,7 +782,7 @@ public class FragmentController {
 	 * showing fragment with the same tag as specified within the options.
 	 * @throws java.lang.IllegalStateException If the current id for layout container is invalid.
 	 */
-	protected boolean onShowFragment(Fragment fragment, @Nullable TransactionOptions options) {
+	protected boolean onShowFragment(@NonNull Fragment fragment, @Nullable TransactionOptions options) {
 		if (options == null) {
 			options = new TransactionOptions();
 		}
