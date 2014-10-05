@@ -179,7 +179,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 * @return New instance of fragment with the given arguments or <code>null</code> if some instantiation
 	 * error occurs.
 	 */
-	public static <F extends Fragment> F newInstanceWithArguments(Class<F> classOfFragment, Bundle args) {
+	public static <F extends Fragment> F newInstanceWithArguments(@NonNull Class<F> classOfFragment, Bundle args) {
 		try {
 			final F fragment = classOfFragment.newInstance();
 			fragment.setArguments(args);
@@ -352,7 +352,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 * @return <code>True</code> if parent activity is available and action was posted, <code>false</code>
 	 * otherwise.
 	 */
-	public final boolean runOnUiThread(Runnable action) {
+	public final boolean runOnUiThread(@NonNull Runnable action) {
 		if (isActivityAvailable()) {
 			getActivity().runOnUiThread(action);
 			return true;

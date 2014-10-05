@@ -206,9 +206,9 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * @return Fragment tag in required format, or <code>""</code> if <var>fragmentName</var> is
 	 * <code>null</code> or empty.
 	 */
-	public static String createFragmentTag(Class<? extends FragmentController.FragmentFactory> classOfFactory, String fragmentName) {
-		// Only valid fragment name is allowed.
-		if (fragmentName == null || fragmentName.length() == 0) {
+	@Nullable
+	public static String createFragmentTag(@NonNull Class<? extends FragmentController.FragmentFactory> classOfFactory, @NonNull String fragmentName) {
+		if (TextUtils.isEmpty(fragmentName)) {
 			return null;
 		}
 		return classOfFactory.getPackage().getName() + "." + classOfFactory.getSimpleName() + ".TAG." + fragmentName;
@@ -290,7 +290,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * @see #getJoinedFactories()
 	 */
 	public boolean hasJoinedFactories() {
-		return (mFactories != null) && !mFactories.isEmpty();
+		return mFactories != null && !mFactories.isEmpty();
 	}
 
 	/**
@@ -322,7 +322,6 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * @see #hasJoinedFactories()
 	 * @see #joinFactory(FragmentController.FragmentFactory)
 	 */
-	@Nullable
 	public final List<FragmentController.FragmentFactory> getJoinedFactories() {
 		return mFactories;
 	}
@@ -351,6 +350,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * or {@link FactoryFragment @FactoryFragment} annotation presented for the specified <var>fragmentId</var>,
 	 * otherwise {@link #createFragmentTag(Class, String)} will be used to create requested fragment tag.
 	 */
+	@Nullable
 	protected String onGetFragmentTag(int fragmentId) {
 		return providesFragment(fragmentId) ? mItems.get(fragmentId).tag : createFragmentTag(getClass(), Integer.toString(fragmentId));
 	}
@@ -363,6 +363,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * annotation presented for the specified <var>fragmentId</var> with valid fragment class type
 	 * ({@link FactoryFragment#type() @FactoryFragment.type()}), <code>null</code> otherwise.
 	 */
+	@Nullable
 	protected Fragment onCreateFragmentInstance(int fragmentId, @Nullable Bundle params) {
 		return providesFragment(fragmentId) ? mItems.get(fragmentId).newInstance(params) : null;
 	}
@@ -374,10 +375,13 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * This implementation returns default transaction options with {@link FragmentTransition#FADE_IN}
 	 * transition and tag for the specified <var>fragmentId</var> obtained by {@link #getFragmentTag(int)}.
 	 */
+	@Nullable
 	protected FragmentController.TransactionOptions onGetFragmentTransactionOptions(int fragmentId, @Nullable Bundle params) {
-		return new FragmentController.TransactionOptions()
-				.transition(FragmentTransition.FADE_IN)
-				.tag(getFragmentTag(fragmentId));
+		return providesFragment(fragmentId) ?
+				new FragmentController.TransactionOptions()
+						.transition(FragmentTransition.FADE_IN)
+						.tag(getFragmentTag(fragmentId)) :
+				null;
 	}
 
 	/**

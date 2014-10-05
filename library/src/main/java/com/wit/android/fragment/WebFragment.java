@@ -21,6 +21,7 @@ package com.wit.android.fragment;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -309,7 +310,7 @@ public class WebFragment extends BaseFragment {
 	 * @param options Options to manage WebFragment.
 	 * @return New instance of WebFragment.
 	 */
-	public static WebFragment newInstance(WebOptions options) {
+	public static WebFragment newInstance(@NonNull WebOptions options) {
 		final WebFragment fragment = new WebFragment();
 		final Bundle args = new Bundle();
 		args.putInt(BUNDLE_PRIVATE_FLAGS, options.javascriptEnabled ? PFLAG_JAVA_SCRIPT_ENABLED : 0);
@@ -449,6 +450,7 @@ public class WebFragment extends BaseFragment {
 	 * @return Current content. This can be a raw HTML or web URL or a FILE path.
 	 * @see #loadContent(String)
 	 */
+	@Nullable
 	public String getContent() {
 		return mContent;
 	}

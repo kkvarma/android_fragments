@@ -166,9 +166,6 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 		 * Build our custom adapter view layout.
 		 */
 		final ViewGroup layout = onCreateLayout(inflater, container, savedInstanceState);
-		if (layout == null) {
-			throw new NullPointerException("Layout created by " + ((Object) this).getClass().getSimpleName() + ".onCreateLayout(...) can't be null.");
-		}
 		final ViewGroup.LayoutParams layoutParams = createLayoutParams();
 		if (layoutParams != null) {
 			layout.setLayoutParams(layoutParams);
@@ -326,6 +323,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 *
 	 * @return Instance of the adapter view presented in the root view hierarchy of this AdapterFragment.
 	 */
+	@NonNull
 	public V getAdapterView() {
 		return mAdapterView;
 	}
@@ -336,7 +334,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @param adapter The adapter which should be used to populate the adapter view of this AdapterFragment.
 	 * @see #getAdapter()
 	 */
-	public void setAdapter(A adapter) {
+	public void setAdapter(@Nullable A adapter) {
 		this.setAdapterInner(adapter);
 	}
 
@@ -427,6 +425,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @return This returns be default an instance of {@link android.widget.FrameLayout}.
 	 * @see #createLayoutParams()
 	 */
+	@NonNull
 	protected ViewGroup onCreateLayout(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return new FrameLayout(inflater.getContext());
 	}
@@ -478,6 +477,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 *                           is just being first time created.
 	 * @return An instance of empty view.
 	 */
+	@Nullable
 	protected View onCreateEmptyView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return new TextView(inflater.getContext(), null, android.R.attr.textViewStyle);
 	}

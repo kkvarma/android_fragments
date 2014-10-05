@@ -20,6 +20,7 @@ package com.wit.android.fragment.util;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.view.View;
 
@@ -87,7 +88,8 @@ public final class FragmentAnnotations {
 	 * Same as {@link #obtainAnnotationFrom(Class, Class, Class)} with no <var>maxSuperClass</var>
 	 * specified.
 	 */
-	public static <A extends Annotation> A obtainAnnotationFrom(Class<?> fromClass, Class<A> classOfAnnotation) {
+	@Nullable
+	public static <A extends Annotation> A obtainAnnotationFrom(@NonNull Class<?> fromClass, @NonNull Class<A> classOfAnnotation) {
 		return obtainAnnotationFrom(fromClass, classOfAnnotation, null);
 	}
 
@@ -106,7 +108,8 @@ public final class FragmentAnnotations {
 	 * for the given class or its supers if requested.
 	 * @see #obtainAnnotationFrom(Class, Class)
 	 */
-	public static <A extends Annotation> A obtainAnnotationFrom(Class<?> fromClass, Class<A> classOfAnnotation, Class<?> maxSuperClass) {
+	@Nullable
+	public static <A extends Annotation> A obtainAnnotationFrom(@NonNull Class<?> fromClass, @NonNull Class<A> classOfAnnotation, Class<?> maxSuperClass) {
 		final boolean present = fromClass.isAnnotationPresent(classOfAnnotation);
 		if (present) {
 			return fromClass.getAnnotation(classOfAnnotation);
@@ -123,7 +126,7 @@ public final class FragmentAnnotations {
 	 * Same as {@link #iterateFields(Class, FieldProcessor, Class)} with no <var>maxSuperClass</var>
 	 * specified.
 	 */
-	public static void iterateFields(Class<?> fieldsClass, FieldProcessor processor) {
+	public static void iterateFields(@NonNull Class<?> fieldsClass, @NonNull FieldProcessor processor) {
 		iterateFields(fieldsClass, processor, null);
 	}
 
@@ -138,7 +141,7 @@ public final class FragmentAnnotations {
 	 *                      be iterated.
 	 * @see #iterateFields(Class, FieldProcessor)
 	 */
-	public static void iterateFields(Class<?> ofClass, FieldProcessor processor, Class<?> maxSuperClass) {
+	public static void iterateFields(@NonNull Class<?> ofClass, @NonNull FieldProcessor processor, Class<?> maxSuperClass) {
 		final Field[] fields = ofClass.getDeclaredFields();
 		if (fields.length > 0) {
 			for (Field field : fields) {
@@ -157,8 +160,8 @@ public final class FragmentAnnotations {
 	 * Same as {@link #injectView(java.lang.reflect.Field, Object, android.view.View, android.view.View.OnClickListener)}
 	 * with <code>null</code> OnClickListener.
 	 */
-	public static boolean injectView(Field field, Object fieldHolder, View root) {
-		return injectView(field, fieldHolder, root, null);
+	public static boolean injectView(@NonNull Field field, @NonNull Object fieldHolder, @NonNull View root) {
+		return injectViewInner(field, fieldHolder, root, null);
 	}
 
 
@@ -180,7 +183,7 @@ public final class FragmentAnnotations {
 	 * presented.
 	 * @throws RuntimeException If the given field is not instance of {@link android.view.View}.
 	 */
-	public static boolean injectView(Field field, Object fieldParent, View root, View.OnClickListener onClickListener) {
+	public static boolean injectView(@NonNull Field field, @NonNull Object fieldParent, @NonNull View root, View.OnClickListener onClickListener) {
 		return injectViewInner(field, fieldParent, root, onClickListener);
 	}
 
@@ -188,7 +191,7 @@ public final class FragmentAnnotations {
 	 * Same as {@link #injectFragmentViews(android.app.Fragment, Class, android.view.View.OnClickListener)}
 	 * with <code>null</code> <var>onClickListener</var>.
 	 */
-	public static void injectFragmentViews(Fragment fragment, Class<?> maxSuperClass) {
+	public static void injectFragmentViews(@NonNull Fragment fragment, Class<?> maxSuperClass) {
 		injectFragmentViews(fragment, maxSuperClass, null);
 	}
 
@@ -223,7 +226,7 @@ public final class FragmentAnnotations {
 	 *                                         to inject is not instance of {@link android.view.View}.
 	 * @see #injectActivityViews(android.app.Activity, Class)
 	 */
-	public static void injectFragmentViews(Fragment fragment, Class<?> maxSuperClass, View.OnClickListener onClickListener) {
+	public static void injectFragmentViews(@NonNull Fragment fragment, Class<?> maxSuperClass, View.OnClickListener onClickListener) {
 		final View root = fragment.getView();
 		if (root != null) {
 			injectViews(fragment, ((Object) fragment).getClass(), root, maxSuperClass, onClickListener);
@@ -236,7 +239,7 @@ public final class FragmentAnnotations {
 	 * Same as {@link #injectActivityViews(android.app.Activity, Class, android.view.View.OnClickListener)}
 	 * with <code>null</code> <var>onClickListener</var>.
 	 */
-	public static void injectActivityViews(Activity activity, Class<?> maxSuperClass) {
+	public static void injectActivityViews(@NonNull Activity activity, Class<?> maxSuperClass) {
 		injectActivityViews(activity, maxSuperClass, null);
 	}
 
@@ -260,7 +263,7 @@ public final class FragmentAnnotations {
 	 * @throws RuntimeException                If one of the marked fields of the given activity (or its
 	 *                                         super) to inject is not instance of {@link android.view.View}.
 	 */
-	public static void injectActivityViews(Activity activity, Class<?> maxSuperClass, View.OnClickListener onClickListener) {
+	public static void injectActivityViews(@NonNull Activity activity, Class<?> maxSuperClass, View.OnClickListener onClickListener) {
 		final View content = activity.getWindow().getDecorView().findViewById(android.R.id.content);
 		if (content != null) {
 			injectViews(activity, ((Object) activity).getClass(), content, maxSuperClass, onClickListener);
