@@ -3,14 +3,12 @@ Change-Log
 
 > **RELEASE VERSION** (<i>RELEASE DATE</i>)
 
-### **4.1** (<i>02.10.2014</i>) ###
+### **4.1** (<i>05.10.2014</i>) ###
+- Added @NonNull + @Nullable annotations.
 - Added default value `0` for **menu** attribute of **@ActionModeOptions** annotation to allow starting
 of action mode without options menu.
 - Moved implementation of ActionMode management into **ActionBarFragment**.
 - Some minor updates.
-
-### **4.1** (<i>05.10.2014</i>) ###
-- Added @NonNull + @Nullable annotations.
 
 ### **4.0.7** (<i>11.09.2014</i>) ###
 - Updated @ActionBarOptions + @WebOptions annotations.
