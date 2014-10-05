@@ -26,7 +26,7 @@ allprojects {
  * Library options =================================================================================
  */
 ext.artifactName = "fragments"
-ext.versionCode = 41
+ext.versionCode = 410
 ext.versionName = "4.1"
 
 /**
