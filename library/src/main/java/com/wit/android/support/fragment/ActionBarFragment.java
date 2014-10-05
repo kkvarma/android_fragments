@@ -23,7 +23,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
@@ -387,14 +386,18 @@ public class ActionBarFragment extends BaseFragment {
 	 *
 	 * @param callback The callback used to manage action mode.
 	 * @return <code>True</code> if action mode has been started, <code>false</code> if this fragment
-	 * is already in the action mode or the parent activity of this fragment is not available.
+	 * is already in the action mode or the parent activity of this fragment is not available or some
+	 * error occurs.
 	 * @see #isInActionMode()
 	 * @see #isActivityAvailable()
 	 */
-	protected boolean startActionMode(ActionMode.Callback callback) {
+	protected boolean startActionMode(@NonNull ActionMode.Callback callback) {
 		if (!isInActionMode() && mActivity != null) {
-			onActionModeStarted(getActionBarActivity().startSupportActionMode(callback));
-			return true;
+			final ActionMode actionMode = ((ActionBarActivity) mActivity).startSupportActionMode(callback);
+			if (actionMode != null) {
+				onActionModeStarted(actionMode);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -415,7 +418,6 @@ public class ActionBarFragment extends BaseFragment {
 	 * @return The current action mode, or <code>null</code> if this fragment is not in action mode.
 	 * @see #isInActionMode()
 	 */
-	@Nullable
 	protected ActionMode getActionMode() {
 		return mActionMode;
 	}
@@ -470,7 +472,6 @@ public class ActionBarFragment extends BaseFragment {
 	 * @return Instance of the ActionBar obtained from the parent activity.
 	 * @throws java.lang.IllegalStateException If this fragment isn't created yet or is already destroyed.
 	 */
-	@Nullable
 	protected ActionBar getActionBar() {
 		if (!mCreated) {
 			throw new IllegalStateException(
