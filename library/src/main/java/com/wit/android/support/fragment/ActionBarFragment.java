@@ -23,6 +23,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
@@ -270,7 +272,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #setActionBarTitle(CharSequence)
 	 * @see #isActionBarAvailable()
 	 */
-	public void setActionBarTitle(int resId) {
+	public void setActionBarTitle(@StringRes int resId) {
 		if (mActionBar != null) {
 			mActionBar.setTitle(resId);
 		}
@@ -283,7 +285,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #setActionBarTitle(int)
 	 * @see #isActionBarAvailable()
 	 */
-	public void setActionBarTitle(CharSequence title) {
+	public void setActionBarTitle(@Nullable CharSequence title) {
 		if (mActionBar != null) {
 			mActionBar.setTitle(title);
 		}
@@ -296,7 +298,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #setActionBarIcon(android.graphics.drawable.Drawable)
 	 * @see #isActionBarAvailable()
 	 */
-	public void setActionBarIcon(int resId) {
+	public void setActionBarIcon(@StringRes int resId) {
 		if (mActionBar != null) {
 			mActionBar.setIcon(resId);
 		}
@@ -309,7 +311,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @see #setActionBarIcon(int)
 	 * @see #isActionBarAvailable()
 	 */
-	public void setActionBarIcon(Drawable icon) {
+	public void setActionBarIcon(@Nullable Drawable icon) {
 		if (mActionBar != null) {
 			mActionBar.setIcon(icon);
 		}
@@ -418,6 +420,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @return The current action mode, or <code>null</code> if this fragment is not in action mode.
 	 * @see #isInActionMode()
 	 */
+	@Nullable
 	protected ActionMode getActionMode() {
 		return mActionMode;
 	}
@@ -472,6 +475,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @return Instance of the ActionBar obtained from the parent activity.
 	 * @throws java.lang.IllegalStateException If this fragment isn't created yet or is already destroyed.
 	 */
+	@Nullable
 	protected ActionBar getActionBar() {
 		if (!mCreated) {
 			throw new IllegalStateException(
@@ -487,6 +491,7 @@ public class ActionBarFragment extends BaseFragment {
 	 * @return The current parent activity of this fragment instance casted to ActionBarActivity.
 	 * @see #isActivityAvailable()
 	 */
+	@Nullable
 	protected ActionBarActivity getActionBarActivity() {
 		return (ActionBarActivity) mActivity;
 	}
@@ -551,7 +556,7 @@ public class ActionBarFragment extends BaseFragment {
 		 *
 		 * @param fragment The instance of fragment in which is being action mode started.
 		 */
-		public ActionModeCallback(ActionBarFragment fragment) {
+		public ActionModeCallback(@Nullable ActionBarFragment fragment) {
 			this.fragment = fragment;
 		}
 

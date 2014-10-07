@@ -450,7 +450,7 @@ public class FragmentTransition implements Parcelable {
 	 *                    replaced by the incoming one.
 	 * @param name        The name of this transition.
 	 */
-	public FragmentTransition(int inAnim, int outAnim, int inAnimBack, int outAnimBack, String name) {
+	public FragmentTransition(int inAnim, int outAnim, int inAnimBack, int outAnimBack, @NonNull String name) {
 		this.mInAnimResId = inAnim;
 		this.mOutAnimResId = outAnim;
 		this.mInAnimBackResId = inAnimBack;
@@ -507,6 +507,7 @@ public class FragmentTransition implements Parcelable {
 	 *
 	 * @return Transition name.
 	 */
+	@NonNull
 	public String name() {
 		return mName;
 	}

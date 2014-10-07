@@ -21,6 +21,8 @@ package com.wit.android.support.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -179,7 +181,8 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 * @return New instance of fragment with the given arguments or <code>null</code> if some instantiation
 	 * error occurs.
 	 */
-	public static <F extends Fragment> F newInstanceWithArguments(@NonNull Class<F> classOfFragment, Bundle args) {
+	@Nullable
+	public static <F extends Fragment> F newInstanceWithArguments(@NonNull Class<F> classOfFragment, @Nullable Bundle args) {
 		try {
 			final F fragment = classOfFragment.newInstance();
 			fragment.setArguments(args);
@@ -324,7 +327,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 * fragment instance is available to prevent illegal state exceptions.
 	 */
 	@NonNull
-	public String obtainString(int resId) {
+	public String obtainString(@StringRes int resId) {
 		return isActivityAvailable() ? getString(resId) : "";
 	}
 
@@ -333,7 +336,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 * of this fragment instance is available to prevent illegal state exceptions.
 	 */
 	@NonNull
-	public String obtainString(int resId, Object... args) {
+	public String obtainString(@StringRes int resId, @Nullable Object... args) {
 		return isActivityAvailable() ? getString(resId, args) : "";
 	}
 
@@ -342,7 +345,7 @@ public abstract class BaseFragment extends Fragment implements BackPressWatcher,
 	 * fragment instance is available to prevent illegal state exceptions.
 	 */
 	@NonNull
-	public CharSequence obtainText(int resId) {
+	public CharSequence obtainText(@StringRes int resId) {
 		return isActivityAvailable() ? getText(resId) : "";
 	}
 

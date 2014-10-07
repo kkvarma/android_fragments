@@ -18,6 +18,9 @@
  */
 package com.wit.android.support.fragment.annotation;
 
+import android.support.annotation.IntDef;
+import android.support.annotation.MenuRes;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -36,6 +39,18 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MenuOptions {
+
+	/**
+	 * Interface ===================================================================================
+	 */
+
+	/**
+	 * <h4>Annotation Overview</h4>
+	 * Defines an annotation for determining set of allowed flags for {@link #flags()} attribute.
+	 */
+	@Retention(RetentionPolicy.SOURCE)
+	@IntDef({DEFAULT, IGNORE_SUPER, BEFORE_SUPER})
+	public @interface Flags {}
 
 	/**
 	 * Constants ===================================================================================
@@ -65,6 +80,7 @@ public @interface MenuOptions {
 	 * <p/>
 	 * Default value: <b>0</b>
 	 */
+	@MenuRes
 	int value() default 0;
 
 	/**
@@ -75,5 +91,6 @@ public @interface MenuOptions {
 	/**
 	 * Flags for determining a menu set up.
 	 */
+	@Flags
 	int flags() default DEFAULT;
 }
