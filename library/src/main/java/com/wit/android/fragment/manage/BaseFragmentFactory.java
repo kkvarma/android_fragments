@@ -307,7 +307,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * @param factory Fragment factory to join with this one.
 	 * @see #getJoinedFactories()
 	 */
-	public final void joinFactory(FragmentController.FragmentFactory factory) {
+	public final void joinFactory(@NonNull FragmentController.FragmentFactory factory) {
 		this.ensureFactories();
 		if (!mFactories.contains(factory)) {
 			mFactories.add(factory);
@@ -322,6 +322,7 @@ public abstract class BaseFragmentFactory implements FragmentController.Fragment
 	 * @see #hasJoinedFactories()
 	 * @see #joinFactory(FragmentController.FragmentFactory)
 	 */
+	@Nullable
 	public final List<FragmentController.FragmentFactory> getJoinedFactories() {
 		return mFactories;
 	}

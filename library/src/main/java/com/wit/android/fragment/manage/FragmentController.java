@@ -337,7 +337,7 @@ public class FragmentController {
 	 * Same as {@link #showFragment(android.app.Fragment, FragmentController.TransactionOptions)}
 	 * with default {@link FragmentController.TransactionOptions} with the given <var>fragmentTag</var>.
 	 */
-	public boolean showFragment(@Nullable Fragment fragment, String fragmentTag) {
+	public boolean showFragment(@Nullable Fragment fragment, @Nullable String fragmentTag) {
 		return showFragment(fragment, new TransactionOptions().tag(fragmentTag));
 	}
 
@@ -349,7 +349,7 @@ public class FragmentController {
 	 * @return <code>True</code> if the fragment has been successfully showed, <code>false</code>
 	 * if there is already fragment with the same TAG already showing and should not be replaced.
 	 */
-	public boolean showFragment(@Nullable Fragment fragment, TransactionOptions options) {
+	public boolean showFragment(@Nullable Fragment fragment, @Nullable TransactionOptions options) {
 		return this.performShowFragment(fragment, options);
 	}
 
@@ -363,7 +363,7 @@ public class FragmentController {
 	 * @see #findFactoryFragmentById(int)
 	 */
 	@Nullable
-	public Fragment findFragmentByTag(String fragmentTag) {
+	public Fragment findFragmentByTag(@Nullable String fragmentTag) {
 		return mFragmentManager.findFragmentByTag(fragmentTag);
 	}
 
@@ -541,7 +541,7 @@ public class FragmentController {
 	 * performed, <code>false</code> otherwise.
 	 * @see #setFragmentOptionsMenuVisible(int, boolean)
 	 */
-	public boolean setFragmentOptionsMenuVisible(String fragmentTag, boolean visible) {
+	public boolean setFragmentOptionsMenuVisible(@Nullable String fragmentTag, boolean visible) {
 		final Fragment fragment = mFragmentManager.findFragmentByTag(fragmentTag);
 		if (fragment != null) {
 			fragment.setHasOptionsMenu(visible);
@@ -632,7 +632,7 @@ public class FragmentController {
 	 *
 	 * @param listener Listener callback.
 	 */
-	public void setOnBackStackChangeListener(OnBackStackChangeListener listener) {
+	public void setOnBackStackChangeListener(@NonNull OnBackStackChangeListener listener) {
 		this.mBackStackListener = listener;
 	}
 
@@ -648,7 +648,7 @@ public class FragmentController {
 	 *
 	 * @param listener Listener callback.
 	 */
-	public void setOnChangeListener(OnChangeListener listener) {
+	public void setOnChangeListener(@NonNull OnChangeListener listener) {
 		this.mFragmentListener = listener;
 	}
 
@@ -740,7 +740,7 @@ public class FragmentController {
 	 * @see #getFragmentFactory()
 	 * @see #hasFragmentFactory()
 	 */
-	public void setFragmentFactory(FragmentFactory factory) {
+	public void setFragmentFactory(@Nullable FragmentFactory factory) {
 		this.mFactory = factory;
 	}
 
@@ -751,6 +751,7 @@ public class FragmentController {
 	 * @see #setFragmentFactory(com.wit.android.fragment.manage.FragmentController.FragmentFactory)
 	 * @see #hasFragmentFactory()
 	 */
+	@Nullable
 	public FragmentFactory getFragmentFactory() {
 		return mFactory;
 	}

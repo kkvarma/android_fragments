@@ -18,6 +18,10 @@
  */
 package com.wit.android.fragment.annotation;
 
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.LayoutRes;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -40,6 +44,7 @@ public @interface ContentView {
 	/**
 	 * A resource id of the desired layout to inflate as root view.
 	 */
+	@LayoutRes
 	int value();
 
 	/**
@@ -55,5 +60,7 @@ public @interface ContentView {
 	 * <p/>
 	 * Default value: <b>-1</b>
 	 */
+	@ColorRes
+	@DrawableRes
 	int backgroundRes() default -1;
 }

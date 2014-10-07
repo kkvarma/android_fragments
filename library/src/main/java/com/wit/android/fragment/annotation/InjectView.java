@@ -18,6 +18,8 @@
  */
 package com.wit.android.fragment.annotation;
 
+import android.support.annotation.IdRes;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -49,6 +51,7 @@ public @interface InjectView {
 	/**
 	 * An id of the desired view presented within the root view hierarchy to inject.
 	 */
+	@IdRes
 	int value();
 
 	/**
@@ -105,6 +108,7 @@ public @interface InjectView {
 		/**
 		 * An id of the desired view presented within the root view hierarchy to inject.
 		 */
+		@IdRes
 		int value();
 
 		/**

@@ -61,6 +61,7 @@ public class GridFragment<A extends ListAdapter> extends AdapterFragment<GridVie
 
 	/**
 	 */
+	@Nullable
 	@Override
 	protected GridView onCreateAdapterView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return new GridView(inflater.getContext(), null, android.R.attr.gridViewStyle);

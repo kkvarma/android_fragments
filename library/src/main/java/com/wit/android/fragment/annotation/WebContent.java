@@ -18,6 +18,8 @@
  */
 package com.wit.android.fragment.annotation;
 
+import android.support.annotation.StringRes;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -50,5 +52,6 @@ public @interface WebContent {
 	 * <p/>
 	 * Default value: <b>-1</b>
 	 */
+	@StringRes
 	int valueRes() default -1;
 }

@@ -21,6 +21,7 @@
 package com.wit.android.fragment.examples;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.app.ActionBar;
 import android.view.ActionMode;
 import android.text.Editable;
@@ -207,12 +208,12 @@ public class WebActivity extends ExBaseActivity {
 
 		@Override
 		public void onLoadingStarted(String webUrl) {
-			setProgressBarIndeterminateVisibility(true);
+			setSupportProgressBarIndeterminateVisibility(true);
 		}
 
 		@Override
 		public void onLoadingFinished(String webUrl) {
-			setProgressBarIndeterminateVisibility(false);
+			setSupportProgressBarIndeterminateVisibility(false);
 		}
 	}
 

@@ -21,6 +21,7 @@ package com.wit.android.fragment;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -34,6 +35,8 @@ import android.webkit.WebViewClient;
 
 import com.wit.android.fragment.annotation.WebContent;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -74,7 +77,7 @@ public class WebFragment extends BaseFragment {
 		 *
 		 * @param webUrl The web url which is currently being loaded into web view.
 		 */
-		public void onLoadingStarted(String webUrl);
+		public void onLoadingStarted(@NonNull String webUrl);
 
 		/**
 		 * Invoked whenever loading process of the specified <var>webUrl</var> within an instance of
@@ -83,8 +86,17 @@ public class WebFragment extends BaseFragment {
 		 *
 		 * @param webUrl The web url which was currently loaded into web view.
 		 */
-		public void onLoadingFinished(String webUrl);
+		public void onLoadingFinished(@NonNull String webUrl);
 	}
+
+	/**
+	 * <h4>Annotation Overview</h4>
+	 * Defines an annotation for determining set of allowed content type flags for
+	 * {@link #onLoadContent(String, int)} method.
+	 */
+	@Retention(RetentionPolicy.SOURCE)
+	@IntDef({CONTENT_EMPTY, CONTENT_URL, CONTENT_HTML, CONTENT_FILE})
+	public @interface ContentType {}
 
 	/**
 	 * Constants ===================================================================================
@@ -291,7 +303,7 @@ public class WebFragment extends BaseFragment {
 	 * @param url Url to check.
 	 * @return <code>True</code> if url matches valid web URL format, <code>false</code> otherwise.
 	 */
-	public static boolean isValidWebUrl(String url) {
+	public static boolean isValidWebUrl(@Nullable String url) {
 		return WEB_URL_MATCHER.reset(url).matches();
 	}
 
@@ -300,6 +312,7 @@ public class WebFragment extends BaseFragment {
 	 *
 	 * @return New instance of WebFragment.
 	 */
+	@NonNull
 	public static WebFragment newInstance() {
 		return new WebFragment();
 	}
@@ -310,6 +323,7 @@ public class WebFragment extends BaseFragment {
 	 * @param options Options to manage WebFragment.
 	 * @return New instance of WebFragment.
 	 */
+	@NonNull
 	public static WebFragment newInstance(@NonNull WebOptions options) {
 		final WebFragment fragment = new WebFragment();
 		final Bundle args = new Bundle();
@@ -461,7 +475,7 @@ public class WebFragment extends BaseFragment {
 	 *
 	 * @param listener Listener callback.
 	 */
-	public void setOnWebContentLoadingListener(OnWebContentLoadingListener listener) {
+	public void setOnWebContentLoadingListener(@NonNull OnWebContentLoadingListener listener) {
 		this.mContentLoadingListener = listener;
 	}
 
@@ -571,7 +585,7 @@ public class WebFragment extends BaseFragment {
 	 * @param type    A type of the specified <var>content</var>. One of flags {@link #CONTENT_EMPTY},
 	 *                {@link #CONTENT_HTML}, {@link #CONTENT_URL} or {@link #CONTENT_FILE}.
 	 */
-	protected void onLoadContent(String content, int type) {
+	protected void onLoadContent(@Nullable String content, @ContentType int type) {
 		if (mWebView != null) {
 			if (LOG_ENABLED && !TextUtils.isEmpty(content)) {
 				if (content.length() > LOG_CONTENT_MAX_LENGTH) {
@@ -603,7 +617,7 @@ public class WebFragment extends BaseFragment {
 	 *
 	 * @param webUrl Web url which is currently being loaded into the current web view.
 	 */
-	protected void notifyLoadingStarted(String webUrl) {
+	protected void notifyLoadingStarted(@NonNull String webUrl) {
 		if (mContentLoadingListener != null) {
 			mContentLoadingListener.onLoadingStarted(webUrl);
 		}
@@ -618,7 +632,7 @@ public class WebFragment extends BaseFragment {
 	 *
 	 * @param webUrl Web url which was currently loaded into the current web view.
 	 */
-	protected void notifyLoadingFinished(String webUrl) {
+	protected void notifyLoadingFinished(@NonNull String webUrl) {
 		if (mContentLoadingListener != null) {
 			mContentLoadingListener.onLoadingFinished(webUrl);
 		}
@@ -645,6 +659,7 @@ public class WebFragment extends BaseFragment {
 	 * @return One of the flags {@link #CONTENT_EMPTY}, {@link #CONTENT_HTML}, {@link #CONTENT_URL}
 	 * or {@link #CONTENT_FILE}.
 	 */
+	@ContentType
 	private int resolveContentType() {
 		if (hasPrivateFlag(PFLAG_CONTENT_CHANGED)) {
 			if (!TextUtils.isEmpty(mContent)) {
@@ -697,7 +712,7 @@ public class WebFragment extends BaseFragment {
 		 *
 		 * @param content Content to load. This can be a raw <b>HTML</b>, web <b>URL</b> or path to
 		 *                a <b>FILE</b> with HTML content.
-		 * @return This options instance.
+		 * @return This options to allow methods chaining.
 		 */
 		public WebOptions content(String content) {
 			this.content = content;
@@ -708,7 +723,7 @@ public class WebFragment extends BaseFragment {
 		 * Sets flag indicating whether to enable Java-Script or not.
 		 *
 		 * @param enabled <code>True</code> to enable, <code>false</code> otherwise.
-		 * @return This options instance.
+		 * @return This options to allow methods chaining.
 		 */
 		public WebOptions javaScriptEnabled(boolean enabled) {
 			this.javascriptEnabled = enabled;
