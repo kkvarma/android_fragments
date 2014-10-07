@@ -18,6 +18,8 @@
  */
 package com.wit.android.support.fragment.annotation;
 
+import android.support.annotation.IdRes;
+import android.support.annotation.StringRes;
 import android.widget.AdapterView;
 
 import java.lang.annotation.ElementType;
@@ -68,6 +70,7 @@ public @interface AdapterViewOptions {
 	 * <p/>
 	 * Default value: <b>{@link #VIEW_DEFAULT_ID}</b>
 	 */
+	@IdRes
 	int viewId() default VIEW_DEFAULT_ID;
 
 	/**
@@ -83,6 +86,7 @@ public @interface AdapterViewOptions {
 	 * <p/>
 	 * Default value: <b>{@link #EMPTY_VIEW_DEFAULT_ID}</b>
 	 */
+	@IdRes
 	int emptyViewId() default EMPTY_VIEW_DEFAULT_ID;
 
 	/**
@@ -90,6 +94,7 @@ public @interface AdapterViewOptions {
 	 * <p/>
 	 * Default value: <b>-1</b>
 	 */
+	@StringRes
 	int emptyText() default -1;
 
 	/**

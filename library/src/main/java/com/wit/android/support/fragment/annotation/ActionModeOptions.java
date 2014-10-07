@@ -18,6 +18,7 @@
  */
 package com.wit.android.support.fragment.annotation;
 
+import android.support.annotation.MenuRes;
 import android.support.v7.view.ActionMode;
 
 import java.lang.annotation.ElementType;
@@ -47,5 +48,6 @@ public @interface ActionModeOptions {
 	 *
 	 * @see ActionMode.Callback#onCreateActionMode(android.support.v7.view.ActionMode, android.view.Menu)
 	 */
+	@MenuRes
 	int menu() default 0;
 }
