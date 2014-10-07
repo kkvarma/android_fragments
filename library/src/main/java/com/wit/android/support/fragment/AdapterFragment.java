@@ -601,11 +601,10 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 */
 	protected boolean startActionMode(@NonNull ActionMode.Callback callback, @NonNull V adapterView, @NonNull View view, int position, long id) {
 		if (!isInActionMode() && mActivity != null) {
-			onActionModeStarted(
-					((ActionBarActivity) mActivity).startSupportActionMode(callback),
-					adapterView, view, position, id
-			);
-			return true;
+			final ActionMode actionMode = ((ActionBarActivity) mActivity).startSupportActionMode(callback);
+			if (actionMode != null) {
+				onActionModeStarted(actionMode, adapterView, view, position, id);
+			}
 		}
 		return false;
 	}
