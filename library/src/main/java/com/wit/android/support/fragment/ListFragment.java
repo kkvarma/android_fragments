@@ -61,6 +61,7 @@ public class ListFragment<A extends ListAdapter> extends AdapterFragment<ListVie
 
 	/**
 	 */
+	@Nullable
 	@Override
 	protected ListView onCreateAdapterView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return new ListView(inflater.getContext(), null, android.R.attr.listViewStyle);

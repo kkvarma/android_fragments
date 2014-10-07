@@ -58,7 +58,7 @@ public final class FragmentAnnotations {
 		 * @param field The currently iterated field.
 		 * @param name  A name of the currently iterated field.
 		 */
-		public void onProcessField(@NonNull Field field, String name);
+		public void onProcessField(@NonNull Field field, @NonNull String name);
 	}
 
 	/**
@@ -109,7 +109,7 @@ public final class FragmentAnnotations {
 	 * @see #obtainAnnotationFrom(Class, Class)
 	 */
 	@Nullable
-	public static <A extends Annotation> A obtainAnnotationFrom(@NonNull Class<?> fromClass, @NonNull Class<A> classOfAnnotation, Class<?> maxSuperClass) {
+	public static <A extends Annotation> A obtainAnnotationFrom(@NonNull Class<?> fromClass, @NonNull Class<A> classOfAnnotation, @Nullable Class<?> maxSuperClass) {
 		final boolean present = fromClass.isAnnotationPresent(classOfAnnotation);
 		if (present) {
 			return fromClass.getAnnotation(classOfAnnotation);
@@ -141,7 +141,7 @@ public final class FragmentAnnotations {
 	 *                      be iterated.
 	 * @see #iterateFields(Class, FieldProcessor)
 	 */
-	public static void iterateFields(@NonNull Class<?> ofClass, @NonNull FieldProcessor processor, Class<?> maxSuperClass) {
+	public static void iterateFields(@NonNull Class<?> ofClass, @NonNull FieldProcessor processor, @Nullable Class<?> maxSuperClass) {
 		final Field[] fields = ofClass.getDeclaredFields();
 		if (fields.length > 0) {
 			for (Field field : fields) {
@@ -183,7 +183,7 @@ public final class FragmentAnnotations {
 	 * presented.
 	 * @throws RuntimeException If the given field is not instance of {@link android.view.View}.
 	 */
-	public static boolean injectView(@NonNull Field field, @NonNull Object fieldParent, @NonNull View root, View.OnClickListener onClickListener) {
+	public static boolean injectView(@NonNull Field field, @NonNull Object fieldParent, @NonNull View root, @NonNull View.OnClickListener onClickListener) {
 		return injectViewInner(field, fieldParent, root, onClickListener);
 	}
 
@@ -191,7 +191,7 @@ public final class FragmentAnnotations {
 	 * Same as {@link #injectFragmentViews(android.support.v4.app.Fragment, Class, android.view.View.OnClickListener)}
 	 * with <code>null</code> <var>onClickListener</var>.
 	 */
-	public static void injectFragmentViews(@NonNull Fragment fragment, Class<?> maxSuperClass) {
+	public static void injectFragmentViews(@NonNull Fragment fragment, @Nullable Class<?> maxSuperClass) {
 		injectFragmentViews(fragment, maxSuperClass, null);
 	}
 
@@ -226,7 +226,7 @@ public final class FragmentAnnotations {
 	 *                                         to inject is not instance of {@link android.view.View}.
 	 * @see #injectActivityViews(android.app.Activity, Class)
 	 */
-	public static void injectFragmentViews(@NonNull Fragment fragment, Class<?> maxSuperClass, View.OnClickListener onClickListener) {
+	public static void injectFragmentViews(@NonNull Fragment fragment, @Nullable Class<?> maxSuperClass, @NonNull View.OnClickListener onClickListener) {
 		final View root = fragment.getView();
 		if (root != null) {
 			injectViews(fragment, ((Object) fragment).getClass(), root, maxSuperClass, onClickListener);
@@ -239,7 +239,7 @@ public final class FragmentAnnotations {
 	 * Same as {@link #injectActivityViews(android.app.Activity, Class, android.view.View.OnClickListener)}
 	 * with <code>null</code> <var>onClickListener</var>.
 	 */
-	public static void injectActivityViews(@NonNull Activity activity, Class<?> maxSuperClass) {
+	public static void injectActivityViews(@NonNull Activity activity, @Nullable Class<?> maxSuperClass) {
 		injectActivityViews(activity, maxSuperClass, null);
 	}
 
@@ -263,7 +263,7 @@ public final class FragmentAnnotations {
 	 * @throws RuntimeException                If one of the marked fields of the given activity (or its
 	 *                                         super) to inject is not instance of {@link android.view.View}.
 	 */
-	public static void injectActivityViews(@NonNull Activity activity, Class<?> maxSuperClass, View.OnClickListener onClickListener) {
+	public static void injectActivityViews(@NonNull Activity activity, @Nullable Class<?> maxSuperClass, @NonNull View.OnClickListener onClickListener) {
 		final View content = activity.getWindow().getDecorView().findViewById(android.R.id.content);
 		if (content != null) {
 			injectViews(activity, ((Object) activity).getClass(), content, maxSuperClass, onClickListener);

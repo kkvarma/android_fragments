@@ -18,6 +18,10 @@
  */
 package com.wit.android.support.fragment.annotation;
 
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IntDef;
+import android.support.annotation.StringRes;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -36,6 +40,18 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ActionBarOptions {
+
+	/**
+	 * Interface ===================================================================================
+	 */
+
+	/**
+	 * <h4>Annotation Overview</h4>
+	 * Defines an annotation for determining set of allowed flags for {@link #homeAsUp()} attribute.
+	 */
+	@Retention(RetentionPolicy.SOURCE)
+	@IntDef({0 /*unchanged*/, HOME_AS_UP_ENABLED, HOME_AS_UP_DISABLED})
+	public @interface HomeAsUp {}
 
 	/**
 	 * Constants ===================================================================================
@@ -70,6 +86,7 @@ public @interface ActionBarOptions {
 	 *
 	 * @see android.app.ActionBar#setTitle(int)
 	 */
+	@StringRes
 	int title() default -1;
 
 	/**
@@ -81,6 +98,7 @@ public @interface ActionBarOptions {
 	 *
 	 * @see android.app.ActionBar#setIcon(int)
 	 */
+	@DrawableRes
 	int icon() default -1;
 
 	/**
@@ -91,5 +109,6 @@ public @interface ActionBarOptions {
 	 *
 	 * @see android.app.ActionBar#setDisplayHomeAsUpEnabled(boolean)
 	 */
+	@HomeAsUp
 	int homeAsUp() default 0;
 }

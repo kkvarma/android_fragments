@@ -20,9 +20,12 @@ package com.wit.android.support.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.LoaderManager;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
 import android.util.Log;
 import android.view.Gravity;
@@ -257,7 +260,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 *
 	 * @param resource A resource id of the desired layout with an empty view.
 	 */
-	public void setEmptyView(int resource) {
+	public void setEmptyView(@LayoutRes int resource) {
 		if (mEmptyViewRes != resource) {
 			setEmptyView(inflateView(mEmptyViewRes = resource));
 		}
@@ -269,7 +272,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @param view The view to set as empty view.
 	 * @see #setEmptyView(int)
 	 */
-	public void setEmptyView(View view) {
+	public void setEmptyView(@Nullable View view) {
 		this.mEmptyView = view;
 		if (mAdapterView != null) {
 			mAdapterView.setEmptyView(mEmptyView);
@@ -291,7 +294,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 *
 	 * @param resId A resource id of the desired empty text.
 	 */
-	public void setEmptyText(int resId) {
+	public void setEmptyText(@StringRes int resId) {
 		setEmptyText(obtainString(resId));
 	}
 
@@ -302,7 +305,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @param text The desired text to set for the empty view.
 	 * @see #setEmptyText(int)
 	 */
-	public void setEmptyText(CharSequence text) {
+	public void setEmptyText(@Nullable CharSequence text) {
 		this.mEmptyText = text;
 		if (mEmptyView instanceof TextView) {
 			((TextView) mEmptyView).setText(text);
@@ -314,6 +317,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 *
 	 * @return The text presented in the empty view.
 	 */
+	@Nullable
 	public CharSequence getEmptyText() {
 		return mEmptyText;
 	}
@@ -344,6 +348,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @return An instance of the current adapter.
 	 * @see #setAdapter(android.widget.Adapter)
 	 */
+	@Nullable
 	public A getAdapter() {
 		return mAdapter;
 	}
@@ -437,6 +442,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @return An instance of layout params. By default this creates params to <b>MATCH_PARENT</b> size.
 	 * @see #onCreateLayout(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
+	@Nullable
 	protected ViewGroup.LayoutParams createLayoutParams() {
 		return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 	}
@@ -450,6 +456,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 *                           is just being first time created.
 	 * @return This returns by default <code>null</code>.
 	 */
+	@Nullable
 	protected V onCreateAdapterView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return null;
 	}
@@ -463,6 +470,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @return An instance of layout params, depends on the root view of this AdapterFragment.
 	 * By default this creates params to <b>MATCH_PARENT</b> size.
 	 */
+	@Nullable
 	protected FrameLayout.LayoutParams createAdapterViewParams() {
 		return new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 	}
@@ -491,6 +499,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	 * @return An instance of layout params, depends on the root view of this AdapterFragment.
 	 * By default this creates params to <b>WRAP_CONTENT</b> size with {@link Gravity#CENTER} gravity.
 	 */
+	@Nullable
 	protected FrameLayout.LayoutParams createEmptyViewParams() {
 		final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 		params.gravity = Gravity.CENTER;
@@ -593,7 +602,7 @@ public abstract class AdapterFragment<V extends AdapterView, A extends Adapter> 
 	protected boolean startActionMode(@NonNull ActionMode.Callback callback, @NonNull V adapterView, @NonNull View view, int position, long id) {
 		if (!isInActionMode() && mActivity != null) {
 			onActionModeStarted(
-					getActionBarActivity().startSupportActionMode(callback),
+					((ActionBarActivity) mActivity).startSupportActionMode(callback),
 					adapterView, view, position, id
 			);
 			return true;
