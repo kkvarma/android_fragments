@@ -20,11 +20,11 @@
  */
 package com.wit.android.fragment.examples;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.app.ActionBar;
-import android.view.ActionMode;
 import android.text.Editable;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -207,13 +207,13 @@ public class WebActivity extends ExBaseActivity {
 	private class LoadingListener implements WebFragment.OnWebContentLoadingListener {
 
 		@Override
-		public void onLoadingStarted(String webUrl) {
-			setSupportProgressBarIndeterminateVisibility(true);
+		public void onLoadingStarted(@NonNull String webUrl) {
+			setProgressBarIndeterminateVisibility(true);
 		}
 
 		@Override
-		public void onLoadingFinished(String webUrl) {
-			setSupportProgressBarIndeterminateVisibility(false);
+		public void onLoadingFinished(@NonNull String webUrl) {
+			setProgressBarIndeterminateVisibility(false);
 		}
 	}
 
